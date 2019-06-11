@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{translationService.get(data.header)}}</h1>
+<div mat-dialog-content>
+  <p>{{translationService.get(data.message)}}</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button [mat-dialog-close]="false" color="warn">{{translationService.get(cancelTC)}}</button>
+  <button mat-raised-button [mat-dialog-close]="true" color="primary">{{translationService.get(okTC)}}</button>
+</div>

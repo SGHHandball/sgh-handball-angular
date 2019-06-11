@@ -1,0 +1,4 @@
+.mat-menu-panel {
+  max-width: none !important;
+  display: block;
+}

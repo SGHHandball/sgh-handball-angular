@@ -1,0 +1,56 @@
+<mat-spinner [diameter]="30" *ngIf="!newsService.newsLoaded" class="loading-spinner"></mat-spinner>
+<ng-container *ngIf="newsService.newsLoaded">
+  <div class="grid-container">
+    <h1 class="mat-h1">{{translationService.get(newsHeaderTC)}}</h1>
+    <mat-grid-list cols="2" rowHeight="350px">
+      <mat-grid-tile *ngFor="let newsCard of newsService.news | async" [colspan]="(isHandset$ | async) ? 2 : 1"
+                     [rowspan]="1">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>
+              <span (click)="newsService.openNewsDetail(newsCard)" class="card-title"> {{newsCard.title}}</span>
+              <app-news-more-menu
+                *ngIf="isEditMenuVisible(newsCard)"
+                class="more-button"
+                (editClickListener)="newsService.openNewsEdit(newsCard)"
+                (deleteClickListener)="openDeleteNewsDialog(newsCard)"
+                (sendClickListener)="openSendNewsDialog(newsCard)"
+              ></app-news-more-menu>
+            </mat-card-title>
+            <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge"
+                               (click)="newsService.openNewsDetail(newsCard)">
+              {{getDateWithTeamAgeAsString(newsCard)}}
+            </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score"
+                               (click)="newsService.openNewsDetail(newsCard)">
+              {{getTeamsWithScoreAsString(newsCard)}}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLink" class="card-img"
+               (click)="newsService.openNewsDetail(newsCard)">
+          <img mat-card-image [src]="newsCard.imgLink" *ngIf="newsCard.imgLink" class="card-img"
+               (click)="newsService.openNewsDetail(newsCard)">
+          <mat-card-content class="dashboard-card-content" (click)="newsService.openNewsDetail(newsCard)">
+            <div class="card-content" [innerHTML]="newsCard.summary"></div>
+          </mat-card-content>
+          <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
+            {{getNewsStateIcon(newsCard)}}
+          </mat-icon>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+  <button mat-fab [matMenuTriggerFor]="newsTypeMenu" class="add-news-btn"
+          [ngClass]="!(isHandset$ | async) ? 'add-news-btn-web' : 'add-news-btn-mobile'"
+          *ngIf="(adminService.user)">
+    <mat-icon>add</mat-icon>
+  </button>
+  <mat-menu #newsTypeMenu="matMenu">
+    <button mat-menu-item
+            (click)="newsService.addNewNews(newsTypeReport)">
+      {{translationService.get(newsTypeReportTC)}}</button>
+  </mat-menu>
+
+
+</ng-container>

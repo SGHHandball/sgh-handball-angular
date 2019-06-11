@@ -1,0 +1,7 @@
+<div>
+  <span>{{translationService.get(adminTC)}}</span>
+  <mat-slide-toggle class="toggle"
+                    [checked]="sghUser.admin"
+                    (toggleChange)="changeAdminMode()"
+  ></mat-slide-toggle>
+</div>

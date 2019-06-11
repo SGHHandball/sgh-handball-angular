@@ -1,0 +1,10 @@
+.auth-container {
+  color:white;
+}
+
+.auth-container:hover{
+  cursor: pointer;
+}
+
+
+

@@ -1,0 +1,152 @@
+<mat-card class="expanded-card">
+  <mat-card-header>
+    <mat-card-title>
+      <span *ngIf="editable">{{editNewsTC}}
+      </span>
+    </mat-card-title>
+    <button mat-icon-button color="warn" class="cancel-btn" (click)="closeNews()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+
+    <div fxLayout="column">
+
+      <div fxLayoutGap="4px">
+        <!-- Date - TeamAge -->
+        <div [fxFlex]="!(isHandset$ | async) ? 25 : 45"
+             fxLayoutAlign="center center"
+             class="news-date-container"
+             *ngIf="editable"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>{{newsDateTC}}</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="date" (change)="onChangeValue()"
+                   (dateChange)="onChangeValue()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div [fxFlex]="!(isHandset$ | async) ? 40 : 45"
+             fxLayoutAlign="center center"
+             class="news-team-age-container"
+             *ngIf="editable"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>{{newsTeamAgeTC}}</mat-label>
+            <input #teamAge type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
+                   [value]="news.teamAge ? news.teamAge : ''">
+            <mat-autocomplete #autoTeamAge="matAutocomplete">
+              <mat-option *ngFor="let option of newsTeamAges" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <h4 *ngIf="!editable">
+          {{news ? getDateWithTeamAgeAsString() : ''}}
+        </h4>
+      </div>
+
+      <div fxLayoutGap="4px" [fxLayout]="!(isHandset$ | async) || !editable ? 'row' : 'column'">
+        <!-- Teams - Score -->
+
+        <div [fxFlex]="!(isHandset$ | async) ? 40 : 100" *ngIf="editable">
+          <div [fxFlex]="!(isHandset$ | async) ? 100 : 70" fxLayoutAlign="center center" class="news-team-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{newsHomeTeam}}</mat-label>
+              <input #homeTeam type="text" matInput [matAutocomplete]="autoHomeTeam" (change)="onChangeValue()"
+                     [value]="news.homeTeam ? news.homeTeam : ''">
+              <mat-autocomplete #autoHomeTeam="matAutocomplete">
+                <mat-option *ngFor="let option of newsService.getAllClubsPlayedAgainst()" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div [fxFlex]="!(isHandset$ | async) ? 60 : 100" fxLayoutGap="4px" *ngIf="editable">
+
+          <div [fxFlex]="!(isHandset$ | async) ? 66 : 70" fxLayoutAlign="center center" class="news-team-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{newsEnemyTeam}}</mat-label>
+              <input #enemyTeam type="text" matInput [matAutocomplete]="autoEnemyTeam" (change)="onChangeValue()"
+                     [value]="news.enemyTeam ? news.enemyTeam : ''">
+              <mat-autocomplete #autoEnemyTeam="matAutocomplete">
+                <mat-option *ngFor="let option of newsService.getAllClubsPlayedAgainst()" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div [fxFlex]="!(isHandset$ | async) ? 20 : 30" fxLayoutAlign="center center" class="news-score-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{newsScoreTC}}</mat-label>
+              <input matInput #score [value]="news.score ? news.score : ''" (input)="onChangeValue()"
+                     maxlength="13">
+              <mat-hint align="end">{{score.value.length}} / 13</mat-hint>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div *ngIf="!editable">
+          <h4>{{news ? getTeamsWithScoreAsString() : ''}}</h4>
+        </div>
+
+      </div>
+
+
+      <div [fxFlex]="!(isHandset$ | async) ? 50 : 100" fxLayoutAlign="center center"
+           class="news-title-container">
+        <mat-form-field *ngIf="editable"
+                        appearance="outline"
+        >
+          <mat-label>{{newsTitleTC}}</mat-label>
+          <input #title matInput [value]="news ? news.title : ''" (input)="onChangeValue()">
+        </mat-form-field>
+        <h3 class="bold-title" *ngIf="!editable">{{news ? news.title : ''}}</h3>
+      </div>
+
+      <div>
+        <mat-form-field *ngIf="editable" appearance="outline" floatLabel="always">
+          <mat-label>{{newsBodyTC}}</mat-label>
+          <textarea #body matInput
+                    (change)="onChangeValue()"
+                    [value]="news ? news.body : ''"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="10"
+                    cdkAutosizeMaxRows="50"></textarea>
+        </mat-form-field>
+        <div *ngIf="!editable" [innerHTML]="news ? news.body : ''"></div>
+      </div>
+
+      <div floatLabel="always">
+        <mat-form-field *ngIf="editable" appearance="outline">
+          <mat-label>{{newsSummaryTC}}</mat-label>
+          <textarea #summary matInput [value]="news ? news.summary : ''"
+                    (change)="onChangeValue()"
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="3"
+                    cdkAutosizeMaxRows="10"></textarea>
+        </mat-form-field>
+        <div *ngIf="!editable" [innerHTML]="news ? news.summary : ''"></div>
+      </div>
+
+
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions align="end"
+                    *ngIf="editable">
+    <button mat-raised-button color="primary"
+            [disabled]="!changedValues"
+            (click)="saveNews()">{{saveTC}}</button>
+  </mat-card-actions>
+
+</mat-card>
+

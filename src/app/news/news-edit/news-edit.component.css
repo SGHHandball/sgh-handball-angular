@@ -1,0 +1,41 @@
+.expanded-card {
+  min-width: 120px;
+  margin: 24px;
+}
+
+.cancel-btn {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  margin: -16px;
+}
+
+mat-form-field, span, h3, p {
+  width: 100%;
+}
+
+span, p {
+  white-space: pre-wrap;
+}
+
+.news-body-container {
+  min-height: 240px;
+}
+
+.news-summary-container {
+  min-height: 120px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}

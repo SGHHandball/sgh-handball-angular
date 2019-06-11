@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    (click)="sideNavButtonListener.next()"
+    *ngIf="isHandset$ | async">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1 class="toolbar-title">{{appName}}</h1>
+  <app-auth></app-auth>
+</mat-toolbar>
+

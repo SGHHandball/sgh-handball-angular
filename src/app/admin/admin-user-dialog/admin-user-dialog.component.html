@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>{{translationService.get(addNewUserHeader)}}</h1>
+<div mat-dialog-content>
+
+  <mat-form-field class="full-width" appearance="outline">
+
+    <mat-label>{{translationService.get(emailTC)}}</mat-label>
+    <input matInput [formControl]="emailFormControl" type="email" autocomplete="new-password">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      {{translationService.get(validEmailErrorTC)}}
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      {{translationService.get(requiredEmailErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(passwordTC)}}</mat-label>
+    <input matInput [formControl]="passwordFormControl" type="password" autocomplete="new-password">
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      {{translationService.get(requiredFieldErrorTC)}}
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+      {{translationService.get(pwToShortTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(preNameTC)}}</mat-label>
+    <input matInput [formControl]="preNameFormControl" autocomplete="off">
+    <mat-error *ngIf="preNameFormControl.hasError('required')">
+      {{translationService.get(requiredFieldErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(lastNameTC)}}</mat-label>
+    <input matInput [formControl]="lastNameFormControl" autocomplete="off">
+    <mat-error *ngIf="lastNameFormControl.hasError('required')">
+      {{translationService.get(requiredFieldErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">{{translationService.get(backTc)}}</button>
+  <button mat-raised-button color="primary"
+          [disabled]="emailFormControl.hasError('email') || emailFormControl.hasError('required')
+          || preNameFormControl.hasError('required') || lastNameFormControl.hasError('required') ||
+          passwordFormControl.hasError('required') ||  passwordFormControl.hasError('minlength')"
+          (click)="saveUser()"
+  >{{translationService.get(saveTC)}}</button>
+</div>
