@@ -4,6 +4,7 @@
 
 export const environment = {
   appName: "SG Hainhausen Handball",
+  appNameShort: "SGH Handball",
   production: false,
   firebase: {
     apiKey: "AIzaSyDe_qxn_nZGA7bV_jxnrfxwXhibIbLUTCY",

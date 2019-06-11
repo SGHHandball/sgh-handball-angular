@@ -29,7 +29,7 @@ import {
   MatAutocompleteModule,
   MatPaginatorModule,
   MatExpansionModule,
-  MatSortModule, MatTableModule, MatSlideToggleModule, MatSnackBarModule
+  MatSortModule, MatTableModule, MatSlideToggleModule, MatSnackBarModule, MatDividerModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -42,13 +42,15 @@ import {NewsMoreMenuComponent} from './news/news-more-menu/news-more-menu.compon
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
 import {ImprintComponent} from './imprint/imprint.component';
-import {AuthComponent} from './app-shell/toolbar/auth/auth.component';
-import {LoginDialogComponent} from './app-shell/toolbar/auth/login-dialog/login-dialog.component';
-import {AdminComponent} from './admin/admin.component';
+import {AuthComponent} from './app-shell/auth/auth.component';
+import {LoginDialogComponent} from './app-shell/auth/login-dialog/login-dialog.component';
+import {AdminUserComponent} from './admin/admin-user.component';
 import {AdminUserDetailComponent} from './admin/admin-user-detail/admin-user-detail.component';
 import {AdminUserDialogComponent} from './admin/admin-user-dialog/admin-user-dialog.component';
 import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
-import { DefaultDialogComponent } from './abstract/default-dialog/default-dialog.component';
+import {DefaultDialogComponent} from './abstract/default-dialog/default-dialog.component';
+import { TeamsComponent } from './teams/teams.component';
+import { HallsComponent } from './halls/halls.component';
 
 // @ts-ignore
 @NgModule({
@@ -64,10 +66,12 @@ import { DefaultDialogComponent } from './abstract/default-dialog/default-dialog
     ImprintComponent,
     AuthComponent,
     LoginDialogComponent,
-    AdminComponent,
+    AdminUserComponent,
     AdminUserDetailComponent,
     AdminUserDialogComponent,
-    DefaultDialogComponent
+    DefaultDialogComponent,
+    TeamsComponent,
+    HallsComponent
   ],
   imports: [
     BrowserModule,
@@ -101,16 +105,17 @@ import { DefaultDialogComponent } from './abstract/default-dialog/default-dialog
     MatSortModule,
     MatTableModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
-    { provide: FunctionsRegionToken, useValue: 'europe-west1' },
-    { provide: FirestoreSettingsToken, useValue: {} },
+    {provide: FunctionsRegionToken, useValue: 'europe-west1'},
+    {provide: FirestoreSettingsToken, useValue: {}},
     PendingChangesGuard
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginDialogComponent, AdminUserDialogComponent,DefaultDialogComponent]
+  entryComponents: [LoginDialogComponent, AdminUserDialogComponent, DefaultDialogComponent]
 })
 export class AppModule {
 }

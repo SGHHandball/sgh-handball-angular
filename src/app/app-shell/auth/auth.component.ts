@@ -6,16 +6,17 @@ import {
   TC_AUTH_LOGIN_SUCCESS, TC_AUTH_LOGOUT_ERROR, TC_AUTH_LOGOUT_SUCCESS,
   TC_LOGIN,
   TC_LOGOUT,
-  TC_ROUTE_IMPRINT,
+  TC_ROUTE_IMPRINT, TC_USERS,
   TranslationService
-} from "../../../translation.service";
-import {AbstractComponent} from "../../../abstract/abstract.component";
+} from "../../translation.service";
+import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {Credentials, LoginDialogComponent} from "./login-dialog/login-dialog.component";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {auth, User} from 'firebase/app';
-import {AdminService} from "../../../admin/admin.service";
+import {AdminService} from "../../admin/admin.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-auth',
@@ -26,7 +27,7 @@ export class AuthComponent extends AbstractComponent {
 
   loginTC = TC_LOGIN;
   logoutTC = TC_LOGOUT;
-  adminTC = TC_ADMIN;
+  usersTC = TC_USERS;
 
   constructor(breakpointObserver: BreakpointObserver,
               private router: Router,
@@ -44,7 +45,7 @@ export class AuthComponent extends AbstractComponent {
   }
 
   routeToAdmin() {
-    this.router.navigate([TC_ADMIN])
+    this.router.navigate([TC_USERS])
   }
 
   handleCLick() {
@@ -82,7 +83,7 @@ export class AuthComponent extends AbstractComponent {
       .finally(() => {
         this.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_SUCCESS));
       }).catch((error) => {
-      console.error(error);
+      if (!environment.production) console.error(error);
       this.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_ERROR));
     });
   }

@@ -1,9 +1,15 @@
 {
   "best-club-on-earth": "SG Hainhausen",
 
+  "club": "Verein",
+  "other": "Anderes",
+  "hallenverzeichnis": "Hallenverzeichnis",
+
   "aktuelles": "Aktuelles",
+  "mannschaften": "Mannschaften",
   "impressum": "Impressum",
   "admin": "Admin",
+  "users": "Benutzer",
   "bearbeiten": "Bearbeiten",
   "detail": "Detail",
 

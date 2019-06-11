@@ -3,7 +3,15 @@
 }
 
 .sidenav, .logo {
-  width: 200px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo{
+  margin: auto;
 }
 
 .logo:hover {
@@ -12,7 +20,8 @@
 
 .logo-toolbar {
   padding: 0;
-  height: fit-content;
+  margin: auto;
+  height: 88px;
 }
 
 .sidenav .mat-toolbar {
@@ -23,6 +32,10 @@
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.mat-list-item-background{
+  background-color: lightgray;
 }
 
 

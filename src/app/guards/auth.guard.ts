@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(): boolean {
-    if (this.adminService.user && this.adminService.sghUser.admin) {
+    if (this.adminService.isUserAdmin()) {
       return true;
     }
     // Navigate to the login page with extras

@@ -1,11 +1,11 @@
 <button mat-icon-button *ngIf="(afAuth.user|async) ? true : isAuthBtnVisible()" class="auth-container"
         [matMenuTriggerFor]="authMenu">
-  <mat-icon>account_circle</mat-icon>
+  <mat-icon>more_vert</mat-icon>
 </button>
 
 <mat-menu #authMenu="matMenu">
   <button mat-menu-item *ngIf="adminService.isUserAdmin()" (click)="routeToAdmin()">
-    {{translationService.get(adminTC)}}
+    {{translationService.get(usersTC)}}
   </button>
   <button mat-menu-item (click)="handleCLick()">
     {{(afAuth.user|async) ?

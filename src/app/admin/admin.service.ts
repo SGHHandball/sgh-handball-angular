@@ -3,12 +3,10 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {User} from "firebase";
 import {SghUser} from "./sgh-user";
 import {AngularFirestore} from "@angular/fire/firestore";
-import {NAVIGATION_ITEMS} from "../app-shell/sidenav/navigation-item";
 import {Observable, of} from "rxjs";
-import {Credentials} from "../app-shell/toolbar/auth/login-dialog/login-dialog.component";
+import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {AngularFireFunctions} from "@angular/fire/functions";
 import {map} from "rxjs/operators";
-import {News} from "../news/news";
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +16,12 @@ export class AdminService {
   user: User;
   sghUser: SghUser;
 
-
-  navigationItems = NAVIGATION_ITEMS;
-
   addUserFunction: any;
 
   constructor(private  afAuth: AngularFireAuth,
               private db: AngularFirestore,
               private afFunctions: AngularFireFunctions) {
-    this.addUserFunction = this.afFunctions.httpsCallable('addUser');
+    this.addUserFunction = this.afFunctions.httpsCallable(FB_FUNCTIONS_ADD_USER);
     afAuth.user.subscribe(user => {
       this.user = user;
       if (user) {
@@ -35,7 +30,6 @@ export class AdminService {
         })
       } else {
         this.sghUser = undefined;
-        this.navigationItems = NAVIGATION_ITEMS;
       }
     })
   }
@@ -84,3 +78,4 @@ export class AdminService {
 }
 
 export const SGH_USERS = 'user';
+export const FB_FUNCTIONS_ADD_USER = 'addUser';

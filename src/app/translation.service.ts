@@ -25,7 +25,12 @@ export class TranslationService {
 
 export const TC_BEST_CLUB_ON_EARTH = 'best-club-on-earth';
 
+export const TC_ROUTE_HEADER_CLUB = 'club';
+export const TC_ROUTE_HEADER_OTHER = 'other';
+
 export const TC_ROUTE_NEWS = 'aktuelles';
+export const TC_ROUTE_TEAMS = 'mannschaften';
+export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
 export const TC_ROUTE_ADMIN = 'admin';
 
@@ -33,6 +38,7 @@ export const TC_NEWS_PATH_EDIT = 'bearbeiten';
 export const TC_NEWS_PATH_DETAIL = 'detail';
 
 export const TC_ADMIN = 'admin';
+export const TC_USERS = 'users';
 export const TC_CANCEL = 'cancel';
 export const TC_OK = 'ok';
 export const TC_BACK = 'back';

@@ -11,7 +11,7 @@ import {
   TC_ADMIN_SGH_USER_PRE_NAME, TC_GENERAL_ERROR,
   TranslationService
 } from "../translation.service";
-import {Credentials, LoginDialogComponent} from "../app-shell/toolbar/auth/login-dialog/login-dialog.component";
+import {Credentials, LoginDialogComponent} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.component";
 
 /**
@@ -19,8 +19,8 @@ import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.co
  */
 @Component({
   selector: 'app-admin',
-  styleUrls: ['admin.component.css'],
-  templateUrl: 'admin.component.html',
+  styleUrls: ['admin-user.component.css'],
+  templateUrl: 'admin-user.component.html',
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
@@ -29,7 +29,7 @@ import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.co
     ]),
   ],
 })
-export class AdminComponent extends AbstractComponent implements AfterViewInit {
+export class AdminUserComponent extends AbstractComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

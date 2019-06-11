@@ -1,9 +1,9 @@
 export class SghUser {
-  id:string;
-  admin: boolean;
-  teams: string[];
-  preName: string;
-  lastName: string;
+  id: string = '';
+  admin: boolean = false;
+  teams: string[] = [];
+  preName: string = '';
+  lastName: string = '';
 
 
   constructor(preName: string, lastName: string) {

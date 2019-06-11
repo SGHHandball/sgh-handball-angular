@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {AbstractComponent} from "../../abstract/abstract.component";
 
@@ -9,10 +9,11 @@ import {AbstractComponent} from "../../abstract/abstract.component";
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent extends AbstractComponent {
-
+  @Input() sideNavButtonIcon: string = 'menu';
   @Output() sideNavButtonListener = new EventEmitter();
 
   appName = environment.appName;
+  appNameShort = environment.appNameShort;
 
 
 }

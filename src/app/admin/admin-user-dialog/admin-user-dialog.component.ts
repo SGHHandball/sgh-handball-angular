@@ -15,7 +15,7 @@ import {
   TranslationService
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
-import {Credentials} from "../../app-shell/toolbar/auth/login-dialog/login-dialog.component";
+import {Credentials} from "../../app-shell/auth/login-dialog/login-dialog.component";
 import {AdminService} from "../admin.service";
 import {SghUser} from "../sgh-user";
 import {MatDialogRef, MatSnackBar} from "@angular/material";

@@ -4,10 +4,9 @@ import {
   TC_BACK,
   TC_EMAIL, TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED,
   TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL,
-  TC_LOGIN,
-  TC_PASSWORD,
+  TC_LOGIN, TC_PASSWORD,
   TranslationService
-} from "../../../../translation.service";
+} from "../../../translation.service";
 
 @Component({
   selector: 'app-login-dialog',
