@@ -20,14 +20,17 @@ import {AngularFireAuth} from "@angular/fire/auth";
 import {User} from "firebase";
 import {Observable, combineLatest, of} from "rxjs";
 import {map, switchMap} from "rxjs/operators";
+import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
 
-  news: Observable<News[]>;
+  news: News[];
   newsLoaded = false;
+
+  clubs: Club[];
 
   expandedNews: News;
   expandedNewsEdit: boolean = false;
@@ -46,43 +49,52 @@ export class NewsService {
       this.user = user;
       if (user) {
         this.authCreatorNewsRef = this.db.collection<News>(DB_COLLECTION_NEWS,
-          ref => ref.where('creator', '==', user.uid));
+          ref => ref
+            .where('creator', '==', user.uid)
+            .where('checked', '==', false));
       } else {
         this.authCreatorNewsRef = undefined;
       }
       this.loadAllNews();
+    });
+    this.db.collection<Club>(CLUBS_COLLECTION_NAME).valueChanges().subscribe(clubs => {
+      this.clubs = clubs;
     });
   }
 
 
   loadAllNews() {
     if (this.authCreatorNewsRef) {
-      this.news = this.getCreatorNews();
+      this.initCreatorNews();
     } else {
-      this.news = this.getNormalNews();
+      this.initNormalNews();
     }
     this.newsLoaded = true;
   }
 
-  getNormalNews(): Observable<News[]> {
-    return this.unAuthNewsRef.snapshotChanges().pipe(
+  initNormalNews() {
+    this.unAuthNewsRef.snapshotChanges().pipe(
       map(actions =>
         actions.map(action => this.addIdToNews(action))
       )
-    );
+    ).subscribe(news => {
+      this.news = news;
+    });
   }
 
-  getCreatorNews(): Observable<News[]> {
-    return combineLatest(this.unAuthNewsRef.snapshotChanges(),
+  initCreatorNews() {
+    combineLatest(this.unAuthNewsRef.snapshotChanges(),
       this.authCreatorNewsRef.snapshotChanges()).pipe(
       switchMap(actions => {
-        const [unAuthNews, authCreatorNew] = actions;
-        const combined = unAuthNews.concat(authCreatorNew);
-        return [combined.map(action =>
-          this.addIdToNews(action)
-        )]
+        const [unAuthNews, authCreatorNews] = actions;
+        const combined = unAuthNews.concat(authCreatorNews);
+        return [
+          combined.map(action => this.addIdToNews(action))
+        ]
       })
-    );
+    ).subscribe(news => {
+      this.news = news;
+    });
   }
 
   addIdToNews(action: DocumentChangeAction<News>): News {
@@ -90,13 +102,6 @@ export class NewsService {
     data.id = action.payload.doc.id;
     return data;
   }
-
-  getAllClubsPlayedAgainst(): string[] {
-    const clubs = [];
-    clubs.push(this.translationService.get(TC_BEST_CLUB_ON_EARTH));
-    return clubs;
-  }
-
 
   addNewNews(newsType: NewsType) {
     if (this.user) {
@@ -121,9 +126,15 @@ export class NewsService {
     return this.db.collection(DB_COLLECTION_NEWS).doc(news.id).delete();
   }
 
-  sendNews(news: News) {
+  updateNewsSendToTrue(news: News) {
     return this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
-      send:true
+      send: true
+    });
+  }
+
+  updateNewsCheckToTrue(news: News) {
+    return this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
+      checked: true
     });
   }
 
@@ -167,7 +178,24 @@ export class NewsService {
   changeExpandedNews(toExpandNews: News | undefined) {
     this.expandedNews = toExpandNews;
   }
+
+  saveNewClubToCollection(clubName: string) {
+    if (!this.isClubListContainingClubName(clubName)) {
+      this.db.collection<Club>(CLUBS_COLLECTION_NAME).add(JSON.parse(JSON.stringify(new Club(clubName))));
+    }
+  }
+
+  isClubListContainingClubName(clubName: string): boolean {
+    let containing = false;
+    this.clubs.forEach((club: Club) => {
+      if (club.name === clubName) {
+        containing = true;
+      }
+    });
+    return containing;
+  }
 }
+
 
 export enum NewsType {
   report

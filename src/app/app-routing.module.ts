@@ -5,7 +5,7 @@ import {NewsComponent} from "./news/news.component";
 import {NewsEditComponent} from "./news/news-edit/news-edit.component";
 import {
   TC_NEWS_PATH_DETAIL,
-  TC_NEWS_PATH_EDIT, TC_ROUTE_ADMIN, TC_ROUTE_HALLS,
+  TC_NEWS_PATH_EDIT, TC_ROUTE_HALLS,
   TC_ROUTE_IMPRINT,
   TC_ROUTE_NEWS, TC_ROUTE_TEAMS, TC_USERS
 } from "./translation.service";

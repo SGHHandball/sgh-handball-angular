@@ -32,7 +32,6 @@ export const TC_ROUTE_NEWS = 'aktuelles';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
-export const TC_ROUTE_ADMIN = 'admin';
 
 export const TC_NEWS_PATH_EDIT = 'bearbeiten';
 export const TC_NEWS_PATH_DETAIL = 'detail';
@@ -73,9 +72,12 @@ export const TC_NEWS_DELETE_HEADER = 'news-delete-header';
 export const TC_NEWS_DELETE_MESSAGE = 'news-delete-message';
 export const TC_NEWS_SEND_HEADER = 'news-send-header';
 export const TC_NEWS_SEND_MESSAGE = 'news-send-message';
+export const TC_NEWS_CHECKED_HEADER = 'news-checked-header';
+export const TC_NEWS_CHECKED_MESSAGE = 'news-checked-message';
 
 export const TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL = 'imprint-login-dialog-error-invalid-email';
 export const TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED = 'imprint-login-dialog-error-email-required';
+export const TC_IMPRINT_LOGIN_DIALOG_ERROR_PASSWORD_REQUIRED = 'imprint-login-dialog-error-password-required';
 
 
 export const TC_ADMIN_SGH_USER_PRE_NAME = 'preName';

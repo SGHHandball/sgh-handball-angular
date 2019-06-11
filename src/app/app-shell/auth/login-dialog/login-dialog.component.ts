@@ -3,7 +3,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {
   TC_BACK,
   TC_EMAIL, TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED,
-  TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL,
+  TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL, TC_IMPRINT_LOGIN_DIALOG_ERROR_PASSWORD_REQUIRED,
   TC_LOGIN, TC_PASSWORD,
   TranslationService
 } from "../../../translation.service";
@@ -20,6 +20,7 @@ export class LoginDialogComponent {
   emailTC = TC_EMAIL;
   validEmailErrorTC = TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL;
   requiredEmailErrorTC = TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED;
+  requiredPasswordErrorTC = TC_IMPRINT_LOGIN_DIALOG_ERROR_PASSWORD_REQUIRED;
   passwordTC = TC_PASSWORD;
 
 
@@ -28,7 +29,9 @@ export class LoginDialogComponent {
     Validators.email,
   ]);
 
-  passwordFormControl = new FormControl();
+  passwordFormControl = new FormControl('', [
+    Validators.required,
+  ]);
 
   constructor(public translationService: TranslationService) {
   }

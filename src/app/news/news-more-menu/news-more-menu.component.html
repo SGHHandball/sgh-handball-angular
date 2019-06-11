@@ -8,7 +8,10 @@
   <button mat-icon-button (click)="deleteClickListener.next()">
     <mat-icon>delete</mat-icon>
   </button>
-  <button mat-icon-button (click)="sendClickListener.next()">
+  <button mat-icon-button (click)="sendClickListener.next()" *ngIf="!sendInvisible">
     <mat-icon>send</mat-icon>
+  </button>
+  <button mat-icon-button (click)="checkClickListener.next()" *ngIf="sendInvisible && adminService.isUserAdmin() && !checkedInvisible">
+    <mat-icon>check</mat-icon>
   </button>
 </mat-menu>

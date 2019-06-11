@@ -149,9 +149,15 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     this.news.teamAge = this.teamAge.nativeElement.value;
     this.news.enemyTeam = this.enemyTeam.nativeElement.value;
     this.news.homeTeam = this.homeTeam.nativeElement.value;
+    this.saveNewClub(this.enemyTeam.nativeElement.value);
+    this.saveNewClub(this.homeTeam.nativeElement.value);
     this.newsService.saveNewsToDataBase(this.news, () => {
       this.changedValues = false;
     });
+  }
+
+  saveNewClub(club: string) {
+    this.newsService.saveNewClubToCollection(club);
   }
 
 

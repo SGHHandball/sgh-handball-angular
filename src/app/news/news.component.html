@@ -3,7 +3,7 @@
   <div class="grid-container">
     <h1 class="mat-h1">{{translationService.get(newsHeaderTC)}}</h1>
     <mat-grid-list cols="2" rowHeight="350px">
-      <mat-grid-tile *ngFor="let newsCard of newsService.news | async" [colspan]="(isHandset$ | async) ? 2 : 1"
+      <mat-grid-tile *ngFor="let newsCard of newsService.news" [colspan]="(isHandset$ | async) ? 2 : 1"
                      [rowspan]="1">
         <mat-card class="dashboard-card">
           <mat-card-header>
@@ -12,9 +12,12 @@
               <app-news-more-menu
                 *ngIf="isEditMenuVisible(newsCard)"
                 class="more-button"
+                [sendInvisible]="newsCard.send"
+                [checkedInvisible]="newsCard.checked"
                 (editClickListener)="newsService.openNewsEdit(newsCard)"
                 (deleteClickListener)="openDeleteNewsDialog(newsCard)"
                 (sendClickListener)="openSendNewsDialog(newsCard)"
+                (checkClickListener)="openCheckNewsDialog(newsCard)"
               ></app-news-more-menu>
             </mat-card-title>
             <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge"
@@ -31,7 +34,7 @@
           <img mat-card-image [src]="newsCard.imgLink" *ngIf="newsCard.imgLink" class="card-img"
                (click)="newsService.openNewsDetail(newsCard)">
           <mat-card-content class="dashboard-card-content" (click)="newsService.openNewsDetail(newsCard)">
-            <div class="card-content" [innerHTML]="newsCard.summary"></div>
+            <p class="card-content">{{newsCard.summary}}</p>
           </mat-card-content>
           <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
             {{getNewsStateIcon(newsCard)}}

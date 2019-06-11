@@ -1,3 +1,4 @@
+<div class="div-padding">
 <mat-card class="expanded-card">
   <mat-card-header>
     <mat-card-title>
@@ -60,8 +61,8 @@
               <input #homeTeam type="text" matInput [matAutocomplete]="autoHomeTeam" (change)="onChangeValue()"
                      [value]="news.homeTeam ? news.homeTeam : ''">
               <mat-autocomplete #autoHomeTeam="matAutocomplete">
-                <mat-option *ngFor="let option of newsService.getAllClubsPlayedAgainst()" [value]="option">
-                  {{option}}
+                <mat-option *ngFor="let club of newsService.clubs" [value]="club.name">
+                  {{club.name}}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
@@ -76,8 +77,8 @@
               <input #enemyTeam type="text" matInput [matAutocomplete]="autoEnemyTeam" (change)="onChangeValue()"
                      [value]="news.enemyTeam ? news.enemyTeam : ''">
               <mat-autocomplete #autoEnemyTeam="matAutocomplete">
-                <mat-option *ngFor="let option of newsService.getAllClubsPlayedAgainst()" [value]="option">
-                  {{option}}
+                <mat-option *ngFor="let club of newsService.clubs" [value]="club.name">
+                  {{club.name}}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
@@ -97,19 +98,19 @@
         <div *ngIf="!editable">
           <h4>{{news ? getTeamsWithScoreAsString() : ''}}</h4>
         </div>
-
       </div>
 
 
       <div [fxFlex]="!(isHandset$ | async) ? 50 : 100" fxLayoutAlign="center center"
            class="news-title-container">
+
         <mat-form-field *ngIf="editable"
                         appearance="outline"
         >
           <mat-label>{{newsTitleTC}}</mat-label>
           <input #title matInput [value]="news ? news.title : ''" (input)="onChangeValue()">
         </mat-form-field>
-        <h3 class="bold-title" *ngIf="!editable">{{news ? news.title : ''}}</h3>
+        <h3 *ngIf="!editable">{{news ? news.title : ''}}</h3>
       </div>
 
       <div>
@@ -122,7 +123,7 @@
                     cdkAutosizeMinRows="10"
                     cdkAutosizeMaxRows="50"></textarea>
         </mat-form-field>
-        <div *ngIf="!editable" [innerHTML]="news ? news.body : ''"></div>
+        <p *ngIf="!editable">{{news ? news.body : ''}}</p>
       </div>
 
       <div floatLabel="always">
@@ -134,7 +135,8 @@
                     cdkAutosizeMinRows="3"
                     cdkAutosizeMaxRows="10"></textarea>
         </mat-form-field>
-        <div *ngIf="!editable" [innerHTML]="news ? news.summary : ''"></div>
+        <mat-divider *ngIf="!editable"></mat-divider>
+        <p *ngIf="!editable">{{news ? news.summary : ''}}</p>
       </div>
 
 
@@ -149,4 +151,4 @@
   </mat-card-actions>
 
 </mat-card>
-
+</div>

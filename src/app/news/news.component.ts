@@ -3,6 +3,8 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {AbstractComponent} from "../abstract/abstract.component";
 import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "./news";
 import {
+  TC_NEWS_CHECKED_HEADER,
+  TC_NEWS_CHECKED_MESSAGE,
   TC_NEWS_DELETE_HEADER, TC_NEWS_DELETE_MESSAGE,
   TC_NEWS_HEADER, TC_NEWS_SEND_HEADER, TC_NEWS_SEND_MESSAGE,
   TC_NEWS_TYPE_REPORT,
@@ -59,7 +61,7 @@ export class NewsComponent extends AbstractComponent {
 
   getNewsStateIcon(news: News): string {
     if (this.hasRightsToEdit(news))
-      if (news.send) {
+      if (news.send && !news.checked) {
         return 'done';
       } else if (news.checked) {
         return 'done_all';
@@ -98,7 +100,26 @@ export class NewsComponent extends AbstractComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.newsService.sendNews(news).then(() => {
+        this.newsService.updateNewsSendToTrue(news).then(() => {
+          // TODO: make snackbar
+        }).catch(error => {
+          console.log(error);
+          // TODO: make snackbar
+        });
+      }
+    });
+  }
+
+  openCheckNewsDialog(news: News) {
+    const dialogRef = this.dialog.open(DefaultDialogComponent, {
+        width: this.dialogWidth,
+        data: new DialogData(TC_NEWS_CHECKED_HEADER, TC_NEWS_CHECKED_MESSAGE)
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.newsService.updateNewsCheckToTrue(news).then(() => {
           // TODO: make snackbar
         }).catch(error => {
           console.log(error);
