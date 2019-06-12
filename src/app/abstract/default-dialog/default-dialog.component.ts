@@ -1,11 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject,} from '@angular/core';
 import {
   TC_CANCEL,
-  TC_NEWS_UNSAVED_DATA_WARNING,
-  TC_NEWS_UNSAVED_DATA_WARNING_HEADER,
   TC_OK, TranslationService
 } from "../../translation.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA} from "@angular/material";
 
 @Component({
   selector: 'app-default-dialog',

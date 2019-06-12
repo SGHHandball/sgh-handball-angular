@@ -12,26 +12,29 @@
     </mat-toolbar>
     <mat-divider></mat-divider>
     <mat-nav-list>
-      <h1 mat-subheader>{{translationService.get(navItemsHeaderClubTC)}}</h1>
-      <mat-list-item *ngFor="let navItem of navItemsClub"
-                     routerLink="{{ navItem.routerLink}}"
-                     (click)="closeSideNavOnHandheldMode(drawer)"
-                     [ngClass]="isRouterLinkActive(navItem.routerLink) ? 'mat-list-item-background' : ''"
-      >
-        <mat-icon mat-list-icon *ngIf="navItem.routerIcon">{{navItem.routerIcon}}</mat-icon>
-        <h4 mat-line>{{translationService.get(navItem.routerName)}}</h4>
-      </mat-list-item>
+      <app-sidenav-list-item
+      headerTitle="{{translationService.get(navItemsHeaderClubTC)}}"
+      [navItems]="navItemsClub"
+      (clickNavigationListener)="closeSideNavOnHandheldMode(drawer)"
+      ></app-sidenav-list-item>
 
       <mat-divider></mat-divider>
-      <h1 mat-subheader>{{translationService.get(navItemsHeaderOtherTC)}}</h1>
-      <mat-list-item *ngFor="let navItem of navItemsOther"
-                     routerLink="{{ navItem.routerLink}}"
-                     (click)="closeSideNavOnHandheldMode(drawer)"
-                     [ngClass]="isRouterLinkActive(navItem.routerLink) ? 'mat-list-item-background' : ''"
-      >
-        <mat-icon mat-list-icon *ngIf="navItem.routerIcon">{{navItem.routerIcon}}</mat-icon>
-        <h4 mat-line>{{translationService.get(navItem.routerName)}}</h4>
-      </mat-list-item>
+
+      <app-sidenav-list-item
+        headerTitle="{{translationService.get(navItemsHeaderInfoTC)}}"
+        [navItems]="navItemsInfo"
+        (clickNavigationListener)="closeSideNavOnHandheldMode(drawer)"
+      ></app-sidenav-list-item>
+
+
+      <mat-divider></mat-divider>
+
+      <app-sidenav-list-item
+        headerTitle="{{translationService.get(navItemsHeaderOtherTC)}}"
+        [navItems]="navItemsOther"
+        (clickNavigationListener)="closeSideNavOnHandheldMode(drawer)"
+      ></app-sidenav-list-item>
+
     </mat-nav-list>
 
   </mat-sidenav>

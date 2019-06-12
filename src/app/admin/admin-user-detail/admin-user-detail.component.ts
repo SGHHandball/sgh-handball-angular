@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SghUser} from "../sgh-user";
 import {TC_ADMIN, TranslationService} from "../../translation.service";
 

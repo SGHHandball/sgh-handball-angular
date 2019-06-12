@@ -1,0 +1,9 @@
+<h1 mat-subheader>{{headerTitle}}</h1>
+<mat-list-item *ngFor="let navItem of navItems"
+               routerLink="{{ navItem.routerLink}}"
+               (click)="clickNavigationListener.next()"
+               [ngClass]="isRouterLinkActive(navItem.routerLink) ? 'mat-list-item-background' : ''"
+>
+  <mat-icon mat-list-icon *ngIf="navItem.routerIcon">{{navItem.routerIcon}}</mat-icon>
+  <h4 mat-line>{{translationService.get(navItem.routerName)}}</h4>
+</mat-list-item>

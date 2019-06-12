@@ -4,9 +4,28 @@ table {
 
 .mat-form-field {
   font-size: 14px;
-  width: 100%;
 }
 
 td, th {
   width: 25%;
+}
+.filter {
+  padding: 16px;
+}
+
+.mat-cell, .mat-header-cell{
+  padding: 4px;
+}
+
+.add-hall-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+}
+
+.add-hall-btn-web {
+  right: 24px;
+}
+
+.add-hall-btn-mobile {
 }

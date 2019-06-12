@@ -32,7 +32,7 @@ import {
   TC_SAVE,
   TranslationService
 } from "../../translation.service";
-import {MatDatepickerInputEvent, MatDialog, MatInput} from "@angular/material";
+import {MatDatepickerInputEvent, MatDialog, MatInput, MatPaginator} from "@angular/material";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
@@ -46,13 +46,13 @@ import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/
 })
 export class NewsEditComponent extends AbstractComponent implements OnInit, ComponentCanDeactivate {
 
-  @ViewChild('title') title: ElementRef;
-  @ViewChild('score') score: ElementRef;
-  @ViewChild('body') body: ElementRef;
-  @ViewChild('summary') summary: ElementRef;
-  @ViewChild('teamAge') teamAge: ElementRef;
-  @ViewChild('enemyTeam') enemyTeam: ElementRef;
-  @ViewChild('homeTeam') homeTeam: ElementRef;
+  @ViewChild('title', {static: true}) title: ElementRef;
+  @ViewChild('score', {static: true}) score: ElementRef;
+  @ViewChild('body', {static: true}) body: ElementRef;
+  @ViewChild('summary', {static: true}) summary: ElementRef;
+  @ViewChild('teamAge', {static: true}) teamAge: ElementRef;
+  @ViewChild('enemyTeam', {static: true}) enemyTeam: ElementRef;
+  @ViewChild('homeTeam', {static: true}) homeTeam: ElementRef;
 
   news: News;
   editable = false;

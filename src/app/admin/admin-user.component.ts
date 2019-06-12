@@ -8,10 +8,9 @@ import {AdminService} from "./admin.service";
 import {
   TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS,
   TC_ADMIN_SGH_USER_LAST_NAME,
-  TC_ADMIN_SGH_USER_PRE_NAME, TC_GENERAL_ERROR,
+  TC_ADMIN_SGH_USER_PRE_NAME, TC_FILTER, TC_GENERAL_ERROR,
   TranslationService
 } from "../translation.service";
-import {Credentials, LoginDialogComponent} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.component";
 
 /**
@@ -30,14 +29,16 @@ import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.co
   ],
 })
 export class AdminUserComponent extends AbstractComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   dataSource: MatTableDataSource<SghUser> = new MatTableDataSource<SghUser>();
   columnsToDisplay = [TC_ADMIN_SGH_USER_PRE_NAME, TC_ADMIN_SGH_USER_LAST_NAME];
   expandedElement: SghUser | null;
 
   dataLoaded = false;
+
+  filterTC = TC_FILTER;
 
   constructor(public breakpointObserver: BreakpointObserver,
               private adminService: AdminService,
@@ -67,7 +68,7 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
   }
 
   openAddUserDialog() {
-    const dialogRef = this.dialog.open(AdminUserDialogComponent, {
+    this.dialog.open(AdminUserDialogComponent, {
         width: this.dialogWidth
       }
     );

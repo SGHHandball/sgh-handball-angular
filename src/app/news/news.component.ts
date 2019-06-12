@@ -5,15 +5,16 @@ import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, Ne
 import {
   TC_NEWS_CHECKED_HEADER,
   TC_NEWS_CHECKED_MESSAGE,
-  TC_NEWS_DELETE_HEADER, TC_NEWS_DELETE_MESSAGE,
+  TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
   TC_NEWS_HEADER, TC_NEWS_SEND_HEADER, TC_NEWS_SEND_MESSAGE,
   TC_NEWS_TYPE_REPORT,
-  TranslationService
+  TranslationService, TC_GENERAL_DELETE_SUCCESS, TC_GENERAL_DELETE_FAIL, TC_GENERAL_EDIT_SUCCESS, TC_GENERAL_EDIT_FAIL
 } from "../translation.service";
 import {NewsService, NewsType} from "./news.service";
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
-import {MatDialog} from "@angular/material";
+import {MatDialog, MatSnackBar} from "@angular/material";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-news',
@@ -31,7 +32,8 @@ export class NewsComponent extends AbstractComponent {
               public newsService: NewsService,
               public translationService: TranslationService,
               public adminService: AdminService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
     super(breakpointObserver);
   }
 
@@ -74,17 +76,17 @@ export class NewsComponent extends AbstractComponent {
   openDeleteNewsDialog(news: News) {
     const dialogRef = this.dialog.open(DefaultDialogComponent, {
         width: this.dialogWidth,
-        data: new DialogData(TC_NEWS_DELETE_HEADER, TC_NEWS_DELETE_MESSAGE)
+        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
       }
     );
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.newsService.deleteNews(news).then(() => {
-          // TODO: make snackbar
+          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
         }).catch(error => {
-          console.log(error);
-          // TODO: make snackbar
+          if (!environment.production) console.log(error);
+          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))
         });
       }
     });
@@ -101,10 +103,10 @@ export class NewsComponent extends AbstractComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.newsService.updateNewsSendToTrue(news).then(() => {
-          // TODO: make snackbar
+          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
         }).catch(error => {
-          console.log(error);
-          // TODO: make snackbar
+          if (!environment.production) console.log(error);
+          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL))
         });
       }
     });
@@ -120,13 +122,19 @@ export class NewsComponent extends AbstractComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.newsService.updateNewsCheckToTrue(news).then(() => {
-          // TODO: make snackbar
+          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
         }).catch(error => {
-          console.log(error);
-          // TODO: make snackbar
+          if (!environment.production) console.log(error);
+          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL))
         });
       }
     });
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000
+    })
   }
 
 }

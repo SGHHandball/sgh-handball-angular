@@ -5,9 +5,9 @@ import {NewsComponent} from "./news/news.component";
 import {NewsEditComponent} from "./news/news-edit/news-edit.component";
 import {
   TC_NEWS_PATH_DETAIL,
-  TC_NEWS_PATH_EDIT, TC_ROUTE_HALLS,
+  TC_NEWS_PATH_EDIT, TC_ROUTE_DOCUMENTS, TC_ROUTE_EVENTS, TC_ROUTE_HALLS,
   TC_ROUTE_IMPRINT,
-  TC_ROUTE_NEWS, TC_ROUTE_TEAMS, TC_USERS
+  TC_ROUTE_NEWS, TC_ROUTE_TEAMS, TC_ROUTE_TRAINING, TC_USERS
 } from "./translation.service";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
 import {ImprintComponent} from "./imprint/imprint.component";
@@ -21,6 +21,9 @@ export const routes = [
   {path: TC_ROUTE_NEWS, component: NewsComponent},
   {path: TC_ROUTE_TEAMS, component: TeamsComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},
+  {path: TC_ROUTE_EVENTS, component: ImprintComponent},
+  {path: TC_ROUTE_TRAINING, component: ImprintComponent},
+  {path: TC_ROUTE_DOCUMENTS, component: ImprintComponent},
   {
     path: TC_ROUTE_NEWS + '/' + TC_NEWS_PATH_EDIT,
     component: NewsEditComponent,

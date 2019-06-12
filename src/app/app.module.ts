@@ -51,6 +51,8 @@ import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/fu
 import {DefaultDialogComponent} from './abstract/default-dialog/default-dialog.component';
 import { TeamsComponent } from './teams/teams.component';
 import { HallsComponent } from './halls/halls.component';
+import { SidenavListItemComponent } from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
+import { HallsEditDialogComponent } from './halls/halls-edit-dialog/halls-edit-dialog.component';
 
 // @ts-ignore
 @NgModule({
@@ -71,7 +73,9 @@ import { HallsComponent } from './halls/halls.component';
     AdminUserDialogComponent,
     DefaultDialogComponent,
     TeamsComponent,
-    HallsComponent
+    HallsComponent,
+    SidenavListItemComponent,
+    HallsEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,7 @@ import { HallsComponent } from './halls/halls.component';
     PendingChangesGuard
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginDialogComponent, AdminUserDialogComponent, DefaultDialogComponent]
+  entryComponents: [LoginDialogComponent, AdminUserDialogComponent, DefaultDialogComponent, HallsEditDialogComponent]
 })
 export class AppModule {
 }

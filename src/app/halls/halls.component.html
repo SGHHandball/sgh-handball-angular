@@ -1,38 +1,56 @@
-<mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+<mat-form-field class="filter">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{translationService.get(filterTC)}}">
 </mat-form-field>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    <ng-container *ngFor="let hallValue of
+    !(isHandset$|async) ? (adminService.isUserAdmin()
+    ? displayedColumnsAdmin :displayedColumns) :
+    (adminService.isUserAdmin() ? displayedColumnsMobileAdmin : displayedColumnsMobile)"
+                  matColumnDef="{{hallValue}}">
+      <ng-container *ngIf="hallValue === editConst">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="openHallsEditDialog(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="hallValue === deleteConst">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="deleteHall(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="hallValue !== editConst && hallValue !== deleteConst">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header
+            class="mat-header-cell"> {{translationService.get(hallValue)}}</th>
+        <td mat-cell *matCellDef="let row" class="mat-cell"> {{row[hallValue]}} </td>
+      </ng-container>
     </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="progress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-      <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-    </ng-container>
-
-    <!-- Color Column -->
-    <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <tr mat-header-row *matHeaderRowDef="
+    !(isHandset$|async) ? (adminService.isUserAdmin()
+    ? displayedColumnsAdmin :displayedColumns) :
+    (adminService.isUserAdmin() ? displayedColumnsMobileAdmin : displayedColumnsMobile)"></tr>
+    <tr mat-row *matRowDef="let row; columns:
+    !(isHandset$|async) ? (adminService.isUserAdmin()
+    ? displayedColumnsAdmin :displayedColumns) :
+    (adminService.isUserAdmin() ? displayedColumnsMobileAdmin : displayedColumnsMobile)">
     </tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
+
+<button mat-fab class="add-hall-btn"
+        [ngClass]="!(isHandset$ | async) ? 'add-hall-btn-web' : 'add-hall-btn-mobile'"
+        *ngIf="(adminService.user)"
+        (click)="openHallsEditDialog(undefined)"
+>
+  <mat-icon>add</mat-icon>
+</button>

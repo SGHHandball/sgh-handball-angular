@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>{{translationService.get(editHallHeader)}}</h1>
+<div mat-dialog-content>
+
+  <mat-form-field class="full-width" appearance="outline">
+
+    <mat-label>{{translationService.get(hallIdTC)}}</mat-label>
+    <input matInput [formControl]="hallIdFormControl" type="number">
+    <mat-error *ngIf="hallIdFormControl.hasError('required')">
+      {{translationService.get(requiredErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(hallNameTC)}}</mat-label>
+    <input matInput [formControl]="hallNameFormControl">
+    <mat-error *ngIf="hallNameFormControl.hasError('required')">
+      {{translationService.get(requiredErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(hallStreetTC)}}</mat-label>
+    <input matInput [formControl]="hallStreetFormControl">
+    <mat-error *ngIf="hallStreetFormControl.hasError('required')">
+      {{translationService.get(requiredErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(hallCityTC)}}</mat-label>
+    <input matInput [formControl]="hallCityFormControl">
+    <mat-error *ngIf="hallCityFormControl.hasError('required')">
+      {{translationService.get(requiredErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(postalCodeTC)}}</mat-label>
+    <input matInput [formControl]="postalCodeControl" type="number">
+    <mat-error *ngIf="postalCodeControl.hasError('required')">
+      {{translationService.get(requiredErrorTC)}}
+    </mat-error>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">{{translationService.get(backTc)}}</button>
+  <button mat-raised-button color="primary"
+          [disabled]="hallIdFormControl.hasError('required')
+          || hallStreetFormControl.hasError('required') || hallCityFormControl.hasError('required') ||
+          hallNameFormControl.hasError('required') ||  postalCodeControl.hasError('required')"
+          (click)="saveHall()"
+  >{{translationService.get(saveTC)}}</button>
+</div>
+
