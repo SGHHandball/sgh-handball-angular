@@ -45,11 +45,9 @@
                  [pageSizeOptions]="[5, 10, 25, 50]" class="paginator-margin">
   </mat-paginator>
 
-
-  <button mat-fab class="add-news-btn" (click)="openAddUserDialog()"
-          [ngClass]="!(isHandset$ | async) ? 'add-news-btn-web' : 'add-news-btn-mobile'">
-    <mat-icon>add</mat-icon>
-  </button>
+  <app-add-btn
+  (clickListener)="openAddUserDialog()"
+  ></app-add-btn>
 </ng-container>
 
 <!-- Copyright 2018 Google Inc. All Rights Reserved.
