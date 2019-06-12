@@ -1,9 +1,15 @@
 <mat-spinner [diameter]="30" *ngIf="!newsService.newsLoaded" class="loading-spinner"></mat-spinner>
 <ng-container *ngIf="newsService.newsLoaded">
   <div class="grid-container">
-    <h1 class="mat-h1">{{translationService.get(newsHeaderTC)}}</h1>
+
+    <app-news-filter class="filter"
+                     [placeholder]="translationService.get(filterTC)"
+                     [possibleValues]="getAllPossibleFilterValues()"
+                     (onValueChangeListener)="filterNews($event)"
+    ></app-news-filter>
+
     <mat-grid-list cols="2" rowHeight="350px">
-      <mat-grid-tile *ngFor="let newsCard of newsService.news" [colspan]="(isHandset$ | async) ? 2 : 1"
+      <mat-grid-tile *ngFor="let newsCard of newsService.filteredNews" [colspan]="(isHandset$ | async) ? 2 : 1"
                      [rowspan]="1">
         <mat-card class="dashboard-card">
           <mat-card-header>

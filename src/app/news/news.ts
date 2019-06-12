@@ -42,7 +42,6 @@ export const NEWS_TEAM_YOUTH_AGES = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 export const DB_COLLECTION_NEWS = 'news';
 
-
 export function getDateString(date: string | Date): string {
   return new Date(date).toLocaleDateString();
 }

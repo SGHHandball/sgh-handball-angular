@@ -5,16 +5,25 @@ import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, Ne
 import {
   TC_NEWS_CHECKED_HEADER,
   TC_NEWS_CHECKED_MESSAGE,
-  TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
-  TC_NEWS_HEADER, TC_NEWS_SEND_HEADER, TC_NEWS_SEND_MESSAGE,
+  TC_GENERAL_DELETE_HEADER,
+  TC_GENERAL_DELETE_MESSAGE,
+  TC_NEWS_HEADER,
+  TC_NEWS_SEND_HEADER,
+  TC_NEWS_SEND_MESSAGE,
   TC_NEWS_TYPE_REPORT,
-  TranslationService, TC_GENERAL_DELETE_SUCCESS, TC_GENERAL_DELETE_FAIL, TC_GENERAL_EDIT_SUCCESS, TC_GENERAL_EDIT_FAIL
+  TranslationService,
+  TC_GENERAL_DELETE_SUCCESS,
+  TC_GENERAL_DELETE_FAIL,
+  TC_GENERAL_EDIT_SUCCESS,
+  TC_GENERAL_EDIT_FAIL,
+  TC_FILTER
 } from "../translation.service";
 import {NewsService, NewsType} from "./news.service";
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {environment} from "../../environments/environment";
+import {TeamsService} from "../teams/teams.service";
 
 @Component({
   selector: 'app-news',
@@ -23,7 +32,7 @@ import {environment} from "../../environments/environment";
 })
 export class NewsComponent extends AbstractComponent {
 
-  newsHeaderTC = TC_NEWS_HEADER;
+  filterTC = TC_FILTER;
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
 
   newsTypeReport = NewsType.report;
@@ -129,6 +138,21 @@ export class NewsComponent extends AbstractComponent {
         });
       }
     });
+  }
+
+  filterNews(filterValues: string[]) {
+    this.newsService.filterNews(filterValues);
+  }
+
+  getAllPossibleFilterValues(): string[] {
+    const filterValues = [];
+    this.newsService.newsTeamAges.forEach(age => {
+      filterValues.push(age);
+    });
+    this.newsService.clubs.forEach(club => {
+      filterValues.push(club.name);
+    });
+    return filterValues;
   }
 
   openSnackBar(message: string) {

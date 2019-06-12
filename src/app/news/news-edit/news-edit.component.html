@@ -39,7 +39,7 @@
             <input #teamAge type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
                    [value]="news.teamAge ? news.teamAge : ''">
             <mat-autocomplete #autoTeamAge="matAutocomplete">
-              <mat-option *ngFor="let option of newsTeamAges" [value]="option">
+              <mat-option *ngFor="let option of newsService.newsTeamAges" [value]="option">
                 {{option}}
               </mat-option>
             </mat-autocomplete>

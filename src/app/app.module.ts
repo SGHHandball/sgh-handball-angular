@@ -29,7 +29,7 @@ import {
   MatAutocompleteModule,
   MatPaginatorModule,
   MatExpansionModule,
-  MatSortModule, MatTableModule, MatSlideToggleModule, MatSnackBarModule, MatDividerModule
+  MatSortModule, MatTableModule, MatSlideToggleModule, MatSnackBarModule, MatDividerModule, MatChipsModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -53,6 +53,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { HallsComponent } from './halls/halls.component';
 import { SidenavListItemComponent } from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
 import { HallsEditDialogComponent } from './halls/halls-edit-dialog/halls-edit-dialog.component';
+import { NewsFilterComponent } from './news/news-filter/news-filter.component';
 
 // @ts-ignore
 @NgModule({
@@ -75,7 +76,8 @@ import { HallsEditDialogComponent } from './halls/halls-edit-dialog/halls-edit-d
     TeamsComponent,
     HallsComponent,
     SidenavListItemComponent,
-    HallsEditDialogComponent
+    HallsEditDialogComponent,
+    NewsFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +112,8 @@ import { HallsEditDialogComponent } from './halls/halls-edit-dialog/halls-edit-d
     MatTableModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatChipsModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

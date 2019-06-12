@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {DB_COLLECTION_NEWS, News} from "./news";
+import {DB_COLLECTION_NEWS, News, NEWS_TEAM_YOUTH_AGES} from "./news";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
   CollectionReference, DocumentChangeAction,
-  Query,
+  Query, QueryDocumentSnapshot,
   QueryFn
 } from "@angular/fire/firestore";
 import {Router} from "@angular/router";
 import {
-  TC_BEST_CLUB_ON_EARTH,
+  TC_BEST_CLUB_ON_EARTH, TC_NEWS_GENDER_M, TC_NEWS_GENDER_W,
   TC_NEWS_PATH_DETAIL,
   TC_NEWS_PATH_EDIT,
-  TC_NEWS_SUMMARY,
+  TC_NEWS_SUMMARY, TC_NEWS_TEAM_MEN, TC_NEWS_TEAM_WOMEN, TC_NEWS_TEAM_YOUTH,
   TC_NEWS_TYPE_REPORT, TC_ROUTE_NEWS,
   TranslationService
 } from "../translation.service";
@@ -28,33 +28,25 @@ import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 export class NewsService {
 
   news: News[];
+  filteredNews: News[];
   newsLoaded = false;
 
   clubs: Club[];
+
+  newsTeamAges: string[] = [];
 
   expandedNews: News;
   expandedNewsEdit: boolean = false;
 
   user: User;
-  unAuthNewsRef: AngularFirestoreCollection<News>;
-  authCreatorNewsRef: AngularFirestoreCollection<News>;
 
   constructor(private db: AngularFirestore,
               public afAuth: AngularFireAuth,
               private router: Router,
               private translationService: TranslationService) {
-    this.unAuthNewsRef = this.db.collection<News>(DB_COLLECTION_NEWS,
-      ref => ref.where('checked', '==', true));
+    this.addTeamAges();
     this.afAuth.user.subscribe(user => {
       this.user = user;
-      if (user) {
-        this.authCreatorNewsRef = this.db.collection<News>(DB_COLLECTION_NEWS,
-          ref => ref
-            .where('creator', '==', user.uid)
-            .where('checked', '==', false));
-      } else {
-        this.authCreatorNewsRef = undefined;
-      }
       this.loadAllNews();
     });
     this.db.collection<Club>(CLUBS_COLLECTION_NAME).valueChanges().subscribe(clubs => {
@@ -62,29 +54,70 @@ export class NewsService {
     });
   }
 
+  getUnAuthNewsRef(): AngularFirestoreCollection<News> {
+    return this.db.collection<News>(DB_COLLECTION_NEWS, ref =>
+      ref.where('checked', '==', true)
+    );
+  }
+
+  getAuthCreatorNewsRef(): AngularFirestoreCollection<News> {
+    if (!this.user) return undefined;
+    return this.db.collection<News>(DB_COLLECTION_NEWS,
+      ref => ref
+        .where('creator', '==', this.user.uid)
+        .where('checked', '==', false));
+  }
+
 
   loadAllNews() {
-    if (this.authCreatorNewsRef) {
+    if (this.user) {
       this.initCreatorNews();
     } else {
       this.initNormalNews();
     }
+  }
+
+  filterNews(filterValues: string[]) {
+    if (!filterValues || filterValues.length === 0) this.filteredNews = this.news;
+    else {
+      this.filteredNews = [];
+      this.news.forEach(news => {
+        filterValues.forEach(filter => {
+          if (this.isFilterInNews(news, filter.toLowerCase())) {
+            this.filteredNews.push(news);
+          }
+        });
+      });
+    }
+  }
+
+  isFilterInNews(news: News, filter: string): boolean {
+    return news.homeTeam.toLowerCase().includes(filter) ||
+      news.enemyTeam.toLowerCase().includes(filter) ||
+      news.body.toLowerCase().includes(filter) ||
+      news.title.toLowerCase().includes(filter) ||
+      news.summary.toLowerCase().includes(filter) ||
+      news.teamAge.toLowerCase() === filter
+      ;
+  }
+
+  setupNews(news: News[]) {
+    this.news = news;
+    this.filteredNews = this.news;
     this.newsLoaded = true;
   }
 
   initNormalNews() {
-    this.unAuthNewsRef.snapshotChanges().pipe(
+    this.getUnAuthNewsRef().snapshotChanges().pipe(
       map(actions =>
         actions.map(action => this.addIdToNews(action))
       )
-    ).subscribe(news => {
-      this.news = news;
-    });
+    ).subscribe(news => this.setupNews(news));
   }
 
   initCreatorNews() {
-    combineLatest(this.unAuthNewsRef.snapshotChanges(),
-      this.authCreatorNewsRef.snapshotChanges()).pipe(
+    combineLatest(this.getUnAuthNewsRef().snapshotChanges(),
+      this.getAuthCreatorNewsRef().snapshotChanges()).pipe(
       switchMap(actions => {
         const [unAuthNews, authCreatorNews] = actions;
         const combined = unAuthNews.concat(authCreatorNews);
@@ -92,9 +125,7 @@ export class NewsService {
           combined.map(action => this.addIdToNews(action))
         ]
       })
-    ).subscribe(news => {
-      this.news = news;
-    });
+    ).subscribe(news => this.setupNews(news));
   }
 
   addIdToNews(action: DocumentChangeAction<News>): News {
@@ -193,6 +224,18 @@ export class NewsService {
       }
     });
     return containing;
+  }
+
+  addTeamAges() {
+    this.newsTeamAges.push(this.translationService.get(TC_NEWS_TEAM_MEN));
+    this.newsTeamAges.push(this.translationService.get(TC_NEWS_TEAM_WOMEN));
+    const youthTC = this.translationService.get(TC_NEWS_TEAM_YOUTH);
+    const genderWoman = this.translationService.get(TC_NEWS_GENDER_W);
+    const genderMen = this.translationService.get(TC_NEWS_GENDER_M);
+    NEWS_TEAM_YOUTH_AGES.forEach(age => {
+      this.newsTeamAges.push(genderMen + ' ' + age + youthTC);
+      this.newsTeamAges.push(genderWoman + ' ' + age + youthTC);
+    })
   }
 }
 

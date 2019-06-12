@@ -73,14 +73,12 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   newsHomeTeam = this.translationService.get(TC_NEWS_HOME_TEAM);
   newsEnemyTeam = this.translationService.get(TC_NEWS_ENEMY_TEAM);
 
-  newsTeamAges = [];
 
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
               private dialog: MatDialog,
               public newsService: NewsService) {
     super(breakpointObserver);
-    this.addTeamAges();
   }
 
 
@@ -89,17 +87,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     return !this.changedValues;
   }
 
-  addTeamAges() {
-    this.newsTeamAges.push(this.translationService.get(TC_NEWS_TEAM_MEN));
-    this.newsTeamAges.push(this.translationService.get(TC_NEWS_TEAM_WOMEN));
-    const youthTC = this.translationService.get(TC_NEWS_TEAM_YOUTH);
-    const genderWoman = this.translationService.get(TC_NEWS_GENDER_W);
-    const genderMen = this.translationService.get(TC_NEWS_GENDER_M);
-    NEWS_TEAM_YOUTH_AGES.forEach(age => {
-      this.newsTeamAges.push(genderMen + ' ' + age + youthTC);
-      this.newsTeamAges.push(genderWoman + ' ' + age + youthTC);
-    })
-  }
+
 
   closeNews() {
     if (this.changedValues) {
