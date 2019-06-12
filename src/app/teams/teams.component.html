@@ -1,0 +1,16 @@
+<mat-spinner [diameter]="30" *ngIf="!teamsService.teamsLoaded" class="loading-spinner"></mat-spinner>
+<mat-tab-group *ngIf="teamsService.teamsLoaded">
+  <mat-tab *ngFor="let team of teamsService.teams" label="{{team.teamAge}}">
+    <app-test-drag-drop></app-test-drag-drop>
+  </mat-tab>
+</mat-tab-group>
+
+<app-add-btn
+  [matMenu]="menu"
+  [moreIcon]="true"
+></app-add-btn>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Reihenfolge ändern</button>
+  <button mat-menu-item>Neue Mannschaft hinzufügen</button>
+</mat-menu>

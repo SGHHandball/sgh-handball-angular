@@ -47,10 +47,6 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
 
-<button mat-fab class="add-hall-btn"
-        [ngClass]="!(isHandset$ | async) ? 'add-hall-btn-web' : 'add-hall-btn-mobile'"
-        *ngIf="(adminService.user)"
-        (click)="openHallsEditDialog(undefined)"
->
-  <mat-icon>add</mat-icon>
-</button>
+<app-add-btn
+(clickListener)="openHallsEditDialog(undefined)"
+></app-add-btn>

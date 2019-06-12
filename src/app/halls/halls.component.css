@@ -16,16 +16,3 @@ td, th {
 .mat-cell, .mat-header-cell{
   padding: 4px;
 }
-
-.add-hall-btn {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-}
-
-.add-hall-btn-web {
-  right: 24px;
-}
-
-.add-hall-btn-mobile {
-}

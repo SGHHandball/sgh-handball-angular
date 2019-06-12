@@ -13,6 +13,8 @@ export class NavigationItem {
 
   routerIcon: string;
 
+  subNavigationItems: NavigationItem[];
+
   constructor(routerLink: string, routerName: string) {
     this.routerLink = routerLink;
     this.routerName = routerName;
@@ -20,6 +22,11 @@ export class NavigationItem {
 
   withRouterIcon(routerIcon: string): NavigationItem {
     this.routerIcon = routerIcon;
+    return this;
+  }
+
+  withSubNavigationItems(subNavigationItems: NavigationItem[]): NavigationItem {
+    this.subNavigationItems = subNavigationItems;
     return this;
   }
 }

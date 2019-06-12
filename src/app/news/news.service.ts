@@ -83,7 +83,7 @@ export class NewsService {
       this.filteredNews = [];
       this.news.forEach(news => {
         filterValues.forEach(filter => {
-          if (this.isFilterInNews(news, filter.toLowerCase())) {
+          if (this.isFilterInNews(news, filter.toLowerCase()) && !this.filteredNews.includes(news)) {
             this.filteredNews.push(news);
           }
         });

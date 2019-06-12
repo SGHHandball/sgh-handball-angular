@@ -50,15 +50,13 @@
     </mat-grid-list>
   </div>
 
-  <button mat-fab [matMenuTriggerFor]="newsTypeMenu" class="add-news-btn"
-          [ngClass]="!(isHandset$ | async) ? 'add-news-btn-web' : 'add-news-btn-mobile'"
-          *ngIf="(adminService.user)">
-    <mat-icon>add</mat-icon>
-  </button>
+
+  <app-add-btn
+  [matMenu]="newsTypeMenu"
+  ></app-add-btn>
   <mat-menu #newsTypeMenu="matMenu">
     <button mat-menu-item
-            (click)="newsService.addNewNews(newsTypeReport)">
-      {{translationService.get(newsTypeReportTC)}}</button>
+            (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
   </mat-menu>
 
 

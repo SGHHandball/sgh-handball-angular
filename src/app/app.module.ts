@@ -29,7 +29,13 @@ import {
   MatAutocompleteModule,
   MatPaginatorModule,
   MatExpansionModule,
-  MatSortModule, MatTableModule, MatSlideToggleModule, MatSnackBarModule, MatDividerModule, MatChipsModule
+  MatSortModule,
+  MatTableModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatDividerModule,
+  MatChipsModule,
+  MatTabsModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -54,6 +60,9 @@ import { HallsComponent } from './halls/halls.component';
 import { SidenavListItemComponent } from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
 import { HallsEditDialogComponent } from './halls/halls-edit-dialog/halls-edit-dialog.component';
 import { NewsFilterComponent } from './news/news-filter/news-filter.component';
+import { AddBtnComponent } from './abstract/add-btn/add-btn.component';
+import { TestDragDropComponent } from './abstract/test-drag-drop/test-drag-drop.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // @ts-ignore
 @NgModule({
@@ -77,7 +86,9 @@ import { NewsFilterComponent } from './news/news-filter/news-filter.component';
     HallsComponent,
     SidenavListItemComponent,
     HallsEditDialogComponent,
-    NewsFilterComponent
+    NewsFilterComponent,
+    AddBtnComponent,
+    TestDragDropComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +124,9 @@ import { NewsFilterComponent } from './news/news-filter/news-filter.component';
     MatSlideToggleModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule,
+    DragDropModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
