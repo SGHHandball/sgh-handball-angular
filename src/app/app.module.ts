@@ -55,14 +55,15 @@ import {AdminUserDetailComponent} from './admin/admin-user-detail/admin-user-det
 import {AdminUserDialogComponent} from './admin/admin-user-dialog/admin-user-dialog.component';
 import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
 import {DefaultDialogComponent} from './abstract/default-dialog/default-dialog.component';
-import { TeamsComponent } from './teams/teams.component';
-import { HallsComponent } from './halls/halls.component';
-import { SidenavListItemComponent } from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
-import { HallsEditDialogComponent } from './halls/halls-edit-dialog/halls-edit-dialog.component';
-import { NewsFilterComponent } from './news/news-filter/news-filter.component';
-import { AddBtnComponent } from './abstract/add-btn/add-btn.component';
-import { TestDragDropComponent } from './abstract/test-drag-drop/test-drag-drop.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {TeamsComponent} from './teams/teams.component';
+import {HallsComponent} from './halls/halls.component';
+import {SidenavListItemComponent} from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
+import {HallsEditDialogComponent} from './halls/halls-edit-dialog/halls-edit-dialog.component';
+import {NewsFilterComponent} from './news/news-filter/news-filter.component';
+import {AddBtnComponent} from './abstract/add-btn/add-btn.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-change-dialog.component';
+import {DefaultInputDialogComponent} from './abstract/default-input-dialog/default-input-dialog.component';
 
 // @ts-ignore
 @NgModule({
@@ -88,7 +89,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     HallsEditDialogComponent,
     NewsFilterComponent,
     AddBtnComponent,
-    TestDragDropComponent
+    TeamsChangeDialogComponent,
+    DefaultInputDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +137,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     PendingChangesGuard
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginDialogComponent, AdminUserDialogComponent, DefaultDialogComponent, HallsEditDialogComponent]
+  entryComponents: [LoginDialogComponent, AdminUserDialogComponent,
+    DefaultDialogComponent, HallsEditDialogComponent, TeamsChangeDialogComponent,
+    DefaultInputDialogComponent]
 })
 export class AppModule {
 }

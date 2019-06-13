@@ -3,7 +3,7 @@ import {AbstractComponent} from "../abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {TeamsService} from "../../teams/teams.service";
 import {AdminService} from "../../admin/admin.service";
-import {MatMenu} from "@angular/material";
+import {MatMenu, MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-add-btn',
@@ -19,7 +19,8 @@ export class AddBtnComponent extends AbstractComponent {
   menuOpen: boolean;
 
   constructor(breakpointObserver: BreakpointObserver,
-              public adminService: AdminService) {
-    super(breakpointObserver);
+              public adminService: AdminService,
+              snackBar: MatSnackBar) {
+    super(breakpointObserver, snackBar);
   }
 }

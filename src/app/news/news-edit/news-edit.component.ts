@@ -32,7 +32,7 @@ import {
   TC_SAVE,
   TranslationService
 } from "../../translation.service";
-import {MatDatepickerInputEvent, MatDialog, MatInput, MatPaginator} from "@angular/material";
+import {MatDatepickerInputEvent, MatDialog, MatInput, MatPaginator, MatSnackBar} from "@angular/material";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
@@ -77,8 +77,9 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
               private dialog: MatDialog,
-              public newsService: NewsService) {
-    super(breakpointObserver);
+              public newsService: NewsService,
+              snackBar: MatSnackBar) {
+    super(breakpointObserver,snackBar);
   }
 
 

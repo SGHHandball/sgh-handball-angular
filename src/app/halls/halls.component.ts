@@ -51,8 +51,8 @@ export class HallsComponent extends AbstractComponent implements OnInit {
               public translationService: TranslationService,
               private dialog: MatDialog,
               public adminService: AdminService,
-              private snackBar: MatSnackBar) {
-    super(breakpointObserver);
+              snackBar: MatSnackBar) {
+    super(breakpointObserver,snackBar);
     this.hallsService.loadAllHalls();
   }
 
@@ -115,12 +115,6 @@ export class HallsComponent extends AbstractComponent implements OnInit {
         }
       });
     }
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 2000
-    })
   }
 }
 

@@ -44,9 +44,9 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
               private adminService: AdminService,
               public translationService: TranslationService,
               private dialog: MatDialog,
-              private snackBar: MatSnackBar,
+              snackBar: MatSnackBar,
   ) {
-    super(breakpointObserver);
+    super(breakpointObserver, snackBar);
   }
 
 
@@ -81,12 +81,6 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
       console.log(error);
       this.openSnackBar(this.translationService.get(TC_GENERAL_ERROR));
     });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 2000
-    })
   }
 
 }

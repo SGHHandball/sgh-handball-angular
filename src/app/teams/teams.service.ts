@@ -36,6 +36,26 @@ export class TeamsService {
     });
   }
 
+  changeOrder(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      for (let i = 0; i < this.teams.length; i++) {
+        this.db.collection<Team>(DB_COLLECTION_TEAMS).doc(this.teams[i].id).update({
+          position: i
+        }).catch(() => reject());
+      }
+      resolve()
+    });
+  }
+
+  addNewTeam(teamAge: string) {
+    return this.db.collection<Team>(DB_COLLECTION_TEAMS)
+      .add(JSON.parse(JSON.stringify(new Team(
+        this.teams.length - 1,
+        teamAge,
+        this.yearToLoad
+      ))))
+  }
+
 
   deleteTeam(team: Team) {
     return this.db.collection<Team>(DB_COLLECTION_TEAMS).doc(team.id).delete();

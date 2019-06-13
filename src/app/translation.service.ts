@@ -101,18 +101,25 @@ export const TC_ADMIN_ADD_NEW_USER_ERROR = 'admin-add-new-user-error';
 export const TC_ADMIN_USER_DIALOG_PW_TO_SHORT = 'admin-user-dialog-pw-to-short';
 export const TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS = 'admin-change-admin-right-success';
 
-export const TC_AUTH_LOGIN_SUCCESS= 'auth-login-success';
-export const TC_AUTH_LOGIN_ERROR= 'auth-login-error';
-export const TC_AUTH_LOGOUT_SUCCESS= 'auth-logout-success';
-export const TC_AUTH_LOGOUT_ERROR= 'auth-logout-error';
+export const TC_AUTH_LOGIN_SUCCESS = 'auth-login-success';
+export const TC_AUTH_LOGIN_ERROR = 'auth-login-error';
+export const TC_AUTH_LOGOUT_SUCCESS = 'auth-logout-success';
+export const TC_AUTH_LOGOUT_ERROR = 'auth-logout-error';
 
 export const TC_HALLS_EDIT_HALL = 'halls-edit-hall';
 export const TC_HALLS_ADD_NEW_HALL_SUCCESS = 'halls-add-new-hall-success';
 export const TC_HALLS_EDIT_HALL_SUCCESS = 'halls-edit-hall-success';
 export const TC_HALLS_EDIT_HALL_FAIL = 'halls-edit-hall-fail';
-export const TC_HALLS_HALL_ID= 'hallId';
-export const TC_HALLS_NAME= 'name';
-export const TC_HALLS_STREET= 'street';
-export const TC_HALLS_CITY= 'city';
-export const TC_HALLS_POST_CODE= 'postCode';
+export const TC_HALLS_HALL_ID = 'hallId';
+export const TC_HALLS_NAME = 'name';
+export const TC_HALLS_STREET = 'street';
+export const TC_HALLS_CITY = 'city';
+export const TC_HALLS_POST_CODE = 'postCode';
+
+
+export const TC_TEAMS_CHANGE_ORDER = 'teams-change-order';
+export const TC_TEAMS_ADD_NEW_TEAM = 'teams-add-new-team';
+export const TC_TEAMS_ADD_NEW_TEAM_SUCCESS = 'teams-add-new-team-success';
+export const TC_TEAMS_ADD_NEW_TEAM_FAIL = 'teams-add-new-team-fail';
+export const TC_TEAMS_TEAM = 'teams-team';
 

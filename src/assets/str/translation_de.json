@@ -78,5 +78,10 @@
   "name": "Name",
   "street": "Straße",
   "city": "Stadt",
-  "postCode": "Postleitzahl"
+  "postCode": "Postleitzahl",
+  "teams-change-order": "Reihenfolge ändern",
+  "teams-add-new-team": "Mannschaft hinzufügen",
+  "teams-add-new-team-success": "Mannschaft erfolgreich hinzugefügt",
+  "teams-add-new-team-fail": "Mannschaft konnte nicht hinzugefügt werden",
+  "teams-team": "Mannschaft"
 }

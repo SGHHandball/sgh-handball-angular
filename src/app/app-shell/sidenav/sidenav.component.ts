@@ -9,6 +9,7 @@ import {
   TranslationService
 } from "../../translation.service";
 import {NAVIGATION_ITEMS_CLUB, NAVIGATION_ITEMS_INFO, NAVIGATION_ITEMS_OTHER} from "./navigation-item";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-sidenav',
@@ -29,8 +30,9 @@ export class SidenavComponent extends AbstractComponent {
 
   constructor(public breakpointObserver: BreakpointObserver,
               private router: Router,
-              public translationService: TranslationService) {
-    super(breakpointObserver);
+              public translationService: TranslationService,
+              snackBar: MatSnackBar) {
+    super(breakpointObserver,snackBar);
     this.isHandset$.subscribe(handset => {
       this.handset = handset;
     })

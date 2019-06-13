@@ -35,9 +35,9 @@ export class AuthComponent extends AbstractComponent {
               private dialog: MatDialog,
               public adminService: AdminService,
               public afAuth: AngularFireAuth,
-              private snackBar: MatSnackBar
+              snackBar: MatSnackBar
   ) {
-    super(breakpointObserver);
+    super(breakpointObserver, snackBar);
   }
 
   isAuthBtnVisible() {
@@ -88,11 +88,5 @@ export class AuthComponent extends AbstractComponent {
     });
   }
 
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 2000
-    })
-  }
 
 }

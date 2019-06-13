@@ -42,8 +42,8 @@ export class NewsComponent extends AbstractComponent {
               public translationService: TranslationService,
               public adminService: AdminService,
               private dialog: MatDialog,
-              private snackBar: MatSnackBar) {
-    super(breakpointObserver);
+              snackBar: MatSnackBar) {
+    super(breakpointObserver, snackBar);
   }
 
 
@@ -153,12 +153,6 @@ export class NewsComponent extends AbstractComponent {
       filterValues.push(club.name);
     });
     return filterValues;
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 2000
-    })
   }
 
 }

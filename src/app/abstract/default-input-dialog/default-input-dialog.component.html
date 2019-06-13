@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{data.inputPlaceholder}}</mat-label>
+    <input matInput [formControl]="inputFormControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="inputFormControl.hasError('required')">
+      {{data.inputMissingError}}
+    </mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button [mat-dialog-close]="false" color="warn">{{data.cancel}}</button>
+  <button mat-raised-button (click)="onOkClick()" color="primary" [disabled]="inputFormControl.hasError('required')">{{data.ok}}</button>
+</div>
