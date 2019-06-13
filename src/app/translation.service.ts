@@ -40,7 +40,6 @@ export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
 
 export const TC_NEWS_PATH_EDIT = 'bearbeiten';
-export const TC_NEWS_PATH_DETAIL = 'detail';
 
 export const TC_ADMIN = 'admin';
 export const TC_USERS = 'users';

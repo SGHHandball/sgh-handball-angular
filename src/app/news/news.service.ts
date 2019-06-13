@@ -3,22 +3,19 @@ import {DB_COLLECTION_NEWS, News, NEWS_TEAM_YOUTH_AGES} from "./news";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  CollectionReference, DocumentChangeAction,
-  Query, QueryDocumentSnapshot,
-  QueryFn
+  DocumentChangeAction,
 } from "@angular/fire/firestore";
 import {Router} from "@angular/router";
 import {
-  TC_BEST_CLUB_ON_EARTH, TC_NEWS_GENDER_M, TC_NEWS_GENDER_W,
-  TC_NEWS_PATH_DETAIL,
+  TC_NEWS_GENDER_M, TC_NEWS_GENDER_W,
   TC_NEWS_PATH_EDIT,
   TC_NEWS_SUMMARY, TC_NEWS_TEAM_MEN, TC_NEWS_TEAM_WOMEN, TC_NEWS_TEAM_YOUTH,
-  TC_NEWS_TYPE_REPORT, TC_ROUTE_NEWS,
+  TC_NEWS_TYPE_REPORT,
   TranslationService
 } from "../translation.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {User} from "firebase";
-import {Observable, combineLatest, of} from "rxjs";
+import {combineLatest} from "rxjs";
 import {map, switchMap} from "rxjs/operators";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 
@@ -148,6 +145,7 @@ export class NewsService {
       const newsTypeText = this.getNewNewsInitText(newsType);
       const newNews = new News()
         .withTitleAndBody(newsTypeText, newsTypeText)
+        .withType(newsType.toString())
         .withSummary(this.translationService.get(TC_NEWS_SUMMARY))
         .withCreator(this.user.uid);
 
@@ -194,13 +192,6 @@ export class NewsService {
   }
 
 
-  openNewsDetail(toExpandNews: News) {
-    this.expandedNewsEdit = false;
-    this.changeExpandedNews(toExpandNews);
-    this.router.navigate([this.router.url.replace('/', '') + '/' + TC_NEWS_PATH_DETAIL])
-  }
-
-
   openNewsEdit(toExpandNews: News) {
     this.expandedNewsEdit = true;
     this.changeExpandedNews(toExpandNews);
@@ -211,7 +202,7 @@ export class NewsService {
   closeExpandedNews() {
     this.expandedNewsEdit = false;
     this.changeExpandedNews(undefined);
-    this.router.navigate([this.router.url.replace(TC_NEWS_PATH_DETAIL, '').replace('/', '')])
+    this.router.navigate([this.router.url.replace('/' + TC_NEWS_PATH_EDIT, '').replace('/', '')])
   }
 
 

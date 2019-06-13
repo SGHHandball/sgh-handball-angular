@@ -11,7 +11,6 @@
 
 <app-news-card-list
   [news]="filteredNews"
-  (openNewsClickListener)="newsService.openNewsDetail($event)"
   (editClickListener)="newsService.openNewsEdit($event)"
 ></app-news-card-list>
 

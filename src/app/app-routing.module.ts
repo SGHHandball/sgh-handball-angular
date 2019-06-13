@@ -4,7 +4,6 @@ import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {NewsComponent} from "./news/news.component";
 import {NewsEditComponent} from "./news/news-edit/news-edit.component";
 import {
-  TC_NEWS_PATH_DETAIL,
   TC_NEWS_PATH_EDIT, TC_ROUTE_DOCUMENTS, TC_ROUTE_EVENTS, TC_ROUTE_HALLS,
   TC_ROUTE_IMPRINT,
   TC_ROUTE_NEWS, TC_ROUTE_TEAMS, TC_ROUTE_TRAINING, TC_USERS
@@ -30,17 +29,7 @@ export const routes = [
     canDeactivate: [PendingChangesGuard]
   },
   {
-    path: TC_ROUTE_TEAMS + '/' + TC_NEWS_PATH_DETAIL,
-    component: NewsEditComponent,
-    canDeactivate: [PendingChangesGuard]
-  },
-  {
     path: TC_ROUTE_TEAMS + '/' + TC_NEWS_PATH_EDIT,
-    component: NewsEditComponent,
-    canDeactivate: [PendingChangesGuard]
-  },
-  {
-    path: TC_ROUTE_NEWS + '/' + TC_NEWS_PATH_DETAIL,
     component: NewsEditComponent,
     canDeactivate: [PendingChangesGuard]
   },

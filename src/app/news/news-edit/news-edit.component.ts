@@ -61,8 +61,9 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
 
   date = new FormControl();
 
+  //TODO: ADD FORMCONTROLS FOR ALL OTHERS
+
   saveTC = this.translationService.get(TC_SAVE);
-  backTC = this.translationService.get(TC_BACK);
   editNewsTC = this.translationService.get(TC_EDIT_NEWS);
   newsTitleTC = this.translationService.get(TC_NEWS_TITLE);
   newsScoreTC = this.translationService.get(TC_NEWS_SCORE);
@@ -79,7 +80,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
               private dialog: MatDialog,
               public newsService: NewsService,
               snackBar: MatSnackBar) {
-    super(breakpointObserver,snackBar);
+    super(breakpointObserver, snackBar);
   }
 
 
@@ -87,7 +88,6 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   canDeactivate(): Observable<boolean> | boolean {
     return !this.changedValues;
   }
-
 
 
   closeNews() {
@@ -158,6 +158,10 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     );
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.changedValues = false;
+        this.closeNews()
+      }
     });
   }
 

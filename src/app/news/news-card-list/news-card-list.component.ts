@@ -4,7 +4,7 @@ import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AdminService} from "../../admin/admin.service";
-import {TC_NEWS_NO_NEWS, TranslationService} from "../../translation.service";
+import {TC_NEWS_NO_NEWS, TC_NEWS_SUMMARY, TC_NEWS_TYPE_REPORT, TranslationService} from "../../translation.service";
 
 @Component({
   selector: 'app-news-card-list',
@@ -20,9 +20,9 @@ export class NewsCardListComponent extends AbstractComponent implements OnInit {
   @Output() deleteClickListener = new EventEmitter<News>();
   @Output() sendClickListener = new EventEmitter<News>();
   @Output() checkClickListener = new EventEmitter<News>();
-  @Output() openNewsClickListener = new EventEmitter<News>();
 
   noNewsTC = TC_NEWS_NO_NEWS;
+  summaryTC = TC_NEWS_SUMMARY;
 
 
   constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
@@ -49,8 +49,8 @@ export class NewsCardListComponent extends AbstractComponent implements OnInit {
 
   hasRightsToEdit(news: News): boolean {
     // TODO: Check for same Team
-    return       (this.adminService.user && this.adminService.user.uid === news.creator ||
-        this.adminService.isUserAdmin());
+    return (this.adminService.user && this.adminService.user.uid === news.creator ||
+      this.adminService.isUserAdmin());
   }
 
   getNewsStateIcon(news: News): string {
@@ -62,6 +62,13 @@ export class NewsCardListComponent extends AbstractComponent implements OnInit {
       } else {
         return 'new_releases';
       }
+  }
+
+  getBodyHeaderOfType(type: string): string {
+    switch (type) {
+      default:
+        return this.translationService.get(TC_NEWS_TYPE_REPORT);
+    }
   }
 
   ngOnInit() {

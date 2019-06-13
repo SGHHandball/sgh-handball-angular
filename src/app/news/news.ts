@@ -15,6 +15,7 @@ export class News {
   send: boolean = false;
   date: Date = new Date();
   teamYear: string = DEFAULT_YEAR;
+  type: string;
 
 
   withTitleAndBody(title: string, body: string): News {
@@ -35,6 +36,11 @@ export class News {
 
   withCreator(creator: string): News {
     this.creator = creator;
+    return this;
+  }
+
+  withType(type: string): News {
+    this.type = type;
     return this;
   }
 
