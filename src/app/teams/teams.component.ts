@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AbstractComponent} from "../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {TeamsService} from "./teams.service";
 import {AdminService} from "../admin/admin.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog, MatSnackBar, MatTab, MatTabChangeEvent} from "@angular/material";
 import {TeamsChangeDialogComponent} from "./teams-change-dialog/teams-change-dialog.component";
 import {DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {
@@ -11,7 +11,7 @@ import {
   TC_GENERAL_REQUIRED_ERROR,
   TC_NEWS_CHECKED_HEADER,
   TC_NEWS_CHECKED_MESSAGE, TC_OK, TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
-  TC_TEAMS_CHANGE_ORDER, TC_TEAMS_TEAM,
+  TC_TEAMS_CHANGE_ORDER, TC_TEAMS_NEWS_HEADER, TC_TEAMS_TEAM,
   TranslationService
 } from "../translation.service";
 import {
@@ -19,6 +19,7 @@ import {
   DefaultInputDialogData
 } from "../abstract/default-input-dialog/default-input-dialog.component";
 import {NewsService} from "../news/news.service";
+import {News} from "../news/news";
 
 @Component({
   selector: 'app-teams',
@@ -30,6 +31,10 @@ export class TeamsComponent extends AbstractComponent {
   addTeamTC = TC_TEAMS_ADD_NEW_TEAM;
   orderChangeTC = TC_TEAMS_CHANGE_ORDER;
 
+  newsHeaderTC = TC_TEAMS_NEWS_HEADER;
+
+  filteredNews: News[];
+
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
               public teamsService: TeamsService,
@@ -37,7 +42,20 @@ export class TeamsComponent extends AbstractComponent {
               private newsService: NewsService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
-    this.teamsService.loadAllTeams();
+    this.teamsService.loadAllTeams()
+      .then(() => {
+        this.changeNews(0)
+      });
+  }
+
+
+  onOtherTabSelected(tab: MatTabChangeEvent) {
+    this.changeNews(tab.index)
+  }
+
+  changeNews(index: number) {
+    const teamWithIndex = this.teamsService.teams[index];
+    this.filteredNews = this.newsService.getFilterNews([teamWithIndex.teamAge, teamWithIndex.teamYear]);
   }
 
   addNewTeamToTab() {

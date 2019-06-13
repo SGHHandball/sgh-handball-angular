@@ -1,3 +1,5 @@
+import {DEFAULT_YEAR} from "../teams/teams.service";
+
 export class News {
   id: string = '';
   creator: string = '';
@@ -12,6 +14,7 @@ export class News {
   checked: boolean = false;
   send: boolean = false;
   date: Date = new Date();
+  teamYear: string = DEFAULT_YEAR;
 
 
   withTitleAndBody(title: string, body: string): News {

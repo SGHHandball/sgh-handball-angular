@@ -51,6 +51,7 @@
   "news-home-team": "Heimmannschaft",
   "news-enemy-team": "Gastmannschaft",
   "news-type-report": "Spielbericht",
+  "news-no-news": "Keine Einträge vorhanden",
   "news-unsaved-data-warning-header": "Ungespeicherte Daten",
   "news-unsaved-data-warning": "Es wurden noch nicht alle Änderungen gespeichert, wollen Sie die Seite verlassen?",
   "news-send-header": "Daten senden",
@@ -83,5 +84,6 @@
   "teams-add-new-team": "Mannschaft hinzufügen",
   "teams-add-new-team-success": "Mannschaft erfolgreich hinzugefügt",
   "teams-add-new-team-fail": "Mannschaft konnte nicht hinzugefügt werden",
-  "teams-team": "Mannschaft"
+  "teams-team": "Mannschaft",
+  "teams-news-header": "Spielberichte der Mannschaft"
 }

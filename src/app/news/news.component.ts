@@ -1,4 +1,4 @@
-import {AfterContentInit, Component} from '@angular/core';
+import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AbstractComponent} from "../abstract/abstract.component";
 import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "./news";
@@ -30,57 +30,26 @@ import {TeamsService} from "../teams/teams.service";
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
-export class NewsComponent extends AbstractComponent {
+export class NewsComponent extends AbstractComponent implements OnInit {
 
   filterTC = TC_FILTER;
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
 
   newsTypeReport = NewsType.report;
 
+  filteredNews: News[];
+
   constructor(breakpointObserver: BreakpointObserver,
               public newsService: NewsService,
               public translationService: TranslationService,
-              public adminService: AdminService,
               private dialog: MatDialog,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
 
-
-  getDateWithTeamAgeAsString(news: News): string {
-    return getDateWithTeamAgeAsString(news);
+  ngOnInit(): void {
+    this.filterNews([]);
   }
-
-  getTeamsWithScoreAsString(news: News): string {
-    return getTeamsWithScoreAsString(news);
-  }
-
-  isEditMenuVisible(news: News): boolean {
-    return this.hasRightsToEdit(news);
-  }
-
-  isNewsStateVisible(news: News): boolean {
-    return this.hasRightsToEdit(news);
-  }
-
-  hasRightsToEdit(news: News): boolean {
-    return this.adminService.user && this.adminService.user.uid === news.creator ||
-      this.adminService.isUserAdmin()
-      // TODO: Check for same Team
-      ;
-  }
-
-  getNewsStateIcon(news: News): string {
-    if (this.hasRightsToEdit(news))
-      if (news.send && !news.checked) {
-        return 'done';
-      } else if (news.checked) {
-        return 'done_all';
-      } else {
-        return 'new_releases';
-      }
-  }
-
 
   openDeleteNewsDialog(news: News) {
     const dialogRef = this.dialog.open(DefaultDialogComponent, {
@@ -141,7 +110,7 @@ export class NewsComponent extends AbstractComponent {
   }
 
   filterNews(filterValues: string[]) {
-    this.newsService.filterNews(filterValues);
+    this.filteredNews = this.newsService.getFilterNews(filterValues);
   }
 
   getAllPossibleFilterValues(): string[] {

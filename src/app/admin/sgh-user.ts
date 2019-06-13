@@ -1,7 +1,9 @@
+import {Team} from "../teams/team";
+
 export class SghUser {
   id: string = '';
   admin: boolean = false;
-  teams: string[] = [];
+  teams: Team[] = [];
   preName: string = '';
   lastName: string = '';
 

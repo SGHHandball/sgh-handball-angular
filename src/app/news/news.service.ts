@@ -28,7 +28,6 @@ import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 export class NewsService {
 
   news: News[];
-  filteredNews: News[];
   newsLoaded = false;
 
   clubs: Club[];
@@ -77,19 +76,29 @@ export class NewsService {
     }
   }
 
-  filterNews(filterValues: string[]) {
-    if (!filterValues || filterValues.length === 0) this.filteredNews = this.news;
-    else {
-      this.filteredNews = [];
+  getFilterNews(filterValues: string[]): News[] {
+    if (this.news && filterValues && filterValues.length > 0) {
+      const filteredNews = [];
       this.news.forEach(news => {
-        filterValues.forEach(filter => {
-          if (this.isFilterInNews(news, filter.toLowerCase()) && !this.filteredNews.includes(news)) {
-            this.filteredNews.push(news);
-          }
-        });
+        if (this.areFiltersInNews(news, filterValues) && !filteredNews.includes(news)) {
+          filteredNews.push(news);
+        }
       });
+      return filteredNews;
     }
+    return this.news;
   }
+
+  areFiltersInNews(news: News, filterValues: string[]): boolean {
+    let allFiltersInNews = true;
+    filterValues.forEach(filter => {
+      if (!this.isFilterInNews(news, filter.toLowerCase())) {
+        allFiltersInNews = false;
+      }
+    });
+    return allFiltersInNews;
+  }
+
 
   isFilterInNews(news: News, filter: string): boolean {
     return news.homeTeam.toLowerCase().includes(filter) ||
@@ -97,13 +106,13 @@ export class NewsService {
       news.body.toLowerCase().includes(filter) ||
       news.title.toLowerCase().includes(filter) ||
       news.summary.toLowerCase().includes(filter) ||
-      news.teamAge.toLowerCase() === filter
+      news.teamAge.toLowerCase() === filter ||
+      news.teamYear.toLowerCase() === filter
       ;
   }
 
   setupNews(news: News[]) {
     this.news = news;
-    this.filteredNews = this.news;
     this.newsLoaded = true;
   }
 
@@ -188,21 +197,21 @@ export class NewsService {
   openNewsDetail(toExpandNews: News) {
     this.expandedNewsEdit = false;
     this.changeExpandedNews(toExpandNews);
-    this.router.navigate([TC_ROUTE_NEWS + '/' + TC_NEWS_PATH_DETAIL])
+    this.router.navigate([this.router.url.replace('/', '') + '/' + TC_NEWS_PATH_DETAIL])
   }
 
 
   openNewsEdit(toExpandNews: News) {
     this.expandedNewsEdit = true;
     this.changeExpandedNews(toExpandNews);
-    this.router.navigate([TC_ROUTE_NEWS + '/' + TC_NEWS_PATH_EDIT])
+    this.router.navigate([this.router.url.replace('/', '') + '/' + TC_NEWS_PATH_EDIT])
   }
 
 
   closeExpandedNews() {
     this.expandedNewsEdit = false;
     this.changeExpandedNews(undefined);
-    this.router.navigate([TC_ROUTE_NEWS])
+    this.router.navigate([this.router.url.replace(TC_NEWS_PATH_DETAIL, '').replace('/', '')])
   }
 
 

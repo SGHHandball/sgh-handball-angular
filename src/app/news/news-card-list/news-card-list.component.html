@@ -1,0 +1,46 @@
+<h3 class="no-news" *ngIf="!(news && news.length>0)">{{translationService.get(noNewsTC)}}</h3>
+<ng-container *ngIf="news && news.length>0">
+
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile *ngFor="let newsCard of news" [colspan]="(isHandset$ | async) ? 2 : 1"
+                   [rowspan]="1">
+
+
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            <span class="card-title"> {{newsCard.title}}</span>
+            <app-news-more-menu
+              *ngIf="isEditMenuVisible(newsCard)"
+              class="more-button"
+              [sendInvisible]="newsCard.send"
+              [checkedInvisible]="newsCard.checked"
+              (editClickListener)="editClickListener.next(newsCard)"
+              (deleteClickListener)="deleteClickListener.next(newsCard)"
+              (sendClickListener)="sendClickListener.next(newsCard)"
+              (checkClickListener)="checkClickListener.next(newsCard)"
+            ></app-news-more-menu>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge">
+            {{getDateWithTeamAgeAsString(newsCard)}}
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score">
+            {{getTeamsWithScoreAsString(newsCard)}}
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLink" class="card-img">
+        <img mat-card-image [src]="newsCard.imgLink" *ngIf="newsCard.imgLink" class="card-img">
+        <mat-card-content class="dashboard-card-content">
+          <!--TODO: Change this to avoid opening a new site -->
+          <p class="card-content">{{newsCard.summary}}</p>
+        </mat-card-content>
+        <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
+          {{getNewsStateIcon(newsCard)}}
+        </mat-icon>
+      </mat-card>
+
+
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-container>

@@ -81,6 +81,7 @@ export const TC_NEWS_TEAM_WOMEN = 'news-team-women';
 export const TC_NEWS_HOME_TEAM = 'news-home-team';
 export const TC_NEWS_ENEMY_TEAM = 'news-enemy-team';
 export const TC_NEWS_TYPE_REPORT = 'news-type-report';
+export const TC_NEWS_NO_NEWS = 'news-no-news';
 export const TC_NEWS_UNSAVED_DATA_WARNING_HEADER = 'news-unsaved-data-warning-header';
 export const TC_NEWS_UNSAVED_DATA_WARNING = 'news-unsaved-data-warning';
 export const TC_NEWS_SEND_HEADER = 'news-send-header';
@@ -122,4 +123,5 @@ export const TC_TEAMS_ADD_NEW_TEAM = 'teams-add-new-team';
 export const TC_TEAMS_ADD_NEW_TEAM_SUCCESS = 'teams-add-new-team-success';
 export const TC_TEAMS_ADD_NEW_TEAM_FAIL = 'teams-add-new-team-fail';
 export const TC_TEAMS_TEAM = 'teams-team';
+export const TC_TEAMS_NEWS_HEADER = 'teams-news-header';
 

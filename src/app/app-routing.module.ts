@@ -30,6 +30,16 @@ export const routes = [
     canDeactivate: [PendingChangesGuard]
   },
   {
+    path: TC_ROUTE_TEAMS + '/' + TC_NEWS_PATH_DETAIL,
+    component: NewsEditComponent,
+    canDeactivate: [PendingChangesGuard]
+  },
+  {
+    path: TC_ROUTE_TEAMS + '/' + TC_NEWS_PATH_EDIT,
+    component: NewsEditComponent,
+    canDeactivate: [PendingChangesGuard]
+  },
+  {
     path: TC_ROUTE_NEWS + '/' + TC_NEWS_PATH_DETAIL,
     component: NewsEditComponent,
     canDeactivate: [PendingChangesGuard]

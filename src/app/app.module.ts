@@ -64,6 +64,8 @@ import {AddBtnComponent} from './abstract/add-btn/add-btn.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-change-dialog.component';
 import {DefaultInputDialogComponent} from './abstract/default-input-dialog/default-input-dialog.component';
+import { TeamsDetailComponent } from './teams/teams-detail/teams-detail.component';
+import { NewsCardListComponent } from './news/news-card-list/news-card-list.component';
 
 // @ts-ignore
 @NgModule({
@@ -90,7 +92,9 @@ import {DefaultInputDialogComponent} from './abstract/default-input-dialog/defau
     NewsFilterComponent,
     AddBtnComponent,
     TeamsChangeDialogComponent,
-    DefaultInputDialogComponent
+    DefaultInputDialogComponent,
+    TeamsDetailComponent,
+    NewsCardListComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +132,7 @@ import {DefaultInputDialogComponent} from './abstract/default-input-dialog/defau
     MatDividerModule,
     MatChipsModule,
     MatTabsModule,
-    DragDropModule
+    DragDropModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

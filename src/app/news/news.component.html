@@ -2,58 +2,36 @@
 <ng-container *ngIf="newsService.newsLoaded">
   <div class="grid-container">
 
-    <app-news-filter class="filter"
-                     [placeholder]="translationService.get(filterTC)"
-                     [possibleValues]="getAllPossibleFilterValues()"
-                     (onValueChangeListener)="filterNews($event)"
+    <app-news-filter
+      class="filter"
+      [placeholder]="translationService.get(filterTC)"
+      [possibleValues]="getAllPossibleFilterValues()"
+      (onValueChangeListener)="filterNews($event)"
     ></app-news-filter>
 
-    <mat-grid-list cols="2" rowHeight="350px">
-      <mat-grid-tile *ngFor="let newsCard of newsService.filteredNews" [colspan]="(isHandset$ | async) ? 2 : 1"
-                     [rowspan]="1">
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              <span (click)="newsService.openNewsDetail(newsCard)" class="card-title"> {{newsCard.title}}</span>
-              <app-news-more-menu
-                *ngIf="isEditMenuVisible(newsCard)"
-                class="more-button"
-                [sendInvisible]="newsCard.send"
-                [checkedInvisible]="newsCard.checked"
-                (editClickListener)="newsService.openNewsEdit(newsCard)"
-                (deleteClickListener)="openDeleteNewsDialog(newsCard)"
-                (sendClickListener)="openSendNewsDialog(newsCard)"
-                (checkClickListener)="openCheckNewsDialog(newsCard)"
-              ></app-news-more-menu>
-            </mat-card-title>
-            <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge"
-                               (click)="newsService.openNewsDetail(newsCard)">
-              {{getDateWithTeamAgeAsString(newsCard)}}
-            </mat-card-subtitle>
-            <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score"
-                               (click)="newsService.openNewsDetail(newsCard)">
-              {{getTeamsWithScoreAsString(newsCard)}}
-            </mat-card-subtitle>
-          </mat-card-header>
-          <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLink" class="card-img"
-               (click)="newsService.openNewsDetail(newsCard)">
-          <img mat-card-image [src]="newsCard.imgLink" *ngIf="newsCard.imgLink" class="card-img"
-               (click)="newsService.openNewsDetail(newsCard)">
-          <mat-card-content class="dashboard-card-content" (click)="newsService.openNewsDetail(newsCard)">
-            <p class="card-content">{{newsCard.summary}}</p>
-          </mat-card-content>
-          <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
-            {{getNewsStateIcon(newsCard)}}
-          </mat-icon>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
+    <app-news-card-list
+      *ngIf="!filteredNews"
+      [news]="newsService.news"
+      (editClickListener)="newsService.openNewsEdit($event)"
+      (deleteClickListener)="openDeleteNewsDialog($event)"
+      (sendClickListener)="openSendNewsDialog($event)"
+      (checkClickListener)="openCheckNewsDialog($event)"
+      (openNewsClickListener)="newsService.openNewsDetail($event)"
+    ></app-news-card-list>
+
+    <app-news-card-list
+      *ngIf="filteredNews"
+      [news]="filteredNews"
+      (editClickListener)="newsService.openNewsEdit($event)"
+      (deleteClickListener)="openDeleteNewsDialog($event)"
+      (sendClickListener)="openSendNewsDialog($event)"
+      (checkClickListener)="openCheckNewsDialog($event)"
+      (openNewsClickListener)="newsService.openNewsDetail($event)"
+    ></app-news-card-list>
   </div>
 
 
-  <app-add-btn
-  [matMenu]="newsTypeMenu"
-  ></app-add-btn>
+  <app-add-btn [matMenu]="newsTypeMenu"></app-add-btn>
   <mat-menu #newsTypeMenu="matMenu">
     <button mat-menu-item
             (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>

@@ -15,24 +15,27 @@ export class TeamsService {
   constructor(private db: AngularFirestore) {
   }
 
-  loadAllTeams() {
-    this.teamsLoaded = false;
-    this.db.collection<Team>(DB_COLLECTION_TEAMS,
-      ref =>
-        ref.where('teamYear', '==', this.yearToLoad)
-          .orderBy("position", "asc"))
-      .snapshotChanges().pipe(
-      map(actions => {
-          return actions.map(action => {
-            const data = action.payload.doc.data() as Team;
-            data.id = action.payload.doc.id;
-            return data;
-          })
-        }
-      )
-    ).subscribe(teams => {
-      this.teams = teams;
-      this.teamsLoaded = true;
+  loadAllTeams(): Promise<void> {
+    return new Promise<void>(resolve => {
+      this.teamsLoaded = false;
+      this.db.collection<Team>(DB_COLLECTION_TEAMS,
+        ref =>
+          ref.where('teamYear', '==', this.yearToLoad)
+            .orderBy("position", "asc"))
+        .snapshotChanges().pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Team;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      ).subscribe(teams => {
+        this.teams = teams;
+        this.teamsLoaded = true;
+        resolve();
+      });
     });
   }
 
@@ -65,3 +68,4 @@ export class TeamsService {
 export const DB_COLLECTION_TEAMS = 'teams';
 
 export const DEFAULT_YEAR = '2019/2020';
+
