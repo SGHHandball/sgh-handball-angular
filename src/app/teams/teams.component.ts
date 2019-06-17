@@ -7,11 +7,11 @@ import {MatDialog, MatSnackBar, MatTab, MatTabChangeEvent} from "@angular/materi
 import {TeamsChangeDialogComponent} from "./teams-change-dialog/teams-change-dialog.component";
 import {DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {
-  TC_CANCEL, TC_GENERAL_EDIT_FAIL, TC_GENERAL_EDIT_SUCCESS,
+  TC_CANCEL, TC_GENERAL_DELETE_FAIL, TC_GENERAL_DELETE_SUCCESS, TC_GENERAL_EDIT_FAIL, TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_REQUIRED_ERROR,
   TC_NEWS_CHECKED_HEADER,
   TC_NEWS_CHECKED_MESSAGE, TC_OK, TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
-  TC_TEAMS_CHANGE_ORDER, TC_TEAMS_NEWS_HEADER, TC_TEAMS_TEAM,
+  TC_TEAMS_CHANGE_ORDER, TC_TEAMS_DELETE_TEAM, TC_TEAMS_NEWS_HEADER, TC_TEAMS_TEAM,
   TranslationService
 } from "../translation.service";
 import {
@@ -20,6 +20,8 @@ import {
 } from "../abstract/default-input-dialog/default-input-dialog.component";
 import {NewsService} from "../news/news.service";
 import {News} from "../news/news";
+import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
+import {Team} from "./team";
 
 @Component({
   selector: 'app-teams',
@@ -30,6 +32,7 @@ export class TeamsComponent extends AbstractComponent {
 
   addTeamTC = TC_TEAMS_ADD_NEW_TEAM;
   orderChangeTC = TC_TEAMS_CHANGE_ORDER;
+  deleteTeamTC = TC_TEAMS_DELETE_TEAM;
 
   newsHeaderTC = TC_TEAMS_NEWS_HEADER;
 
@@ -88,6 +91,21 @@ export class TeamsComponent extends AbstractComponent {
         this.teamsService.changeOrder()
           .then(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS)))
           .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL)))
+      }
+    })
+  }
+
+
+  deleteTab() {
+    const dialogRef = this.dialog.open(TeamsDeleteDialogComponent, {
+      width: this.dialogWidth,
+      data: this.teamsService.teams
+    });
+    dialogRef.afterClosed().subscribe((teamToDelete: Team) => {
+      if (teamToDelete) {
+        this.teamsService.deleteTeam(teamToDelete)
+          .then(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS)))
+          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL)))
       }
     })
   }

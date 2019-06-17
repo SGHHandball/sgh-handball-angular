@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamsChangeDialogComponent } from './teams-change-dialog.component';
+import { TeamsDeleteDialogComponent } from './teams-delete-dialog.component';
 
 describe('TeamsDeleteDialogComponent', () => {
-  let component: TeamsChangeDialogComponent;
-  let fixture: ComponentFixture<TeamsChangeDialogComponent>;
+  let component: TeamsDeleteDialogComponent;
+  let fixture: ComponentFixture<TeamsDeleteDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamsChangeDialogComponent ]
+      declarations: [ TeamsDeleteDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamsChangeDialogComponent);
+    fixture = TestBed.createComponent(TeamsDeleteDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,1 +1,5 @@
-<p>Teams Detail</p>
+<slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
+           [showDots]="true"
+           [imageUrls]="team.imgUrls"
+           *ngIf="team.imgUrls && team.imgUrls.length>0"
+></slideshow>

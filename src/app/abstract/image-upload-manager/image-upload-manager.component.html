@@ -1,0 +1,18 @@
+<div class="img-preview-holder">
+  <h4>{{imagesTC}}</h4>
+  <ng-container *ngIf="urls">
+    <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="urls"
+         (cdkDropListDropped)="moveImage($event)" class="img-previews">
+      <div *ngFor="let url of urls">
+        <img class="img-preview" [src]="url" cdkDrag>
+        <button mat-icon-button (click)="itemDeleteEventListener.next(url)" class="img-upload-delete-btn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <app-image-upload class="img-upload"
+                    (uploadEventListener)="uploadEventListener.next($event)"
+                    [uploadProgress]="uploadProgress"
+  ></app-image-upload>
+</div>

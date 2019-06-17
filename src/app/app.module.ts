@@ -69,6 +69,8 @@ import { NewsCardListComponent } from './news/news-card-list/news-card-list.comp
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {SlideshowModule} from "ng-simple-slideshow";
 import { ImageUploadComponent } from './abstract/image-upload/image-upload.component';
+import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-delete-dialog.component";
+import { ImageUploadManagerComponent } from './abstract/image-upload-manager/image-upload-manager.component';
 
 // @ts-ignore
 @NgModule({
@@ -98,7 +100,9 @@ import { ImageUploadComponent } from './abstract/image-upload/image-upload.compo
     DefaultInputDialogComponent,
     TeamsDetailComponent,
     NewsCardListComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    TeamsDeleteDialogComponent,
+    ImageUploadManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -148,7 +152,7 @@ import { ImageUploadComponent } from './abstract/image-upload/image-upload.compo
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginDialogComponent, AdminUserDialogComponent,
-    DefaultDialogComponent, HallsEditDialogComponent, TeamsChangeDialogComponent,
+    DefaultDialogComponent, HallsEditDialogComponent, TeamsChangeDialogComponent, TeamsDeleteDialogComponent,
     DefaultInputDialogComponent]
 })
 export class AppModule {

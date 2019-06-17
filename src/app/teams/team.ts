@@ -3,6 +3,7 @@ export class Team {
   position: number;
   teamAge: string;
   teamYear: string;
+  imgUrls: string[];
 
 
   constructor(position: number, teamAge: string, teamYear: string) {

@@ -37,7 +37,7 @@
               <input type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
                      [formControl]="teamAgeFormControl">
               <mat-autocomplete #autoTeamAge="matAutocomplete">
-                <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option">
+                <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option" (change)="onChangeValue()">
                   {{option}}
                 </mat-option>
               </mat-autocomplete>
@@ -128,23 +128,14 @@
           <mat-divider></mat-divider>
         </div>
 
-        <div class="img-preview-holder">
-          <h4>{{imagesTC}}</h4>
-          <ng-container *ngIf="news && news.imgLinks">
-            <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="news.imgLinks" (cdkDropListDropped)="moveImage($event)" class="img-previews">
-              <div *ngFor="let url of news.imgLinks" >
-                <img class="img-preview" [src]="url" cdkDrag>
-                <button mat-icon-button (click)="deleteImage(url)" class="img-upload-delete-btn">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </div>
-          </ng-container>
-          <app-image-upload class="img-upload"
-                            (uploadEventListener)="upload($event)"
-                            [uploadProgress]="uploadProgress"
-          ></app-image-upload>
-        </div>
+        <app-image-upload-manager
+          [urls]="news ? news.imgLinks : []"
+          (itemDeleteEventListener)="deleteImage($event)"
+          (afterItemMovedEventListener)="changedValues = true"
+          [uploadProgress]="uploadProgress"
+          (uploadEventListener)="upload($event)"
+        ></app-image-upload-manager>
+
       </div>
 
     </mat-card-content>

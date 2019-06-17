@@ -22,6 +22,7 @@
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
     <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
     <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>
   </mat-menu>

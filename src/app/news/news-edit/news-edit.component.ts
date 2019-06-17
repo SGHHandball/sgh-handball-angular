@@ -57,7 +57,6 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
 
   saveTC = this.translationService.get(TC_SAVE);
   editNewsTC = this.translationService.get(TC_EDIT_NEWS);
-  imagesTC = this.translationService.get(TC_IMAGES);
 
   newsTitleTC = this.translationService.get(TC_NEWS_TITLE);
   newsScoreTC = this.translationService.get(TC_NEWS_SCORE);
@@ -106,6 +105,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
       if (this.news.summary) this.summaryFormControl.setValue(this.news.summary);
       if (this.news.enemyTeam) this.enemyTeamFormControl.setValue(this.news.enemyTeam);
       if (this.news.homeTeam) this.homeTeamFormControl.setValue(this.news.homeTeam);
+      if (this.news.teamAge) this.teamAgeFormControl.setValue(this.news.teamAge);
       this.filteredTeamAgesOptions = this.teamAgeFormControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filterTeamAges(value))
@@ -186,10 +186,6 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     })
   }
 
-  moveImage(event: CdkDragDrop<string[]>) {
-    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    this.changedValues = true;
-  }
 
   deleteImage(imagePath: string) {
     const dialogRef = this.dialog.open(DefaultDialogComponent, {

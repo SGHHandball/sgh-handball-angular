@@ -120,6 +120,7 @@ export const TC_HALLS_POST_CODE = 'postCode';
 
 export const TC_TEAMS_CHANGE_ORDER = 'teams-change-order';
 export const TC_TEAMS_ADD_NEW_TEAM = 'teams-add-new-team';
+export const TC_TEAMS_DELETE_TEAM = 'teams-delete-team';
 export const TC_TEAMS_ADD_NEW_TEAM_SUCCESS = 'teams-add-new-team-success';
 export const TC_TEAMS_ADD_NEW_TEAM_FAIL = 'teams-add-new-team-fail';
 export const TC_TEAMS_TEAM = 'teams-team';

@@ -82,6 +82,7 @@
   "city": "Stadt",
   "postCode": "Postleitzahl",
   "teams-change-order": "Reihenfolge ändern",
+  "teams-delete-team": "Mannschaft entfernen",
   "teams-add-new-team": "Mannschaft hinzufügen",
   "teams-add-new-team-success": "Mannschaft erfolgreich hinzugefügt",
   "teams-add-new-team-fail": "Mannschaft konnte nicht hinzugefügt werden",
