@@ -27,9 +27,13 @@
         </mat-card-subtitle>
       </mat-card-header>
 
-      <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLink" class="card-img">
-      <img mat-card-image [src]="newsCard.imgLink" *ngIf="newsCard.imgLink" class="card-img">
+      <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLinks ||  newsCard.imgLinks.length===0" class="card-img">
       <mat-card-content class="dashboard-card-content">
+        <slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
+                   [showDots]="true"
+                   [imageUrls]="newsCard.imgLinks"
+                   *ngIf="newsCard.imgLinks && newsCard.imgLinks.length>0"
+        ></slideshow>
         <mat-accordion class="card-content">
           <mat-expansion-panel>
             <mat-expansion-panel-header>

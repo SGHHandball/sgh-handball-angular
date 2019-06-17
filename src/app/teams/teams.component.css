@@ -6,3 +6,7 @@
 .news-header{
   text-align: center;
 }
+
+.container {
+  margin: 16px 16px 72px;
+}

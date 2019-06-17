@@ -15,9 +15,10 @@ import {
 } from "../translation.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {User} from "firebase";
-import {combineLatest} from "rxjs";
+import {combineLatest, Observable} from "rxjs";
 import {map, switchMap} from "rxjs/operators";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from "@angular/fire/storage";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,7 @@ export class NewsService {
 
   constructor(private db: AngularFirestore,
               public afAuth: AngularFireAuth,
+              private afStorage: AngularFireStorage,
               private router: Router,
               private translationService: TranslationService) {
     this.addTeamAges();
@@ -53,6 +55,7 @@ export class NewsService {
   getUnAuthNewsRef(): AngularFirestoreCollection<News> {
     return this.db.collection<News>(DB_COLLECTION_NEWS, ref =>
       ref.where('checked', '==', true)
+        .orderBy('date', 'desc')
     );
   }
 
@@ -61,7 +64,8 @@ export class NewsService {
     return this.db.collection<News>(DB_COLLECTION_NEWS,
       ref => ref
         .where('creator', '==', this.user.uid)
-        .where('checked', '==', false));
+        .where('checked', '==', false)
+        .orderBy('date', 'desc'));
   }
 
 
@@ -98,13 +102,13 @@ export class NewsService {
 
 
   isFilterInNews(news: News, filter: string): boolean {
-    return news.homeTeam.toLowerCase().includes(filter) ||
-      news.enemyTeam.toLowerCase().includes(filter) ||
-      news.body.toLowerCase().includes(filter) ||
-      news.title.toLowerCase().includes(filter) ||
-      news.summary.toLowerCase().includes(filter) ||
-      news.teamAge.toLowerCase() === filter ||
-      news.teamYear.toLowerCase() === filter
+    return (news.homeTeam && news.homeTeam.toLowerCase().includes(filter)) ||
+      (news.enemyTeam && news.enemyTeam.toLowerCase().includes(filter)) ||
+      (news.body && news.body.toLowerCase().includes(filter)) ||
+      (news.title && news.title.toLowerCase().includes(filter)) ||
+      (news.summary && news.summary.toLowerCase().includes(filter)) ||
+      (news.teamAge && news.teamAge.toLowerCase() === filter) ||
+      (news.teamYear && news.teamYear.toLowerCase() === filter)
       ;
   }
 
@@ -237,6 +241,13 @@ export class NewsService {
       this.newsTeamAges.push(genderWoman + ' ' + age + youthTC);
     })
   }
+
+  uploadImage(event): AngularFireUploadTask {
+    const randomId = Math.random().toString(36).substring(2);
+    const ref = this.afStorage.ref(randomId);
+    return ref.put(event.target.files[0]);
+  }
+
 }
 
 

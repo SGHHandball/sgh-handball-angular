@@ -66,6 +66,9 @@ import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-chan
 import {DefaultInputDialogComponent} from './abstract/default-input-dialog/default-input-dialog.component';
 import { TeamsDetailComponent } from './teams/teams-detail/teams-detail.component';
 import { NewsCardListComponent } from './news/news-card-list/news-card-list.component';
+import {AngularFireStorageModule} from "@angular/fire/storage";
+import {SlideshowModule} from "ng-simple-slideshow";
+import { ImageUploadComponent } from './abstract/image-upload/image-upload.component';
 
 // @ts-ignore
 @NgModule({
@@ -94,7 +97,8 @@ import { NewsCardListComponent } from './news/news-card-list/news-card-list.comp
     TeamsChangeDialogComponent,
     DefaultInputDialogComponent,
     TeamsDetailComponent,
-    NewsCardListComponent
+    NewsCardListComponent,
+    ImageUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +106,7 @@ import { NewsCardListComponent } from './news/news-card-list/news-card-list.comp
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule, // imports firebase/auth, only needed for auth features,
     AngularFireFunctionsModule,
     MatToolbarModule,
     MatIconModule,
@@ -133,6 +138,7 @@ import { NewsCardListComponent } from './news/news-card-list/news-card-list.comp
     MatChipsModule,
     MatTabsModule,
     DragDropModule,
+    SlideshowModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

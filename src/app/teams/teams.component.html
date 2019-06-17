@@ -1,26 +1,28 @@
 <mat-spinner [diameter]="30" *ngIf="!teamsService.teamsLoaded" class="loading-spinner"></mat-spinner>
 
-<ng-container *ngIf="teamsService.teamsLoaded" >
-<mat-tab-group *ngIf="teamsService.teamsLoaded" (selectedTabChange)="onOtherTabSelected($event)">
-  <mat-tab *ngFor="let team of teamsService.teams" label="{{team ? team.teamAge : '---'}}">
-    <app-teams-detail [team]="team"></app-teams-detail>
-  </mat-tab>
-</mat-tab-group>
+<ng-container *ngIf="teamsService.teamsLoaded">
+  <mat-tab-group *ngIf="teamsService.teamsLoaded" (selectedTabChange)="onOtherTabSelected($event)">
+    <mat-tab *ngFor="let team of teamsService.teams" label="{{team ? team.teamAge : '---'}}">
+      <app-teams-detail [team]="team"></app-teams-detail>
+    </mat-tab>
+  </mat-tab-group>
 
-<h1 class="news-header">{{translationService.get(newsHeaderTC)}}</h1>
+  <h1 class="news-header">{{translationService.get(newsHeaderTC)}}</h1>
 
-<app-news-card-list
-  [news]="filteredNews"
-  (editClickListener)="newsService.openNewsEdit($event)"
-></app-news-card-list>
+  <div class="container">
+    <app-news-card-list
+      [news]="filteredNews"
+      (editClickListener)="newsService.openNewsEdit($event)"
+    ></app-news-card-list>
+  </div>
 
-<app-add-btn
-  [matMenu]="menu"
-  [moreIcon]="true"
-></app-add-btn>
+  <app-add-btn
+    [matMenu]="menu"
+    [moreIcon]="true"
+  ></app-add-btn>
 
-<mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
-  <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>
-</mat-menu>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
+    <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>
+  </mat-menu>
 </ng-container>

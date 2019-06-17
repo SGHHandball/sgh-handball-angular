@@ -1,43 +1,38 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {
-  DB_COLLECTION_NEWS,
-  getDateString,
-  getDateWithTeamAgeAsString,
-  getTeamsWithScoreAsString,
   News,
-  NEWS_TEAM_YOUTH_AGES
 } from "../news";
 import {FormControl} from "@angular/forms";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {
-  TC_BACK,
-  TC_CANCEL,
   TC_EDIT_NEWS,
+  TC_GENERAL_DELETE_FAIL,
+  TC_GENERAL_DELETE_HEADER,
+  TC_GENERAL_DELETE_MESSAGE,
+  TC_GENERAL_DELETE_SUCCESS,
+  TC_IMAGES,
   TC_NEWS_BODY,
   TC_NEWS_DATE,
   TC_NEWS_ENEMY_TEAM,
-  TC_NEWS_GENDER,
-  TC_NEWS_GENDER_M,
-  TC_NEWS_GENDER_W,
   TC_NEWS_HOME_TEAM,
   TC_NEWS_SCORE,
   TC_NEWS_SUMMARY,
   TC_NEWS_TEAM_AGE,
-  TC_NEWS_TEAM_MEN,
-  TC_NEWS_TEAM_WOMEN,
-  TC_NEWS_TEAM_YOUTH,
-  TC_NEWS_TITLE, TC_NEWS_UNSAVED_DATA_WARNING, TC_NEWS_UNSAVED_DATA_WARNING_HEADER,
-  TC_OK,
+  TC_NEWS_TITLE,
+  TC_NEWS_UNSAVED_DATA_WARNING,
+  TC_NEWS_UNSAVED_DATA_WARNING_HEADER,
   TC_SAVE,
   TranslationService
 } from "../../translation.service";
-import {MatDatepickerInputEvent, MatDialog, MatInput, MatPaginator, MatSnackBar} from "@angular/material";
-import {AngularFirestore} from "@angular/fire/firestore";
+import {MatDialog, MatSnackBar} from "@angular/material";
 import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
+import {map, startWith} from "rxjs/operators";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {Team} from "../../teams/team";
 
 @Component({
   selector: 'app-news-edit',
@@ -46,25 +41,24 @@ import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/
 })
 export class NewsEditComponent extends AbstractComponent implements OnInit, ComponentCanDeactivate {
 
-  @ViewChild('title', {static: true}) title: ElementRef;
-  @ViewChild('score', {static: true}) score: ElementRef;
-  @ViewChild('body', {static: true}) body: ElementRef;
-  @ViewChild('summary', {static: true}) summary: ElementRef;
-  @ViewChild('teamAge', {static: true}) teamAge: ElementRef;
-  @ViewChild('enemyTeam', {static: true}) enemyTeam: ElementRef;
-  @ViewChild('homeTeam', {static: true}) homeTeam: ElementRef;
-
   news: News;
-  editable = false;
 
   changedValues = false;
 
   date = new FormControl();
 
-  //TODO: ADD FORMCONTROLS FOR ALL OTHERS
+  titleFormControl = new FormControl();
+  scoreFormControl = new FormControl();
+  bodyFormControl = new FormControl();
+  summaryFormControl = new FormControl();
+  teamAgeFormControl = new FormControl();
+  enemyTeamFormControl = new FormControl();
+  homeTeamFormControl = new FormControl();
 
   saveTC = this.translationService.get(TC_SAVE);
   editNewsTC = this.translationService.get(TC_EDIT_NEWS);
+  imagesTC = this.translationService.get(TC_IMAGES);
+
   newsTitleTC = this.translationService.get(TC_NEWS_TITLE);
   newsScoreTC = this.translationService.get(TC_NEWS_SCORE);
   newsSummaryTC = this.translationService.get(TC_NEWS_SUMMARY);
@@ -74,6 +68,9 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   newsHomeTeam = this.translationService.get(TC_NEWS_HOME_TEAM);
   newsEnemyTeam = this.translationService.get(TC_NEWS_ENEMY_TEAM);
 
+  uploadProgress: Observable<number>;
+
+  filteredTeamAgesOptions: Observable<string[]>;
 
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
@@ -101,9 +98,18 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   ngOnInit(): void {
     if (this.newsService.expandedNews) {
       this.news = this.newsService.expandedNews;
-      this.date.setValue(this.newsService.expandedNews.date.toLocaleString());
+      this.date.setValue(this.news.date);
       this.date.registerOnChange(this.getOnChangeFunction);
-      this.editable = this.newsService.expandedNewsEdit;
+      if (this.news.title) this.titleFormControl.setValue(this.news.title);
+      if (this.news.score) this.scoreFormControl.setValue(this.news.score);
+      if (this.news.body) this.bodyFormControl.setValue(this.news.body);
+      if (this.news.summary) this.summaryFormControl.setValue(this.news.summary);
+      if (this.news.enemyTeam) this.enemyTeamFormControl.setValue(this.news.enemyTeam);
+      if (this.news.homeTeam) this.homeTeamFormControl.setValue(this.news.homeTeam);
+      this.filteredTeamAgesOptions = this.teamAgeFormControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filterTeamAges(value))
+      );
     } else {
       this.newsService.closeExpandedNews();
     }
@@ -121,25 +127,17 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     }
   }
 
-  getDateWithTeamAgeAsString(): string {
-    return getDateWithTeamAgeAsString(this.news);
-  }
-
-  getTeamsWithScoreAsString(): string {
-    return getTeamsWithScoreAsString(this.news);
-  }
-
   saveNews() {
-    this.news.date = this.date.value.toString();
-    this.news.title = this.title.nativeElement.value;
-    this.news.score = this.score.nativeElement.value;
-    this.news.body = this.body.nativeElement.value;
-    this.news.summary = this.summary.nativeElement.value;
-    this.news.teamAge = this.teamAge.nativeElement.value;
-    this.news.enemyTeam = this.enemyTeam.nativeElement.value;
-    this.news.homeTeam = this.homeTeam.nativeElement.value;
-    this.saveNewClub(this.enemyTeam.nativeElement.value);
-    this.saveNewClub(this.homeTeam.nativeElement.value);
+    this.news.date = new Date(this.date.value.toString());
+    this.news.title = this.titleFormControl.value;
+    this.news.score = this.scoreFormControl.value;
+    this.news.body = this.bodyFormControl.value;
+    this.news.summary = this.summaryFormControl.value;
+    this.news.teamAge = this.teamAgeFormControl.value;
+    this.news.enemyTeam = this.enemyTeamFormControl.value;
+    this.news.homeTeam = this.homeTeamFormControl.value;
+    this.saveNewClub(this.enemyTeamFormControl.value);
+    this.saveNewClub(this.homeTeamFormControl.value);
     this.newsService.saveNewsToDataBase(this.news, () => {
       this.changedValues = false;
     });
@@ -165,5 +163,47 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     });
   }
 
+  private _filterTeamAges(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.newsService.newsTeamAges.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  upload(event) {
+    const uploadTask = this.newsService.uploadImage(event);
+    this.uploadProgress = uploadTask.snapshotChanges()
+      .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
+    uploadTask.then(snap => {
+      this.uploadProgress = undefined;
+      snap.ref.getDownloadURL().then(url => {
+        console.log(url);
+        if (!this.news.imgLinks) {
+          this.news.imgLinks = [];
+        }
+        this.news.imgLinks.push(url);
+        this.changedValues = true;
+      });
+    })
+  }
+
+  moveImage(event: CdkDragDrop<string[]>) {
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    this.changedValues = true;
+  }
+
+  deleteImage(imagePath: string) {
+    const dialogRef = this.dialog.open(DefaultDialogComponent, {
+        width: this.dialogWidth,
+        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.news.imgLinks.splice(this.news.imgLinks.indexOf(imagePath), 1);
+        this.changedValues = true;
+      }
+    });
+  }
 
 }

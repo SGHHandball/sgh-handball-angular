@@ -52,6 +52,7 @@ export const TC_LOGOUT = 'logout';
 export const TC_EMAIL = 'email';
 export const TC_PASSWORD = 'password';
 export const TC_FILTER = 'filter';
+export const TC_IMAGES = 'images';
 
 
 export const TC_GENERAL_ERROR = 'general-error';

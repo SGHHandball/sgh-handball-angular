@@ -7,7 +7,7 @@ export class News {
   score: string = '0:0 (0:0)';
   body: string = '';
   summary: string = '';
-  imgLink: string = '';
+  imgLinks: string[] = [];
   homeTeam: string = '';
   enemyTeam: string = '';
   teamAge: string = '';
@@ -26,11 +26,6 @@ export class News {
 
   withSummary(summary: string): News {
     this.summary = summary;
-    return this;
-  }
-
-  withImgLink(imgLink: string): News {
-    this.imgLink = imgLink;
     return this;
   }
 
