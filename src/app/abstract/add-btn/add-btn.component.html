@@ -1,6 +1,6 @@
 <button mat-fab class="add-btn"
         [ngClass]="!(isHandset$ | async) ? 'add-btn-web' : 'add-btn-mobile'"
-        *ngIf="adminService.isUserAdmin() && !matMenu"
+        *ngIf="!matMenu"
         (click)="clickListener.next()"
 >
   <mat-icon>add</mat-icon>
@@ -9,7 +9,7 @@
 <button mat-fab class="add-btn"
         [matMenuTriggerFor]="matMenu"
         [ngClass]="!(isHandset$ | async) ? 'add-btn-web' : 'add-btn-mobile'"
-        *ngIf="adminService.isUserAdmin() && matMenu"
+        *ngIf="matMenu"
         (menuOpened)="menuOpen = true"
         (menuClosed)="menuOpen = false"
 >

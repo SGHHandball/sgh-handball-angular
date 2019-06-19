@@ -71,7 +71,7 @@
   "imprint-login-dialog-error-email-required": "Eine E-Mail Adresse ist notwendig",
   "imprint-login-dialog-error-password-required": "Eine Passwort ist notwendig",
   "admin-add-new-user": "Neuen Nutzer hinzufügen",
-  "admin-change-admin-right-success": "Admin Rechte wurden geändert",
+  "admin-change-admin-right-success": "Rechte wurden geändert",
   "admin-add-new-user-success": "Der Nutzer wurde erfolgreich hinzugefügt",
   "admin-add-new-user-error": "Der Nutzer konnte nicht hinzugefügt werden",
   "admin-user-dialog-pw-to-short": "Das Password muss min. 6 Zeichen enthalten",

@@ -60,9 +60,8 @@ export class NewsCardListComponent extends AbstractComponent {
 
 
   hasRightsToEdit(news: News): boolean {
-    // TODO: Check for same Team
     return (this.adminService.user && this.adminService.user.uid === news.creator ||
-      this.adminService.isUserAdmin());
+      this.adminService.isUserAdmin() || this.adminService.hasUserRightsForTeam(news.teamAge, news.teamSeason));
   }
 
   getNewsStateIcon(news: News): string {

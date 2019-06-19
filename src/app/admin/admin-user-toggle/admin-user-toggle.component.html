@@ -1,0 +1,10 @@
+<div class="toggle-container">
+<mat-divider></mat-divider>
+<div>
+  <span>{{toggleDesc}}</span>
+  <mat-slide-toggle class="toggle"
+                    [checked]="toggleValue"
+                    (toggleChange)="toggleChangeListener.next()"
+  ></mat-slide-toggle>
+</div>
+</div>

@@ -1,3 +1,6 @@
 .loading-spinner{
   margin: 25% auto;
 }
+.container {
+  margin: 16px 16px 72px;
+}

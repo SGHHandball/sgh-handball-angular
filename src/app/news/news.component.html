@@ -29,11 +29,11 @@
   </div>
 
 
-  <app-add-btn [matMenu]="newsTypeMenu"></app-add-btn>
+  <app-add-btn [matMenu]="newsTypeMenu" *ngIf="adminService.hasUserAddNewsAccess()"></app-add-btn>
   <mat-menu #newsTypeMenu="matMenu">
-    <button mat-menu-item
+    <button mat-menu-item *ngIf="adminService.isUserEventAdmin()"
             (click)="newsService.addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
-    <button mat-menu-item
+    <button mat-menu-item *ngIf="adminService.sghUser.teams.length>0"
             (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
   </mat-menu>
 

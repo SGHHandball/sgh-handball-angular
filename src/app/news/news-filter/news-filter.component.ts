@@ -36,22 +36,15 @@ export class NewsFilterComponent {
   }
 
   add(event: MatChipInputEvent): void {
-    // Add fruit only when MatAutocomplete is not open
-    // To make sure this does not conflict with OptionSelected Event
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
-
-      // Add our fruit
       if ((value || '').trim()) {
         this.values.push(value.trim());
       }
-
-      // Reset the input value
       if (input) {
         input.value = '';
       }
-
       this.filterCtrl.setValue(null);
       this.onValueChangeListener.next(this.values);
     }

@@ -2,11 +2,11 @@
 
   <mat-chip-list #chipList>
     <mat-chip
-      *ngFor="let fruit of values"
+      *ngFor="let value of values"
       [selectable]="selectable"
       [removable]="removable"
-      (removed)="remove(fruit)">
-      {{fruit}}
+      (removed)="remove(value)">
+      {{value}}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
 

@@ -74,6 +74,7 @@ import {ImageUploadManagerComponent} from './abstract/image-upload-manager/image
 import {SeasonsComponent} from './seasons/seasons.component';
 import {EventsComponent} from './events/events.component';
 import {AbstractNewsComponent} from "./abstract/abstract-news.component";
+import { AdminUserToggleComponent } from './admin/admin-user-toggle/admin-user-toggle.component';
 
 // @ts-ignore
 @NgModule({
@@ -108,7 +109,8 @@ import {AbstractNewsComponent} from "./abstract/abstract-news.component";
     ImageUploadManagerComponent,
     SeasonsComponent,
     EventsComponent,
-    AbstractNewsComponent
+    AbstractNewsComponent,
+    AdminUserToggleComponent
   ],
   imports: [
     BrowserModule,

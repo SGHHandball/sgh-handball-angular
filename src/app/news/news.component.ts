@@ -9,6 +9,7 @@ import {NewsService} from "./news.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
+import {AdminService} from "../admin/admin.service";
 
 @Component({
   selector: 'app-news',
@@ -27,7 +28,8 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   filteredNews: News[];
 
 
-  constructor(breakpointObserver: BreakpointObserver, newsService: NewsService, translationService: TranslationService, dialog: MatDialog, snackBar: MatSnackBar) {
+  constructor(breakpointObserver: BreakpointObserver, newsService: NewsService, translationService: TranslationService, dialog: MatDialog, snackBar: MatSnackBar,
+              public adminService: AdminService) {
     super(breakpointObserver, newsService, translationService, dialog, snackBar);
   }
 

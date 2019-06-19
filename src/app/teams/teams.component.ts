@@ -39,6 +39,8 @@ export class TeamsComponent extends AbstractComponent {
 
   filteredNews: News[];
 
+  currentTeam: Team;
+
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
               public teamsService: TeamsService,
@@ -59,8 +61,8 @@ export class TeamsComponent extends AbstractComponent {
   }
 
   changeNews(index: number) {
-    const teamWithIndex = this.teamsService.teams[index];
-    this.filteredNews = this.newsService.getFilterNews([teamWithIndex.teamAge, teamWithIndex.teamSeason]);
+    this.currentTeam =  this.teamsService.teams[index];
+    this.filteredNews = this.newsService.getFilterNews([this.currentTeam.teamAge, this.currentTeam.teamSeason]);
   }
 
   addNewTeamToTab() {

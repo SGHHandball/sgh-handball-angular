@@ -6,6 +6,7 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {TC_NEWS_TYPE_EVENT, TC_NEWS_TYPE_REPORT, TranslationService} from "../translation.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
+import {AdminService} from "../admin/admin.service";
 
 @Component({
   selector: 'app-events',
@@ -20,7 +21,8 @@ export class EventsComponent extends AbstractNewsComponent {
 
   constructor(breakpointObserver: BreakpointObserver,
               newsService: NewsService, translationService: TranslationService,
-              dialog: MatDialog, snackBar: MatSnackBar, public eventService: EventService) {
+              dialog: MatDialog, snackBar: MatSnackBar, public eventService: EventService,
+              public adminService : AdminService) {
     super(breakpointObserver, newsService, translationService, dialog, snackBar);
   }
 }

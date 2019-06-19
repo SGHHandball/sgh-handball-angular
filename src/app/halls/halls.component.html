@@ -47,6 +47,6 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
 
-<app-add-btn
-(clickListener)="openHallsEditDialog(undefined)"
+<app-add-btn *ngIf="adminService.isUserHallAdmin()"
+             (clickListener)="openHallsEditDialog(undefined)"
 ></app-add-btn>

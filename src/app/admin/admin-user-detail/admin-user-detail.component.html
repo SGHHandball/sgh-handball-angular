@@ -1,7 +1,41 @@
+<app-admin-user-toggle
+  [toggleDesc]="translationService.get(adminTC)"
+  [toggleValue]="sghUser.admin"
+  (toggleChangeListener)="changeAdminMode()"
+></app-admin-user-toggle>
+
+<app-admin-user-toggle
+  [toggleDesc]="translationService.get(hallsTC)"
+  [toggleValue]="sghUser.hallsAdmin"
+  (toggleChangeListener)="changeHallAdminMode()"
+></app-admin-user-toggle>
+
+
+<app-admin-user-toggle
+  [toggleDesc]="translationService.get(teamsTC)"
+  [toggleValue]="sghUser.teamsAdmin"
+  (toggleChangeListener)="changeTeamsAdminMode()"
+></app-admin-user-toggle>
+
+<app-admin-user-toggle
+  [toggleDesc]="translationService.get(eventsTC)"
+  [toggleValue]="sghUser.eventsAdmin"
+  (toggleChangeListener)="changeEventsAdminMode()"
+></app-admin-user-toggle>
+
+<mat-divider></mat-divider>
+
 <div>
-  <span>{{translationService.get(adminTC)}}</span>
-  <mat-slide-toggle class="toggle"
-                    [checked]="sghUser.admin"
-                    (toggleChange)="changeAdminMode()"
-  ></mat-slide-toggle>
+  <h4>Mannschaften:</h4>
+  <mat-chip-list *ngIf="sghUser.teams" class="chip-list">
+    <mat-chip *ngFor="let team of sghUser.teams" [selectable]="true"
+              [removable]="true" (removed)="removeTeam(team)">
+      {{team}}
+      <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+  <button mat-icon-button>
+    <mat-icon (click)="openAddTeamDialog()">add</mat-icon>
+  </button>
 </div>
+

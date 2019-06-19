@@ -17,14 +17,15 @@
   </div>
 
   <app-add-btn
-    *ngIf="adminService.isUserAdmin()"
+    *ngIf="adminService.isUserTeamsAdmin() || adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)"
     [matMenu]="menu"
     [moreIcon]="true"
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
-    <ng-container *ngIf="adminService.isUserAdmin()">
+    <button mat-menu-item (click)="editTeamPage()"
+            *ngIf="adminService.isUserTeamsAdmin() || adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)">{{translationService.get(editTeamPageTC)}}</button>
+    <ng-container *ngIf="adminService.isUserTeamsAdmin()">
       <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
       <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
       <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>

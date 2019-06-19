@@ -3,7 +3,10 @@ import {Team} from "../teams/team";
 export class SghUser {
   id: string = '';
   admin: boolean = false;
-  teams: Team[] = [];
+  eventsAdmin: boolean = false;
+  hallsAdmin: boolean = false;
+  teamsAdmin: boolean = false;
+  teams: string[] = [];
   preName: string = '';
   lastName: string = '';
 
