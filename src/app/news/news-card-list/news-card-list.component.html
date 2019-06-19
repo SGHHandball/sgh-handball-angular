@@ -47,6 +47,13 @@
             </mat-expansion-panel-header>
             <span>{{newsCard.summary}}</span>
           </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="newsCard.players">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{translationService.get(playersTC)}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <span>{{newsCard.players}}</span>
+          </mat-expansion-panel>
         </mat-accordion>
       </mat-card-content>
       <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">

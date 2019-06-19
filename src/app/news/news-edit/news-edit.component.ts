@@ -15,7 +15,7 @@ import {
   TC_NEWS_BODY,
   TC_NEWS_DATE,
   TC_NEWS_ENEMY_TEAM,
-  TC_NEWS_HOME_TEAM,
+  TC_NEWS_HOME_TEAM, TC_NEWS_PLAYERS,
   TC_NEWS_SCORE,
   TC_NEWS_SUMMARY,
   TC_NEWS_TEAM_AGE,
@@ -31,8 +31,7 @@ import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
 import {map, startWith} from "rxjs/operators";
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Team} from "../../teams/team";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-news-edit',
@@ -51,6 +50,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   scoreFormControl = new FormControl();
   bodyFormControl = new FormControl();
   summaryFormControl = new FormControl();
+  playersFormControl = new FormControl();
   teamAgeFormControl = new FormControl();
   enemyTeamFormControl = new FormControl();
   homeTeamFormControl = new FormControl();
@@ -61,6 +61,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   newsTitleTC = this.translationService.get(TC_NEWS_TITLE);
   newsScoreTC = this.translationService.get(TC_NEWS_SCORE);
   newsSummaryTC = this.translationService.get(TC_NEWS_SUMMARY);
+  newsPlayersTC = this.translationService.get(TC_NEWS_PLAYERS);
   newsBodyTC = this.translationService.get(TC_NEWS_BODY);
   newsDateTC = this.translationService.get(TC_NEWS_DATE);
   newsTeamAgeTC = this.translationService.get(TC_NEWS_TEAM_AGE);
@@ -97,12 +98,13 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   ngOnInit(): void {
     if (this.newsService.expandedNews) {
       this.news = this.newsService.expandedNews;
-      this.date.setValue(this.news.date);
+      this.date.setValue(new Date(this.news.date));
       this.date.registerOnChange(this.getOnChangeFunction);
       if (this.news.title) this.titleFormControl.setValue(this.news.title);
       if (this.news.score) this.scoreFormControl.setValue(this.news.score);
       if (this.news.body) this.bodyFormControl.setValue(this.news.body);
       if (this.news.summary) this.summaryFormControl.setValue(this.news.summary);
+      if (this.news.players) this.playersFormControl.setValue(this.news.players);
       if (this.news.enemyTeam) this.enemyTeamFormControl.setValue(this.news.enemyTeam);
       if (this.news.homeTeam) this.homeTeamFormControl.setValue(this.news.homeTeam);
       if (this.news.teamAge) this.teamAgeFormControl.setValue(this.news.teamAge);
@@ -128,11 +130,12 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   }
 
   saveNews() {
-    this.news.date = new Date(this.date.value.toString());
+    this.news.date = new Date(this.date.value.toString()).getTime();
     this.news.title = this.titleFormControl.value;
     this.news.score = this.scoreFormControl.value;
     this.news.body = this.bodyFormControl.value;
     this.news.summary = this.summaryFormControl.value;
+    this.news.players = this.playersFormControl.value;
     this.news.teamAge = this.teamAgeFormControl.value;
     this.news.enemyTeam = this.enemyTeamFormControl.value;
     this.news.homeTeam = this.homeTeamFormControl.value;
@@ -176,7 +179,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     uploadTask.then(snap => {
       this.uploadProgress = undefined;
       snap.ref.getDownloadURL().then(url => {
-        console.log(url);
+        if (!environment.production) console.log(url);
         if (!this.news.imgLinks) {
           this.news.imgLinks = [];
         }

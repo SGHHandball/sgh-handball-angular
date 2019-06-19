@@ -55,7 +55,6 @@ export class NewsService {
   getUnAuthNewsRef(): AngularFirestoreCollection<News> {
     return this.db.collection<News>(DB_COLLECTION_NEWS, ref =>
       ref.where('checked', '==', true)
-        .orderBy('date', 'desc')
     );
   }
 
@@ -64,8 +63,7 @@ export class NewsService {
     return this.db.collection<News>(DB_COLLECTION_NEWS,
       ref => ref
         .where('creator', '==', this.user.uid)
-        .where('checked', '==', false)
-        .orderBy('date', 'desc'));
+        .where('checked', '==', false));
   }
 
 
@@ -78,16 +76,18 @@ export class NewsService {
   }
 
   getFilterNews(filterValues: string[]): News[] {
+    let returnNewsArray = this.news;
     if (this.news && filterValues && filterValues.length > 0) {
-      const filteredNews = [];
+      returnNewsArray = [];
       this.news.forEach(news => {
-        if (this.areFiltersInNews(news, filterValues) && !filteredNews.includes(news)) {
-          filteredNews.push(news);
+        if (this.areFiltersInNews(news, filterValues) && !returnNewsArray.includes(news)) {
+          returnNewsArray.push(news);
         }
       });
-      return filteredNews;
+      return returnNewsArray;
     }
-    return this.news;
+    return returnNewsArray;
+
   }
 
   areFiltersInNews(news: News, filterValues: string[]): boolean {
@@ -113,7 +113,9 @@ export class NewsService {
   }
 
   setupNews(news: News[]) {
-    this.news = news;
+    this.news = news.sort((val1, val2) => {
+      return (val2.date - val1.date)
+    });
     this.newsLoaded = true;
   }
 
@@ -221,6 +223,7 @@ export class NewsService {
   }
 
   isClubListContainingClubName(clubName: string): boolean {
+    if (!clubName || clubName.length === 0 || clubName === '') return true;
     let containing = false;
     this.clubs.forEach((club: Club) => {
       if (club.name === clubName) {

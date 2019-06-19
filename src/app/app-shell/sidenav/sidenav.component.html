@@ -41,7 +41,6 @@
 
   <mat-sidenav-content>
     <app-toolbar
-      [sideNavButtonIcon]="drawer.opened ? 'close' : 'menu'"
       (sideNavButtonListener)="drawer.toggle()"
     ></app-toolbar>
     <router-outlet></router-outlet>

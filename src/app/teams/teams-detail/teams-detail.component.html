@@ -1,5 +1,27 @@
-<slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
-           [showDots]="true"
-           [imageUrls]="team.imgUrls"
-           *ngIf="team.imgUrls && team.imgUrls.length>0"
-></slideshow>
+<h2 class="team-header">{{team.teamAge}} - {{team.teamYear}}</h2>
+
+<mat-card class="image-edit-container" *ngIf="teamsService.editTeamsActive">
+  <mat-card-content>
+    <app-image-upload-manager
+      [urls]="team ? team.imgUrls : []"
+      (itemDeleteEventListener)="deleteImage($event)"
+      (afterItemMovedEventListener)="changedValues = true"
+      [uploadProgress]="uploadProgress"
+      (uploadEventListener)="upload($event)"
+    ></app-image-upload-manager>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="warn" (click)="disableEditMode()">{{translationService.get(cancelTC)}}</button>
+    <button mat-raised-button color="primary" (click)="saveTeam()"
+            [disabled]="!changedValues">{{translationService.get(saveTC)}}</button>
+  </mat-card-actions>
+</mat-card>
+
+<div class="slideshow-container"
+     *ngIf="!teamsService.editTeamsActive">
+  <slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
+             [showDots]="true"
+             [imageUrls]="team.imgUrls"
+             *ngIf="team.imgUrls && team.imgUrls.length>0"
+  ></slideshow>
+</div>

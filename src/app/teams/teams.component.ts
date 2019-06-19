@@ -11,7 +11,7 @@ import {
   TC_GENERAL_REQUIRED_ERROR,
   TC_NEWS_CHECKED_HEADER,
   TC_NEWS_CHECKED_MESSAGE, TC_OK, TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
-  TC_TEAMS_CHANGE_ORDER, TC_TEAMS_DELETE_TEAM, TC_TEAMS_NEWS_HEADER, TC_TEAMS_TEAM,
+  TC_TEAMS_CHANGE_ORDER, TC_TEAMS_DELETE_TEAM, TC_TEAMS_EDIT_TEAM_PAGE, TC_TEAMS_NEWS_HEADER, TC_TEAMS_TEAM,
   TranslationService
 } from "../translation.service";
 import {
@@ -33,6 +33,7 @@ export class TeamsComponent extends AbstractComponent {
   addTeamTC = TC_TEAMS_ADD_NEW_TEAM;
   orderChangeTC = TC_TEAMS_CHANGE_ORDER;
   deleteTeamTC = TC_TEAMS_DELETE_TEAM;
+  editTeamPageTC = TC_TEAMS_EDIT_TEAM_PAGE;
 
   newsHeaderTC = TC_TEAMS_NEWS_HEADER;
 
@@ -43,6 +44,7 @@ export class TeamsComponent extends AbstractComponent {
               public teamsService: TeamsService,
               private dialog: MatDialog,
               private newsService: NewsService,
+              private adminService: AdminService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
     this.teamsService.loadAllTeams()
@@ -108,5 +110,9 @@ export class TeamsComponent extends AbstractComponent {
           .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL)))
       }
     })
+  }
+
+  editTeamPage() {
+    this.teamsService.editTeamsActive = !this.teamsService.editTeamsActive;
   }
 }

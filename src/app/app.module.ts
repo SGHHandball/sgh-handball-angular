@@ -102,7 +102,7 @@ import { ImageUploadManagerComponent } from './abstract/image-upload-manager/ima
     NewsCardListComponent,
     ImageUploadComponent,
     TeamsDeleteDialogComponent,
-    ImageUploadManagerComponent
+    ImageUploadManagerComponent,
   ],
   imports: [
     BrowserModule,

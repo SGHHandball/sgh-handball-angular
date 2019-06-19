@@ -60,7 +60,7 @@ export class AuthComponent extends AbstractComponent {
     this.afAuth.auth.signOut().then(() => {
       this.openSnackBar(this.translationService.get(TC_AUTH_LOGOUT_SUCCESS));
     }).catch(error => {
-      console.log(error);
+      if (!environment.production) console.log(error);
       this.openSnackBar(this.translationService.get(TC_AUTH_LOGOUT_ERROR));
     });
   }

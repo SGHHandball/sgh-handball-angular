@@ -7,13 +7,14 @@ export class News {
   score: string = '0:0 (0:0)';
   body: string = '';
   summary: string = '';
+  players: string;
   imgLinks: string[] = [];
   homeTeam: string = '';
   enemyTeam: string = '';
   teamAge: string = '';
   checked: boolean = false;
   send: boolean = false;
-  date: Date = new Date();
+  date: number = new Date().getTime();
   teamYear: string = DEFAULT_YEAR;
   type: string;
 
@@ -46,7 +47,7 @@ export const NEWS_TEAM_YOUTH_AGES = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 export const DB_COLLECTION_NEWS = 'news';
 
-export function getDateString(date: string | Date): string {
+export function getDateString(date: number | string | Date): string {
   return new Date(date).toLocaleDateString();
 }
 

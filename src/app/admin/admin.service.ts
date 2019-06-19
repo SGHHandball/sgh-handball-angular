@@ -38,6 +38,11 @@ export class AdminService {
     return this.user && this.sghUser && this.sghUser.admin;
   }
 
+
+  getTeamRights(): string[] {
+    return [];
+  }
+
   getAllUsers(): Observable<SghUser[]> {
     if (this.isUserAdmin()) {
       return this.db.collection<SghUser>(SGH_USERS).snapshotChanges()

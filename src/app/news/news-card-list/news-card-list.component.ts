@@ -4,14 +4,20 @@ import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AdminService} from "../../admin/admin.service";
-import {TC_NEWS_NO_NEWS, TC_NEWS_SUMMARY, TC_NEWS_TYPE_REPORT, TranslationService} from "../../translation.service";
+import {
+  TC_NEWS_NO_NEWS,
+  TC_NEWS_PLAYERS,
+  TC_NEWS_SUMMARY,
+  TC_NEWS_TYPE_REPORT,
+  TranslationService
+} from "../../translation.service";
 
 @Component({
   selector: 'app-news-card-list',
   templateUrl: './news-card-list.component.html',
   styleUrls: ['./news-card-list.component.css']
 })
-export class NewsCardListComponent extends AbstractComponent implements OnInit {
+export class NewsCardListComponent extends AbstractComponent{
 
   @Input() news: News[];
 
@@ -23,6 +29,7 @@ export class NewsCardListComponent extends AbstractComponent implements OnInit {
 
   noNewsTC = TC_NEWS_NO_NEWS;
   summaryTC = TC_NEWS_SUMMARY;
+  playersTC = TC_NEWS_PLAYERS;
 
 
   constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
@@ -69,9 +76,6 @@ export class NewsCardListComponent extends AbstractComponent implements OnInit {
       default:
         return this.translationService.get(TC_NEWS_TYPE_REPORT);
     }
-  }
-
-  ngOnInit() {
   }
 
 }

@@ -37,7 +37,8 @@
               <input type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
                      [formControl]="teamAgeFormControl">
               <mat-autocomplete #autoTeamAge="matAutocomplete">
-                <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option" (change)="onChangeValue()">
+                <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option"
+                            (onSelectionChange)="onChangeValue()">
                   {{option}}
                 </mat-option>
               </mat-autocomplete>
@@ -55,7 +56,7 @@
                 <input [formControl]="homeTeamFormControl" type="text" matInput [matAutocomplete]="autoHomeTeam"
                        (change)="onChangeValue()">
                 <mat-autocomplete #autoHomeTeam="matAutocomplete">
-                  <mat-option *ngFor="let club of newsService.clubs">
+                  <mat-option *ngFor="let club of newsService.clubs" [value]="club.name" (onSelectionChange)="onChangeValue()">
                     {{club.name}}
                   </mat-option>
                 </mat-autocomplete>
@@ -71,7 +72,7 @@
                 <input [formControl]="enemyTeamFormControl" type="text" matInput [matAutocomplete]="autoEnemyTeam"
                        (change)="onChangeValue()">
                 <mat-autocomplete #autoEnemyTeam="matAutocomplete">
-                  <mat-option *ngFor="let club of newsService.clubs">
+                  <mat-option *ngFor="let club of newsService.clubs" [value]="club.name" (onSelectionChange)="onChangeValue()">
                     {{club.name}}
                   </mat-option>
                 </mat-autocomplete>
@@ -117,6 +118,18 @@
           <mat-form-field appearance="outline">
             <mat-label>{{newsSummaryTC}}</mat-label>
             <textarea [formControl]="summaryFormControl" matInput
+                      (change)="onChangeValue()"
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="3"
+                      cdkAutosizeMaxRows="10"></textarea>
+          </mat-form-field>
+        </div>
+
+
+        <div floatLabel="always">
+          <mat-form-field appearance="outline">
+            <mat-label>{{newsPlayersTC}}</mat-label>
+            <textarea [formControl]="playersFormControl" matInput
                       (change)="onChangeValue()"
                       cdkTextareaAutosize
                       cdkAutosizeMinRows="3"

@@ -7,7 +7,7 @@
     </mat-tab>
   </mat-tab-group>
 
-  <h1 class="news-header">{{translationService.get(newsHeaderTC)}}</h1>
+  <h2 class="news-header">{{translationService.get(newsHeaderTC)}}</h2>
 
   <div class="container">
     <app-news-card-list
@@ -17,13 +17,17 @@
   </div>
 
   <app-add-btn
+    *ngIf="adminService.isUserAdmin()"
     [matMenu]="menu"
     [moreIcon]="true"
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
-    <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
-    <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>
+    <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
+    <ng-container *ngIf="adminService.isUserAdmin()">
+      <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
+      <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
+      <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>
+    </ng-container>
   </mat-menu>
 </ng-container>

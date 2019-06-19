@@ -12,6 +12,7 @@ import {
   TranslationService
 } from "../translation.service";
 import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.component";
+import {environment} from "../../environments/environment";
 
 /**
  * @title Table with expandable rows
@@ -78,7 +79,7 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
     this.adminService.changeAdminMode(sghUser).then(() => {
       this.openSnackBar(this.translationService.get(TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS));
     }).catch(error => {
-      console.log(error);
+      if (!environment.production) console.log(error);
       this.openSnackBar(this.translationService.get(TC_GENERAL_ERROR));
     });
   }

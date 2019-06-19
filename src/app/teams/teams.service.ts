@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map} from "rxjs/operators";
 import {Team} from "./team";
+import {AngularFireStorage, AngularFireUploadTask} from "@angular/fire/storage";
+import {DB_COLLECTION_NEWS, News} from "../news/news";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,10 @@ export class TeamsService {
   teamsLoaded = false;
   yearToLoad = DEFAULT_YEAR;
 
-  constructor(private db: AngularFirestore) {
+  editTeamsActive = false;
+
+  constructor(private db: AngularFirestore,
+              private afStorage: AngularFireStorage) {
   }
 
   loadAllTeams(): Promise<void> {
@@ -59,9 +64,20 @@ export class TeamsService {
       ))))
   }
 
+  saveNewTeamValues(team: Team, onChangeFun: () => any) {
+    this.db.collection<News>(DB_COLLECTION_TEAMS)
+      .doc(team.id).set(JSON.parse(JSON.stringify(team))).finally(onChangeFun)
+  }
+
 
   deleteTeam(team: Team) {
     return this.db.collection<Team>(DB_COLLECTION_TEAMS).doc(team.id).delete();
+  }
+
+  uploadImage(event): AngularFireUploadTask {
+    const randomId = Math.random().toString(36).substring(2);
+    const ref = this.afStorage.ref(randomId);
+    return ref.put(event.target.files[0]);
   }
 }
 
