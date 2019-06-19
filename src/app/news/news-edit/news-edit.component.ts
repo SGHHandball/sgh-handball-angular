@@ -16,7 +16,7 @@ import {
   TC_NEWS_DATE,
   TC_NEWS_ENEMY_TEAM,
   TC_NEWS_HOME_TEAM, TC_NEWS_PLAYERS,
-  TC_NEWS_SCORE,
+  TC_NEWS_SCORE, TC_NEWS_SEASON,
   TC_NEWS_SUMMARY,
   TC_NEWS_TEAM_AGE,
   TC_NEWS_TITLE,
@@ -32,6 +32,7 @@ import {Observable} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
 import {map, startWith} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
+import {SeasonService} from "../../seasons/season.service";
 
 @Component({
   selector: 'app-news-edit',
@@ -52,6 +53,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   summaryFormControl = new FormControl();
   playersFormControl = new FormControl();
   teamAgeFormControl = new FormControl();
+  teamSeasonFormControl = new FormControl();
   enemyTeamFormControl = new FormControl();
   homeTeamFormControl = new FormControl();
 
@@ -65,6 +67,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   newsBodyTC = this.translationService.get(TC_NEWS_BODY);
   newsDateTC = this.translationService.get(TC_NEWS_DATE);
   newsTeamAgeTC = this.translationService.get(TC_NEWS_TEAM_AGE);
+  newsTeamSeasonTC = this.translationService.get(TC_NEWS_SEASON);
   newsHomeTeam = this.translationService.get(TC_NEWS_HOME_TEAM);
   newsEnemyTeam = this.translationService.get(TC_NEWS_ENEMY_TEAM);
 
@@ -76,6 +79,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
               public translationService: TranslationService,
               private dialog: MatDialog,
               public newsService: NewsService,
+              public seasonService: SeasonService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
@@ -108,6 +112,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
       if (this.news.enemyTeam) this.enemyTeamFormControl.setValue(this.news.enemyTeam);
       if (this.news.homeTeam) this.homeTeamFormControl.setValue(this.news.homeTeam);
       if (this.news.teamAge) this.teamAgeFormControl.setValue(this.news.teamAge);
+      if (this.news.teamSeason) this.teamSeasonFormControl.setValue(this.news.teamSeason);
       this.filteredTeamAgesOptions = this.teamAgeFormControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filterTeamAges(value))
@@ -139,6 +144,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     this.news.teamAge = this.teamAgeFormControl.value;
     this.news.enemyTeam = this.enemyTeamFormControl.value;
     this.news.homeTeam = this.homeTeamFormControl.value;
+    this.news.teamSeason = this.teamSeasonFormControl.value;
     this.saveNewClub(this.enemyTeamFormControl.value);
     this.saveNewClub(this.homeTeamFormControl.value);
     this.newsService.saveNewsToDataBase(this.news, () => {
@@ -169,7 +175,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   private _filterTeamAges(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.newsService.newsTeamAges.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.newsService.newsTeamAges.filter(option => option && option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   upload(event) {
@@ -204,5 +210,4 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
       }
     });
   }
-
 }

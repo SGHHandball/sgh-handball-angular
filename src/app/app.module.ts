@@ -71,6 +71,7 @@ import {SlideshowModule} from "ng-simple-slideshow";
 import { ImageUploadComponent } from './abstract/image-upload/image-upload.component';
 import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-delete-dialog.component";
 import { ImageUploadManagerComponent } from './abstract/image-upload-manager/image-upload-manager.component';
+import { SeasonsComponent } from './seasons/seasons.component';
 
 // @ts-ignore
 @NgModule({
@@ -103,6 +104,7 @@ import { ImageUploadManagerComponent } from './abstract/image-upload-manager/ima
     ImageUploadComponent,
     TeamsDeleteDialogComponent,
     ImageUploadManagerComponent,
+    SeasonsComponent,
   ],
   imports: [
     BrowserModule,

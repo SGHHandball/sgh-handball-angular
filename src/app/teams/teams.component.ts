@@ -60,7 +60,7 @@ export class TeamsComponent extends AbstractComponent {
 
   changeNews(index: number) {
     const teamWithIndex = this.teamsService.teams[index];
-    this.filteredNews = this.newsService.getFilterNews([teamWithIndex.teamAge, teamWithIndex.teamYear]);
+    this.filteredNews = this.newsService.getFilterNews([teamWithIndex.teamAge, teamWithIndex.teamSeason]);
   }
 
   addNewTeamToTab() {

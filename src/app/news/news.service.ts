@@ -108,7 +108,7 @@ export class NewsService {
       (news.title && news.title.toLowerCase().includes(filter)) ||
       (news.summary && news.summary.toLowerCase().includes(filter)) ||
       (news.teamAge && news.teamAge.toLowerCase() === filter) ||
-      (news.teamYear && news.teamYear.toLowerCase() === filter)
+      (news.teamSeason && news.teamSeason.toLowerCase() === filter)
       ;
   }
 

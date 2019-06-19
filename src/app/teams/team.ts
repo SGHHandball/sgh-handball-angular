@@ -2,13 +2,13 @@ export class Team {
   id: string;
   position: number;
   teamAge: string;
-  teamYear: string;
+  teamSeason: string;
   imgUrls: string[];
 
 
-  constructor(position: number, teamAge: string, teamYear: string) {
+  constructor(position: number, teamAge: string, teamSeason: string) {
     this.position = position;
     this.teamAge = teamAge;
-    this.teamYear = teamYear;
+    this.teamSeason = teamSeason;
   }
 }

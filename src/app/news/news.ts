@@ -14,9 +14,13 @@ export class News {
   teamAge: string = '';
   checked: boolean = false;
   send: boolean = false;
-  date: number = new Date().getTime();
-  teamYear: string = DEFAULT_YEAR;
+  date: number;
+  teamSeason: string;
   type: string;
+
+  constructor() {
+    this.date = new Date().getTime();
+  }
 
 
   withTitleAndBody(title: string, body: string): News {
@@ -39,7 +43,6 @@ export class News {
     this.type = type;
     return this;
   }
-
 
 }
 

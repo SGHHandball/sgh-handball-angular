@@ -12,7 +12,7 @@ export class TeamsService {
 
   teams: Team[];
   teamsLoaded = false;
-  yearToLoad = DEFAULT_YEAR;
+  seasonToLoad = DEFAULT_YEAR;
 
   editTeamsActive = false;
 
@@ -25,7 +25,7 @@ export class TeamsService {
       this.teamsLoaded = false;
       this.db.collection<Team>(DB_COLLECTION_TEAMS,
         ref =>
-          ref.where('teamYear', '==', this.yearToLoad)
+          ref.where('teamSeason', '==', this.seasonToLoad)
             .orderBy("position", "asc"))
         .snapshotChanges().pipe(
         map(actions => {
@@ -60,7 +60,7 @@ export class TeamsService {
       .add(JSON.parse(JSON.stringify(new Team(
         this.teams.length - 1,
         teamAge,
-        this.yearToLoad
+        this.seasonToLoad
       ))))
   }
 
