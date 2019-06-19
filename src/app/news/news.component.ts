@@ -1,112 +1,38 @@
-import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {AbstractComponent} from "../abstract/abstract.component";
-import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "./news";
+import {News} from "./news";
 import {
-  TC_NEWS_CHECKED_HEADER,
-  TC_NEWS_CHECKED_MESSAGE,
-  TC_GENERAL_DELETE_HEADER,
-  TC_GENERAL_DELETE_MESSAGE,
-  TC_NEWS_HEADER,
-  TC_NEWS_SEND_HEADER,
-  TC_NEWS_SEND_MESSAGE,
   TC_NEWS_TYPE_REPORT,
-  TranslationService,
-  TC_GENERAL_DELETE_SUCCESS,
-  TC_GENERAL_DELETE_FAIL,
-  TC_GENERAL_EDIT_SUCCESS,
-  TC_GENERAL_EDIT_FAIL,
-  TC_FILTER
+  TranslationService, TC_NEWS_TYPE_EVENT, TC_FILTER
 } from "../translation.service";
-import {NewsService, NewsType} from "./news.service";
-import {AdminService} from "../admin/admin.service";
-import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
+import {NewsService} from "./news.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
-import {environment} from "../../environments/environment";
-import {TeamsService} from "../teams/teams.service";
+import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
+import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
-export class NewsComponent extends AbstractComponent implements OnInit {
+export class NewsComponent extends AbstractNewsComponent implements OnInit {
 
   filterTC = TC_FILTER;
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
+  newsTypeEventTC = TC_NEWS_TYPE_EVENT;
 
-  newsTypeReport = NewsType.report;
+  newsTypeReport = NEWS_TYPE_REPORT;
+  newsTypeEvent = NEWS_TYPE_EVENT;
 
   filteredNews: News[];
 
-  constructor(breakpointObserver: BreakpointObserver,
-              public newsService: NewsService,
-              public translationService: TranslationService,
-              private dialog: MatDialog,
-              snackBar: MatSnackBar) {
-    super(breakpointObserver, snackBar);
+
+  constructor(breakpointObserver: BreakpointObserver, newsService: NewsService, translationService: TranslationService, dialog: MatDialog, snackBar: MatSnackBar) {
+    super(breakpointObserver, newsService, translationService, dialog, snackBar);
   }
 
   ngOnInit(): void {
     this.filterNews([]);
-  }
-
-  openDeleteNewsDialog(news: News) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.newsService.deleteNews(news).then(() => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
-        }).catch(error => {
-          if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))
-        });
-      }
-    });
-  }
-
-
-  openSendNewsDialog(news: News) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_NEWS_SEND_HEADER, TC_NEWS_SEND_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.newsService.updateNewsSendToTrue(news).then(() => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
-        }).catch(error => {
-          if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL))
-        });
-      }
-    });
-  }
-
-  openCheckNewsDialog(news: News) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_NEWS_CHECKED_HEADER, TC_NEWS_CHECKED_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.newsService.updateNewsCheckToTrue(news).then(() => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
-        }).catch(error => {
-          if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL))
-        });
-      }
-    });
   }
 
   filterNews(filterValues: string[]) {

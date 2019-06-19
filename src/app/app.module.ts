@@ -35,7 +35,7 @@ import {
   MatSnackBarModule,
   MatDividerModule,
   MatChipsModule,
-  MatTabsModule
+  MatTabsModule, MatTooltipModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -64,14 +64,16 @@ import {AddBtnComponent} from './abstract/add-btn/add-btn.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-change-dialog.component';
 import {DefaultInputDialogComponent} from './abstract/default-input-dialog/default-input-dialog.component';
-import { TeamsDetailComponent } from './teams/teams-detail/teams-detail.component';
-import { NewsCardListComponent } from './news/news-card-list/news-card-list.component';
+import {TeamsDetailComponent} from './teams/teams-detail/teams-detail.component';
+import {NewsCardListComponent} from './news/news-card-list/news-card-list.component';
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {SlideshowModule} from "ng-simple-slideshow";
-import { ImageUploadComponent } from './abstract/image-upload/image-upload.component';
+import {ImageUploadComponent} from './abstract/image-upload/image-upload.component';
 import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-delete-dialog.component";
-import { ImageUploadManagerComponent } from './abstract/image-upload-manager/image-upload-manager.component';
-import { SeasonsComponent } from './seasons/seasons.component';
+import {ImageUploadManagerComponent} from './abstract/image-upload-manager/image-upload-manager.component';
+import {SeasonsComponent} from './seasons/seasons.component';
+import {EventsComponent} from './events/events.component';
+import {AbstractNewsComponent} from "./abstract/abstract-news.component";
 
 // @ts-ignore
 @NgModule({
@@ -105,6 +107,8 @@ import { SeasonsComponent } from './seasons/seasons.component';
     TeamsDeleteDialogComponent,
     ImageUploadManagerComponent,
     SeasonsComponent,
+    EventsComponent,
+    AbstractNewsComponent
   ],
   imports: [
     BrowserModule,
@@ -144,7 +148,8 @@ import { SeasonsComponent } from './seasons/seasons.component';
     MatChipsModule,
     MatTabsModule,
     DragDropModule,
-    SlideshowModule
+    SlideshowModule,
+    MatTooltipModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

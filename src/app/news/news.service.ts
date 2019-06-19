@@ -3,50 +3,37 @@ import {DB_COLLECTION_NEWS, News, NEWS_TEAM_YOUTH_AGES} from "./news";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-  DocumentChangeAction,
 } from "@angular/fire/firestore";
 import {Router} from "@angular/router";
 import {
   TC_NEWS_GENDER_M, TC_NEWS_GENDER_W,
   TC_NEWS_PATH_EDIT,
-  TC_NEWS_SUMMARY, TC_NEWS_TEAM_MEN, TC_NEWS_TEAM_WOMEN, TC_NEWS_TEAM_YOUTH,
+  TC_NEWS_TEAM_MEN, TC_NEWS_TEAM_WOMEN, TC_NEWS_TEAM_YOUTH, TC_NEWS_TYPE_EVENT,
   TC_NEWS_TYPE_REPORT,
   TranslationService
 } from "../translation.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {User} from "firebase";
-import {combineLatest, Observable} from "rxjs";
-import {map, switchMap} from "rxjs/operators";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
-import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from "@angular/fire/storage";
+import {AngularFireStorage, AngularFireUploadTask} from "@angular/fire/storage";
+import {AbstractNewsService} from "../abstract/abstract-news.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class NewsService {
-
-  news: News[];
-  newsLoaded = false;
-
+export class NewsService extends AbstractNewsService {
   clubs: Club[];
 
   newsTeamAges: string[] = [];
 
-  expandedNews: News;
-  expandedNewsEdit: boolean = false;
 
-  user: User;
-
-  constructor(private db: AngularFirestore,
-              public afAuth: AngularFireAuth,
-              private afStorage: AngularFireStorage,
+  constructor(db: AngularFirestore,
+              afAuth: AngularFireAuth,
+              afStorage: AngularFireStorage,
               private router: Router,
-              private translationService: TranslationService) {
+              translationService: TranslationService) {
+    super(db, afAuth, afStorage, translationService);
     this.addTeamAges();
-    this.afAuth.user.subscribe(user => {
-      this.user = user;
-      this.loadAllNews();
-    });
     this.db.collection<Club>(CLUBS_COLLECTION_NAME).valueChanges().subscribe(clubs => {
       this.clubs = clubs;
     });
@@ -66,14 +53,6 @@ export class NewsService {
         .where('checked', '==', false));
   }
 
-
-  loadAllNews() {
-    if (this.user) {
-      this.initCreatorNews();
-    } else {
-      this.initNormalNews();
-    }
-  }
 
   getFilterNews(filterValues: string[]): News[] {
     let returnNewsArray = this.news;
@@ -112,109 +91,6 @@ export class NewsService {
       ;
   }
 
-  setupNews(news: News[]) {
-    this.news = news.sort((val1, val2) => {
-      return (val2.date - val1.date)
-    });
-    this.newsLoaded = true;
-  }
-
-  initNormalNews() {
-    this.getUnAuthNewsRef().snapshotChanges().pipe(
-      map(actions =>
-        actions.map(action => this.addIdToNews(action))
-      )
-    ).subscribe(news => this.setupNews(news));
-  }
-
-  initCreatorNews() {
-    combineLatest(this.getUnAuthNewsRef().snapshotChanges(),
-      this.getAuthCreatorNewsRef().snapshotChanges()).pipe(
-      switchMap(actions => {
-        const [unAuthNews, authCreatorNews] = actions;
-        const combined = unAuthNews.concat(authCreatorNews);
-        return [
-          combined.map(action => this.addIdToNews(action))
-        ]
-      })
-    ).subscribe(news => this.setupNews(news));
-  }
-
-  addIdToNews(action: DocumentChangeAction<News>): News {
-    const data = action.payload.doc.data() as News;
-    data.id = action.payload.doc.id;
-    return data;
-  }
-
-  addNewNews(newsType: NewsType) {
-    if (this.user) {
-      const newsTypeText = this.getNewNewsInitText(newsType);
-      const newNews = new News()
-        .withTitleAndBody(newsTypeText, newsTypeText)
-        .withType(newsType.toString())
-        .withSummary(this.translationService.get(TC_NEWS_SUMMARY))
-        .withCreator(this.user.uid);
-
-      this.db.collection<News>(DB_COLLECTION_NEWS)
-        .add(JSON.parse(JSON.stringify(newNews)))
-        .then(response => {
-          newNews.id = response.id;
-          this.openNewsEdit(newNews);
-        })
-    } else {
-      // TODO: Handle if user is not know, which should never happen
-    }
-  }
-
-  deleteNews(news: News) {
-    return this.db.collection(DB_COLLECTION_NEWS).doc(news.id).delete();
-  }
-
-  updateNewsSendToTrue(news: News) {
-    return this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
-      send: true
-    });
-  }
-
-  updateNewsCheckToTrue(news: News) {
-    return this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
-      checked: true
-    });
-  }
-
-  getNewNewsInitText(newsType: NewsType): string {
-    switch (newsType) {
-      case NewsType.report:
-        return this.translationService.get(TC_NEWS_TYPE_REPORT);
-      default:
-        return ''
-    }
-  }
-
-
-  saveNewsToDataBase(news: News, onChangeFun: () => any) {
-    this.db.collection<News>(DB_COLLECTION_NEWS)
-      .doc(news.id).set(JSON.parse(JSON.stringify(news))).finally(onChangeFun)
-  }
-
-
-  openNewsEdit(toExpandNews: News) {
-    this.expandedNewsEdit = true;
-    this.changeExpandedNews(toExpandNews);
-    this.router.navigate([this.router.url.replace('/', '') + '/' + TC_NEWS_PATH_EDIT])
-  }
-
-
-  closeExpandedNews() {
-    this.expandedNewsEdit = false;
-    this.changeExpandedNews(undefined);
-    this.router.navigate([this.router.url.replace('/' + TC_NEWS_PATH_EDIT, '').replace('/', '')])
-  }
-
-
-  changeExpandedNews(toExpandNews: News | undefined) {
-    this.expandedNews = toExpandNews;
-  }
 
   saveNewClubToCollection(clubName: string) {
     if (!this.isClubListContainingClubName(clubName)) {
@@ -245,15 +121,43 @@ export class NewsService {
     })
   }
 
-  uploadImage(event): AngularFireUploadTask {
-    const randomId = Math.random().toString(36).substring(2);
-    const ref = this.afStorage.ref(randomId);
-    return ref.put(event.target.files[0]);
+
+  addNewNews(newsType: string) {
+    if (this.user) {
+      const newsTypeText = this.getNewNewsInitText(newsType);
+      const newNews = new News()
+        .withTitleAndBody(newsTypeText, newsTypeText)
+        .withType(newsType.toString())
+        .withCreator(this.user.uid);
+
+      this.db.collection<News>(DB_COLLECTION_NEWS)
+        .add(JSON.parse(JSON.stringify(newNews)))
+        .then(response => {
+          newNews.id = response.id;
+          this.openNewsEdit(newNews);
+        })
+    } else {
+      // TODO: Handle if user is not know, which should never happen
+    }
   }
 
-}
+
+  openNewsEdit(toExpandNews: News) {
+    this.changeExpandedNews(toExpandNews);
+    this.router.navigate([this.router.url.replace('/', '') + '/' + TC_NEWS_PATH_EDIT])
+  }
 
 
-export enum NewsType {
-  report
+  closeExpandedNews() {
+    this.changeExpandedNews(undefined);
+    this.router.navigate([this.router.url.replace('/' + TC_NEWS_PATH_EDIT, '').replace('/', '')])
+  }
+
+
+  changeExpandedNews(toExpandNews: News | undefined) {
+    this.expandedNews = toExpandNews;
+  }
+
+
 }
+

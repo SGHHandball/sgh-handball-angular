@@ -32,6 +32,8 @@
   <app-add-btn [matMenu]="newsTypeMenu"></app-add-btn>
   <mat-menu #newsTypeMenu="matMenu">
     <button mat-menu-item
+            (click)="newsService.addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
+    <button mat-menu-item
             (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
   </mat-menu>
 

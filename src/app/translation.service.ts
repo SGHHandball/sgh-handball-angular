@@ -54,6 +54,11 @@ export const TC_PASSWORD = 'password';
 export const TC_FILTER = 'filter';
 export const TC_IMAGES = 'images';
 
+export const TC_DELETE = 'delete';
+export const TC_EDIT = 'edit';
+export const TC_SEND = 'send';
+export const TC_MAKE_VISIBLE = 'make-visible';
+
 
 export const TC_GENERAL_ERROR = 'general-error';
 export const TC_GENERAL_REQUIRED_ERROR = 'general-required-error';
@@ -81,6 +86,8 @@ export const TC_NEWS_TEAM_WOMEN = 'news-team-women';
 export const TC_NEWS_HOME_TEAM = 'news-home-team';
 export const TC_NEWS_ENEMY_TEAM = 'news-enemy-team';
 export const TC_NEWS_TYPE_REPORT = 'news-type-report';
+export const TC_NEWS_TYPE_EVENT = 'news-type-event';
+export const TC_NEWS_TYPE_DESCRIPTION = 'news-type-description';
 export const TC_NEWS_SEASON = 'news-team-season';
 export const TC_NEWS_NO_NEWS = 'news-no-news';
 export const TC_NEWS_UNSAVED_DATA_WARNING_HEADER = 'news-unsaved-data-warning-header';

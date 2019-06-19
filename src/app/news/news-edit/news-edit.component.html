@@ -28,38 +28,40 @@
             </mat-form-field>
           </div>
 
-          <div [fxFlex]="!(isHandset$ | async) ? 40 : 50"
-               fxLayoutAlign="center center"
-               class="news-team-age-container"
-          >
-            <mat-form-field appearance="outline">
-              <mat-label>{{newsTeamAgeTC}}</mat-label>
-              <input type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
-                     [formControl]="teamAgeFormControl">
-              <mat-autocomplete #autoTeamAge="matAutocomplete">
-                <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option"
-                            (onSelectionChange)="onChangeValue()">
-                  {{option}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-          </div>
+          <ng-container *ngIf="isNewsTypeReport()">
+            <div [fxFlex]="!(isHandset$ | async) ? 40 : 50"
+                 fxLayoutAlign="center center"
+                 class="news-team-age-container"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>{{newsTeamAgeTC}}</mat-label>
+                <input type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
+                       [formControl]="teamAgeFormControl">
+                <mat-autocomplete #autoTeamAge="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option"
+                              (onSelectionChange)="onChangeValue()">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
 
-          <div *ngIf="!(isHandset$ | async)" [fxFlex]="40" fxLayoutAlign="center center">
-            <mat-form-field appearance="outline">
-              <mat-label>{{newsTeamSeasonTC}}</mat-label>
-              <mat-select [formControl]="teamSeasonFormControl">
-                <mat-option *ngFor="let season of seasonService.seasons"
-                            [value]="seasonService.getSeasonAsString(season)"
-                            (onSelectionChange)="onChangeValue()">
-                  {{seasonService.getSeasonAsString(season)}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+            <div *ngIf="!(isHandset$ | async)" [fxFlex]="40" fxLayoutAlign="center center">
+              <mat-form-field appearance="outline">
+                <mat-label>{{newsTeamSeasonTC}}</mat-label>
+                <mat-select [formControl]="teamSeasonFormControl">
+                  <mat-option *ngFor="let season of seasonService.seasons"
+                              [value]="seasonService.getSeasonAsString(season)"
+                              (onSelectionChange)="onChangeValue()">
+                    {{seasonService.getSeasonAsString(season)}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
         </div>
 
-        <div fxLayoutGap="4px" [fxLayout]="!(isHandset$ | async) ? 'row' : 'column'">
+        <div fxLayoutGap="4px" [fxLayout]="!(isHandset$ | async) ? 'row' : 'column'" *ngIf="isNewsTypeReport()">
           <!-- Teams - Score -->
 
           <div [fxFlex]="!(isHandset$ | async) ? 40 : 100">
@@ -154,7 +156,7 @@
         </div>
 
 
-        <div floatLabel="always">
+        <div floatLabel="always" *ngIf="isNewsTypeReport()">
           <mat-form-field appearance="outline">
             <mat-label>{{newsPlayersTC}}</mat-label>
             <textarea [formControl]="playersFormControl" matInput

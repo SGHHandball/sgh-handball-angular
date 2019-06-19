@@ -33,6 +33,7 @@ import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/
 import {map, startWith} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../seasons/season.service";
+import {NEWS_TYPE_REPORT} from "../../abstract/abstract-news.service";
 
 @Component({
   selector: 'app-news-edit',
@@ -44,6 +45,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   news: News;
 
   changedValues = false;
+  valuesInit = false;
 
   date = new FormControl();
 
@@ -90,6 +92,10 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
     return !this.changedValues;
   }
 
+  isNewsTypeReport(): boolean {
+    return this.news && this.news.type === NEWS_TYPE_REPORT;
+  }
+
 
   closeNews() {
     if (this.changedValues) {
@@ -117,6 +123,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
         startWith(''),
         map(value => this._filterTeamAges(value))
       );
+      this.valuesInit = true;
     } else {
       this.newsService.closeExpandedNews();
     }
@@ -129,7 +136,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, Comp
   }
 
   onChangeValue() {
-    if (!this.changedValues) {
+    if (this.valuesInit) {
       this.changedValues = true;
     }
   }

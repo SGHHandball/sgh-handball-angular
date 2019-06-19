@@ -2,16 +2,18 @@
   <mat-icon>more_vert</mat-icon>
 </button>
 <mat-menu #menu="matMenu" class="mat-menu-panel">
-  <button mat-icon-button (click)="editClickListener.next()">
+  <button mat-icon-button [matTooltip]="translationService.get(editTC)" (click)="editClickListener.next()">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button (click)="deleteClickListener.next()">
+  <button mat-icon-button [matTooltip]="translationService.get(deleteTC)" (click)="deleteClickListener.next()">
     <mat-icon>delete</mat-icon>
   </button>
-  <button mat-icon-button (click)="sendClickListener.next()" *ngIf="!sendInvisible">
+  <button mat-icon-button [matTooltip]="translationService.get(sendTC)" (click)="sendClickListener.next()"
+          *ngIf="!sendInvisible">
     <mat-icon>send</mat-icon>
   </button>
-  <button mat-icon-button (click)="checkClickListener.next()" *ngIf="sendInvisible && adminService.isUserAdmin() && !checkedInvisible">
+  <button mat-icon-button [matTooltip]="translationService.get(makeVisibleTC)" (click)="checkClickListener.next()"
+          *ngIf="sendInvisible && adminService.isUserAdmin() && !checkedInvisible">
     <mat-icon>check</mat-icon>
   </button>
 </mat-menu>

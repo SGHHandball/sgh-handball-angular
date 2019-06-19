@@ -20,14 +20,15 @@
           ></app-news-more-menu>
         </mat-card-title>
         <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge">
-          {{getDateWithTeamAgeAsString(newsCard)}}
+          {{newsCard.teamAge ? getDateWithTeamAgeAsString(newsCard) : getDateAsString(newsCard)}}
         </mat-card-subtitle>
         <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score">
           {{getTeamsWithScoreAsString(newsCard)}}
         </mat-card-subtitle>
       </mat-card-header>
 
-      <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLinks ||  newsCard.imgLinks.length===0" class="card-img">
+      <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLinks ||  newsCard.imgLinks.length===0"
+           class="card-img">
       <mat-card-content class="dashboard-card-content">
         <slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
                    [showDots]="true"
@@ -35,13 +36,13 @@
                    *ngIf="newsCard.imgLinks && newsCard.imgLinks.length>0"
         ></slideshow>
         <mat-accordion class="card-content">
-          <mat-expansion-panel>
+          <mat-expansion-panel *ngIf="newsCard.body">
             <mat-expansion-panel-header>
               <mat-panel-title> {{getBodyHeaderOfType(newsCard.type)}}</mat-panel-title>
             </mat-expansion-panel-header>
             <span>{{newsCard.body}}</span>
           </mat-expansion-panel>
-          <mat-expansion-panel>
+          <mat-expansion-panel *ngIf="newsCard.summary">
             <mat-expansion-panel-header>
               <mat-panel-title>{{translationService.get(summaryTC)}}</mat-panel-title>
             </mat-expansion-panel-header>

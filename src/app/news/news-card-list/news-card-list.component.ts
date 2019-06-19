@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "../news";
+import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "../news";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
@@ -7,17 +7,18 @@ import {AdminService} from "../../admin/admin.service";
 import {
   TC_NEWS_NO_NEWS,
   TC_NEWS_PLAYERS,
-  TC_NEWS_SUMMARY,
+  TC_NEWS_SUMMARY, TC_NEWS_TYPE_DESCRIPTION, TC_NEWS_TYPE_EVENT,
   TC_NEWS_TYPE_REPORT,
   TranslationService
 } from "../../translation.service";
+import {NEWS_TYPE_REPORT} from "../../abstract/abstract-news.service";
 
 @Component({
   selector: 'app-news-card-list',
   templateUrl: './news-card-list.component.html',
   styleUrls: ['./news-card-list.component.css']
 })
-export class NewsCardListComponent extends AbstractComponent{
+export class NewsCardListComponent extends AbstractComponent {
 
   @Input() news: News[];
 
@@ -39,6 +40,10 @@ export class NewsCardListComponent extends AbstractComponent{
 
   getDateWithTeamAgeAsString(news: News): string {
     return getDateWithTeamAgeAsString(news);
+  }
+
+  getDateAsString(news: News): string {
+    return getDateString(news.date);
   }
 
   getTeamsWithScoreAsString(news: News): string {
@@ -73,8 +78,10 @@ export class NewsCardListComponent extends AbstractComponent{
 
   getBodyHeaderOfType(type: string): string {
     switch (type) {
-      default:
+      case NEWS_TYPE_REPORT:
         return this.translationService.get(TC_NEWS_TYPE_REPORT);
+      default:
+        return this.translationService.get(TC_NEWS_TYPE_DESCRIPTION);
     }
   }
 

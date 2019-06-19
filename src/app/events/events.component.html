@@ -1,0 +1,17 @@
+<mat-spinner [diameter]="30" *ngIf="!eventService.newsLoaded" class="loading-spinner"></mat-spinner>
+
+<div class="container" *ngIf="eventService.newsLoaded">
+  <app-news-card-list
+    [news]="eventService.news"
+    (editClickListener)="newsService.openNewsEdit($event)"
+    (deleteClickListener)="openDeleteNewsDialog($event)"
+    (sendClickListener)="openSendNewsDialog($event)"
+    (checkClickListener)="openCheckNewsDialog($event)"
+  ></app-news-card-list>
+</div>
+
+<app-add-btn [matMenu]="newsTypeMenu"></app-add-btn>
+<mat-menu #newsTypeMenu="matMenu">
+  <button mat-menu-item
+          (click)="newsService.addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
+</mat-menu>

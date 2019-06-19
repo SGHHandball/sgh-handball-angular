@@ -4,9 +4,9 @@ export class News {
   id: string = '';
   creator: string = '';
   title: string = '';
-  score: string = '0:0 (0:0)';
+  score: string;
   body: string = '';
-  summary: string = '';
+  summary: string;
   players: string;
   imgLinks: string[] = [];
   homeTeam: string = '';
@@ -26,11 +26,6 @@ export class News {
   withTitleAndBody(title: string, body: string): News {
     this.title = title;
     this.body = body;
-    return this;
-  }
-
-  withSummary(summary: string): News {
-    this.summary = summary;
     return this;
   }
 
