@@ -135,3 +135,19 @@ export const TC_TEAMS_ADD_NEW_TEAM_FAIL = 'teams-add-new-team-fail';
 export const TC_TEAMS_TEAM = 'teams-team';
 export const TC_TEAMS_NEWS_HEADER = 'teams-news-header';
 
+
+
+
+export const TC_TRAININGS_EDIT_TRAINING = 'trainings-edit-training';
+export const TC_TRAININGS_ADD_NEW_TRAINING_SUCCESS = 'trainings-add-new-training-success';
+export const TC_TRAININGS_EDIT_TRAINING_SUCCESS = 'trainings-edit-training-success';
+export const TC_TRAININGS_EDIT_TRAINING_FAIL = 'trainings-edit-training-fail';
+export const TC_TRAININGS_TRAINING_TEAM = 'teamId';
+export const TC_TRAININGS_TRAINING_DATES_DAY = 'trainings-training-dates-day';
+export const TC_TRAININGS_TRAINING_DATES_TIME = 'trainings-training-dates-time';
+export const TC_TRAININGS_TRAINING_DATES_HALL = 'trainings-training-dates-hall';
+export const TC_TRAININGS_TRAINING_DATES = 'dates';
+export const TC_TRAININGS_TRAINING_TRAINER = 'trainer';
+export const TC_TRAININGS_TRAINING_TRAINER_NAME = 'trainings-training-trainer-name';
+export const TC_TRAININGS_TRAINING_TRAINER_MAIL = 'trainings-training-trainer-mail';
+

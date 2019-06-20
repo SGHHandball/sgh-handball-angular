@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HallsEditDialogComponent } from './halls-edit-dialog.component';
+import { TrainingsEditDialogComponent } from './trainings-edit-dialog.component';
 
 describe('TrainingsEditDialogComponent', () => {
-  let component: HallsEditDialogComponent;
-  let fixture: ComponentFixture<HallsEditDialogComponent>;
+  let component: TrainingsEditDialogComponent;
+  let fixture: ComponentFixture<TrainingsEditDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HallsEditDialogComponent ]
+      declarations: [ TrainingsEditDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HallsEditDialogComponent);
+    fixture = TestBed.createComponent(TrainingsEditDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

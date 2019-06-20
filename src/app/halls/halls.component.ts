@@ -52,13 +52,12 @@ export class HallsComponent extends AbstractComponent implements OnInit {
               private dialog: MatDialog,
               public adminService: AdminService,
               snackBar: MatSnackBar) {
-    super(breakpointObserver,snackBar);
-    this.hallsService.loadAllHalls();
+    super(breakpointObserver, snackBar);
   }
 
   ngOnInit() {
-    this.hallsService.hallsObservable.subscribe(halls => {
-      this.dataSource = new MatTableDataSource(halls);
+    this.hallsService.loadAllHalls().then(() => {
+      this.dataSource = new MatTableDataSource(this.hallsService.halls);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -73,7 +72,7 @@ export class HallsComponent extends AbstractComponent implements OnInit {
   }
 
   openHallsEditDialog(hall: Hall | undefined) {
-    if (this.adminService.isUserAdmin()) {
+    if (this.adminService.isUserHallAdmin()) {
       const dialogRef = this.dialog.open(HallsEditDialogComponent, {
           width: this.dialogWidth,
           data: hall
@@ -97,7 +96,7 @@ export class HallsComponent extends AbstractComponent implements OnInit {
   }
 
   deleteHall(hall: Hall) {
-    if (this.adminService.isUserAdmin()) {
+    if (this.adminService.isUserHallAdmin()) {
       const dialogRef = this.dialog.open(DefaultDialogComponent, {
           width: this.dialogWidth,
           data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)

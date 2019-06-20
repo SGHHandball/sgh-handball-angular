@@ -2,32 +2,34 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {Hall} from "./hall";
 import {Observable} from "rxjs";
-import {SghUser} from "../admin/sgh-user";
 import {map} from "rxjs/operators";
-import {SGH_USERS} from "../admin/admin.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HallsService {
 
-  hallsObservable: Observable<Hall[]>;
+  halls: Hall[];
 
   constructor(private db: AngularFirestore) {
   }
 
-  loadAllHalls() {
-    this.hallsObservable = this.db.collection<Hall>(DB_COLLECTION_HALLS).snapshotChanges()
-      .pipe(
-        map(actions => {
-            return actions.map(action => {
-              const data = action.payload.doc.data() as Hall;
-              data.id = action.payload.doc.id;
-              return data;
-            })
-          }
-        )
-      )
+  loadAllHalls(): Promise<void> {
+    return new Promise<void>(resolve =>
+      this.db.collection<Hall>(DB_COLLECTION_HALLS).snapshotChanges()
+        .pipe(
+          map(actions => {
+              return actions.map(action => {
+                const data = action.payload.doc.data() as Hall;
+                data.id = action.payload.doc.id;
+                return data;
+              })
+            }
+          )
+        ).subscribe(halls => {
+        this.halls = halls;
+        resolve();
+      }));
   }
 
   changeHall(hall: Hall, existing: boolean): Promise<boolean> {

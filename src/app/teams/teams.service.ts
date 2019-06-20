@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {Team} from "./team";
 import {AngularFireStorage, AngularFireUploadTask} from "@angular/fire/storage";
 import {DB_COLLECTION_NEWS, News} from "../news/news";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,18 @@ export class TeamsService {
     const randomId = Math.random().toString(36).substring(2);
     const ref = this.afStorage.ref(randomId);
     return ref.put(event.target.files[0]);
+  }
+
+  getTeamById(teamId: string): Team {
+    let teamToReturn = undefined;
+    this.teams.forEach(team => {
+      if (team.id === teamId) teamToReturn = team;
+    });
+    return teamToReturn;
+  }
+
+  getTeamAsString(team: Team): string {
+    return team.teamAge + (team.teamVintage ? (' / ' + team.teamVintage) : '');
   }
 }
 

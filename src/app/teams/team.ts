@@ -3,6 +3,7 @@ export class Team {
   position: number;
   teamAge: string;
   teamSeason: string;
+  teamVintage: string;
   imgUrls: string[];
 
 

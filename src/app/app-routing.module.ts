@@ -15,6 +15,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import {TeamsComponent} from "./teams/teams.component";
 import {HallsComponent} from "./halls/halls.component";
 import {EventsComponent} from "./events/events.component";
+import {TrainingsComponent} from "./trainings/trainings.component";
 
 export const routes = [
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_NEWS, pathMatch: 'full'},
@@ -22,7 +23,7 @@ export const routes = [
   {path: TC_ROUTE_TEAMS, component: TeamsComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_EVENTS, component: EventsComponent},
-  {path: TC_ROUTE_TRAINING, component: ImprintComponent},
+  {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
   {path: TC_ROUTE_DOCUMENTS, component: ImprintComponent},
   {
     path: TC_ROUTE_NEWS + '/' + TC_NEWS_PATH_EDIT,

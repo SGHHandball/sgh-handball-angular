@@ -1,0 +1,15 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+.filter {
+  padding: 16px;
+}
+
+.mat-cell, .mat-header-cell{
+  padding: 4px;
+}

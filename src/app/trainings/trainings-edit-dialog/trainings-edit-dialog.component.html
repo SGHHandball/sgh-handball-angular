@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>{{translationService.get(editTrainingHeader)}}</h1>
+<div mat-dialog-content>
+
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>{{translationService.get(teamsIdTC)}}</mat-label>
+    <mat-select [formControl]="teamIdFormControl">
+      <mat-option *ngFor="let team of teamsService.teams"
+                  [value]="team.id">
+        {{teamsService.getTeamAsString(team)}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field [ngClass]="(isHandset$|async) ? '' : 'twenty-percent-width'" appearance="outline"
+                  class="margin-right">
+    <mat-label>{{translationService.get(dayTC)}}</mat-label>
+    <mat-select [formControl]="dayFormControl">
+      <mat-option *ngFor="let day of dayValues"
+                  [value]="day">
+        {{day}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" [ngClass]="(isHandset$|async) ? 'width' : 'thirty-percent-width'"
+                  class="margin-right">
+    <mat-label>{{translationService.get(timeTC)}}</mat-label>
+    <input [formControl]="timeFormControl" matInput>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" [ngClass]="(isHandset$|async) ? 'width' : 'fifty-percent-width'">
+    <mat-label>{{translationService.get(hallTC)}}</mat-label>
+    <mat-select [formControl]="hallFormControl">
+      <mat-option *ngFor="let hall of hallsService.halls"
+                  [value]="hall.id">
+        {{hall.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="outline" [ngClass]="(isHandset$|async) ? 'full-width' : 'fifty-percent-width'"
+                  class="margin-right">
+    <mat-label>{{translationService.get(trainerNameTC)}}</mat-label>
+    <input [formControl]="trainerNameFormControl" matInput>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="outline" [ngClass]="(isHandset$|async) ? 'full-width' : 'fifty-percent-width'">
+    <mat-label>{{translationService.get(trainerMailTC)}}</mat-label>
+    <input [formControl]="trainerMailFormControl" type="email" matInput>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">{{translationService.get(backTc)}}</button>
+  <button mat-raised-button color="primary"
+          [disabled]="teamIdFormControl.hasError('required') ||
+                        dayFormControl.hasError('required') ||
+                        timeFormControl.hasError('required') ||
+                        hallFormControl.hasError('required')"
+          (click)="saveTraining()"
+  >{{translationService.get(saveTC)}}</button>
+</div>
+

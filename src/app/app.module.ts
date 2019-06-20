@@ -75,6 +75,8 @@ import {SeasonsComponent} from './seasons/seasons.component';
 import {EventsComponent} from './events/events.component';
 import {AbstractNewsComponent} from "./abstract/abstract-news.component";
 import { AdminUserToggleComponent } from './admin/admin-user-toggle/admin-user-toggle.component';
+import {TrainingsComponent} from "./trainings/trainings.component";
+import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 
 // @ts-ignore
 @NgModule({
@@ -110,7 +112,9 @@ import { AdminUserToggleComponent } from './admin/admin-user-toggle/admin-user-t
     SeasonsComponent,
     EventsComponent,
     AbstractNewsComponent,
-    AdminUserToggleComponent
+    AdminUserToggleComponent,
+    TrainingsComponent,
+    TrainingsEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -162,7 +166,7 @@ import { AdminUserToggleComponent } from './admin/admin-user-toggle/admin-user-t
   bootstrap: [AppComponent],
   entryComponents: [LoginDialogComponent, AdminUserDialogComponent,
     DefaultDialogComponent, HallsEditDialogComponent, TeamsChangeDialogComponent, TeamsDeleteDialogComponent,
-    DefaultInputDialogComponent]
+    DefaultInputDialogComponent, TrainingsEditDialogComponent]
 })
 export class AppModule {
 }

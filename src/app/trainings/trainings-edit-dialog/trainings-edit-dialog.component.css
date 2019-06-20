@@ -1,0 +1,19 @@
+.full-width {
+  width: calc(100% - 4px);
+}
+
+
+.twenty-percent-width {
+  width: calc(20% - 4px);
+}
+.thirty-percent-width {
+   width: calc(30% - 4px);
+ }
+
+.fifty-percent-width {
+  width: calc(50% - 4px);
+}
+
+.margin-right {
+  margin-right: 4px;
+}

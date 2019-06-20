@@ -96,5 +96,17 @@
   "teams-add-new-team-success": "Mannschaft erfolgreich hinzugefügt",
   "teams-add-new-team-fail": "Mannschaft konnte nicht hinzugefügt werden",
   "teams-team": "Mannschaft",
-  "teams-news-header": "Spielberichte der Mannschaft"
+  "teams-news-header": "Spielberichte der Mannschaft",
+  "trainings-edit-training": "Trainingszeit bearbeiten",
+  "trainings-add-new-training-success": "Trainingszeit wurde erfolgreich hinzugefügt",
+  "trainings-edit-training-success": "Trainingszeit  wurde erfolgreich geändert",
+  "trainings-edit-training-fail": "Trainingszeit konnte nicht geändert werden",
+  "teamId": "Team/ Jahrgang",
+  "dates": "Trainingszeiten",
+  "trainings-training-dates-day": "Tag",
+  "trainings-training-dates-time": "Zeit",
+  "trainings-training-dates-hall": "Halle",
+  "trainings-training-trainer-name": "Trainername",
+  "trainings-training-trainer-mail": "Trainer E-Mail",
+  "trainer": "Trainer/ Betreuer"
 }
