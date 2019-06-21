@@ -101,12 +101,17 @@
   "trainings-add-new-training-success": "Trainingszeit wurde erfolgreich hinzugefügt",
   "trainings-edit-training-success": "Trainingszeit  wurde erfolgreich geändert",
   "trainings-edit-training-fail": "Trainingszeit konnte nicht geändert werden",
-  "teamId": "Team/ Jahrgang",
-  "dates": "Trainingszeiten",
+  "team": "Team/ Jahrgänge",
+  "date": "Trainingszeiten/ Halle",
+  "trainings-training-team-name": "Team",
+  "trainings-training-team-vintage": "Jahrgänge",
   "trainings-training-dates-day": "Tag",
   "trainings-training-dates-time": "Zeit",
   "trainings-training-dates-hall": "Halle",
   "trainings-training-trainer-name": "Trainername",
   "trainings-training-trainer-mail": "Trainer E-Mail",
-  "trainer": "Trainer/ Betreuer"
+  "trainer": "Trainer/ E-Mail",
+  "imprint-find-imprint": "Unser Impressum finden Sie ",
+  "imprint-find-data-protection": "Unsere Datenschutzerklärung finden Sie ",
+  "imprint-here": "hier"
 }

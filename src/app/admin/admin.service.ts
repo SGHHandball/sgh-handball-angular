@@ -36,7 +36,7 @@ export class AdminService {
   }
 
   hasUserAddNewsAccess() {
-    return this.isUserAdmin() || this.isUserEventAdmin() || this.sghUser.teams.length > 0
+    return this.isUserAdmin() || this.isUserEventAdmin() || (this.sghUser.teams && this.sghUser.teams.length > 0)
   }
 
   isUserAdmin(): boolean {

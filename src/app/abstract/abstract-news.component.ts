@@ -26,7 +26,7 @@ import {DefaultDialogComponent, DialogData} from "./default-dialog/default-dialo
 })
 export abstract class AbstractNewsComponent extends AbstractComponent {
 
-  protected constructor(breakpointObserver: BreakpointObserver,
+  constructor(breakpointObserver: BreakpointObserver,
                         public newsService: NewsService,
                         public translationService: TranslationService,
                         public dialog: MatDialog,

@@ -90,7 +90,7 @@ export class TeamsService {
   }
 
   getTeamAsString(team: Team): string {
-    return team.teamAge + (team.teamVintage ? (' / ' + team.teamVintage) : '');
+    return team.teamAge;
   }
 }
 

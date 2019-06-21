@@ -15,7 +15,8 @@ export class TrainingsService {
   }
 
   loadAllTrainings() {
-    this.trainingsObservable = this.db.collection<Training>(DB_COLLECTION_TRAININGS).snapshotChanges()
+    this.trainingsObservable = this.db.collection<Training>(DB_COLLECTION_TRAININGS,
+      ref => ref.orderBy("editTime", "asc")).snapshotChanges()
       .pipe(
         map(actions => {
             return actions.map(action => {
@@ -33,9 +34,9 @@ export class TrainingsService {
       if (existing) {
         this.db.collection<Training>(DB_COLLECTION_TRAININGS).doc(training.id).update(
           {
-            teamId: training.teamId,
-            trainer:training.trainer,
-            dates: training.date,
+            team: training.team,
+            trainer: training.trainer,
+            date: training.date,
           }
         ).then(() => resolve(true)).catch(() => resolve(false))
       } else {

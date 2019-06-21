@@ -1,8 +1,14 @@
 export class Training {
   id: string;
-  teamId: string;
+  team: TrainingTeam = new TrainingTeam();
   date: TrainingDate = new TrainingDate();
   trainer: Trainer = new Trainer();
+  editTime: Date = new Date();
+}
+
+export class TrainingTeam {
+  teamId: string;
+  teamVintage: string;
 }
 
 export class TrainingDate {

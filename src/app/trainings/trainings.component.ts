@@ -10,7 +10,7 @@ import {
   TC_GENERAL_DELETE_FAIL,
   TC_GENERAL_DELETE_MESSAGE,
   TC_TRAININGS_TRAINING_TEAM,
-  TC_TRAININGS_TRAINING_DATES,
+  TC_TRAININGS_TRAINING_DATE,
   TC_TRAININGS_TRAINING_TRAINER,
   TC_TRAININGS_EDIT_TRAINING_SUCCESS, TC_TRAININGS_ADD_NEW_TRAINING_SUCCESS, TC_TRAININGS_EDIT_TRAINING_FAIL
 } from "../translation.service";
@@ -22,7 +22,6 @@ import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/def
 import {environment} from "../../environments/environment";
 import {TeamsService} from "../teams/teams.service";
 import {HallsService} from "../halls/halls.service";
-import {Hall} from "../halls/hall";
 
 @Component({
   selector: 'app-trainings',
@@ -32,9 +31,11 @@ import {Hall} from "../halls/hall";
 export class TrainingsComponent extends AbstractComponent implements OnInit {
 
 
-  displayedColumnsAdmin: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATES, TC_TRAININGS_TRAINING_TRAINER, 'edit', 'delete'];
-  displayedColumns: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATES, TC_TRAININGS_TRAINING_TRAINER];
+  displayedColumnsAdmin: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER, 'edit', 'delete'];
+  displayedColumns: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER];
   dataSource: MatTableDataSource<TrainingGroup> = new MatTableDataSource();
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(public breakpointObserver: BreakpointObserver,
               private trainingsService: TrainingsService,
@@ -57,6 +58,7 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
   ngOnInit() {
     this.trainingsService.trainingsObservable.subscribe(trainings => {
       this.dataSource = new MatTableDataSource(this.getAllTrainingGroups(trainings));
+      this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -66,14 +68,14 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
     trainings.forEach(training => {
       let existingGroup: TrainingGroup;
       trainingGroups.forEach(group => {
-        if (training.teamId === group.teamId) {
+        if (training.team.teamId === group.teamId) {
           existingGroup = group;
         }
       });
       if (existingGroup) {
         existingGroup.trainings.push(training);
       } else {
-        trainingGroups.push(new TrainingGroup(training.teamId, [training]))
+        trainingGroups.push(new TrainingGroup(training.team.teamId, [training]))
       }
     });
     return trainingGroups;
@@ -111,7 +113,7 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
         hallString = hall.name;
       }
     });
-    return date.day + ' ' + date.time + ' - ' + hallString;
+    return date.day + ' ' + date.time + '/ ' + hallString;
   }
 
 

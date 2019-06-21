@@ -4,7 +4,10 @@
     <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[0] : displayedColumns[0]}}">
       <th mat-header-cell
           *matHeaderCellDef>{{translationService.get(adminService.isUserAdmin() ? displayedColumnsAdmin[0] : displayedColumns[0])}}</th>
-      <td mat-cell *matCellDef="let row">{{teamService.getTeamAsString(teamService.getTeamById(row.teamId))}}</td>
+      <td mat-cell *matCellDef="let row">
+        {{teamService.getTeamAsString(teamService.getTeamById(row.teamId))}}
+        <span *ngIf="row.trainings && row.trainings.length>0">/ {{row.trainings[0].team.teamVintage}}</span>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[1] : displayedColumns[1]}}">
@@ -23,7 +26,7 @@
       <td mat-cell *matCellDef="let row">
         <p *ngFor="let training of row.trainings">
           {{training.trainer.name ? training.trainer.name : ''}}
-          <span *ngIf="training.trainer.email"> - </span>
+          <span *ngIf="training.trainer.email">/ </span>
           <a *ngIf="training.trainer.email" href="mailto:{{training.trainer.email}}">{{training.trainer.email}}</a>
         </p>
       </td>
@@ -35,9 +38,9 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <p *ngFor="let training of row.trainings">
-          <button mat-icon-button (click)="openTrainingsEditDialog(training)">
-            <mat-icon>edit</mat-icon>
-          </button>
+            <button mat-icon-button (click)="openTrainingsEditDialog(training)">
+              <mat-icon>edit</mat-icon>
+            </button>
           </p>
         </td>
       </ng-container>
@@ -45,9 +48,9 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <p *ngFor="let training of row.trainings">
-          <button mat-icon-button (click)="deleteTraining(training)">
-            <mat-icon>delete</mat-icon>
-          </button>
+            <button mat-icon-button (click)="deleteTraining(training)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </p>
         </td>
       </ng-container>
@@ -59,7 +62,7 @@
     <tr mat-row *matRowDef="let row; columns: adminService.isUserAdmin()? displayedColumnsAdmin: displayedColumns"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator pageSize="15" [pageSizeOptions]="[5, 15, 30, 50]"></mat-paginator>
 </div>
 
 <app-add-btn *ngIf="adminService.isUserAdmin()"

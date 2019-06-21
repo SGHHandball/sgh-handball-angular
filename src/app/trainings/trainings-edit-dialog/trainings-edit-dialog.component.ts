@@ -4,11 +4,11 @@ import {
   TC_GENERAL_REQUIRED_ERROR,
   TC_SAVE,
   TC_TRAININGS_EDIT_TRAINING,
-  TC_TRAININGS_TRAINING_DATES,
+  TC_TRAININGS_TRAINING_DATE,
   TC_TRAININGS_TRAINING_DATES_DAY,
   TC_TRAININGS_TRAINING_DATES_HALL,
   TC_TRAININGS_TRAINING_DATES_TIME,
-  TC_TRAININGS_TRAINING_TEAM,
+  TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_TEAM_NAME, TC_TRAININGS_TRAINING_TEAM_VINTAGE,
   TC_TRAININGS_TRAINING_TRAINER, TC_TRAININGS_TRAINING_TRAINER_MAIL, TC_TRAININGS_TRAINING_TRAINER_NAME,
   TranslationService
 } from "../../translation.service";
@@ -36,7 +36,8 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
 
   requiredErrorTC = TC_GENERAL_REQUIRED_ERROR;
 
-  teamsIdTC = TC_TRAININGS_TRAINING_TEAM;
+  teamNameTC = TC_TRAININGS_TRAINING_TEAM_NAME;
+  teamVintageTC = TC_TRAININGS_TRAINING_TEAM_VINTAGE;
   dayTC = TC_TRAININGS_TRAINING_DATES_DAY;
   timeTC = TC_TRAININGS_TRAINING_DATES_TIME;
   hallTC = TC_TRAININGS_TRAINING_DATES_HALL;
@@ -47,6 +48,9 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
   dayValues = ['Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.'];
 
   teamIdFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  teamVintageFormControl = new FormControl('', [
     Validators.required,
   ]);
 
@@ -60,12 +64,8 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
     Validators.required
   ]);
 
-  trainerNameFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  trainerMailFormControl = new FormControl('', [
-    Validators.required
-  ]);
+  trainerNameFormControl = new FormControl();
+  trainerMailFormControl = new FormControl();
 
   training: Training = new Training();
   existing: boolean = false;
@@ -83,7 +83,8 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
       this.existing = true;
     }
 
-    this.teamIdFormControl.setValue(this.training.teamId);
+    this.teamIdFormControl.setValue(this.training.team.teamId);
+    this.teamVintageFormControl.setValue(this.training.team.teamVintage);
     this.dayFormControl.setValue(this.training.date.day);
     this.timeFormControl.setValue(this.training.date.time);
     this.hallFormControl.setValue(this.training.date.hallId);
@@ -92,7 +93,8 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
   }
 
   saveTraining() {
-    this.training.teamId = this.teamIdFormControl.value;
+    this.training.team.teamId = this.teamIdFormControl.value;
+    this.training.team.teamVintage = this.teamVintageFormControl.value;
     this.training.date.day = this.dayFormControl.value;
     this.training.date.time = this.timeFormControl.value;
     this.training.date.hallId = this.hallFormControl.value;

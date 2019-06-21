@@ -101,7 +101,6 @@ export const TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL = 'imprint-login-dialog
 export const TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED = 'imprint-login-dialog-error-email-required';
 export const TC_IMPRINT_LOGIN_DIALOG_ERROR_PASSWORD_REQUIRED = 'imprint-login-dialog-error-password-required';
 
-
 export const TC_ADMIN_SGH_USER_PRE_NAME = 'preName';
 export const TC_ADMIN_SGH_USER_LAST_NAME = 'lastName';
 export const TC_ADMIN_ADD_NEW_USER = 'admin-add-new-user';
@@ -125,7 +124,6 @@ export const TC_HALLS_STREET = 'street';
 export const TC_HALLS_CITY = 'city';
 export const TC_HALLS_POST_CODE = 'postCode';
 
-
 export const TC_TEAMS_CHANGE_ORDER = 'teams-change-order';
 export const TC_TEAMS_ADD_NEW_TEAM = 'teams-add-new-team';
 export const TC_TEAMS_DELETE_TEAM = 'teams-delete-team';
@@ -135,19 +133,22 @@ export const TC_TEAMS_ADD_NEW_TEAM_FAIL = 'teams-add-new-team-fail';
 export const TC_TEAMS_TEAM = 'teams-team';
 export const TC_TEAMS_NEWS_HEADER = 'teams-news-header';
 
-
-
-
 export const TC_TRAININGS_EDIT_TRAINING = 'trainings-edit-training';
 export const TC_TRAININGS_ADD_NEW_TRAINING_SUCCESS = 'trainings-add-new-training-success';
 export const TC_TRAININGS_EDIT_TRAINING_SUCCESS = 'trainings-edit-training-success';
 export const TC_TRAININGS_EDIT_TRAINING_FAIL = 'trainings-edit-training-fail';
-export const TC_TRAININGS_TRAINING_TEAM = 'teamId';
+export const TC_TRAININGS_TRAINING_TEAM = 'team';
+export const TC_TRAININGS_TRAINING_TEAM_NAME = 'trainings-training-team-name';
+export const TC_TRAININGS_TRAINING_TEAM_VINTAGE = 'trainings-training-team-vintage';
 export const TC_TRAININGS_TRAINING_DATES_DAY = 'trainings-training-dates-day';
 export const TC_TRAININGS_TRAINING_DATES_TIME = 'trainings-training-dates-time';
 export const TC_TRAININGS_TRAINING_DATES_HALL = 'trainings-training-dates-hall';
-export const TC_TRAININGS_TRAINING_DATES = 'dates';
+export const TC_TRAININGS_TRAINING_DATE = 'date';
 export const TC_TRAININGS_TRAINING_TRAINER = 'trainer';
 export const TC_TRAININGS_TRAINING_TRAINER_NAME = 'trainings-training-trainer-name';
 export const TC_TRAININGS_TRAINING_TRAINER_MAIL = 'trainings-training-trainer-mail';
+
+export const TC_IMPRINT_FIND_IMPRINT = 'imprint-find-imprint';
+export const TC_IMPRINT_FIND_DATA_PROTECTION = 'imprint-find-data-protection';
+export const TC_IMPRINT_HERE = 'imprint-here';
 
