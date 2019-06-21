@@ -57,10 +57,14 @@ export class HallsComponent extends AbstractComponent implements OnInit {
 
   ngOnInit() {
     this.hallsService.loadAllHalls().then(() => {
-      this.dataSource = new MatTableDataSource(this.hallsService.halls);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.reloadData();
     });
+  }
+
+  reloadData() {
+    this.dataSource = new MatTableDataSource(this.hallsService.halls);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
@@ -85,6 +89,7 @@ export class HallsComponent extends AbstractComponent implements OnInit {
             .then((success) => {
               if (success) {
                 this.openSnackBar(this.translationService.get(result.existing ? TC_HALLS_EDIT_HALL_SUCCESS : TC_HALLS_ADD_NEW_HALL_SUCCESS));
+                this.reloadData();
               } else {
                 this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL))
               }
@@ -106,7 +111,8 @@ export class HallsComponent extends AbstractComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.hallsService.deleteHall(hall).then(() => {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
+            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+            this.reloadData();
           }).catch(error => {
             if (!environment.production) console.log(error);
             this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))

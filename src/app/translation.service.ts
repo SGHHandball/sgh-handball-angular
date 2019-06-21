@@ -152,3 +152,9 @@ export const TC_IMPRINT_FIND_IMPRINT = 'imprint-find-imprint';
 export const TC_IMPRINT_FIND_DATA_PROTECTION = 'imprint-find-data-protection';
 export const TC_IMPRINT_HERE = 'imprint-here';
 
+export const TC_DOCUMENTS_NO_DOCUMENTS = 'documents-no-documents';
+export const TC_DOCUMENTS_ADD_NEW_FOLDER = 'documents-add-new-folder';
+export const TC_DOCUMENTS_ADD_NEW_FOLDER_SUCCESS = 'documents-add-new-folder-success';
+export const TC_DOCUMENTS_ADD_NEW_FOLDER_FAIL = 'documents-add-new-folder-fail';
+export const TC_DOCUMENTS_FOLDER_NAME = 'documents-folder-name';
+

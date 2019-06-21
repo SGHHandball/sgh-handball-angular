@@ -6,6 +6,8 @@ export class SghUser {
   eventsAdmin: boolean = false;
   hallsAdmin: boolean = false;
   teamsAdmin: boolean = false;
+  trainingsAdmin: boolean = false;
+  documentsAdmin: boolean = false;
   teams: string[] = [];
   preName: string = '';
   lastName: string = '';

@@ -113,5 +113,10 @@
   "trainer": "Trainer/ E-Mail",
   "imprint-find-imprint": "Unser Impressum finden Sie ",
   "imprint-find-data-protection": "Unsere Datenschutzerklärung finden Sie ",
-  "imprint-here": "hier"
+  "imprint-here": "hier",
+  "documents-no-documents": "Keine Dokumente vorhanden",
+  "documents-add-new-folder": "Neuen Ordner hinzufügen",
+  "documents-folder-name": "Ordnername",
+  "documents-add-new-folder-success": "Neuen Ordner wurde erfolgreich hinzugefügt",
+  "documents-add-new-folder-fail": "Neuer Ordner konnte nicht erfolgreich hinzugefügt werden"
 }

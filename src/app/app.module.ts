@@ -35,7 +35,7 @@ import {
   MatSnackBarModule,
   MatDividerModule,
   MatChipsModule,
-  MatTabsModule, MatTooltipModule
+  MatTabsModule, MatTooltipModule, MatTreeModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -74,11 +74,11 @@ import {ImageUploadManagerComponent} from './abstract/image-upload-manager/image
 import {SeasonsComponent} from './seasons/seasons.component';
 import {EventsComponent} from './events/events.component';
 import {AbstractNewsComponent} from "./abstract/abstract-news.component";
-import { AdminUserToggleComponent } from './admin/admin-user-toggle/admin-user-toggle.component';
+import {AdminUserToggleComponent} from './admin/admin-user-toggle/admin-user-toggle.component';
 import {TrainingsComponent} from "./trainings/trainings.component";
 import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
+import {DocumentsComponent} from './documents/documents.component';
 
-// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -111,10 +111,12 @@ import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/tr
     ImageUploadManagerComponent,
     SeasonsComponent,
     EventsComponent,
+// @ts-ignore
     AbstractNewsComponent,
     AdminUserToggleComponent,
     TrainingsComponent,
-    TrainingsEditDialogComponent
+    TrainingsEditDialogComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,
@@ -155,7 +157,8 @@ import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/tr
     MatTabsModule,
     DragDropModule,
     SlideshowModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTreeModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

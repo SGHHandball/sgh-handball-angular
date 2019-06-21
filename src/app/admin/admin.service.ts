@@ -55,6 +55,14 @@ export class AdminService {
     return this.user && this.sghUser && this.sghUser.teamsAdmin;
   }
 
+  isUserTrainingsAdmin() {
+    return this.user && this.sghUser && this.sghUser.trainingsAdmin;
+  }
+
+  isUserDocumentsAdmin() {
+    return this.user && this.sghUser && this.sghUser.documentsAdmin;
+  }
+
   hasUserRightsForTeam(teamAge: string, teamSeason: string): boolean {
     if (!this.sghUser || !this.sghUser.teams) return false;
     let hasRight = false;
