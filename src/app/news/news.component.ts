@@ -27,6 +27,7 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
 
   filteredNews: News[];
 
+  filters: string[] = [];
 
   constructor(breakpointObserver: BreakpointObserver, newsService: NewsService, translationService: TranslationService, dialog: MatDialog, snackBar: MatSnackBar,
               public adminService: AdminService) {
@@ -34,11 +35,12 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterNews([]);
+    this.filterNews(this.filters);
   }
 
   filterNews(filterValues: string[]) {
-    this.filteredNews = this.newsService.getFilterNews(filterValues);
+    this.filters = filterValues;
+    this.filteredNews = this.newsService.getFilterNews(this.filters);
   }
 
   getAllPossibleFilterValues(): string[] {
@@ -50,6 +52,10 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
       filterValues.push(club.name);
     });
     return filterValues;
+  }
+
+  onNewsDeleted() {
+    this.filterNews(this.filters);
   }
 
 }

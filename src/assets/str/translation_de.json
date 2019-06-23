@@ -96,6 +96,7 @@
   "teams-add-new-team-success": "Mannschaft erfolgreich hinzugefügt",
   "teams-add-new-team-fail": "Mannschaft konnte nicht hinzugefügt werden",
   "teams-team": "Mannschaft",
+  "teams-no-teams": "Es wurden bisher noch keine Mannschaften angelegt",
   "teams-news-header": "Spielberichte der Mannschaft",
   "trainings-edit-training": "Trainingszeit bearbeiten",
   "trainings-add-new-training-success": "Trainingszeit wurde erfolgreich hinzugefügt",

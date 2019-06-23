@@ -7,24 +7,34 @@
     </mat-tab>
   </mat-tab-group>
 
-  <h2 class="news-header">{{translationService.get(newsHeaderTC)}}</h2>
 
-  <div class="container">
-    <app-news-card-list
-      [news]="filteredNews"
-      (editClickListener)="newsService.openNewsEdit($event)"
-    ></app-news-card-list>
-  </div>
+  <h2 class="news-header" *ngIf="!currentTeam">{{translationService.get(noTeamsTC)}}</h2>
+
+  <ng-container *ngIf="currentTeam">
+    <h2 class="news-header">{{translationService.get(newsHeaderTC)}}</h2>
+
+    <div class="container">
+      <app-news-card-list
+        [news]="filteredNews"
+        (editClickListener)="newsService.openNewsEdit($event)"
+        (deleteClickListener)="openDeleteNewsDialog($event)"
+        (sendClickListener)="openSendNewsDialog($event)"
+        (checkClickListener)="openCheckNewsDialog($event)"
+      ></app-news-card-list>
+    </div>
+  </ng-container>
 
   <app-add-btn
-    *ngIf="adminService.isUserTeamsAdmin() || adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)"
+    *ngIf="adminService.isUserTeamsAdmin() ||
+             (currentTeam && adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason))"
     [matMenu]="menu"
     [moreIcon]="true"
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="editTeamPage()"
-            *ngIf="adminService.isUserTeamsAdmin() || adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)">{{translationService.get(editTeamPageTC)}}</button>
+            *ngIf="adminService.isUserTeamsAdmin() ||
+             (currentTeam && adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason))">{{translationService.get(editTeamPageTC)}}</button>
     <ng-container *ngIf="adminService.isUserTeamsAdmin()">
       <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
       <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>

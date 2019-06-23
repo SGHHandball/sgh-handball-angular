@@ -1,18 +1,18 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
 
-    <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[0] : displayedColumns[0]}}">
+    <ng-container matColumnDef="{{adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[0] : displayedColumns[0]}}">
       <th mat-header-cell
-          *matHeaderCellDef>{{translationService.get(adminService.isUserAdmin() ? displayedColumnsAdmin[0] : displayedColumns[0])}}</th>
+          *matHeaderCellDef>{{translationService.get(adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[0] : displayedColumns[0])}}</th>
       <td mat-cell *matCellDef="let row">
         {{teamService.getTeamAsString(teamService.getTeamById(row.teamId))}}
         <span *ngIf="row.trainings && row.trainings.length>0">/ {{row.trainings[0].team.teamVintage}}</span>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[1] : displayedColumns[1]}}">
+    <ng-container matColumnDef="{{adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[1] : displayedColumns[1]}}">
       <th mat-header-cell
-          *matHeaderCellDef>{{translationService.get(adminService.isUserAdmin() ? displayedColumnsAdmin[1] : displayedColumns[1])}}</th>
+          *matHeaderCellDef>{{translationService.get(adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[1] : displayedColumns[1])}}</th>
       <td mat-cell *matCellDef="let row">
         <p *ngFor="let training of row.trainings">
           {{getTrainingDateAsString(training.date)}}
@@ -20,9 +20,9 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[2] : displayedColumns[2]}}">
+    <ng-container matColumnDef="{{adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[2] : displayedColumns[2]}}">
       <th mat-header-cell
-          *matHeaderCellDef>{{translationService.get(adminService.isUserAdmin() ? displayedColumnsAdmin[2] : displayedColumns[2])}}</th>
+          *matHeaderCellDef>{{translationService.get(adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[2] : displayedColumns[2])}}</th>
       <td mat-cell *matCellDef="let row">
         <p *ngFor="let training of row.trainings">
           {{training.trainer.name ? training.trainer.name : ''}}
@@ -33,8 +33,8 @@
     </ng-container>
 
 
-    <ng-container *ngIf="adminService.isUserAdmin()">
-      <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[3] : displayedColumns[3]}}">
+    <ng-container *ngIf="adminService.isUserTrainingsAdmin()">
+      <ng-container matColumnDef="{{adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[3] : displayedColumns[3]}}">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <p *ngFor="let training of row.trainings">
@@ -44,7 +44,7 @@
           </p>
         </td>
       </ng-container>
-      <ng-container matColumnDef="{{adminService.isUserAdmin() ? displayedColumnsAdmin[4] : displayedColumns[4]}}">
+      <ng-container matColumnDef="{{adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin[4] : displayedColumns[4]}}">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <p *ngFor="let training of row.trainings">
@@ -58,13 +58,13 @@
 
 
     <tr mat-header-row
-        *matHeaderRowDef="adminService.isUserAdmin() ? displayedColumnsAdmin : displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: adminService.isUserAdmin()? displayedColumnsAdmin: displayedColumns"></tr>
+        *matHeaderRowDef="adminService.isUserTrainingsAdmin() ? displayedColumnsAdmin : displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: adminService.isUserTrainingsAdmin()? displayedColumnsAdmin: displayedColumns"></tr>
   </table>
 
   <mat-paginator pageSize="15" [pageSizeOptions]="[5, 15, 30, 50]"></mat-paginator>
 </div>
 
-<app-add-btn *ngIf="adminService.isUserAdmin()"
+<app-add-btn *ngIf="adminService.isUserTrainingsAdmin()"
              (clickListener)="openTrainingsEditDialog(undefined)"
 ></app-add-btn>

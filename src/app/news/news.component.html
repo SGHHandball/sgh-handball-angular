@@ -33,7 +33,7 @@
   <mat-menu #newsTypeMenu="matMenu">
     <button mat-menu-item *ngIf="adminService.isUserEventAdmin()"
             (click)="newsService.addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
-    <button mat-menu-item *ngIf="adminService.sghUser.teams.length>0"
+    <button mat-menu-item *ngIf="adminService.sghUser && adminService.sghUser.teams.length>0"
             (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
   </mat-menu>
 

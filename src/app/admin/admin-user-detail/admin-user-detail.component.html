@@ -23,6 +23,12 @@
   (toggleChangeListener)="changeEventsAdminMode()"
 ></app-admin-user-toggle>
 
+<app-admin-user-toggle
+  [toggleDesc]="translationService.get(trainingsTC)"
+  [toggleValue]="sghUser.trainingsAdmin"
+  (toggleChangeListener)="changeTrainingsAdminMode()"
+></app-admin-user-toggle>
+
 <mat-divider></mat-divider>
 
 <div>

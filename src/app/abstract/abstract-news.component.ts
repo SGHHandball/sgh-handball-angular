@@ -27,10 +27,10 @@ import {DefaultDialogComponent, DialogData} from "./default-dialog/default-dialo
 export abstract class AbstractNewsComponent extends AbstractComponent {
 
   constructor(breakpointObserver: BreakpointObserver,
-                        public newsService: NewsService,
-                        public translationService: TranslationService,
-                        public dialog: MatDialog,
-                        snackBar: MatSnackBar) {
+              public newsService: NewsService,
+              public translationService: TranslationService,
+              public dialog: MatDialog,
+              snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
 
@@ -44,6 +44,7 @@ export abstract class AbstractNewsComponent extends AbstractComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.newsService.deleteNews(news).then(() => {
+          this.onNewsDeleted();
           this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
         }).catch(error => {
           if (!environment.production) console.log(error);
@@ -52,6 +53,8 @@ export abstract class AbstractNewsComponent extends AbstractComponent {
       }
     });
   }
+
+  abstract onNewsDeleted();
 
 
   openSendNewsDialog(news: News) {

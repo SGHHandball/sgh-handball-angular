@@ -36,7 +36,8 @@ export class AdminService {
   }
 
   hasUserAddNewsAccess() {
-    return this.isUserAdmin() || this.isUserEventAdmin() || (this.sghUser.teams && this.sghUser.teams.length > 0)
+    return this.isUserAdmin() || this.isUserEventAdmin() ||
+      (this.sghUser && this.sghUser.teams && this.sghUser.teams.length > 0)
   }
 
   isUserAdmin(): boolean {
@@ -116,6 +117,7 @@ export class AdminService {
       hallsAdmin: sghUser.hallsAdmin,
       eventsAdmin: sghUser.eventsAdmin,
       teamsAdmin: sghUser.teamsAdmin,
+      trainingsAdmin: sghUser.trainingsAdmin,
       teams: sghUser.teams
     })
   }

@@ -42,7 +42,7 @@ export const NAVIGATION_ITEMS_CLUB = [
 export const NAVIGATION_ITEMS_INFO = [
   new NavigationItem(TC_ROUTE_EVENTS, TC_ROUTE_EVENTS).withRouterIcon('event'),
   new NavigationItem(TC_ROUTE_TRAINING, TC_ROUTE_TRAINING).withRouterIcon('fitness_center'),
-  new NavigationItem(TC_ROUTE_DOCUMENTS, TC_ROUTE_DOCUMENTS).withRouterIcon('folder'),
+ // new NavigationItem(TC_ROUTE_DOCUMENTS, TC_ROUTE_DOCUMENTS).withRouterIcon('folder'),
 ];
 
 export const NAVIGATION_ITEMS_OTHER = [

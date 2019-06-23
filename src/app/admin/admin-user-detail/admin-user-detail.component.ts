@@ -4,7 +4,7 @@ import {
   TC_ADMIN, TC_CANCEL, TC_GENERAL_REQUIRED_ERROR, TC_OK,
   TC_ROUTE_EVENTS,
   TC_ROUTE_HALLS,
-  TC_ROUTE_TEAMS,
+  TC_ROUTE_TEAMS, TC_ROUTE_TRAINING,
   TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS, TC_TEAMS_TEAM,
   TranslationService
 } from "../../translation.service";
@@ -36,6 +36,8 @@ export class AdminUserDetailComponent extends AbstractComponent {
 
   eventsTC = TC_ROUTE_EVENTS;
 
+  trainingsTC = TC_ROUTE_TRAINING;
+
   constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
               public translationService: TranslationService, public teamsService: TeamsService, public dialog: MatDialog) {
     super(breakpointObserver, snackBar);
@@ -63,6 +65,11 @@ export class AdminUserDetailComponent extends AbstractComponent {
 
   changeEventsAdminMode() {
     this.sghUser.eventsAdmin = !this.sghUser.eventsAdmin;
+    this.toggleChangeListener.next();
+  }
+
+  changeTrainingsAdminMode() {
+    this.sghUser.trainingsAdmin = !this.sghUser.trainingsAdmin;
     this.toggleChangeListener.next();
   }
 

@@ -132,6 +132,7 @@ export const TC_TEAMS_ADD_NEW_TEAM_SUCCESS = 'teams-add-new-team-success';
 export const TC_TEAMS_ADD_NEW_TEAM_FAIL = 'teams-add-new-team-fail';
 export const TC_TEAMS_TEAM = 'teams-team';
 export const TC_TEAMS_NEWS_HEADER = 'teams-news-header';
+export const TC_TEAMS_NO_TEAMS = 'teams-no-teams';
 
 export const TC_TRAININGS_EDIT_TRAINING = 'trainings-edit-training';
 export const TC_TRAININGS_ADD_NEW_TRAINING_SUCCESS = 'trainings-add-new-training-success';

@@ -25,4 +25,7 @@ export class EventsComponent extends AbstractNewsComponent {
               public adminService : AdminService) {
     super(breakpointObserver, newsService, translationService, dialog, snackBar);
   }
+
+  onNewsDeleted() {
+  }
 }
