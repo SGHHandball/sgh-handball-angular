@@ -1,6 +1,5 @@
-import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Team} from "../team";
-import {NewsService} from "../../news/news.service";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatDialog, MatSnackBar} from "@angular/material";
@@ -12,7 +11,7 @@ import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/
 import {
   TC_CANCEL,
   TC_GENERAL_DELETE_HEADER,
-  TC_GENERAL_DELETE_MESSAGE, TC_OK, TC_SAVE,
+  TC_GENERAL_DELETE_MESSAGE, TC_SAVE,
   TranslationService
 } from "../../translation.service";
 
@@ -36,7 +35,7 @@ export class TeamsDetailComponent extends AbstractComponent {
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
               private dialog: MatDialog,
-              private teamsService: TeamsService,
+              public teamsService: TeamsService,
               public translationService: TranslationService) {
     super(breakpointObserver, snackBar);
   }

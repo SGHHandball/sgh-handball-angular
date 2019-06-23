@@ -4,7 +4,17 @@
 
 export const environment = {
   appName: "SG Hainhausen Handball",
-  production: false,
+  appNameShort: "SGH Handball",
+  production: true,
+  firebase: {
+    apiKey: "AIzaSyAHwYx5fFf35HRVsZmcyXpdOUHDoYIPtIU",
+    authDomain: "sgh-handball-stage.firebaseapp.com",
+    databaseURL: "https://sgh-handball-stage.firebaseio.com",
+    projectId: "sgh-handball-stage",
+    storageBucket: "sgh-handball-stage.appspot.com",
+    messagingSenderId: "826984336142",
+    appId: "1:826984336142:web:b066b31e8c3c1a42"
+  }
 };
 
 /*
