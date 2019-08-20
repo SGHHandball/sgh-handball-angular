@@ -3,13 +3,13 @@ import {User} from "firebase";
 import {AngularFirestore, AngularFirestoreCollection, DocumentChangeAction} from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {map, switchMap} from "rxjs/operators";
-import {combineLatest} from "rxjs";
-import {TC_NEWS_PATH_EDIT, TC_NEWS_TYPE_EVENT, TC_NEWS_TYPE_REPORT, TranslationService} from "../translation.service";
+import {combineLatest, Subject} from "rxjs";
+import {TC_NEWS_TYPE_EVENT, TC_NEWS_TYPE_REPORT, TranslationService} from "../translation.service";
 import {AngularFireStorage, AngularFireUploadTask} from "@angular/fire/storage";
-import {Router} from "@angular/router";
 
 export abstract class AbstractNewsService {
   news: News[];
+  $newsLoaded = new Subject();
   newsLoaded = false;
   user: User;
 
@@ -27,7 +27,7 @@ export abstract class AbstractNewsService {
   }
 
   loadAllNews() {
-    if (this.user) {
+    if (this.user && this.getAuthCreatorNewsRef()) {
       this.initCreatorNews();
     } else {
       this.initNormalNews();
@@ -47,16 +47,17 @@ export abstract class AbstractNewsService {
   }
 
   initCreatorNews() {
-    combineLatest(this.getUnAuthNewsRef().snapshotChanges(),
-      this.getAuthCreatorNewsRef().snapshotChanges()).pipe(
-      switchMap(actions => {
-        const [unAuthNews, authCreatorNews] = actions;
-        const combined = unAuthNews.concat(authCreatorNews);
-        return [
-          combined.map(action => this.addIdToNews(action))
-        ]
-      })
-    ).subscribe(news => this.setupNews(news));
+    if (this.getAuthCreatorNewsRef())
+      combineLatest(this.getUnAuthNewsRef().snapshotChanges(),
+        this.getAuthCreatorNewsRef().snapshotChanges()).pipe(
+        switchMap(actions => {
+          const [unAuthNews, authCreatorNews] = actions;
+          const combined = unAuthNews.concat(authCreatorNews);
+          return [
+            combined.map(action => this.addIdToNews(action))
+          ]
+        })
+      ).subscribe(news => this.setupNews(news));
   }
 
 
@@ -64,6 +65,7 @@ export abstract class AbstractNewsService {
     this.news = news.sort((val1, val2) => {
       return (val2.date - val1.date)
     });
+    this.$newsLoaded.next(true);
     this.newsLoaded = true;
   }
 

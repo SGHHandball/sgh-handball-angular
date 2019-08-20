@@ -149,9 +149,11 @@
             <mat-label>{{newsSummaryTC}}</mat-label>
             <textarea [formControl]="summaryFormControl" matInput
                       (change)="onChangeValue()"
+                      maxlength="1500"
                       cdkTextareaAutosize
                       cdkAutosizeMinRows="3"
                       cdkAutosizeMaxRows="10"></textarea>
+            <mat-hint align="end">{{summaryFormControl.value ? summaryFormControl.value.length : 0}} / 1500</mat-hint>
           </mat-form-field>
         </div>
 

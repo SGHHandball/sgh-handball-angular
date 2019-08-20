@@ -1,67 +1,31 @@
 <h3 class="no-news" *ngIf="!(news && news.length>0)">{{translationService.get(noNewsTC)}}</h3>
 <ng-container *ngIf="news && news.length>0">
 
-  <ng-container *ngFor="let newsCard of news">
 
-
-    <mat-card class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title>
-          <span class="card-title"> {{newsCard.title}}</span>
-          <app-news-more-menu
-            *ngIf="isEditMenuVisible(newsCard)"
-            class="more-button"
-            [sendInvisible]="newsCard.send"
-            [checkedInvisible]="newsCard.checked"
-            (editClickListener)="editClickListener.next(newsCard)"
-            (deleteClickListener)="deleteClickListener.next(newsCard)"
-            (sendClickListener)="sendClickListener.next(newsCard)"
-            (checkClickListener)="checkClickListener.next(newsCard)"
-          ></app-news-more-menu>
-        </mat-card-title>
-        <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge">
-          {{newsCard.teamAge ? getDateWithTeamAgeAsString(newsCard) : getDateAsString(newsCard)}}
-        </mat-card-subtitle>
-        <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score">
-          {{getTeamsWithScoreAsString(newsCard)}}
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <img mat-card-image src="assets/img/SghLogo.png" *ngIf="!newsCard.imgLinks ||  newsCard.imgLinks.length===0"
-           class="card-img">
-      <mat-card-content class="dashboard-card-content">
-        <slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
-                   [showDots]="true"
-                   [imageUrls]="newsCard.imgLinks"
-                   *ngIf="newsCard.imgLinks && newsCard.imgLinks.length>0"
-        ></slideshow>
-        <mat-accordion class="card-content">
-          <mat-expansion-panel *ngIf="newsCard.body">
-            <mat-expansion-panel-header>
-              <mat-panel-title> {{getBodyHeaderOfType(newsCard.type)}}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <span>{{newsCard.body}}</span>
-          </mat-expansion-panel>
-          <mat-expansion-panel *ngIf="newsCard.summary">
-            <mat-expansion-panel-header>
-              <mat-panel-title>{{translationService.get(summaryTC)}}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <span>{{newsCard.summary}}</span>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel *ngIf="newsCard.players">
-            <mat-expansion-panel-header>
-              <mat-panel-title>{{translationService.get(playersTC)}}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <span>{{newsCard.players}}</span>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </mat-card-content>
-      <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
-        {{getNewsStateIcon(newsCard)}}
-      </mat-icon>
-    </mat-card>
-
+  <ng-container *ngIf="!(isHandset$ | async)">
+    <div *ngFor="let newsCard of news" class="web-list">
+      <app-news-card [newsCard]="newsCard"
+                     (editClickListener)="editClickListener.next(newsCard)"
+                     (deleteClickListener)="deleteClickListener.next(newsCard)"
+                     (sendClickListener)="sendClickListener.next(newsCard)"
+                     (checkClickListener)="checkClickListener.next(newsCard)"
+      >
+      </app-news-card>
+    </div>
 
   </ng-container>
+
+
+  <ng-container *ngIf="(isHandset$ | async)">
+    <ng-container *ngFor="let newsCard of news">
+      <app-news-card [newsCard]="newsCard"
+                     (editClickListener)="editClickListener.next(newsCard)"
+                     (deleteClickListener)="deleteClickListener.next(newsCard)"
+                     (sendClickListener)="sendClickListener.next(newsCard)"
+                     (checkClickListener)="checkClickListener.next(newsCard)"
+      >
+      </app-news-card>
+    </ng-container>
+  </ng-container>
+
 </ng-container>

@@ -26,6 +26,7 @@ export class NewsService extends AbstractNewsService {
 
   newsTeamAges: string[] = [];
 
+  filters: string[] = [];
 
   constructor(db: AngularFirestore,
               afAuth: AngularFireAuth,

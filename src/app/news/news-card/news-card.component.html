@@ -1,0 +1,56 @@
+<mat-card class="dashboard-card">
+  <mat-card-header>
+    <mat-card-title>
+      <span class="card-title"> {{newsCard.title}}</span>
+      <app-news-more-menu
+        *ngIf="isEditMenuVisible(newsCard)"
+        class="more-button"
+        [sendInvisible]="newsCard.send"
+        [checkedInvisible]="newsCard.checked"
+        (editClickListener)="editClickListener.next()"
+        (deleteClickListener)="deleteClickListener.next()"
+        (sendClickListener)="sendClickListener.next()"
+        (checkClickListener)="checkClickListener.next()"
+      ></app-news-more-menu>
+    </mat-card-title>
+    <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge">
+      {{newsCard.teamAge ? getDateWithTeamAgeAsString(newsCard) : getDateAsString(newsCard)}}
+    </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score">
+      {{getTeamsWithScoreAsString(newsCard)}}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+
+  <mat-card-content class="dashboard-card-content">
+    <slideshow [minHeight]="(isHandset$|async)?'250px':'300px'"
+               [showDots]="true"
+               [imageUrls]="newsCard.imgLinks && newsCard.imgLinks.length>0 ? newsCard.imgLinks :['assets/img/SghLogo.png'] "
+               backgroundSize="contain"
+    ></slideshow>
+    <mat-accordion class="card-content">
+      <mat-expansion-panel *ngIf="newsCard.body">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{getBodyHeaderOfType(newsCard.type)}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <span>{{newsCard.body}}</span>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="newsCard.summary">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{translationService.get(summaryTC)}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <span>{{newsCard.summary}}</span>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel *ngIf="newsCard.players">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{translationService.get(playersTC)}}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <span>{{newsCard.players}}</span>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+  <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
+    {{getNewsStateIcon(newsCard)}}
+  </mat-icon>
+</mat-card>

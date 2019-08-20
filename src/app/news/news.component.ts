@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {News} from "./news";
 import {
@@ -10,6 +10,7 @@ import {MatDialog, MatSnackBar} from "@angular/material";
 import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {AdminService} from "../admin/admin.service";
+import {NewsCardListComponent} from "./news-card-list/news-card-list.component";
 
 @Component({
   selector: 'app-news',
@@ -17,7 +18,6 @@ import {AdminService} from "../admin/admin.service";
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent extends AbstractNewsComponent implements OnInit {
-
   filterTC = TC_FILTER;
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
   newsTypeEventTC = TC_NEWS_TYPE_EVENT;
@@ -25,9 +25,9 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   newsTypeReport = NEWS_TYPE_REPORT;
   newsTypeEvent = NEWS_TYPE_EVENT;
 
-  filteredNews: News[];
+  filteredNews: News[] = [];
 
-  filters: string[] = [];
+  filters: string[] = this.newsService.filters;
 
   constructor(breakpointObserver: BreakpointObserver, newsService: NewsService, translationService: TranslationService, dialog: MatDialog, snackBar: MatSnackBar,
               public adminService: AdminService) {

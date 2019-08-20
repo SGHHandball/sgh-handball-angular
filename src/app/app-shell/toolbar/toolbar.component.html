@@ -4,7 +4,8 @@
     (click)="sideNavButtonListener.next()">
     <mat-icon>{{sideNavButtonIcon}}</mat-icon>
   </button>
-  <h1 class="toolbar-title">{{(isHandset$|async) ? appNameShort : appName}}</h1>
+  <img src="assets/img/SghLogoOnlyTransparent.png" class="logo" (click)="goToHome()">
+  <h1 class="toolbar-title" (click)="goToHome()">{{(isHandset$|async) ? appNameShort : appName}}</h1>
   <span class="example-spacer"></span>
   <app-auth></app-auth>
 </mat-toolbar>

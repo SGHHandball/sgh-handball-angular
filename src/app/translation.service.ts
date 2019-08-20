@@ -29,6 +29,7 @@ export const TC_ROUTE_HEADER_CLUB = 'club';
 export const TC_ROUTE_HEADER_INFO = 'info';
 export const TC_ROUTE_HEADER_OTHER = 'other';
 
+export const TC_ROUTE_HOME = 'home';
 export const TC_ROUTE_NEWS = 'aktuelles';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 

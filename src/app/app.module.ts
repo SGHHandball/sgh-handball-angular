@@ -78,6 +78,8 @@ import {AdminUserToggleComponent} from './admin/admin-user-toggle/admin-user-tog
 import {TrainingsComponent} from "./trainings/trainings.component";
 import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 import {DocumentsComponent} from './documents/documents.component';
+import { HomeComponent } from './home/home.component';
+import { NewsCardComponent } from './news/news-card/news-card.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +118,9 @@ import {DocumentsComponent} from './documents/documents.component';
     AdminUserToggleComponent,
     TrainingsComponent,
     TrainingsEditDialogComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    HomeComponent,
+    NewsCardComponent
   ],
   imports: [
     BrowserModule,

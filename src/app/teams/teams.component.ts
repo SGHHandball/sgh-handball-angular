@@ -14,7 +14,7 @@ import {
   TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_REQUIRED_ERROR,
   TC_NEWS_CHECKED_HEADER,
-  TC_NEWS_CHECKED_MESSAGE,
+  TC_NEWS_CHECKED_MESSAGE, TC_NEWS_TYPE_EVENT, TC_NEWS_TYPE_REPORT,
   TC_OK,
   TC_TEAMS_ADD_NEW_TEAM,
   TC_TEAMS_ADD_NEW_TEAM_FAIL,
@@ -36,6 +36,7 @@ import {News} from "../news/news";
 import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
 import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
+import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
 
 @Component({
   selector: 'app-teams',
@@ -51,6 +52,10 @@ export class TeamsComponent extends AbstractNewsComponent {
 
   newsHeaderTC = TC_TEAMS_NEWS_HEADER;
   noTeamsTC = TC_TEAMS_NO_TEAMS;
+
+  newsTypeReportTC = TC_NEWS_TYPE_REPORT;
+
+  newsTypeReport = NEWS_TYPE_REPORT;
 
   filteredNews: News[];
 

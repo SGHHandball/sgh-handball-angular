@@ -1,7 +1,7 @@
 import {
   TC_ROUTE_DOCUMENTS,
   TC_ROUTE_EVENTS,
-  TC_ROUTE_HALLS,
+  TC_ROUTE_HALLS, TC_ROUTE_HOME,
   TC_ROUTE_IMPRINT,
   TC_ROUTE_NEWS,
   TC_ROUTE_TEAMS, TC_ROUTE_TRAINING
@@ -35,6 +35,7 @@ export const ROUTE_INDEX = '';
 
 
 export const NAVIGATION_ITEMS_CLUB = [
+  new NavigationItem(TC_ROUTE_HOME, TC_ROUTE_HOME).withRouterIcon('home'),
   new NavigationItem(TC_ROUTE_NEWS, TC_ROUTE_NEWS).withRouterIcon('notifications'),
   new NavigationItem(TC_ROUTE_TEAMS, TC_ROUTE_TEAMS).withRouterIcon('supervisor_account'),
 ];
@@ -46,6 +47,6 @@ export const NAVIGATION_ITEMS_INFO = [
 ];
 
 export const NAVIGATION_ITEMS_OTHER = [
-  new NavigationItem(TC_ROUTE_HALLS, TC_ROUTE_HALLS).withRouterIcon('home'),
+  new NavigationItem(TC_ROUTE_HALLS, TC_ROUTE_HALLS).withRouterIcon('account_balance'),
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
 ];

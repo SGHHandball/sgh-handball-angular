@@ -5,6 +5,7 @@
     <app-news-filter
       class="filter"
       [placeholder]="translationService.get(filterTC)"
+      [values]="filters"
       [possibleValues]="getAllPossibleFilterValues()"
       (onValueChangeListener)="filterNews($event)"
     ></app-news-filter>

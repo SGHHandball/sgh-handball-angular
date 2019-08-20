@@ -4,7 +4,7 @@ import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {NewsComponent} from "./news/news.component";
 import {NewsEditComponent} from "./news/news-edit/news-edit.component";
 import {
-  TC_NEWS_PATH_EDIT, TC_ROUTE_DOCUMENTS, TC_ROUTE_EVENTS, TC_ROUTE_HALLS,
+  TC_NEWS_PATH_EDIT, TC_ROUTE_DOCUMENTS, TC_ROUTE_EVENTS, TC_ROUTE_HALLS, TC_ROUTE_HOME,
   TC_ROUTE_IMPRINT,
   TC_ROUTE_NEWS, TC_ROUTE_TEAMS, TC_ROUTE_TRAINING, TC_USERS
 } from "./translation.service";
@@ -17,9 +17,11 @@ import {HallsComponent} from "./halls/halls.component";
 import {EventsComponent} from "./events/events.component";
 import {TrainingsComponent} from "./trainings/trainings.component";
 import {DocumentsComponent} from "./documents/documents.component";
+import {HomeComponent} from "./home/home.component";
 
 export const routes = [
-  {path: ROUTE_INDEX, redirectTo: TC_ROUTE_NEWS, pathMatch: 'full'},
+  {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
+  {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_NEWS, component: NewsComponent},
   {path: TC_ROUTE_TEAMS, component: TeamsComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},

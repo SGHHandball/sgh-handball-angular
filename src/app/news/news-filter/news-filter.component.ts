@@ -13,6 +13,7 @@ import {map, startWith} from "rxjs/operators";
 export class NewsFilterComponent {
 
   @Input() placeholder: string;
+  @Input() values: string[] = [];
   @Input() possibleValues: string[] = [];
   @Output() onValueChangeListener = new EventEmitter<string[]>();
 
@@ -23,8 +24,6 @@ export class NewsFilterComponent {
 
   filterCtrl = new FormControl();
   filteredValues: Observable<string[]>;
-
-  values: string[] = [];
 
   @ViewChild('valueInput', {static: false}) valueInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;

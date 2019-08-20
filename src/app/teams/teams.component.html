@@ -32,9 +32,12 @@
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="editTeamPage()"
-            *ngIf="adminService.isUserTeamsAdmin() ||
-             (currentTeam && adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason))">{{translationService.get(editTeamPageTC)}}</button>
+    <ng-container *ngIf="adminService.isUserTeamsAdmin() ||
+             (currentTeam && adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason))">
+      <button mat-menu-item
+              (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
+      <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
+    </ng-container>
     <ng-container *ngIf="adminService.isUserTeamsAdmin()">
       <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
       <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>

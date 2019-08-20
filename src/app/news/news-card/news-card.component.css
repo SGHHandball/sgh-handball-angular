@@ -1,0 +1,58 @@
+.grid-container {
+  margin: 16px 16px 44px;
+}
+
+.dashboard-card {
+  margin: 16px auto;
+  min-width: 120px;
+  max-width: 800px;
+}
+
+.more-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.add-news-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+}
+
+.add-news-btn-web {
+  right: 24px;
+}
+
+.add-news-btn-mobile {
+}
+
+.news-state {
+  position: absolute;
+  right: 16px;
+  bottom: 8px;
+}
+
+.card-img {
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+  display: block;
+}
+
+.card-content {
+  margin: 8px !important;
+  text-align: start !important;
+}
+
+.no-news {
+  text-align: center;
+}
+
+.mat-grid-tile {
+  height: calc(100vh - 24px);
+}

@@ -1,0 +1,7 @@
+.no-content{
+  margin: 16px;
+}
+
+.slideshow:hover{
+  cursor: pointer;
+}
