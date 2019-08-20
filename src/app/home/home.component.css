@@ -1,5 +1,10 @@
-.no-content{
+.content{
   margin: 16px;
+}
+
+.web-content{
+  width: 70%;
+  margin: 16px auto;
 }
 
 .slideshow:hover{

@@ -1,13 +1,12 @@
-<mat-card class="no-content">
+<mat-card class="content" [class.web-content]="!(isHandset$|async)">
   <img mat-card-image src="assets/img/Handballer2019.jpg">
 
   <mat-card-content>
     <slideshow
       #slideshow
-      [minHeight]="(isHandset$|async)?'300px' : '500px'"
+      [minHeight]="(isHandset$|async)?'250px' : '300px'"
       [imageUrls]="images"
       [autoPlay]="true"
-      [showDots]="true"
       [showArrows]="false"
       backgroundSize="contain"
       (click)="gotoDetailNews()"
@@ -15,7 +14,7 @@
     ></slideshow>
 
     <!--TODO: Make this editable -->
-    <h2>Handball</h2>
+    <h2>Handball in Hainhausen</h2>
     <p>Seit fast 100 Jahren wird in Hainhausen Handball gespielt. Bereits im Jahr 1923 fanden sich einige junge Männer
       in der Turngemeinde zusammen, um gemeinsam diesen Sport zu betreiben.</p>
     <p>Der Schwerpunkt unserer Abteilung liegt in der Förderung des Kinder - und Jugendsports. Wie jeder bei den Spielen

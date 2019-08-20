@@ -80,6 +80,7 @@ import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/tr
 import {DocumentsComponent} from './documents/documents.component';
 import { HomeComponent } from './home/home.component';
 import { NewsCardComponent } from './news/news-card/news-card.component';
+import { SearchComponent } from './app-shell/search/search.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { NewsCardComponent } from './news/news-card/news-card.component';
     TrainingsEditDialogComponent,
     DocumentsComponent,
     HomeComponent,
-    NewsCardComponent
+    NewsCardComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
