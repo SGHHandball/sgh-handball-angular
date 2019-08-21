@@ -97,6 +97,8 @@ export const TC_NEWS_SEND_HEADER = 'news-send-header';
 export const TC_NEWS_SEND_MESSAGE = 'news-send-message';
 export const TC_NEWS_CHECKED_HEADER = 'news-checked-header';
 export const TC_NEWS_CHECKED_MESSAGE = 'news-checked-message';
+export const TC_NEWS_EXPORT_CHECK_BOX = 'news-export-check-box';
+export const TC_NEWS_EXPORT = 'news-export';
 
 export const TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL = 'imprint-login-dialog-error-invalid-email';
 export const TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED = 'imprint-login-dialog-error-email-required';

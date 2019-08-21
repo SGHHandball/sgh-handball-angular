@@ -37,6 +37,12 @@
   bottom: 8px;
 }
 
+.export-checkbox {
+   position: absolute;
+   left: 16px;
+   bottom: 8px;
+ }
+
 .card-img {
   width: 100%;
   max-width: 300px;

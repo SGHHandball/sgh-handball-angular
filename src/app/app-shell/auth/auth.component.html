@@ -1,6 +1,6 @@
-<button mat-icon-button *ngIf="(afAuth.user|async) ? true : isAuthBtnVisible()" class="auth-container"
+<button mat-icon-button  class="auth-container"
         [matMenuTriggerFor]="authMenu">
-  <mat-icon>more_vert</mat-icon>
+  <mat-icon>person</mat-icon>
 </button>
 
 <mat-menu #authMenu="matMenu">

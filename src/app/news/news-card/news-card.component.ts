@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "../news";
 import {
+  TC_NEWS_EXPORT_CHECK_BOX,
   TC_NEWS_NO_NEWS,
   TC_NEWS_PLAYERS,
   TC_NEWS_SUMMARY, TC_NEWS_TYPE_DESCRIPTION,
@@ -25,10 +26,11 @@ export class NewsCardComponent extends AbstractComponent {
   @Output() deleteClickListener = new EventEmitter();
   @Output() sendClickListener = new EventEmitter();
   @Output() checkClickListener = new EventEmitter();
+  @Output() exportChangeListener = new EventEmitter<boolean>();
 
-  noNewsTC = TC_NEWS_NO_NEWS;
   summaryTC = TC_NEWS_SUMMARY;
   playersTC = TC_NEWS_PLAYERS;
+  exportCheckBoxTC = TC_NEWS_EXPORT_CHECK_BOX;
 
 
   constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
@@ -54,6 +56,10 @@ export class NewsCardComponent extends AbstractComponent {
 
   isNewsStateVisible(news: News): boolean {
     return this.hasRightsToEdit(news);
+  }
+
+  isExportVisible(news: News): boolean {
+    return this.hasRightsToEdit(news) && this.newsCard.type === NEWS_TYPE_REPORT;
   }
 
 

@@ -62,6 +62,8 @@
   "news-type-event": "Veranstaltung",
   "news-type-description": "Beschreibung",
   "news-no-news": "Keine Einträge vorhanden",
+  "news-export-check-box": "Export",
+  "news-export": "Exportieren",
   "news-unsaved-data-warning-header": "Ungespeicherte Daten",
   "news-unsaved-data-warning": "Es wurden noch nicht alle Änderungen gespeichert, wollen Sie die Seite verlassen?",
   "news-send-header": "Daten senden",

@@ -1,5 +1,3 @@
-import {DEFAULT_YEAR} from "../teams/teams.service";
-
 export class News {
   id: string = '';
   creator: string = '';

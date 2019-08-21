@@ -20,6 +20,7 @@ export class NewsCardListComponent extends AbstractComponent  {
   @Output() deleteClickListener = new EventEmitter<News>();
   @Output() sendClickListener = new EventEmitter<News>();
   @Output() checkClickListener = new EventEmitter<News>();
+  @Output() exportChangeListener = new EventEmitter<News>();
 
   noNewsTC = TC_NEWS_NO_NEWS;
 
@@ -27,7 +28,5 @@ export class NewsCardListComponent extends AbstractComponent  {
     super(breakpointObserver, snackBar);
   }
 
-
-
-
 }
+

@@ -50,6 +50,9 @@
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card-content>
+  <mat-checkbox (change)="exportChangeListener.next($event.checked)" class="export-checkbox" *ngIf="isExportVisible(newsCard)">
+    {{translationService.get(exportCheckBoxTC)}}
+  </mat-checkbox>
   <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
     {{getNewsStateIcon(newsCard)}}
   </mat-icon>

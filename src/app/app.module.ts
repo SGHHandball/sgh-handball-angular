@@ -35,7 +35,7 @@ import {
   MatSnackBarModule,
   MatDividerModule,
   MatChipsModule,
-  MatTabsModule, MatTooltipModule, MatTreeModule
+  MatTabsModule, MatTooltipModule, MatTreeModule, MatCheckboxModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -81,6 +81,7 @@ import {DocumentsComponent} from './documents/documents.component';
 import { HomeComponent } from './home/home.component';
 import { NewsCardComponent } from './news/news-card/news-card.component';
 import { SearchComponent } from './app-shell/search/search.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -122,7 +123,7 @@ import { SearchComponent } from './app-shell/search/search.component';
     DocumentsComponent,
     HomeComponent,
     NewsCardComponent,
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -164,7 +165,9 @@ import { SearchComponent } from './app-shell/search/search.component';
     DragDropModule,
     SlideshowModule,
     MatTooltipModule,
-    MatTreeModule
+    MatTreeModule,
+    MatCheckboxModule,
+    HttpClientModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
