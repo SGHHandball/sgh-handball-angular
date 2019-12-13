@@ -9,3 +9,7 @@
 .logo:hover, .toolbar-title:hover {
   cursor: pointer;
 }
+
+.toolbar-container{
+  position: sticky;
+}
