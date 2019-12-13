@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {getDateString, News} from "../news/news";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {NewsService} from "../news/news.service";
@@ -10,60 +10,57 @@ import {AbstractComponent} from "../abstract/abstract.component";
 import {HomeService} from "./home.service";
 import {IImage} from "ng-simple-slideshow";
 import {Router} from "@angular/router";
+import {DataService} from "../common/data.service";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent extends AbstractComponent implements OnInit {
+export class HomeComponent extends AbstractComponent implements OnInit, OnDestroy {
 
   @ViewChild('slideshow', {static: true}) slideshow: any;
 
-  constructor(breakpointObserver: BreakpointObserver, public homeService: HomeService, snackBar: MatSnackBar, public router: Router, private newsService: NewsService) {
+  destroy$ = new Subject();
+
+  constructor(breakpointObserver: BreakpointObserver,
+              public homeService: HomeService,
+              snackBar: MatSnackBar,
+              private dataService: DataService
+  ) {
     super(breakpointObserver, snackBar);
   }
 
+  news: News[];
   images: IImage[] = [];
 
   ngOnInit(): void {
-    if (!this.homeService.newsLoaded)
-      this.homeService.$newsLoaded.subscribe(onLoad => {
-          this.getImageUrls();
-        }
-      );
-    else this.getImageUrls();
+    this.getNews();
   }
 
-  getImageUrls() {
-    this.images = [];
-    this.homeService.news.forEach(news => {
-      let image = "assets/img/SghLogo.png";
-      if (news.imgLinks.length > 0) {
-        image = news.imgLinks[0];
-      }
-      this.images.push({
-        url: image,
-        title: news.title,
-        caption: this.getCaption(news)
+  getNews() {
+    this.dataService.getNormalUserNews(true, 10)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(news => {
+        this.news = news;
+        this.images = this.homeService.getImageUrls(news);
       })
-    });
   }
 
   gotoDetailNews() {
     let slideIndex = this.slideshow.slideIndex;
-    let news = this.homeService.news[slideIndex];
-    if (news.title) this.newsService.filters.push(news.title);
-    if (news.teamAge) this.newsService.filters.push(news.teamAge);
-    this.router.navigate([TC_ROUTE_NEWS])
+    let news = this.news[slideIndex];
+    this.homeService.gotoDetailNews(news);
   }
 
-  getCaption(news: News): string {
-    let caption = "";
-    if (news.date) caption += getDateString(news.date) + ': ';
-    if (news.title) caption += news.title;
-    if (news.score) caption += ' ' + news.score;
-    if (news.summary) caption += ' - ' + news.summary;
-    return caption;
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
+
+
 }
