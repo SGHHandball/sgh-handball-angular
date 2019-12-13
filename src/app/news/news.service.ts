@@ -17,6 +17,7 @@ import {User} from "firebase";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 import {AngularFireStorage, AngularFireUploadTask} from "@angular/fire/storage";
 import {AbstractNewsService} from "../abstract/abstract-news.service";
+import {Team} from "../teams/team";
 
 @Injectable({
   providedIn: 'root'
@@ -123,13 +124,18 @@ export class NewsService extends AbstractNewsService {
   }
 
 
-  addNewNews(newsType: string) {
+  addNewNews(newsType: string, newsTeam?: Team) {
     if (this.user) {
       const newsTypeText = this.getNewNewsInitText(newsType);
       const newNews = new News()
         .withTitleAndBody(newsTypeText, newsTypeText)
         .withType(newsType.toString())
         .withCreator(this.user.uid);
+
+      if (newsTeam) {
+        newNews.teamAge = newsTeam.teamAge;
+        newNews.teamSeason = newsTeam.teamSeason;
+      }
 
       this.db.collection<News>(DB_COLLECTION_NEWS)
         .add(JSON.parse(JSON.stringify(newNews)))
@@ -145,13 +151,19 @@ export class NewsService extends AbstractNewsService {
 
   openNewsEdit(toExpandNews: News) {
     this.changeExpandedNews(toExpandNews);
-    this.router.navigate([this.router.url.replace('/', '') + '/' + TC_NEWS_PATH_EDIT])
+    this.router.navigate([this.getNormalizedUrl(this.router.url) + '/' + TC_NEWS_PATH_EDIT])
   }
 
+  getNormalizedUrl(url: string): string {
+    if (url.charAt(url.length - 1) === '/') {
+      url = url.replace('/', '');
+    }
+    return url;
+  }
 
   closeExpandedNews() {
     this.changeExpandedNews(undefined);
-    this.router.navigate([this.router.url.replace('/' + TC_NEWS_PATH_EDIT, '').replace('/', '')])
+    this.router.navigate([this.getNormalizedUrl(this.router.url.replace('/' + TC_NEWS_PATH_EDIT, ''))])
   }
 
 

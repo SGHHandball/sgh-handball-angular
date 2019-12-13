@@ -37,6 +37,7 @@ import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dia
 import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-teams',
@@ -67,19 +68,29 @@ export class TeamsComponent extends AbstractNewsComponent {
               public dialog: MatDialog,
               public newsService: NewsService,
               private adminService: AdminService,
-              snackBar: MatSnackBar) {
+              snackBar: MatSnackBar,
+              private route: ActivatedRoute) {
     super(breakpointObserver, newsService, translationService, dialog, snackBar);
-    this.teamsService.loadAllTeams()
-      .then(() => {
-        this.currentTeam = this.teamsService.teams[0];
-        this.changeNews()
-      });
+    this.route.params.subscribe(() => {
+      this.teamsService.loadAllTeams()
+        .then(() => {
+          this.initTeam();
+        });
+    });
   }
 
+  initTeam(){
+    let teamAge = this.route.snapshot.paramMap.get('teamAge');
+    this.currentTeam = this.getTeamByAge(teamAge);
+    this.changeNews();
+  }
 
-  onOtherTabSelected(tab: MatTabChangeEvent) {
-    this.currentTeam = this.teamsService.teams[tab.index];
-    this.changeNews()
+  getTeamByAge(teamAge: string): Team {
+    let returnTeam = this.teamsService.teams[0];
+    this.teamsService.teams.forEach(team => {
+      if (team.teamAge === teamAge) returnTeam = team;
+    });
+    return returnTeam;
   }
 
   changeNews() {

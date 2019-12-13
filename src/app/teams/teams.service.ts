@@ -21,14 +21,12 @@ export class TeamsService {
               private afStorage: AngularFireStorage) {
   }
 
-  loadAllTeams(): Promise<void> {
-    return new Promise<void>(resolve => {
-      this.teamsLoaded = false;
-      this.db.collection<Team>(DB_COLLECTION_TEAMS,
-        ref =>
-          ref.where('teamSeason', '==', this.seasonToLoad)
-            .orderBy("position", "asc"))
-        .snapshotChanges().pipe(
+  loadAllTeamsAsync(): Observable<Team[]> {
+    return this.db.collection<Team>(DB_COLLECTION_TEAMS,
+      ref =>
+        ref.where('teamSeason', '==', this.seasonToLoad)
+          .orderBy("position", "asc"))
+      .snapshotChanges().pipe(
         map(actions => {
             return actions.map(action => {
               const data = action.payload.doc.data() as Team;
@@ -37,7 +35,13 @@ export class TeamsService {
             })
           }
         )
-      ).subscribe(teams => {
+      );
+  }
+
+  loadAllTeams(): Promise<void> {
+    return new Promise<void>(resolve => {
+      this.teamsLoaded = false;
+      this.loadAllTeamsAsync().subscribe(teams => {
         this.teams = teams;
         this.teamsLoaded = true;
         resolve();

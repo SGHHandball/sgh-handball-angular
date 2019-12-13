@@ -82,6 +82,8 @@ import { HomeComponent } from './home/home.component';
 import { NewsCardComponent } from './news/news-card/news-card.component';
 import { SearchComponent } from './app-shell/search/search.component';
 import {HttpClientModule} from "@angular/common/http";
+import { SidenavSubMenuComponent } from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
+import { EmptyComponent } from './empty/empty.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +126,8 @@ import {HttpClientModule} from "@angular/common/http";
     HomeComponent,
     NewsCardComponent,
     SearchComponent,
+    SidenavSubMenuComponent,
+    EmptyComponent,
   ],
   imports: [
     BrowserModule,

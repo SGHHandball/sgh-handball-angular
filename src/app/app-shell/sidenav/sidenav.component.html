@@ -1,6 +1,5 @@
-
 <app-toolbar
-  (sideNavButtonListener)="drawer.toggle()"
+  (sideNavButtonListener)="toogleSideNav()"
 ></app-toolbar>
 
 <mat-sidenav-container class="sidenav-container">
@@ -13,19 +12,30 @@
   >
 
     <mat-divider></mat-divider>
-    <mat-nav-list>
+    <mat-nav-list *ngIf="!teamsNavItemsVisible && !generalInformationNavItemsVisible">
       <app-sidenav-list-item
-      headerTitle="{{translationService.get(navItemsHeaderClubTC)}}"
-      [navItems]="navItemsClub"
-      (clickNavigationListener)="closeSideNavOnHandheldMode(drawer)"
+        headerTitle="{{translationService.get(navItemsHeaderClubTC)}}"
+        [navItems]="navItemsClub"
+        (clickNavigationListener)="closeSideNavOnHandheldMode()"
+      ></app-sidenav-list-item>
+
+
+      <app-sidenav-list-item
+        [navItems]="navItemTeam"
+        (clickNavigationListener)="toogleTeamsSideNav()"
       ></app-sidenav-list-item>
 
       <mat-divider></mat-divider>
 
       <app-sidenav-list-item
         headerTitle="{{translationService.get(navItemsHeaderInfoTC)}}"
+        [navItems]="navItemGeneralInformation"
+        (clickNavigationListener)="toogleGenInfoSideNav()"
+      ></app-sidenav-list-item>
+
+      <app-sidenav-list-item
         [navItems]="navItemsInfo"
-        (clickNavigationListener)="closeSideNavOnHandheldMode(drawer)"
+        (clickNavigationListener)="closeSideNavOnHandheldMode()"
       ></app-sidenav-list-item>
 
 
@@ -34,12 +44,28 @@
       <app-sidenav-list-item
         headerTitle="{{translationService.get(navItemsHeaderOtherTC)}}"
         [navItems]="navItemsOther"
-        (clickNavigationListener)="closeSideNavOnHandheldMode(drawer)"
+        (clickNavigationListener)="closeSideNavOnHandheldMode()"
       ></app-sidenav-list-item>
 
     </mat-nav-list>
 
+    <app-sidenav-sub-menu *ngIf="teamsNavItemsVisible"
+                          [header]="translationService.get(navItemTeam[0].routerName)"
+                          (closeEventEmitter)="toogleTeamsSideNav()"
+                          [navItems]="teamsNavItems"
+                          (navigateEventEmitter)="closeSideNavOnHandheldMode()"
+    ></app-sidenav-sub-menu>
+
+    <app-sidenav-sub-menu *ngIf="generalInformationNavItemsVisible"
+                          [header]="translationService.get(navItemGeneralInformation[0].routerName)"
+                          (closeEventEmitter)="toogleGenInfoSideNav()"
+                          [navItems]="generalInormationNavItems"
+                          (navigateEventEmitter)="closeSideNavOnHandheldMode()"
+    ></app-sidenav-sub-menu>
+
+
   </mat-sidenav>
+
 
   <mat-sidenav-content>
     <router-outlet></router-outlet>

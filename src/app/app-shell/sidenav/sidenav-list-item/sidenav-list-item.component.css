@@ -2,3 +2,7 @@
 .mat-list-item-background{
   background-color: lightgray;
 }
+
+.arrow-btn{
+  margin-left: 8px;
+}

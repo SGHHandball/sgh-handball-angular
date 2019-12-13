@@ -33,10 +33,16 @@ export const TC_ROUTE_HOME = 'home';
 export const TC_ROUTE_NEWS = 'aktuelles';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 
+export const TC_ROUTE_GENERAL_INFORMATION = 'allgemeine-informationen';
+export const TC_ROUTE_EXECUTIVES = 'vorstand';
+export const TC_ROUTE_REFEREES = 'schiedsrichter';
+export const TC_ROUTE_TIME_KEEPER = 'zeitnehmer';
 export const TC_ROUTE_EVENTS = 'events';
 export const TC_ROUTE_TRAINING = 'trainingszeiten';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
 
+export const TC_ROUTE_SPONSORS = 'sponsoren';
+export const TC_ROUTE_CDH = 'club-der-hunderter';
 export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
 
@@ -152,7 +158,7 @@ export const TC_TRAININGS_TRAINING_TRAINER = 'trainer';
 export const TC_TRAININGS_TRAINING_TRAINER_NAME = 'trainings-training-trainer-name';
 export const TC_TRAININGS_TRAINING_TRAINER_MAIL = 'trainings-training-trainer-mail';
 
-export const TC_IMPRINT_FIND_IMPRINT = 'imprint-find-imprint';
+export const TC_IMPRINT_FIND_MAIN_PAGE = 'imprint-main-page';
 export const TC_IMPRINT_FIND_DATA_PROTECTION = 'imprint-find-data-protection';
 export const TC_IMPRINT_HERE = 'imprint-here';
 
@@ -162,3 +168,4 @@ export const TC_DOCUMENTS_ADD_NEW_FOLDER_SUCCESS = 'documents-add-new-folder-suc
 export const TC_DOCUMENTS_ADD_NEW_FOLDER_FAIL = 'documents-add-new-folder-fail';
 export const TC_DOCUMENTS_FOLDER_NAME = 'documents-folder-name';
 
+export const TC_EMPTY_SITE= 'empty-site';

@@ -1,14 +1,19 @@
 {
   "best-club-on-earth": "SG Hainhausen",
   "club": "Verein",
-  "info": "Infos",
+  "info": "Informationen",
   "other": "Anderes",
   "hallenverzeichnis": "Hallenverzeichnis",
   "home": "Home",
   "aktuelles": "Aktuelles",
   "events": "Veranstaltungen",
   "trainingszeiten": "Trainingszeiten",
+  "allgemeine-informationen": "Allgemeine Infos",
+  "vorstand": "Vorstand",
+  "schiedsrichter": "Schiedsrichter",
+  "zeitnehmer": "Zeitnehmer",
   "dokumente": "Dokumente",
+  "sponsoren": "Sponsoren",
   "club-der-hunderter": "Club der Hunderter",
   "mannschaften": "Mannschaften",
   "impressum": "Impressum",
@@ -118,9 +123,11 @@
   "imprint-find-imprint": "Unser Impressum finden Sie ",
   "imprint-find-data-protection": "Unsere Datenschutzerklärung finden Sie ",
   "imprint-here": "hier",
+  "imprint-main-page": "Die Website des Hauptvereins finden Sie ",
   "documents-no-documents": "Keine Dokumente vorhanden",
   "documents-add-new-folder": "Neuen Ordner hinzufügen",
   "documents-folder-name": "Ordnername",
   "documents-add-new-folder-success": "Neuen Ordner wurde erfolgreich hinzugefügt",
-  "documents-add-new-folder-fail": "Neuer Ordner konnte nicht erfolgreich hinzugefügt werden"
+  "documents-add-new-folder-fail": "Neuer Ordner konnte nicht erfolgreich hinzugefügt werden",
+  "empty-site": "Diese Seite wurde noch nicht bearbeitet und wird bald hinzugefügt werden."
 }

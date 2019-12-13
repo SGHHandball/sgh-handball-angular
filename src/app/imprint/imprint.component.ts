@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {
   TC_IMPRINT_FIND_DATA_PROTECTION,
-  TC_IMPRINT_FIND_IMPRINT, TC_IMPRINT_HERE,
+  TC_IMPRINT_FIND_MAIN_PAGE, TC_IMPRINT_HERE,
   TC_ROUTE_IMPRINT,
   TranslationService
 } from "../translation.service";
@@ -15,7 +15,7 @@ export class ImprintComponent {
 
   imprintTC = TC_ROUTE_IMPRINT;
 
-  imprintFindTC = TC_IMPRINT_FIND_IMPRINT;
+  mainPageTC = TC_IMPRINT_FIND_MAIN_PAGE;
   dataProtectionFindTC = TC_IMPRINT_FIND_DATA_PROTECTION;
   hereTC = TC_IMPRINT_HERE;
 
