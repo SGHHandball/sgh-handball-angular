@@ -1,17 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News} from "../news";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News, NewsType} from "../news";
 import {
   TC_NEWS_EXPORT_CHECK_BOX,
-  TC_NEWS_NO_NEWS,
   TC_NEWS_PLAYERS,
-  TC_NEWS_SUMMARY, TC_NEWS_TYPE_DESCRIPTION,
+  TC_NEWS_SUMMARY,
+  TC_NEWS_TYPE_DESCRIPTION,
   TC_NEWS_TYPE_REPORT,
   TranslationService
 } from "../../translation.service";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AdminService} from "../../admin/admin.service";
-import {NEWS_TYPE_REPORT} from "../../abstract/abstract-news.service";
 import {AbstractComponent} from "../../abstract/abstract.component";
 
 @Component({
@@ -59,7 +58,7 @@ export class NewsCardComponent extends AbstractComponent {
   }
 
   isExportVisible(news: News): boolean {
-    return this.hasRightsToEdit(news) && this.newsCard.type === NEWS_TYPE_REPORT;
+    return this.hasRightsToEdit(news) && this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
   }
 
 
@@ -81,7 +80,7 @@ export class NewsCardComponent extends AbstractComponent {
 
   getBodyHeaderOfType(type: string): string {
     switch (type) {
-      case NEWS_TYPE_REPORT:
+      case NewsType.NEWS_TYPE_REPORT:
         return this.translationService.get(TC_NEWS_TYPE_REPORT);
       default:
         return this.translationService.get(TC_NEWS_TYPE_DESCRIPTION);

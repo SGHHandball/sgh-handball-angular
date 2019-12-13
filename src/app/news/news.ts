@@ -1,42 +1,25 @@
-export class News {
-  id: string = '';
-  creator: string = '';
-  title: string = '';
-  score: string;
-  body: string = '';
-  summary: string;
-  players: string;
-  imgLinks: string[] = [];
-  homeTeam: string = '';
-  enemyTeam: string = '';
-  teamAge: string = '';
-  checked: boolean = false;
-  send: boolean = false;
-  date: number;
-  teamSeason: string;
-  type: string;
+export interface News {
+  id?: string;
+  creator?: string;
+  title?: string;
+  score?: string;
+  body?: string;
+  summary?: string;
+  players?: string;
+  imgLinks?: string[];
+  homeTeam?: string;
+  enemyTeam?: string;
+  teamAge?: string;
+  checked?: boolean;
+  send?: boolean;
+  date?: number;
+  teamSeason?: string;
+  type?: NewsType;
+}
 
-  constructor() {
-    this.date = new Date().getTime();
-  }
-
-
-  withTitleAndBody(title: string, body: string): News {
-    this.title = title;
-    this.body = body;
-    return this;
-  }
-
-  withCreator(creator: string): News {
-    this.creator = creator;
-    return this;
-  }
-
-  withType(type: string): News {
-    this.type = type;
-    return this;
-  }
-
+export enum NewsType {
+  NEWS_TYPE_EVENT = 'event',
+  NEWS_TYPE_REPORT = 'report',
 }
 
 export const NEWS_TEAM_YOUTH_AGES = ['A', 'B', 'C', 'D', 'E', 'F'];

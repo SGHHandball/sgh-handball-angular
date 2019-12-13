@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AbstractComponent} from "./abstract.component";
 import {
@@ -19,17 +19,22 @@ import {environment} from "../../environments/environment";
 import {News} from "../news/news";
 import {NewsService} from "../news/news.service";
 import {DefaultDialogComponent, DialogData} from "./default-dialog/default-dialog.component";
+import {DataService} from "../common/data.service";
+import {Subject} from "rxjs";
+import {catchError, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-abstract-news',
   templateUrl: './abstract.component.html'
 })
-export abstract class AbstractNewsComponent extends AbstractComponent {
+export abstract class AbstractNewsComponent extends AbstractComponent implements OnDestroy {
+
+  destroy$ = new Subject();
 
   constructor(breakpointObserver: BreakpointObserver,
-              public newsService: NewsService,
               public translationService: TranslationService,
               public dialog: MatDialog,
+              public dataService: DataService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
@@ -43,13 +48,20 @@ export abstract class AbstractNewsComponent extends AbstractComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.newsService.deleteNews(news).then(() => {
-          this.onNewsDeleted();
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
-        }).catch(error => {
-          if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))
-        });
+        this.dataService.deleteNews(news)
+          .pipe(takeUntil(this.destroy$),
+            catchError(error => {
+              if (!environment.production) console.log(error);
+              this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+              return error;
+            })
+          )
+          .subscribe(
+            _ => {
+              this.onNewsDeleted();
+              this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
+            }
+          )
       }
     });
   }
@@ -63,15 +75,22 @@ export abstract class AbstractNewsComponent extends AbstractComponent {
         data: new DialogData(TC_NEWS_SEND_HEADER, TC_NEWS_SEND_MESSAGE)
       }
     );
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.newsService.updateNewsSendToTrue(news).then(() => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
-        }).catch(error => {
-          if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL))
-        });
+        this.dataService.updateNewsSendToTrue(news)
+          .pipe(takeUntil(this.destroy$),
+            catchError(error => {
+              if (!environment.production) console.log(error);
+              this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
+              return error;
+            })
+          )
+          .subscribe(
+            _ => {
+              this.onNewsDeleted();
+              this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
+            }
+          )
       }
     });
   }
@@ -82,17 +101,30 @@ export abstract class AbstractNewsComponent extends AbstractComponent {
         data: new DialogData(TC_NEWS_CHECKED_HEADER, TC_NEWS_CHECKED_MESSAGE)
       }
     );
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.newsService.updateNewsCheckToTrue(news).then(() => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
-        }).catch(error => {
-          if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL))
-        });
+        this.dataService.updateNewsCheckToTrue(news)
+          .pipe(takeUntil(this.destroy$),
+            catchError(error => {
+              if (!environment.production) console.log(error);
+              this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
+              return error;
+            })
+          )
+          .subscribe(
+            _ => {
+              this.onNewsDeleted();
+              this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
+            }
+          )
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
 
 }

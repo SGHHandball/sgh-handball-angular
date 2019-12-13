@@ -32,12 +32,13 @@ import {
   DefaultInputDialogData
 } from "../abstract/default-input-dialog/default-input-dialog.component";
 import {NewsService} from "../news/news.service";
-import {News} from "../news/news";
+import {News, NewsType} from "../news/news";
 import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
 import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
-import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
 import {ActivatedRoute} from "@angular/router";
+import {DataService} from "../common/data.service";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-teams',
@@ -56,7 +57,7 @@ export class TeamsComponent extends AbstractNewsComponent {
 
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
 
-  newsTypeReport = NEWS_TYPE_REPORT;
+  newsTypeReport = NewsType.NEWS_TYPE_REPORT;
 
   filteredNews: News[];
 
@@ -67,10 +68,11 @@ export class TeamsComponent extends AbstractNewsComponent {
               public teamsService: TeamsService,
               public dialog: MatDialog,
               public newsService: NewsService,
+              dataService: DataService,
               private adminService: AdminService,
               snackBar: MatSnackBar,
               private route: ActivatedRoute) {
-    super(breakpointObserver, newsService, translationService, dialog, snackBar);
+    super(breakpointObserver, translationService, dialog, dataService, snackBar);
     this.route.params.subscribe(() => {
       this.teamsService.loadAllTeams()
         .then(() => {
@@ -79,7 +81,7 @@ export class TeamsComponent extends AbstractNewsComponent {
     });
   }
 
-  initTeam(){
+  initTeam() {
     let teamAge = this.route.snapshot.paramMap.get('teamAge');
     this.currentTeam = this.getTeamByAge(teamAge);
     this.changeNews();
@@ -95,30 +97,47 @@ export class TeamsComponent extends AbstractNewsComponent {
 
   changeNews() {
     if (this.currentTeam) {
-      this.filteredNews = this.newsService.getFilterNews([this.currentTeam.teamAge, this.currentTeam.teamSeason]);
+      this.newsService
+        .getFilterNews(
+          [
+            this.currentTeam.teamAge,
+            this.currentTeam.teamSeason
+          ]
+        )
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          news => {
+            this.filteredNews = news;
+          }
+        )
+      ;
     } else {
       this.filteredNews = [];
     }
   }
 
   addNewTeamToTab() {
-    const dialogRef = this.dialog.open(DefaultInputDialogComponent, {
-      width: this.dialogWidth,
-      data: new DefaultInputDialogData(
-        this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
-        this.translationService.get(TC_TEAMS_TEAM),
-        this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-        this.translationService.get(TC_CANCEL),
-        this.translationService.get(TC_OK)
-      ).withAutocompleteValues(this.newsService.newsTeamAges)
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.teamsService.addNewTeam(result)
-          .then(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS)))
-          .catch(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL)))
-      }
-    })
+    this.newsService.getTeamAges()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ages => {
+        const dialogRef = this.dialog.open(DefaultInputDialogComponent, {
+          width: this.dialogWidth,
+          data: new DefaultInputDialogData(
+            this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
+            this.translationService.get(TC_TEAMS_TEAM),
+            this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+            this.translationService.get(TC_CANCEL),
+            this.translationService.get(TC_OK)
+          ).withAutocompleteValues(ages)
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.teamsService.addNewTeam(result)
+              .then(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS)))
+              .catch(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL)))
+          }
+        })
+      });
   }
 
   changeOrderOfTabs() {

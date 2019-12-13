@@ -6,7 +6,6 @@ import {
 } from "../../translation.service";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
-import {AdminService} from "../../admin/admin.service";
 
 @Component({
   selector: 'app-news-card-list',

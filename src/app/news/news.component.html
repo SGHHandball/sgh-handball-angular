@@ -1,29 +1,19 @@
-<mat-spinner [diameter]="30" *ngIf="!newsService.newsLoaded" class="loading-spinner"></mat-spinner>
-<ng-container *ngIf="newsService.newsLoaded">
+<mat-spinner [diameter]="30" *ngIf="!filteredNews" class="loading-spinner"></mat-spinner>
+<ng-container *ngIf="filteredNews">
   <div class="grid-container">
 
     <app-news-filter
       class="filter"
       [placeholder]="translationService.get(filterTC)"
       [values]="filters"
-      [possibleValues]="getAllPossibleFilterValues()"
-      (onValueChangeListener)="filterNews($event)"
+      [possibleValues]="possibleFilterValues"
+      (onValueChangeListener)="getFilterNews($event)"
     ></app-news-filter>
-
-    <app-news-card-list
-      *ngIf="!filteredNews"
-      [news]="newsService.news"
-      (editClickListener)="newsService.openNewsEdit($event)"
-      (deleteClickListener)="openDeleteNewsDialog($event)"
-      (sendClickListener)="openSendNewsDialog($event)"
-      (checkClickListener)="openCheckNewsDialog($event)"
-      (exportChangeListener)="changeExportNews($event)"
-    ></app-news-card-list>
 
     <app-news-card-list
       *ngIf="filteredNews"
       [news]="filteredNews"
-      (editClickListener)="newsService.openNewsEdit($event)"
+      (editClickListener)="newsService.openNewsEdit($event.id)"
       (deleteClickListener)="openDeleteNewsDialog($event)"
       (sendClickListener)="openSendNewsDialog($event)"
       (checkClickListener)="openCheckNewsDialog($event)"
@@ -37,9 +27,9 @@
     <button mat-menu-item *ngIf="adminService.isUserEventAdmin() && exportNews.length>0"
             (click)="exportNewsToText()"> {{translationService.get(exportTC)}}</button>
     <button mat-menu-item *ngIf="adminService.isUserEventAdmin()"
-            (click)="newsService.addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
+            (click)="addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
     <button mat-menu-item *ngIf="adminService.sghUser && adminService.sghUser.teams.length>0"
-            (click)="newsService.addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
+            (click)="addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
   </mat-menu>
 
 

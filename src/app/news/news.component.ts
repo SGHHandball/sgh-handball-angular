@@ -1,16 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {getDateString, News} from "./news";
+import {News, NewsType} from "./news";
 import {
   TC_NEWS_TYPE_REPORT,
   TranslationService, TC_NEWS_TYPE_EVENT, TC_FILTER, TC_NEWS_EXPORT
 } from "../translation.service";
 import {NewsService} from "./news.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
-import {NEWS_TYPE_EVENT, NEWS_TYPE_REPORT} from "../abstract/abstract-news.service";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {AdminService} from "../admin/admin.service";
 import {exportNewsToText} from "./news-export/news-export";
+import {DataService} from "../common/data.service";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-news',
@@ -22,48 +23,65 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
   newsTypeEventTC = TC_NEWS_TYPE_EVENT;
 
-  newsTypeReport = NEWS_TYPE_REPORT;
-  newsTypeEvent = NEWS_TYPE_EVENT;
+  newsTypeReport = NewsType.NEWS_TYPE_REPORT;
+  newsTypeEvent = NewsType.NEWS_TYPE_EVENT;
 
   exportTC = TC_NEWS_EXPORT;
 
-  filteredNews: News[] = [];
+  filteredNews: News[];
 
   exportNews: News[] = [];
 
   filters: string[] = this.newsService.filters;
 
+  possibleFilterValues: string[];
+
   constructor(breakpointObserver: BreakpointObserver,
-              newsService: NewsService,
               translationService: TranslationService,
               dialog: MatDialog,
               snackBar: MatSnackBar,
-              public adminService: AdminService) {
-    super(breakpointObserver, newsService, translationService, dialog, snackBar);
+              dataService: DataService,
+              public adminService: AdminService,
+              private newsService: NewsService
+  ) {
+    super(breakpointObserver, translationService, dialog, dataService, snackBar);
   }
 
   ngOnInit(): void {
-    this.filterNews(this.filters);
+    this.getAllPossibleFilterValues();
+    this.getFilterNews(this.filters);
   }
 
-  filterNews(filterValues: string[]) {
+  addNewNews(newsType: NewsType) {
+    this.dataService.addNewNews(newsType)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(news => {
+        this.newsService.openNewsEdit(news.id);
+      })
+  }
+
+  getFilterNews(filterValues: string[]) {
     this.filters = filterValues;
-    this.filteredNews = this.newsService.getFilterNews(this.filters);
+    this.newsService.getFilterNews(this.filters)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(news => {
+        this.filteredNews = news;
+      });
   }
 
-  getAllPossibleFilterValues(): string[] {
-    const filterValues = [];
-    this.newsService.newsTeamAges.forEach(age => {
-      filterValues.push(age);
-    });
-    this.newsService.clubs.forEach(club => {
-      filterValues.push(club.name);
-    });
-    return filterValues;
+  getAllPossibleFilterValues() {
+    this.newsService
+      .getAllPossibleFilterValues()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(values => {
+        this.possibleFilterValues = values;
+      })
   }
 
   onNewsDeleted() {
-    this.filterNews(this.filters);
+    this.getFilterNews(this.filters);
   }
 
   changeExportNews(news: News) {

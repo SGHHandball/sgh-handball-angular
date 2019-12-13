@@ -3,7 +3,7 @@
 }
 
 .web-list{
-  width: 48%;
+  width: 45%;
   display: inline-grid;
-  margin: 8px;
+  margin: 0 16px;
 }
