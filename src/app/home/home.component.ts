@@ -1,15 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {getDateString, News} from "../news/news";
+import {News} from "../news/news";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {NewsService} from "../news/news.service";
-import {TC_ROUTE_NEWS, TranslationService} from "../translation.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {AdminService} from "../admin/admin.service";
-import {AbstractNewsComponent} from "../abstract/abstract-news.component";
+import {MatSnackBar} from "@angular/material";
 import {AbstractComponent} from "../abstract/abstract.component";
 import {HomeService} from "./home.service";
 import {IImage} from "ng-simple-slideshow";
-import {Router} from "@angular/router";
 import {DataService} from "../common/data.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
