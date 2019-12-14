@@ -8,7 +8,7 @@ import {
   TranslationService
 } from "../translation.service";
 import {Club,} from "../clubs/club";
-import {Observable, of} from "rxjs";
+import {Observable, of, Subject} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../common/data.service";
 import {Location} from '@angular/common';
@@ -17,8 +17,8 @@ import {Location} from '@angular/common';
   providedIn: 'root'
 })
 export class NewsService {
-
-  filters: string[] = [];
+  filter: string;
+  filterChange$ = new Subject<string>();
 
   constructor(
     private router: Router,
@@ -45,7 +45,7 @@ export class NewsService {
   areFiltersInNews(news: News, filterValues: string[]): boolean {
     let allFiltersInNews = true;
     filterValues.forEach(filter => {
-      if (!this.isFilterInNews(news, filter.toLowerCase())) {
+      if (filter && !this.isFilterInNews(news, filter.toLowerCase())) {
         allFiltersInNews = false;
       }
     });

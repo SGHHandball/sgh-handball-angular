@@ -231,6 +231,7 @@ export class FireApiService {
   }
 
   downloadImages(paths: string[]): Observable<string> {
+    if (!paths) return of();
     return from(paths)
       .pipe(
         mergeMap(

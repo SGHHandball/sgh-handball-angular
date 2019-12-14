@@ -52,8 +52,7 @@ export class HomeService {
   }
 
   gotoDetailNews(news: News) {
-    if (news.title) this.newsService.filters.push(news.title);
-    if (news.teamAge) this.newsService.filters.push(news.teamAge);
+    this.newsService.filterChange$.next(news.title);
     this.router.navigate([TC_ROUTE_NEWS])
   }
 }

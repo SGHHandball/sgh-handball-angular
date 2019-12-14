@@ -2,14 +2,6 @@
 <ng-container *ngIf="filteredNews">
   <div class="grid-container">
 
-    <app-news-filter
-      class="filter"
-      [placeholder]="translationService.get(filterTC)"
-      [values]="filters"
-      [possibleValues]="possibleFilterValues"
-      (onValueChangeListener)="getFilterNews($event)"
-    ></app-news-filter>
-
     <app-news-card-list
       *ngIf="filteredNews"
       [news]="filteredNews"

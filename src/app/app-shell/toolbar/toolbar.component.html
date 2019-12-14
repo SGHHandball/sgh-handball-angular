@@ -5,8 +5,16 @@
     <mat-icon>{{sideNavButtonIcon}}</mat-icon>
   </button>
   <img src="assets/img/SghLogoOnlyTransparent.png" class="logo" (click)="goToHome()">
-  <h1 class="toolbar-title" (click)="goToHome()">{{(isHandset$|async) ? appNameShort : appName}}</h1>
+  <h1 class="toolbar-title"
+      (click)="goToHome()">{{(isHandset$|async) ? (appNameVisible ? appNameShort : '') : appName}}</h1>
   <span class="example-spacer"></span>
+  <mat-search-bar
+    #search
+    (ngModelChange)="searchControl.value ? search.open():''"
+    (onOpen)="changeVisibilityAppName(false)"
+    (onClose)="changeVisibilityAppName(true)"
+    [formControl]="searchControl"
+  ></mat-search-bar>
   <app-auth></app-auth>
 </mat-toolbar>
 

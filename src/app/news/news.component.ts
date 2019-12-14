@@ -11,7 +11,7 @@ import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {AdminService} from "../admin/admin.service";
 import {exportNewsToText} from "./news-export/news-export";
 import {DataService} from "../common/data.service";
-import {takeUntil} from "rxjs/operators";
+import {switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-news',
@@ -19,7 +19,6 @@ import {takeUntil} from "rxjs/operators";
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent extends AbstractNewsComponent implements OnInit {
-  filterTC = TC_FILTER;
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
   newsTypeEventTC = TC_NEWS_TYPE_EVENT;
 
@@ -31,8 +30,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   filteredNews: News[];
 
   exportNews: News[] = [];
-
-  filters: string[] = this.newsService.filters;
 
   possibleFilterValues: string[];
 
@@ -49,7 +46,8 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllPossibleFilterValues();
-    this.getFilterNews(this.filters);
+    this.getFilterNews();
+    this.initFilterNews();
   }
 
   addNewNews(newsType: NewsType) {
@@ -60,13 +58,28 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
       })
   }
 
-  getFilterNews(filterValues: string[]) {
-    this.filters = filterValues;
-    this.newsService.getFilterNews(this.filters)
-      .pipe(takeUntil(this.destroy$))
+  initFilterNews() {
+    this.newsService.filterChange$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(filterValue =>
+          this.newsService.getFilterNews([filterValue])
+        )
+      )
       .subscribe(news => {
         this.filteredNews = news;
       });
+  }
+
+  getFilterNews() {
+    this.newsService.getFilterNews([this.newsService.filter])
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(news => {
+          this.filteredNews = news;
+        }
+      );
   }
 
   getAllPossibleFilterValues() {
@@ -81,7 +94,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   onNewsDeleted() {
-    this.getFilterNews(this.filters);
   }
 
   changeExportNews(news: News) {

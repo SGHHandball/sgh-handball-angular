@@ -16,7 +16,7 @@ import {map, switchMap, takeUntil} from "rxjs/operators";
 })
 export class HomeComponent extends AbstractComponent implements OnInit, OnDestroy {
 
-  @ViewChild('slideshow', {static: true}) slideshow: any;
+  @ViewChild('slideshow', {static: false}) slideshow: any;
 
   destroy$ = new Subject();
 
