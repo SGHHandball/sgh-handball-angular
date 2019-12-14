@@ -21,7 +21,10 @@
           >
             <mat-form-field appearance="outline">
               <mat-label>{{newsDateTC}}</mat-label>
-              <input matInput [matDatepicker]="picker" [formControl]="date" (change)="onChangeValue()"
+              <input matInput
+                     [matDatepicker]="picker"
+                     [formControl]="date"
+                     (change)="onChangeValue()"
                      (dateChange)="onChangeValue()">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -35,7 +38,9 @@
             >
               <mat-form-field appearance="outline">
                 <mat-label>{{newsTeamAgeTC}}</mat-label>
-                <input type="text" matInput [matAutocomplete]="autoTeamAge" (change)="onChangeValue()"
+                <input type="text" matInput
+                       [matAutocomplete]="autoTeamAge"
+                       (change)="onChangeValue()"
                        [formControl]="teamAgeFormControl">
                 <mat-autocomplete #autoTeamAge="matAutocomplete">
                   <mat-option *ngFor="let option of filteredTeamAgesOptions | async" [value]="option"
@@ -176,7 +181,7 @@
         </div>
 
         <app-image-upload-manager
-          [urls]="uploadImages.length>0 ? uploadImages : []"
+          [urls]="news&&news.imgLinks.length>0 ? news.imgLinks : []"
           (itemDeleteEventListener)="deleteImage($event)"
           (afterItemMovedEventListener)="changedValues = true"
           [uploadProgress]="uploadProgress"

@@ -27,11 +27,12 @@ import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
-import {map, startWith, switchMap, takeUntil} from "rxjs/operators";
+import {delay, map, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../seasons/season.service";
 import {DataService} from "../../common/data.service";
 import {ActivatedRoute} from "@angular/router";
+import {ImageProgress} from "../../model/image-progress";
 
 @Component({
   selector: 'app-news-edit',
@@ -74,7 +75,6 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
   newsEnemyTeam = this.translationService.get(TC_NEWS_ENEMY_TEAM);
 
   uploadProgress: Observable<number>;
-  uploadImages: string[] = [];
 
   filteredTeamAgesOptions: Observable<string[]>;
 
@@ -124,7 +124,6 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
       if (newsList.length > 0) {
         this.news = newsList[0];
         this.initFormControls();
-        this.initUploadedImages();
       }
     })
   }
@@ -145,13 +144,6 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
     this.valuesInit = true;
   }
 
-  initUploadedImages() {
-    this.dataService.downloadImages(this.news.imgLinks)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(link => {
-        this.uploadImages.push(link);
-      })
-  }
 
   initTeamAgeFilter() {
     this.filteredTeamAgesOptions =
@@ -233,19 +225,40 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
     this.uploadProgress = undefined;
     this.dataService.uploadImage(event, this.news.id)
       .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(
-      imageProgress => {
-        if (imageProgress.uploadDone) {
-          if (!environment.production) console.log(imageProgress.path);
-          if (!this.news.imgLinks) {
-            this.news.imgLinks = [];
+        takeUntil(this.destroy$),
+      ).subscribe(imageProgress => {
+      if (imageProgress.uploadDone) {
+        if (!environment.production) console.log(imageProgress.path);
+        this.news.imgPaths.push(imageProgress.path);
+        this.uploadProgress = of(imageProgress.progress);
+        this.addDownLoadLinkToNews(imageProgress)
+          .then(_ => {
+            this.uploadProgress = undefined;
+          });
+      } else {
+        this.uploadProgress = of(imageProgress.progress);
+      }
+    });
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async addDownLoadLinkToNews(imageProgress: ImageProgress) {
+    // Workaround because firebase need some time to provide the url
+    await this.delay(2000);
+    this.dataService.getDownloadPath(imageProgress.path)
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          imageLink => {
+            this.news.imgLinks.push(imageLink);
+            return this.dataService.saveNewsToDataBase(this.news);
           }
-          this.news.imgLinks.push(imageProgress.path);
-          this.changedValues = true;
-        } else {
-          this.uploadProgress = of(imageProgress.progress);
-        }
+        )
+      ).subscribe(
+      _ => {
       }
     );
   }
@@ -266,7 +279,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
           )
           .subscribe(_ => {
             this.news.imgLinks.splice(this.news.imgLinks.indexOf(imagePath), 1);
-            this.changedValues = true;
+            this.onChangeValue();
           })
       }
     });

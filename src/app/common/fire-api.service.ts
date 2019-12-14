@@ -6,14 +6,13 @@ import {
 import {AngularFireAuth} from "@angular/fire/auth";
 import {from, Observable, of} from "rxjs";
 import {DB_COLLECTION_NEWS, News, NewsType} from "../news/news";
-import {map, mergeMap, switchMap} from "rxjs/operators";
+import {filter, map, mergeMap, switchMap} from "rxjs/operators";
 import {FireBaseModel} from "../model/fire-base.model";
 import {User} from "firebase";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {Team} from "../teams/team";
 import {environment} from "../../environments/environment";
-import {UploadTaskSnapshot} from "@angular/fire/storage/interfaces";
 import {ImageProgress} from "../model/image-progress";
 
 @Injectable({
@@ -111,6 +110,8 @@ export class FireApiService {
               score: '0:0 (0:0)',
               send: false,
               type: newsType,
+              imgPaths: [],
+              imgLinks: [],
               creator: user.uid,
               teamAge: newsTeam ? newsTeam.teamAge : undefined,
               teamSeason: newsTeam ? newsTeam.teamSeason : undefined,
@@ -173,6 +174,13 @@ export class FireApiService {
     }));
   }
 
+  updateImages(news: News): Observable<void> {
+    return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
+      imgLinks: news.imgLinks,
+      imgPaths: news.imgPaths
+    }));
+  }
+
 
   saveNewsToDataBase(news: News): Observable<void> {
     return from(
@@ -207,26 +215,25 @@ export class FireApiService {
   uploadImage(event, subPath?: string): Observable<ImageProgress> {
     const randomId = Math.random().toString(36).substring(2);
     const path = [this.IMAGES_PATH, subPath, randomId].join('/');
-    const ref = this.afStorage.ref(path);
+    const ref = this.afStorage.ref(path).put(event.target.files[0]);
     return ref
-      .put(event.target.files[0])
       .snapshotChanges()
       .pipe(
         switchMap(
-          snapshot =>
-            of(
+          snapshot => {
+            return of(
               {
                 path: path,
                 progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
                 uploadDone: snapshot.bytesTransferred === snapshot.totalBytes
               }
             )
+          }
         )
-      )
-      ;
+      );
   }
 
-  downloadImage(path: string): Observable<string> {
+  getDownloadPath(path: string): Observable<string> {
     return this.afStorage.ref(path).getDownloadURL();
   }
 

@@ -20,25 +20,24 @@ export class HomeService {
   }
 
 
-  getImageUrls(news: News[]): Observable<IImage> {
-    return from(news)
-      .pipe(
-        switchMap(news => {
-          if (news.imgLinks.length > 0) {
-            return this.dataService.downloadImage(news.imgLinks[0])
-              .pipe(switchMap(link => this.getIImageObservable(news, link)))
-          }
-          return this.getIImageObservable(news, "assets/img/SghLogo.png");
-        })
-      );
+  getImageUrls(news: News[]): IImage[] {
+    const images: IImage[] = [];
+    news.forEach(news => {
+      if (news.imgLinks.length > 0) {
+        images.push(this.getIImage(news, news.imgLinks[0]))
+      }
+      images.push(this.getIImage(news, "assets/img/SghLogo.png"));
+    });
+    return images;
+
   }
 
-  getIImageObservable(news: News, link: string): Observable<IImage> {
-    return of({
+  getIImage(news: News, link: string): IImage {
+    return {
       url: link,
       title: news.title,
       caption: this.getCaption(news)
-    });
+    };
   }
 
 

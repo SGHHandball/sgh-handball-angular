@@ -6,6 +6,7 @@ export interface News {
   body?: string;
   summary?: string;
   players?: string;
+  imgPaths?: string[];
   imgLinks?: string[];
   homeTeam?: string;
   enemyTeam?: string;

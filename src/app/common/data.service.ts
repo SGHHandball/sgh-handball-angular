@@ -57,12 +57,16 @@ export class DataService {
     return this.service.saveNewsToDataBase(news);
   }
 
+  updateImages(news: News): Observable<void> {
+    return this.service.updateImages(news);
+  }
+
   uploadImage(event, subPath?: string): Observable<ImageProgress> {
     return this.service.uploadImage(event, subPath);
   }
 
-  downloadImage(path: string): Observable<string> {
-    return this.service.downloadImage(path);
+  getDownloadPath(path: string): Observable<string> {
+    return this.service.getDownloadPath(path);
   }
 
   downloadImages(paths: string[]): Observable<string> {

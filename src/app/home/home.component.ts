@@ -39,13 +39,10 @@ export class HomeComponent extends AbstractComponent implements OnInit, OnDestro
     this.dataService.getNormalUserNews(true, 10)
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(news => {
-          this.news = news;
-          return this.homeService.getImageUrls(news);
-        })
       )
-      .subscribe(images => {
-        this.images.push(images);
+      .subscribe(news => {
+        this.news = news;
+        this.images = this.homeService.getImageUrls(news);
       })
   }
 

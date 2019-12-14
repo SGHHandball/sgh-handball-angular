@@ -37,8 +37,6 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
 
   destroy$ = new Subject();
 
-  uploadImages: string[] = [];
-
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
               public adminService: AdminService,
@@ -49,7 +47,6 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initUploadedImages();
   }
 
   getDateWithTeamAgeAsString(news: News): string {
@@ -103,13 +100,5 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
       default:
         return this.translationService.get(TC_NEWS_TYPE_DESCRIPTION);
     }
-  }
-
-  initUploadedImages() {
-    this.dataService.downloadImages(this.newsCard.imgLinks)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(link => {
-        this.uploadImages.push(link);
-      })
   }
 }
