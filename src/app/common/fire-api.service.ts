@@ -221,13 +221,34 @@ export class FireApiService {
       .pipe(
         switchMap(
           snapshot => {
-            return of(
-              {
-                path: path,
-                progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-                uploadDone: snapshot.bytesTransferred === snapshot.totalBytes
-              }
-            )
+            if (snapshot.bytesTransferred !== snapshot.totalBytes) {
+              return of(
+                {
+                  progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+                  uploadDone: false
+                }
+              )
+            }
+            return from(ref)
+              .pipe(
+                switchMap(
+                  snap => {
+                    return from(snap.ref.getDownloadURL())
+                      .pipe(
+                        switchMap(url => {
+                          return of(
+                            {
+                              path: path,
+                              url: url,
+                              progress: 100,
+                              uploadDone: true
+                            }
+                          )
+                        })
+                      )
+                  }
+                )
+              )
           }
         )
       );

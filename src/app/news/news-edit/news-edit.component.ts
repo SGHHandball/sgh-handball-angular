@@ -226,45 +226,33 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
     this.dataService.uploadImage(event, this.news.id)
       .pipe(
         takeUntil(this.destroy$),
-      ).subscribe(imageProgress => {
-      if (imageProgress.uploadDone) {
-        if (!environment.production) console.log(imageProgress.path);
-        this.news.imgPaths.push(imageProgress.path);
-        this.uploadProgress = of(imageProgress.progress);
-        this.addDownLoadLinkToNews(imageProgress)
-          .then(_ => {
-            this.uploadProgress = undefined;
-          });
-      } else {
-        this.uploadProgress = of(imageProgress.progress);
-      }
-    });
-  }
-
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async addDownLoadLinkToNews(imageProgress: ImageProgress) {
-    // Workaround because firebase need some time to provide the url
-    await this.delay(2000);
-    this.dataService.getDownloadPath(imageProgress.path)
-      .pipe(
-        takeUntil(this.destroy$),
         switchMap(
-          imageLink => {
-            this.news.imgLinks.push(imageLink);
-            return this.dataService.saveNewsToDataBase(this.news);
+          imageProgress => {
+            if (imageProgress.uploadDone) {
+              if (!environment.production) console.log(imageProgress);
+              this.news.imgPaths.push(imageProgress.path);
+              this.news.imgLinks.push(imageProgress.url);
+              this.uploadProgress = of(imageProgress.progress);
+            } else {
+              this.uploadProgress = of(imageProgress.progress);
+            }
+            return of(imageProgress.uploadDone)
+          }
+        ),
+        switchMap(
+          doneUploading => {
+            if (doneUploading) {
+              this.uploadProgress = undefined;
+              return this.dataService.updateImages(this.news);
+            }
+            return of(false)
           }
         )
-      ).subscribe(
-      _ => {
-      }
-    );
+      ).subscribe();
   }
 
 
-  deleteImage(imagePath: string) {
+  deleteImage(index: number) {
     const dialogRef = this.dialog.open(DefaultDialogComponent, {
         width: this.dialogWidth,
         data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
@@ -273,14 +261,16 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataService.deleteImage(imagePath)
+        this.dataService.deleteImage(this.news.imgPaths[index])
           .pipe(
-            takeUntil(this.destroy$)
+            takeUntil(this.destroy$),
+            switchMap(_ => {
+              this.news.imgLinks.splice(index, 1);
+              this.news.imgPaths.splice(index, 1);
+              return this.dataService.updateImages(this.news);
+            })
           )
-          .subscribe(_ => {
-            this.news.imgLinks.splice(this.news.imgLinks.indexOf(imagePath), 1);
-            this.onChangeValue();
-          })
+          .subscribe()
       }
     });
   }
