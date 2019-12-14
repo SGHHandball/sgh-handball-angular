@@ -1,12 +1,20 @@
-.content{
+.content {
   margin: 16px;
 }
 
-.web-content{
+.web-content {
   width: 70%;
   margin: 16px auto;
 }
 
-.slideshow:hover{
+.slideshow:hover {
   cursor: pointer;
+}
+
+.loading-spinner {
+  margin: 25% auto;
+}
+
+.spinner-container {
+  min-height: 300px;
 }
