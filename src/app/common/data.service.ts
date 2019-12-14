@@ -61,8 +61,12 @@ export class DataService {
     return this.service.uploadImage(event, subPath);
   }
 
-  downloadImage(path: string): Observable<any> {
+  downloadImage(path: string): Observable<string> {
     return this.service.downloadImage(path);
+  }
+
+  downloadImages(paths: string[]): Observable<string> {
+    return this.service.downloadImages(paths);
   }
 
   deleteImage(path: string): Observable<any> {

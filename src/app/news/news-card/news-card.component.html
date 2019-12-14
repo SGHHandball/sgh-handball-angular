@@ -25,7 +25,7 @@
   <mat-card-content class="dashboard-card-content">
     <slideshow [minHeight]="(isHandset$|async)?'250px':'300px'"
                [showDots]="true"
-               [imageUrls]="newsCard.imgLinks && newsCard.imgLinks.length>0 ? newsCard.imgLinks :['assets/img/SghLogo.png'] "
+               [imageUrls]="uploadImages.length>0 ? uploadImages :['assets/img/SghLogo.png'] "
                backgroundSize="contain"
     ></slideshow>
     <mat-accordion class="card-content">
@@ -50,7 +50,8 @@
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card-content>
-  <mat-checkbox (change)="exportChangeListener.next($event.checked)" class="export-checkbox" *ngIf="isExportVisible(newsCard)">
+  <mat-checkbox (change)="exportChangeListener.next($event.checked)" class="export-checkbox"
+                *ngIf="isExportVisible(newsCard)">
     {{translationService.get(exportCheckBoxTC)}}
   </mat-checkbox>
   <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">

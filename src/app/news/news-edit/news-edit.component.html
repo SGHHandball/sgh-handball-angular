@@ -176,7 +176,7 @@
         </div>
 
         <app-image-upload-manager
-          [urls]="news ? news.imgLinks : []"
+          [urls]="uploadImages.length>0 ? uploadImages : []"
           (itemDeleteEventListener)="deleteImage($event)"
           (afterItemMovedEventListener)="changedValues = true"
           [uploadProgress]="uploadProgress"

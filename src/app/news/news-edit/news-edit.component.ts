@@ -74,6 +74,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
   newsEnemyTeam = this.translationService.get(TC_NEWS_ENEMY_TEAM);
 
   uploadProgress: Observable<number>;
+  uploadImages: string[] = [];
 
   filteredTeamAgesOptions: Observable<string[]>;
 
@@ -123,6 +124,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
       if (newsList.length > 0) {
         this.news = newsList[0];
         this.initFormControls();
+        this.initUploadedImages();
       }
     })
   }
@@ -141,6 +143,14 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
     if (this.news.teamSeason) this.teamSeasonFormControl.setValue(this.news.teamSeason);
     this.initTeamAgeFilter();
     this.valuesInit = true;
+  }
+
+  initUploadedImages() {
+    this.dataService.downloadImages(this.news.imgLinks)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(link => {
+        this.uploadImages.push(link);
+      })
   }
 
   initTeamAgeFilter() {

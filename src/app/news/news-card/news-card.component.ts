@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News, NewsType} from "../news";
 import {
   TC_NEWS_EXPORT_CHECK_BOX,
@@ -12,13 +12,17 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AdminService} from "../../admin/admin.service";
 import {AbstractComponent} from "../../abstract/abstract.component";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
+import {DataService} from "../../common/data.service";
 
 @Component({
   selector: 'app-news-card',
   templateUrl: './news-card.component.html',
   styleUrls: ['./news-card.component.css']
 })
-export class NewsCardComponent extends AbstractComponent {
+export class NewsCardComponent extends AbstractComponent implements OnInit {
+
   @Input() newsCard: News;
 
   @Output() editClickListener = new EventEmitter();
@@ -31,10 +35,21 @@ export class NewsCardComponent extends AbstractComponent {
   playersTC = TC_NEWS_PLAYERS;
   exportCheckBoxTC = TC_NEWS_EXPORT_CHECK_BOX;
 
+  destroy$ = new Subject();
 
-  constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
-              public adminService: AdminService, public translationService: TranslationService) {
+  uploadImages: string[] = [];
+
+  constructor(breakpointObserver: BreakpointObserver,
+              snackBar: MatSnackBar,
+              public adminService: AdminService,
+              public translationService: TranslationService,
+              private dataService: DataService
+  ) {
     super(breakpointObserver, snackBar);
+  }
+
+  ngOnInit(): void {
+    this.initUploadedImages();
   }
 
   getDateWithTeamAgeAsString(news: News): string {
@@ -85,5 +100,13 @@ export class NewsCardComponent extends AbstractComponent {
       default:
         return this.translationService.get(TC_NEWS_TYPE_DESCRIPTION);
     }
+  }
+
+  initUploadedImages() {
+    this.dataService.downloadImages(this.newsCard.imgLinks)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(link => {
+        this.uploadImages.push(link);
+      })
   }
 }

@@ -6,7 +6,7 @@ import {
 import {AngularFireAuth} from "@angular/fire/auth";
 import {from, Observable, of} from "rxjs";
 import {DB_COLLECTION_NEWS, News, NewsType} from "../news/news";
-import {map, switchMap} from "rxjs/operators";
+import {map, mergeMap, switchMap} from "rxjs/operators";
 import {FireBaseModel} from "../model/fire-base.model";
 import {User} from "firebase";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
@@ -226,8 +226,17 @@ export class FireApiService {
       ;
   }
 
-  downloadImage(path: string): Observable<any> {
+  downloadImage(path: string): Observable<string> {
     return this.afStorage.ref(path).getDownloadURL();
+  }
+
+  downloadImages(paths: string[]): Observable<string> {
+    return from(paths)
+      .pipe(
+        mergeMap(
+          path => this.afStorage.ref(path).getDownloadURL()
+        )
+      );
   }
 
   deleteImage(path: string): Observable<any> {
