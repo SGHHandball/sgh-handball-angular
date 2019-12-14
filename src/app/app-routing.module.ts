@@ -46,17 +46,7 @@ export const routes = [
   {path: TC_ROUTE_TIME_KEEPER, component: EmptyComponent},
   {path: TC_ROUTE_DOCUMENTS, component: EmptyComponent},
   {
-    path: [TC_ROUTE_NEWS, TC_NEWS_PATH_EDIT, ':newsId'].join('/'),
-    component: NewsEditComponent,
-    canDeactivate: [PendingChangesGuard]
-  },
-  {
-    path: TC_ROUTE_EVENTS + '/' + TC_NEWS_PATH_EDIT,
-    component: NewsEditComponent,
-    canDeactivate: [PendingChangesGuard]
-  },
-  {
-    path: TC_ROUTE_TEAMS + '/:teamAge' + '/' + TC_NEWS_PATH_EDIT,
+    path: [TC_NEWS_PATH_EDIT, ':newsId'].join('/'),
     component: NewsEditComponent,
     canDeactivate: [PendingChangesGuard]
   },

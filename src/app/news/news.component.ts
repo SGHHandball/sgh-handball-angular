@@ -56,6 +56,7 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
     this.dataService.addNewNews(newsType)
       .pipe(takeUntil(this.destroy$))
       .subscribe(news => {
+        console.log(news);
         this.newsService.openNewsEdit(news.id);
       })
   }

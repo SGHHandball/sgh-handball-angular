@@ -10,7 +10,7 @@ import {map, startWith} from "rxjs/operators";
   templateUrl: './news-filter.component.html',
   styleUrls: ['./news-filter.component.css']
 })
-export class NewsFilterComponent {
+export class NewsFilterComponent implements OnInit{
 
   @Input() placeholder: string;
   @Input() values: string[] = [];
@@ -28,7 +28,7 @@ export class NewsFilterComponent {
   @ViewChild('valueInput', {static: false}) valueInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
 
-  constructor() {
+  ngOnInit(): void {
     this.filteredValues = this.filterCtrl.valueChanges.pipe(
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.possibleValues.slice()));

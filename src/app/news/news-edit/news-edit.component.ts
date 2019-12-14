@@ -103,7 +103,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
     if (this.changedValues) {
       this.openChangedValuesDialog();
     } else {
-      // this.newsService.closeExpandedNews();
+      this.newsService.closeExpandedNews();
     }
   }
 

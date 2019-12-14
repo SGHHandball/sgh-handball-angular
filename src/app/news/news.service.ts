@@ -11,6 +11,7 @@ import {Club,} from "../clubs/club";
 import {Observable, of} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../common/data.service";
+import {Location} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class NewsService {
 
   constructor(
     private router: Router,
+    private location: Location,
     private dataService: DataService,
     private translationService: TranslationService) {
   }
@@ -81,20 +83,15 @@ export class NewsService {
 
   openNewsEdit(toExpandNewsId: string) {
     const url = [
-      this.getNormalizedUrl(this.router.url),
       TC_NEWS_PATH_EDIT,
       toExpandNewsId
     ].join('/');
     this.router.navigate([url])
   }
 
-  getNormalizedUrl(url: string): string {
-    if (url.charAt(url.length - 1) === '/') {
-      url = url.replace('/', '');
-    }
-    return url;
+  closeExpandedNews() {
+    this.location.back();
   }
-
 
   saveNewClubToCollection(clubName: string): Observable<boolean> {
     return this.dataService

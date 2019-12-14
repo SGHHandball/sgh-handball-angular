@@ -38,10 +38,6 @@ export class FireApiService {
             map((normalNews: News[]) => {
               const jointArray = [...newsWithCreator, ...normalNews];
               if (!environment.production) {
-                console.log("newsWithCreator");
-                console.log(newsWithCreator);
-                console.log("normalNews");
-                console.log(normalNews);
                 console.log("allNews");
                 console.log(jointArray);
               }
@@ -57,7 +53,7 @@ export class FireApiService {
       .collection<News>(
         DB_COLLECTION_NEWS,
         ref => {
-          return ref.where('id', '==', id)
+          return ref.where(FireBaseModel.ID, '==', id)
         }
       ).valueChanges();
   }
@@ -111,6 +107,9 @@ export class FireApiService {
               id: '',
               title: newsTypeText,
               body: newsTypeText,
+              checked: false,
+              score: '0:0 (0:0)',
+              send: false,
               type: newsType,
               creator: user.uid,
               teamAge: newsTeam ? newsTeam.teamAge : undefined,
@@ -121,12 +120,24 @@ export class FireApiService {
               .pipe(
                 switchMap(response => {
                   newNews.id = response.id;
-                  return of(newNews);
+                  return this.updateNewsID(response.id)
+                    .pipe(
+                      switchMap(_ => {
+                        return of(newNews);
+                      })
+                    )
                 })
               );
           }
         )
       )
+  }
+
+
+  updateNewsID(newsId: string): Observable<void> {
+    return from(this.db.collection(DB_COLLECTION_NEWS).doc(newsId).update({
+      id: newsId
+    }));
   }
 
   getNewNewsInitText(newsType: NewsType): string {
