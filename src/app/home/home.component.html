@@ -3,9 +3,10 @@
 
   <mat-card-content>
     <slideshow
+      *ngIf="news && news.length>0"
       #slideshow
       [minHeight]="(isHandset$|async)?'250px' : '300px'"
-      [imageUrls]="images"
+      [imageUrls]="images.length>0 ? images : []"
       [autoPlay]="true"
       [showArrows]="false"
       backgroundSize="contain"

@@ -7,7 +7,7 @@ import {HomeService} from "./home.service";
 import {IImage} from "ng-simple-slideshow";
 import {DataService} from "../common/data.service";
 import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {map, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -37,10 +37,15 @@ export class HomeComponent extends AbstractComponent implements OnInit, OnDestro
 
   getNews() {
     this.dataService.getNormalUserNews(true, 10)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(news => {
-        this.news = news;
-        this.images = this.homeService.getImageUrls(news);
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(news => {
+          this.news = news;
+          return this.homeService.getImageUrls(news);
+        })
+      )
+      .subscribe(images => {
+        this.images.push(images);
       })
   }
 
