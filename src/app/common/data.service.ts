@@ -57,8 +57,12 @@ export class DataService {
     return this.service.saveNewsToDataBase(news);
   }
 
-  updateImages(news: News): Observable<void> {
-    return this.service.updateImages(news);
+  updateImagesInNews(news: News): Observable<void> {
+    return this.service.updateImagesInNews(news);
+  }
+
+  updateImagesInTeam(team: Team): Observable<void> {
+    return this.service.updateImagesInTeam(team);
   }
 
   uploadImage(event, subPath?: string): Observable<ImageProgress> {

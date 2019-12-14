@@ -3,7 +3,7 @@
 <mat-card class="image-edit-container" *ngIf="teamsService.editTeamsActive">
   <mat-card-content>
     <app-image-upload-manager
-      [urls]="team ? team.imgUrls : []"
+      [urls]="team ? team.imgLinks : []"
       (itemDeleteEventListener)="deleteImage($event)"
       (afterItemMovedEventListener)="changedValues = true"
       [uploadProgress]="uploadProgress"
@@ -12,8 +12,6 @@
   </mat-card-content>
   <mat-card-actions align="end">
     <button mat-raised-button color="warn" (click)="disableEditMode()">{{translationService.get(cancelTC)}}</button>
-    <button mat-raised-button color="primary" (click)="saveTeam()"
-            [disabled]="!changedValues">{{translationService.get(saveTC)}}</button>
   </mat-card-actions>
 </mat-card>
 
@@ -21,8 +19,8 @@
      *ngIf="!teamsService.editTeamsActive">
   <slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
              [showDots]="true"
-             [imageUrls]="team.imgUrls"
+             [imageUrls]="team.imgLinks"
              backgroundSize="contain"
-             *ngIf="team.imgUrls && team.imgUrls.length>0"
+             *ngIf="team.imgLinks && team.imgLinks.length>0"
   ></slideshow>
 </div>

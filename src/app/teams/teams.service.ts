@@ -62,11 +62,19 @@ export class TeamsService {
 
   addNewTeam(teamAge: string) {
     return this.db.collection<Team>(DB_COLLECTION_TEAMS)
-      .add(JSON.parse(JSON.stringify(new Team(
-        this.teams.length - 1,
-        teamAge,
-        this.seasonToLoad
-      ))))
+      .add(
+        JSON.parse(
+          JSON.stringify(
+            {
+              position: this.teams.length - 1,
+              teamAge,
+              teamSeason: this.seasonToLoad,
+              imgPaths: [],
+              imgLinks: []
+            }
+          )
+        )
+      )
   }
 
   saveNewTeamValues(team: Team, onChangeFun: () => any) {

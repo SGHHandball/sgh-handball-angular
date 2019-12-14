@@ -12,7 +12,7 @@
     <div class="container">
       <app-news-card-list
         [news]="filteredNews"
-        (editClickListener)="newsService.openNewsEdit($event)"
+        (editClickListener)="newsService.openNewsEdit($event.id)"
         (deleteClickListener)="openDeleteNewsDialog($event)"
         (sendClickListener)="openSendNewsDialog($event)"
         (checkClickListener)="openCheckNewsDialog($event)"

@@ -14,6 +14,7 @@ import {AngularFireStorage} from "@angular/fire/storage";
 import {Team} from "../teams/team";
 import {environment} from "../../environments/environment";
 import {ImageProgress} from "../model/image-progress";
+import {DB_COLLECTION_TEAMS} from "../teams/teams.service";
 
 @Injectable({
   providedIn: 'root'
@@ -174,7 +175,7 @@ export class FireApiService {
     }));
   }
 
-  updateImages(news: News): Observable<void> {
+  updateImagesInNews(news: News): Observable<void> {
     return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
       imgLinks: news.imgLinks,
       imgPaths: news.imgPaths
@@ -207,6 +208,15 @@ export class FireApiService {
     return this.db.collection<Club>(CLUBS_COLLECTION_NAME).valueChanges();
   }
 
+  //TEAMS
+
+
+  updateImagesInTeam(team: Team): Observable<void> {
+    return from(this.db.collection(DB_COLLECTION_TEAMS).doc(team.id).update({
+      imgLinks: team.imgLinks,
+      imgPaths: team.imgPaths
+    }));
+  }
 
   //IMAGES
 

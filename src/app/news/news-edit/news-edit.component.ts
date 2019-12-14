@@ -243,7 +243,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
           doneUploading => {
             if (doneUploading) {
               this.uploadProgress = undefined;
-              return this.dataService.updateImages(this.news);
+              return this.dataService.updateImagesInNews(this.news);
             }
             return of(false)
           }
@@ -267,7 +267,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
             switchMap(_ => {
               this.news.imgLinks.splice(index, 1);
               this.news.imgPaths.splice(index, 1);
-              return this.dataService.updateImages(this.news);
+              return this.dataService.updateImagesInNews(this.news);
             })
           )
           .subscribe()
