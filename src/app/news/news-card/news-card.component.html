@@ -16,7 +16,7 @@
     <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge">
       {{newsCard.teamAge ? getDateWithTeamAgeAsString(newsCard) : getDateAsString(newsCard)}}
     </mat-card-subtitle>
-    <mat-card-subtitle *ngIf="newsCard.homeTeam || newsCard.enemyTeam || newsCard.score">
+    <mat-card-subtitle *ngIf="isNewsCardReport() && (newsCard.homeTeam || newsCard.enemyTeam || newsCard.score)">
       {{getTeamsWithScoreAsString(newsCard)}}
     </mat-card-subtitle>
   </mat-card-header>

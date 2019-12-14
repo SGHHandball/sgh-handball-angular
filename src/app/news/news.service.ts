@@ -17,6 +17,7 @@ import {Location} from '@angular/common';
   providedIn: 'root'
 })
 export class NewsService {
+  filterVisible: boolean;
   filter: string;
   filterChange$ = new Subject<string>();
 

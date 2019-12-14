@@ -50,9 +50,13 @@ export class ToolbarComponent extends AbstractComponent implements OnInit, OnDes
     this.searchControl.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(value => {
-        this.newsService.filterChange$.next(value);
-        this.newsService.filter = value;
+        this.setFilterValue(value);
       });
+  }
+
+  setFilterValue(value: string) {
+    this.newsService.filterChange$.next(value);
+    this.newsService.filter = value;
   }
 
   goToHome() {

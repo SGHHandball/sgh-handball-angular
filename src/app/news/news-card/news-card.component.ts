@@ -76,6 +76,9 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
     return this.hasRightsToEdit(news) && this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
   }
 
+  isNewsCardReport(): boolean {
+    return this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
+  }
 
   hasRightsToEdit(news: News): boolean {
     return (this.adminService.user && this.adminService.user.uid === news.creator ||

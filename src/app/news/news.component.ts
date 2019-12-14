@@ -59,6 +59,11 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   initFilterNews() {
+    this.newsService.filterVisible = true;
+    this.destroy$.subscribe(_ => {
+      this.newsService.filterVisible = false;
+    });
+
     this.newsService.filterChange$
       .pipe(
         takeUntil(this.destroy$),

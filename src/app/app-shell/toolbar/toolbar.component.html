@@ -9,6 +9,7 @@
       (click)="goToHome()">{{(isHandset$|async) ? (appNameVisible ? appNameShort : '') : appName}}</h1>
   <span class="example-spacer"></span>
   <mat-search-bar
+    [style.display]="newsService.filterVisible ? '':'none'"
     #search
     (ngModelChange)="searchControl.value ? search.open():''"
     (onOpen)="changeVisibilityAppName(false)"
