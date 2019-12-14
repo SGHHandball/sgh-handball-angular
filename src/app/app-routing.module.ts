@@ -34,7 +34,7 @@ export const routes = [
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
   {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_NEWS, component: NewsComponent},
-  {path: TC_ROUTE_TEAMS + '/:teamAge', component: TeamsComponent},
+  {path: [TC_ROUTE_TEAMS, ':season', ':teamAge'].join('/'), component: TeamsComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_EVENTS, component: EventsComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},

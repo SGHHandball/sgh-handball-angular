@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {Router} from "@angular/router";
@@ -19,16 +19,19 @@ import {MatSidenav, MatSnackBar} from "@angular/material";
 import {TeamsService} from "../../teams/teams.service";
 import {Team} from "../../teams/team";
 import {Observable, Subject} from "rxjs";
-import {map} from "rxjs/operators";
+import {map, takeUntil} from "rxjs/operators";
+import {DataService} from "../../common/data.service";
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent extends AbstractComponent implements OnInit {
+export class SidenavComponent extends AbstractComponent implements OnInit, OnDestroy {
 
   @ViewChild('drawer', {static: true}) drawer: MatSidenav;
+
+  destroy$ = new Subject();
 
   handset: boolean;
 
@@ -54,7 +57,8 @@ export class SidenavComponent extends AbstractComponent implements OnInit {
               private router: Router,
               public translationService: TranslationService,
               snackBar: MatSnackBar,
-              public teamsService: TeamsService
+              public teamsService: TeamsService,
+              private dataService: DataService
   ) {
     super(breakpointObserver, snackBar);
     this.isHandset$.subscribe(handset => {
@@ -77,34 +81,44 @@ export class SidenavComponent extends AbstractComponent implements OnInit {
   }
 
   toogleTeamsSideNav() {
-    this.drawer.toggle().then(()=>{
+    this.drawer.toggle().then(() => {
       this.teamsNavItemsVisible = !this.teamsNavItemsVisible;
       this.drawer.toggle();
     })
   }
 
   toogleGenInfoSideNav() {
-    this.drawer.toggle().then(()=>{
+    this.drawer.toggle().then(() => {
       this.generalInformationNavItemsVisible = !this.generalInformationNavItemsVisible;
       this.drawer.toggle();
     })
   }
 
-  getTeamsAsNavItem(): Observable<NavigationItem[]> {
-    const teamsToNavItemMapper = map((teams: Team[]) => {
-      const teamsNavItems = [];
-      teams.forEach((team: Team) => {
-        teamsNavItems.push(new NavigationItem(TC_ROUTE_TEAMS, team.teamAge).withRouterDeepLink(team.teamAge))
-      });
-      return teamsNavItems;
-    });
-    return teamsToNavItemMapper(this.teamsService.loadAllTeamsAsync());
+  ngOnInit(): void {
+    this.initTeamNavItems()
   }
 
-  ngOnInit(): void {
-    this.getTeamsAsNavItem().subscribe(navItems => {
-      this.teamsNavItems = navItems;
-    })
+  initTeamNavItems() {
+    this.dataService.getTeamsBySeason(this.teamsService.seasonToLoad)
+      .pipe(
+        takeUntil(this.destroy$),
+        map((teams: Team[]) =>
+          teams.map(
+            team =>
+              new NavigationItem(TC_ROUTE_TEAMS, team.teamAge)
+                .withRouterDeepLink([team.teamSeason, team.teamAge].join('/'))
+          )
+        )
+      )
+      .subscribe(navItems => {
+        this.teamsNavItems = navItems;
+      })
+  }
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
 
 }

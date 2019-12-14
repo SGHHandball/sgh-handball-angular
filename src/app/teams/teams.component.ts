@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractComponent} from "../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {TeamsService} from "./teams.service";
@@ -38,14 +38,14 @@ import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../common/data.service";
-import {takeUntil} from "rxjs/operators";
+import {switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.css']
 })
-export class TeamsComponent extends AbstractNewsComponent {
+export class TeamsComponent extends AbstractNewsComponent implements OnInit {
 
   addTeamTC = TC_TEAMS_ADD_NEW_TEAM;
   orderChangeTC = TC_TEAMS_CHANGE_ORDER;
@@ -73,26 +73,28 @@ export class TeamsComponent extends AbstractNewsComponent {
               snackBar: MatSnackBar,
               private route: ActivatedRoute) {
     super(breakpointObserver, translationService, dialog, dataService, snackBar);
-    this.route.params.subscribe(() => {
-      this.teamsService.loadAllTeams()
-        .then(() => {
-          this.initTeam();
-        });
-    });
+  }
+
+  ngOnInit(): void {
+    this.initTeam();
   }
 
   initTeam() {
-    let teamAge = this.route.snapshot.paramMap.get('teamAge');
-    this.currentTeam = this.getTeamByAge(teamAge);
-    this.changeNews();
-  }
-
-  getTeamByAge(teamAge: string): Team {
-    let returnTeam = this.teamsService.teams[0];
-    this.teamsService.teams.forEach(team => {
-      if (team.teamAge === teamAge) returnTeam = team;
-    });
-    return returnTeam;
+    this.route.params
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(_ => {
+          let teamAge = this.route.snapshot.paramMap.get('teamAge');
+          let season = this.route.snapshot.paramMap.get('season');
+          return this.dataService.getTeamsBySeasonAndAge(season, teamAge);
+        })
+      )
+      .subscribe(teams => {
+        if (teams.length > 0) {
+          this.currentTeam = teams[0];
+          this.changeNews();
+        }
+      });
   }
 
   changeNews() {
@@ -132,9 +134,9 @@ export class TeamsComponent extends AbstractNewsComponent {
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.teamsService.addNewTeam(result)
+            /*this.teamsService.addNewTeam(result)
               .then(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS)))
-              .catch(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL)))
+              .catch(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL)))*/
           }
         })
       });
@@ -147,9 +149,9 @@ export class TeamsComponent extends AbstractNewsComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.teamsService.changeOrder()
+        /*this.teamsService.changeOrder()
           .then(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS)))
-          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL)))
+          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL)))*/
       }
     })
   }
@@ -162,9 +164,9 @@ export class TeamsComponent extends AbstractNewsComponent {
     });
     dialogRef.afterClosed().subscribe((teamToDelete: Team) => {
       if (teamToDelete) {
-        this.teamsService.deleteTeam(teamToDelete)
+   /*     this.teamsService.deleteTeam(teamToDelete)
           .then(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS)))
-          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL)))
+          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL)))*/
       }
     })
   }

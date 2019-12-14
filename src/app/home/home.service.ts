@@ -25,8 +25,8 @@ export class HomeService {
     news.forEach(news => {
       if (news.imgLinks.length > 0) {
         images.push(this.getIImage(news, news.imgLinks[0]))
-      }
-      images.push(this.getIImage(news, "assets/img/SghLogo.png"));
+      } else
+        images.push(this.getIImage(news, "assets/img/SghLogo.png"));
     });
     return images;
 

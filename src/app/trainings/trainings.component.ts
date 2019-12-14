@@ -46,13 +46,6 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
               public adminService: AdminService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
-    this.trainingsService.loadAllTrainings();
-    if (!this.teamService.teams) {
-      this.teamService.loadAllTeams();
-    }
-    if (!this.hallsService.halls) {
-      this.hallsService.loadAllHalls();
-    }
   }
 
   ngOnInit() {

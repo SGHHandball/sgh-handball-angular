@@ -210,6 +210,90 @@ export class FireApiService {
 
   //TEAMS
 
+  getTeamsBySeason(season: string): Observable<Team[]> {
+    return this.db.collection<Team>(DB_COLLECTION_TEAMS,
+      ref =>
+        ref.where(FireBaseModel.TEAM_SEASON, '==', season)
+          .orderBy(FireBaseModel.POSITION, "asc"))
+      .snapshotChanges().pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Team;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      );
+  }
+
+  getTeamsBySeasonAndAge(season: string, teamAge: string): Observable<Team[]> {
+    return this.db.collection<Team>(DB_COLLECTION_TEAMS,
+      ref =>
+        ref.where(FireBaseModel.TEAM_SEASON, '==', season)
+          .where(FireBaseModel.TEAM_AGE, '==', teamAge)
+          .orderBy(FireBaseModel.POSITION, "asc"))
+      .snapshotChanges().pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Team;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      );
+  }
+
+  addNewTeam(position: number, season: string, teamAge: string): Observable<string> {
+    return from(this.db.collection<Team>(DB_COLLECTION_TEAMS)
+      .add(
+        JSON.parse(
+          JSON.stringify(
+            {
+              position: position,
+              teamAge,
+              teamSeason: season,
+              imgPaths: [],
+              imgLinks: []
+            }
+          )
+        )
+      )
+    ).pipe(
+      switchMap(response => {
+        return of(response.id);
+      })
+    )
+  }
+
+  updateTeam(team: Team): Observable<void> {
+    return from(this.db.collection<News>(DB_COLLECTION_TEAMS)
+      .doc(team.id).set(JSON.parse(JSON.stringify(team))))
+  }
+
+  deleteTeam(team: Team): Observable<void> {
+    return from(this.db.collection<News>(DB_COLLECTION_TEAMS)
+      .doc(team.id).delete());
+  }
+
+  changeOrderOfTeams(teams: Team[]): Observable<void> {
+    if (!teams) return of();
+    return from(teams)
+      .pipe(
+        mergeMap(
+          team =>
+            this.db
+              .collection<Team>(DB_COLLECTION_TEAMS)
+              .doc(team.id)
+              .update({
+                  position: teams.indexOf(team)
+                }
+              )
+        )
+      );
+  }
+
 
   updateImagesInTeam(team: Team): Observable<void> {
     return from(this.db.collection(DB_COLLECTION_TEAMS).doc(team.id).update({

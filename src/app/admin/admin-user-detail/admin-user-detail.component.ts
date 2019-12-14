@@ -41,9 +41,6 @@ export class AdminUserDetailComponent extends AbstractComponent {
   constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
               public translationService: TranslationService, public teamsService: TeamsService, public dialog: MatDialog) {
     super(breakpointObserver, snackBar);
-    if (!this.teamsService.teams) {
-      this.teamsService.loadAllTeams();
-    }
   }
 
   changeAdminMode() {

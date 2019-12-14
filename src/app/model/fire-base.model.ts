@@ -3,5 +3,8 @@ export enum FireBaseModel {
   CREATOR = 'creator',
   CHECKED = 'checked',
   TYPE = 'type',
-  DATE = 'date'
+  DATE = 'date',
+  TEAM_SEASON = 'teamSeason',
+  TEAM_AGE = 'teamAge',
+  POSITION = 'position'
 }

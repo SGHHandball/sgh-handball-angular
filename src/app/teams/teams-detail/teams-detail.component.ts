@@ -98,12 +98,6 @@ export class TeamsDetailComponent extends AbstractComponent {
     });
   }
 
-  saveTeam() {
-    this.teamsService.saveNewTeamValues(this.team, () => {
-      this.changedValues = false;
-    })
-  }
-
   disableEditMode() {
     this.teamsService.editTeamsActive = false;
   }

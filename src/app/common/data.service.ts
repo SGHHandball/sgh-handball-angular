@@ -80,4 +80,28 @@ export class DataService {
   deleteImage(path: string): Observable<any> {
     return this.service.deleteImage(path);
   }
+
+  getTeamsBySeason(season: string): Observable<Team[]> {
+    return this.service.getTeamsBySeason(season);
+  }
+
+  getTeamsBySeasonAndAge(season: string, teamAge: string): Observable<Team[]> {
+    return this.service.getTeamsBySeasonAndAge(season, teamAge);
+  }
+
+  addNewTeam(position: number, season: string, teamAge: string): Observable<string> {
+    return this.service.addNewTeam(position, season, teamAge);
+  }
+
+  updateTeam(team: Team): Observable<void> {
+    return this.service.updateTeam(team);
+  }
+
+  deleteTeam(team: Team): Observable<void> {
+    return this.service.deleteTeam(team);
+  }
+
+  changeOrderOfTeams(teams: Team[]): Observable<void> {
+    return this.service.changeOrderOfTeams(teams);
+  }
 }
