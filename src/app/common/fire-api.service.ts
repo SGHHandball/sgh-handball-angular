@@ -31,8 +31,11 @@ export class FireApiService {
   }
 
   //USER
+  getUser(): Observable<User> {
+    return this.afAuth.user;
+  }
 
-  getUser(): Observable<SghUser> {
+  getSghUser(): Observable<SghUser> {
     return this.afAuth.user
       .pipe(
         switchMap(
@@ -57,7 +60,7 @@ export class FireApiService {
   }
 
   hasUserRightsForTeam(teamAge: string, teamSeason: string): Observable<boolean> {
-    return this.getUser()
+    return this.getSghUser()
       .pipe(
         switchMap(user => {
           if (!user || !user.teams) return of(false);

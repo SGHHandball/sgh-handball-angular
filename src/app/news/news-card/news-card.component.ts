@@ -37,6 +37,11 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
 
   destroy$ = new Subject();
 
+  editMenuVisible = false;
+  newsStateVisible = false;
+  exportVisible = false;
+  rightsToEdit = false;
+
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
               public adminService: AdminService,
@@ -47,6 +52,22 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initRightsToEdit()
+  }
+
+  initRightsToEdit() {
+    this.hasRightsToEdit(this.newsCard)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        editRights => {
+          this.exportVisible = editRights && this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
+          this.editMenuVisible = editRights;
+          this.newsStateVisible = editRights;
+          this.rightsToEdit = editRights;
+        }
+      )
   }
 
   getDateWithTeamAgeAsString(news: News): string {
@@ -61,58 +82,39 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
     return getTeamsWithScoreAsString(news);
   }
 
-  isEditMenuVisible(news: News): Observable<boolean> {
-    return this.hasRightsToEdit(news);
-  }
-
-  isNewsStateVisible(news: News): Observable<boolean> {
-    return this.hasRightsToEdit(news);
-  }
-
-  isExportVisible(news: News): Observable<boolean> {
-    return this.hasRightsToEdit(news)
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(
-          editRights => {
-            return of(editRights && this.newsCard.type === NewsType.NEWS_TYPE_REPORT)
-          }
-        )
-      );
-  }
 
   isNewsCardReport(): boolean {
     return this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
   }
 
   hasRightsToEdit(news: News): Observable<boolean> {
-    return this.dataService
-      .hasUserRightsForTeam(news.teamAge, news.teamSeason)
+    return this.dataService.getUser()
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(
-          rightsForTeam => {
-            return of(this.adminService.user && this.adminService.user.uid === news.creator && rightsForTeam);
-          }
-        )
-      );
-  }
-
-  getNewsStateIcon(news: News): Observable<string> {
-    return this.hasRightsToEdit(news)
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(editRights => {
-          if (!editRights) return of('');
-          if (news.send && !news.checked) {
-            return of('done');
-          } else if (news.checked) {
-            return of('done_all');
-          } else {
-            return of('new_releases');
-          }
+        switchMap(user => {
+          return this.dataService
+            .hasUserRightsForTeam(news.teamAge, news.teamSeason)
+            .pipe(
+              switchMap(
+                rightsForTeam => {
+                  return of(user && user.uid === news.creator && rightsForTeam);
+                }
+              )
+            );
         })
       );
+
+  }
+
+  getNewsStateIcon(news: News): string {
+    if (!this.rightsToEdit) return '';
+    if (news.send && !news.checked) {
+      return 'done';
+    } else if (news.checked) {
+      return 'done_all';
+    } else {
+      return 'new_releases';
+    }
   }
 
   getBodyHeaderOfType(type: string): string {

@@ -7,6 +7,7 @@ import {DocumentReference} from "@angular/fire/firestore";
 import {Team} from "../teams/team";
 import {AngularFireUploadTask} from "@angular/fire/storage";
 import {ImageProgress} from "../model/image-progress";
+import {User} from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ import {ImageProgress} from "../model/image-progress";
 export class DataService {
 
   protected constructor(public service: FireApiService) {
+  }
+
+  getUser(): Observable<User> {
+    return this.service.getUser();
   }
 
   hasUserRightsForTeam(teamAge: string, teamSeason: string): Observable<boolean> {
