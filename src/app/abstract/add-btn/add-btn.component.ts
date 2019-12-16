@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {TeamsService} from "../../teams/teams.service";
 import {AdminService} from "../../admin/admin.service";
 import {MatMenu, MatSnackBar} from "@angular/material";
 

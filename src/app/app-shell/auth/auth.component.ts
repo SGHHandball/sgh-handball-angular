@@ -72,9 +72,7 @@ export class AuthComponent extends AbstractComponent {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result instanceof Credentials) {
-        this.login(result);
-      }
+      this.login(result);
     });
   }
 

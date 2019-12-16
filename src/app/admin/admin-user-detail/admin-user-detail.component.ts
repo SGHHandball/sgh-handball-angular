@@ -1,16 +1,15 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {SghUser} from "../sgh-user";
 import {
   TC_ADMIN, TC_CANCEL, TC_GENERAL_REQUIRED_ERROR, TC_OK,
   TC_ROUTE_EVENTS,
   TC_ROUTE_HALLS,
   TC_ROUTE_TEAMS, TC_ROUTE_TRAINING,
-  TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS, TC_TEAMS_TEAM,
+  TC_TEAMS_ADD_NEW_TEAM,
+  TC_TEAMS_TEAM,
   TranslationService
 } from "../../translation.service";
-import {TeamsService} from "../../teams/teams.service";
 import {Team} from "../../teams/team";
-import {FormControl} from "@angular/forms";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {
   DefaultInputDialogComponent,
@@ -18,15 +17,21 @@ import {
 } from "../../abstract/default-input-dialog/default-input-dialog.component";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {DataService} from "../../common/data.service";
+import {DEFAULT_YEAR} from "../../constants";
+import {Subject} from "rxjs";
+import {switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-admin-user-detail',
   templateUrl: './admin-user-detail.component.html',
   styleUrls: ['./admin-user-detail.component.css']
 })
-export class AdminUserDetailComponent extends AbstractComponent {
+export class AdminUserDetailComponent extends AbstractComponent implements OnDestroy {
   @Input() sghUser: SghUser;
   @Output() toggleChangeListener = new EventEmitter();
+
+  destroy$ = new Subject();
 
   adminTC = TC_ADMIN;
 
@@ -38,8 +43,12 @@ export class AdminUserDetailComponent extends AbstractComponent {
 
   trainingsTC = TC_ROUTE_TRAINING;
 
-  constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
-              public translationService: TranslationService, public teamsService: TeamsService, public dialog: MatDialog) {
+  constructor(breakpointObserver: BreakpointObserver,
+              snackBar: MatSnackBar,
+              public translationService: TranslationService,
+              public dialog: MatDialog,
+              private dataService: DataService
+  ) {
     super(breakpointObserver, snackBar);
   }
 
@@ -77,35 +86,36 @@ export class AdminUserDetailComponent extends AbstractComponent {
   }
 
   openAddTeamDialog() {
-    const dialogRef = this.dialog.open(DefaultInputDialogComponent, {
-      width: this.dialogWidth,
-      data: new DefaultInputDialogData(
-        this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
-        this.translationService.get(TC_TEAMS_TEAM),
-        this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-        this.translationService.get(TC_CANCEL),
-        this.translationService.get(TC_OK)
-      ).withAutocompleteValues(this.getAllTeamsAsString())
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (!this.sghUser.teams) this.sghUser.teams = [];
-        this.sghUser.teams.push(result);
-        this.toggleChangeListener.next();
-      }
-    })
+    this.dataService.getTeamsBySeason(DEFAULT_YEAR)
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(teams => {
+          const teamsAsStrings = teams.map(team => [team.teamAge, team.teamSeason].join(" - "));
+          return this.dialog.open(DefaultInputDialogComponent, {
+            width: this.dialogWidth,
+            data: new DefaultInputDialogData(
+              this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
+              this.translationService.get(TC_TEAMS_TEAM),
+              this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+              this.translationService.get(TC_CANCEL),
+              this.translationService.get(TC_OK)
+            )
+              .withAutocompleteValues(teamsAsStrings)
+          }).afterClosed();
+        })
+      )
+      .subscribe(result => {
+        if (result) {
+          if (!this.sghUser.teams) this.sghUser.teams = [];
+          this.sghUser.teams.push(result);
+          this.toggleChangeListener.next();
+        }
+      });
   }
 
-
-  getAllTeamsAsString(): string[] {
-    const allTeamsAsString = [];
-    this.teamsService.teams.forEach(team => {
-      allTeamsAsString.push(this.getTeamAsString(team));
-    });
-    return allTeamsAsString;
-  }
-
-  getTeamAsString(team: Team): string {
-    return team.teamAge + ' - ' + team.teamSeason;
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
 }

@@ -14,7 +14,6 @@ import {AngularFireStorage} from "@angular/fire/storage";
 import {Team} from "../teams/team";
 import {environment} from "../../environments/environment";
 import {ImageProgress} from "../model/image-progress";
-import {DB_COLLECTION_TEAMS} from "../teams/teams.service";
 import {SghUser} from "../admin/sgh-user";
 import {SGH_USERS} from "../admin/admin.service";
 
@@ -22,6 +21,9 @@ import {SGH_USERS} from "../admin/admin.service";
   providedIn: 'root'
 })
 export class FireApiService {
+
+
+  DB_COLLECTION_TEAMS = 'teams';
 
   protected constructor(public db: AngularFirestore,
                         public afAuth: AngularFireAuth,
@@ -54,13 +56,21 @@ export class FireApiService {
       );
   }
 
-  hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {
-    if (!user || !user.teams) return false;
-    return user.teams.filter(team => team.includes(teamAge) && team.includes(teamSeason)).length > 0;
-  }
-
-  isUserAdmin(user: SghUser): boolean {
-    return user && user.admin;
+  hasUserRightsForTeam(teamAge: string, teamSeason: string): Observable<boolean> {
+    return this.getUser()
+      .pipe(
+        switchMap(user => {
+          if (!user || !user.teams) return of(false);
+          return of(
+            user.teams
+              .filter(
+                team =>
+                  user.admin ||
+                  team.includes(teamAge) &&
+                  team.includes(teamSeason)).length > 0
+          );
+        })
+      )
   }
 
   //NEWS
@@ -135,12 +145,12 @@ export class FireApiService {
 
 
   getTeamNews(teamAge: string, teamSeason: string): Observable<News[]> {
-    return this.getUser().pipe(
+    return this.hasUserRightsForTeam(teamAge, teamSeason).pipe(
       switchMap(
-        (user: SghUser) =>
-          this.db.collection<News>(DB_COLLECTION_NEWS, ref => {
+        userRights => {
+          return this.db.collection<News>(DB_COLLECTION_NEWS, ref => {
               let query: CollectionReference | Query = ref;
-              if (!this.hasUserRightsForTeam(user, teamAge, teamSeason) && !this.isUserAdmin(user)) {
+              if (!userRights) {
                 query = query.where(FireBaseModel.CHECKED, '==', true);
               }
               query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_REPORT);
@@ -149,8 +159,8 @@ export class FireApiService {
               query = query.orderBy(FireBaseModel.DATE, 'asc');
               return query;
             }
-          )
-            .valueChanges()
+          ).valueChanges();
+        }
       )
     );
   }
@@ -269,7 +279,7 @@ export class FireApiService {
   //TEAMS
 
   getTeamsBySeason(season: string): Observable<Team[]> {
-    return this.db.collection<Team>(DB_COLLECTION_TEAMS,
+    return this.db.collection<Team>(this.DB_COLLECTION_TEAMS,
       ref =>
         ref.where(FireBaseModel.TEAM_SEASON, '==', season)
           .orderBy(FireBaseModel.POSITION, "asc"))
@@ -286,7 +296,7 @@ export class FireApiService {
   }
 
   getTeamsBySeasonAndAge(season: string, teamAge: string): Observable<Team[]> {
-    return this.db.collection<Team>(DB_COLLECTION_TEAMS,
+    return this.db.collection<Team>(this.DB_COLLECTION_TEAMS,
       ref =>
         ref.where(FireBaseModel.TEAM_SEASON, '==', season)
           .where(FireBaseModel.TEAM_AGE, '==', teamAge)
@@ -304,7 +314,7 @@ export class FireApiService {
   }
 
   addNewTeam(position: number, season: string, teamAge: string): Observable<string> {
-    return from(this.db.collection<Team>(DB_COLLECTION_TEAMS)
+    return from(this.db.collection<Team>(this.DB_COLLECTION_TEAMS)
       .add(
         JSON.parse(
           JSON.stringify(
@@ -326,12 +336,12 @@ export class FireApiService {
   }
 
   updateTeam(team: Team): Observable<void> {
-    return from(this.db.collection<News>(DB_COLLECTION_TEAMS)
+    return from(this.db.collection<News>(this.DB_COLLECTION_TEAMS)
       .doc(team.id).set(JSON.parse(JSON.stringify(team))))
   }
 
   deleteTeam(team: Team): Observable<void> {
-    return from(this.db.collection<News>(DB_COLLECTION_TEAMS)
+    return from(this.db.collection<News>(this.DB_COLLECTION_TEAMS)
       .doc(team.id).delete());
   }
 
@@ -342,7 +352,7 @@ export class FireApiService {
         mergeMap(
           team =>
             this.db
-              .collection<Team>(DB_COLLECTION_TEAMS)
+              .collection<Team>(this.DB_COLLECTION_TEAMS)
               .doc(team.id)
               .update({
                   position: teams.indexOf(team)
@@ -354,7 +364,7 @@ export class FireApiService {
 
 
   updateImagesInTeam(team: Team): Observable<void> {
-    return from(this.db.collection(DB_COLLECTION_TEAMS).doc(team.id).update({
+    return from(this.db.collection(this.DB_COLLECTION_TEAMS).doc(team.id).update({
       imgLinks: team.imgLinks,
       imgPaths: team.imgPaths
     }));

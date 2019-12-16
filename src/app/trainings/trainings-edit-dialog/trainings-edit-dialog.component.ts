@@ -14,11 +14,8 @@ import {
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
-import {TrainingsService} from "../trainings.service";
 import {Training} from "../training";
-import {TeamsService} from "../../teams/teams.service";
 import {HallsService} from "../../halls/halls.service";
-import {Hall} from "../../halls/hall";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 
@@ -73,7 +70,6 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
 
   constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
               public translationService: TranslationService,
-              public teamsService: TeamsService,
               public hallsService: HallsService,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<TrainingsEditDialogComponent>) {

@@ -3,7 +3,6 @@ import {Team} from "../team";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatDialog, MatSnackBar} from "@angular/material";
-import {TeamsService} from "../teams.service";
 import {map, switchMap, takeUntil} from "rxjs/operators";
 import {Observable, of, Subject} from "rxjs";
 import {environment} from "../../../environments/environment";
@@ -15,6 +14,7 @@ import {
   TranslationService
 } from "../../translation.service";
 import {DataService} from "../../common/data.service";
+import {ɵAnimationRendererFactory} from "@angular/platform-browser/animations";
 
 @Component({
   selector: 'app-teams-detail',
@@ -24,6 +24,7 @@ import {DataService} from "../../common/data.service";
 export class TeamsDetailComponent extends AbstractComponent {
 
   @Input() team: Team;
+  @Input() editTeamsActive:boolean;
 
   uploadProgress: Observable<number>;
   changedValues = false;
@@ -34,10 +35,10 @@ export class TeamsDetailComponent extends AbstractComponent {
   saveTC = TC_SAVE;
 
 
+
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
               private dialog: MatDialog,
-              public teamsService: TeamsService,
               private dataService: DataService,
               public translationService: TranslationService) {
     super(breakpointObserver, snackBar);
@@ -99,6 +100,6 @@ export class TeamsDetailComponent extends AbstractComponent {
   }
 
   disableEditMode() {
-    this.teamsService.editTeamsActive = false;
+    this.editTeamsActive = false;
   }
 }

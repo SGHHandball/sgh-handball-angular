@@ -3,7 +3,7 @@
     <mat-card-title>
       <span class="card-title"> {{newsCard.title}}</span>
       <app-news-more-menu
-        *ngIf="isEditMenuVisible(newsCard)"
+        *ngIf="isEditMenuVisible(newsCard)|async"
         class="more-button"
         [sendInvisible]="newsCard.send"
         [checkedInvisible]="newsCard.checked"
@@ -51,10 +51,10 @@
     </mat-accordion>
   </mat-card-content>
   <mat-checkbox (change)="exportChangeListener.next($event.checked)" class="export-checkbox"
-                *ngIf="isExportVisible(newsCard)">
+                *ngIf="isExportVisible(newsCard)|async">
     {{translationService.get(exportCheckBoxTC)}}
   </mat-checkbox>
-  <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)">
-    {{getNewsStateIcon(newsCard)}}
+  <mat-icon class="news-state" *ngIf="isNewsStateVisible(newsCard)|async">
+    {{getNewsStateIcon(newsCard)|async}}
   </mat-icon>
 </mat-card>

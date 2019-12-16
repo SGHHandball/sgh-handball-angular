@@ -1,7 +1,10 @@
 <mat-spinner [diameter]="30" *ngIf="!currentTeam" class="loading-spinner"></mat-spinner>
 
 <ng-container *ngIf="currentTeam">
-  <app-teams-detail [team]="currentTeam"></app-teams-detail>
+  <app-teams-detail
+    [team]="currentTeam"
+    [editTeamsActive]="editTeamsActive"
+  ></app-teams-detail>
 
 
   <h2 class="news-header" *ngIf="!currentTeam">{{translationService.get(noTeamsTC)}}</h2>
@@ -22,22 +25,22 @@
 
   <app-add-btn
     *ngIf="adminService.isUserTeamsAdmin() ||
-             (currentTeam && adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason))"
+             (currentTeam && dataService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)|async)"
     [matMenu]="menu"
     [moreIcon]="true"
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
     <ng-container *ngIf="adminService.isUserTeamsAdmin() ||
-             (currentTeam && adminService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason))">
+             (currentTeam && dataService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)|async)">
       <button mat-menu-item
-              (click)="newsService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
+              (click)="dataService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
       <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
     </ng-container>
     <ng-container *ngIf="adminService.isUserTeamsAdmin()">
-      <button mat-menu-item (click)="deleteTab()">{{translationService.get(deleteTeamTC)}}</button>
-      <button mat-menu-item (click)="changeOrderOfTabs()">{{translationService.get(orderChangeTC)}}</button>
-      <button mat-menu-item (click)="addNewTeamToTab()">{{translationService.get(addTeamTC)}}</button>
+      <button mat-menu-item (click)="deleteTeam()">{{translationService.get(deleteTeamTC)}}</button>
+      <button mat-menu-item (click)="changeOrderOfTeams()">{{translationService.get(orderChangeTC)}}</button>
+      <button mat-menu-item (click)="addNewTeam()">{{translationService.get(addTeamTC)}}</button>
     </ng-container>
   </mat-menu>
 </ng-container>

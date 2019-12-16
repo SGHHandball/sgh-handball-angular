@@ -1,6 +1,6 @@
 <h2 class="team-header">{{team.teamAge}} - {{team.teamSeason}}</h2>
 
-<mat-card class="image-edit-container" *ngIf="teamsService.editTeamsActive">
+<mat-card class="image-edit-container" *ngIf="editTeamsActive">
   <mat-card-content>
     <app-image-upload-manager
       [urls]="team ? team.imgLinks : []"
@@ -16,7 +16,7 @@
 </mat-card>
 
 <div class="slideshow-container"
-     *ngIf="!teamsService.editTeamsActive">
+     *ngIf="!editTeamsActive">
   <slideshow [minHeight]="(isHandset$|async)?'300px' : '500px'"
              [showDots]="true"
              [imageUrls]="team.imgLinks"

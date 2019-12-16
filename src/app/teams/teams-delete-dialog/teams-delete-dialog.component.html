@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{translationService.get(deleteTeamTC)}}</h1>
 <div mat-dialog-content>
-  <ng-container *ngFor="let item of data">
+  <ng-container *ngFor="let item of teams">
     <div class="list-item">{{item.teamAge}}</div>
     <button mat-icon-button (click)="deleteItem(item)">
       <mat-icon>delete</mat-icon>

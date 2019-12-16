@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {Training} from "../trainings/training";
 import {AngularFirestore} from "@angular/fire/firestore";
 import {map} from "rxjs/operators";
 import {Document} from "./document";
-import {Team} from "../teams/team";
-import {DB_COLLECTION_TEAMS} from "../teams/teams.service";
 
 @Injectable({
   providedIn: 'root'

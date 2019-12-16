@@ -1,14 +1,14 @@
 <h1 mat-dialog-title>{{translationService.get(changeOrderTC)}}</h1>
 <div mat-dialog-content>
-  <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="data"
+  <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="teams"
        class="list" (cdkDropListDropped)="drop($event)">
-    <ng-container *ngFor="let item of data">
+    <ng-container *ngFor="let item of teams">
       <div class="list-item" cdkDrag>{{item.teamAge}}</div>
     </ng-container>
   </div>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-raised-button [mat-dialog-close]="false" color="warn">{{translationService.get(cancelTC)}}</button>
-  <button mat-raised-button [mat-dialog-close]="true" color="primary"
+  <button mat-raised-button [mat-dialog-close]="teams" color="primary"
           [disabled]="!unsavedChanges">{{translationService.get(saveTC)}}</button>
 </div>

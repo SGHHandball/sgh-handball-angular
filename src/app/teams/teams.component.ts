@@ -1,24 +1,14 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractComponent} from "../abstract/abstract.component";
+import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {TeamsService} from "./teams.service";
 import {AdminService} from "../admin/admin.service";
-import {MatDialog, MatSnackBar, MatTab, MatTabChangeEvent} from "@angular/material";
+import {MatDialog, MatSnackBar,} from "@angular/material";
 import {TeamsChangeDialogComponent} from "./teams-change-dialog/teams-change-dialog.component";
-import {DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {
-  TC_CANCEL,
-  TC_GENERAL_DELETE_FAIL,
-  TC_GENERAL_DELETE_SUCCESS,
-  TC_GENERAL_EDIT_FAIL,
-  TC_GENERAL_EDIT_SUCCESS,
+  TC_CANCEL, TC_GENERAL_DELETE_FAIL, TC_GENERAL_DELETE_SUCCESS, TC_GENERAL_EDIT_FAIL, TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_REQUIRED_ERROR,
-  TC_NEWS_CHECKED_HEADER,
-  TC_NEWS_CHECKED_MESSAGE, TC_NEWS_TYPE_EVENT, TC_NEWS_TYPE_REPORT,
+  TC_NEWS_TYPE_REPORT,
   TC_OK,
-  TC_TEAMS_ADD_NEW_TEAM,
-  TC_TEAMS_ADD_NEW_TEAM_FAIL,
-  TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
+  TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
   TC_TEAMS_CHANGE_ORDER,
   TC_TEAMS_DELETE_TEAM,
   TC_TEAMS_EDIT_TEAM_PAGE,
@@ -38,8 +28,10 @@ import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../common/data.service";
-import {switchMap, takeUntil} from "rxjs/operators";
+import {catchError, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {of} from "rxjs";
+import {DEFAULT_YEAR} from "../constants";
 
 @Component({
   selector: 'app-teams',
@@ -63,10 +55,13 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   filteredNews: News[];
 
   currentTeam: Team;
+  allTeams: Team[];
+
+
+  editTeamsActive = false;
 
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
-              public teamsService: TeamsService,
               public dialog: MatDialog,
               public newsService: NewsService,
               dataService: DataService,
@@ -77,7 +72,22 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initAllTeamsForSeason();
     this.initTeam();
+  }
+
+  initAllTeamsForSeason() {
+    this.route.params
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(_ => {
+          let season = this.route.snapshot.paramMap.get('season');
+          return this.dataService.getTeamsBySeason(season);
+        })
+      )
+      .subscribe(teams => {
+        this.allTeams = teams;
+      });
   }
 
   initTeam() {
@@ -121,61 +131,97 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
     }
   }
 
-  addNewTeamToTab() {
+  addNewTeam() {
     this.newsService.getTeamAges()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(ages => {
-        const dialogRef = this.dialog.open(DefaultInputDialogComponent, {
-          width: this.dialogWidth,
-          data: new DefaultInputDialogData(
-            this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
-            this.translationService.get(TC_TEAMS_TEAM),
-            this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-            this.translationService.get(TC_CANCEL),
-            this.translationService.get(TC_OK)
-          ).withAutocompleteValues(ages)
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            /*this.teamsService.addNewTeam(result)
-              .then(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS)))
-              .catch(() => this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL)))*/
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          ages => {
+            return this.dialog.open(
+              DefaultInputDialogComponent, {
+                width: this.dialogWidth,
+                data: new DefaultInputDialogData(
+                  this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
+                  this.translationService.get(TC_TEAMS_TEAM),
+                  this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+                  this.translationService.get(TC_CANCEL),
+                  this.translationService.get(TC_OK)
+                ).withAutocompleteValues(ages)
+              }
+            ).afterClosed()
           }
+        ),
+        switchMap(result =>
+          result ? this.dataService.addNewTeam(this.allTeams.length - 1, DEFAULT_YEAR, result) : of(false)
+        ),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
         })
-      });
+      )
+      .subscribe(
+        cancel => {
+          if (cancel) this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS));
+          else this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
+        }
+      );
   }
 
-  changeOrderOfTabs() {
-    const dialogRef = this.dialog.open(TeamsChangeDialogComponent, {
-      width: this.dialogWidth,
-      data: this.teamsService.teams
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        /*this.teamsService.changeOrder()
-          .then(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS)))
-          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL)))*/
+  changeOrderOfTeams() {
+    this.dialog.open(
+      TeamsChangeDialogComponent,
+      {
+        width: this.dialogWidth,
       }
-    })
+    ).afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(teams => {
+          return teams ? this.dataService.changeOrderOfTeams(teams) : of("cancelBtn");
+        }),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
+        })
+      )
+      .subscribe(
+        cancel => {
+          if (cancel) this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
+          else this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS));
+        }
+      );
   }
 
-
-  deleteTab() {
-    const dialogRef = this.dialog.open(TeamsDeleteDialogComponent, {
-      width: this.dialogWidth,
-      data: this.teamsService.teams
-    });
-    dialogRef.afterClosed().subscribe((teamToDelete: Team) => {
-      if (teamToDelete) {
-   /*     this.teamsService.deleteTeam(teamToDelete)
-          .then(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS)))
-          .catch(() => this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL)))*/
+  deleteTeam() {
+    this.dialog.open(
+      TeamsDeleteDialogComponent,
+      {
+        width: this.dialogWidth,
       }
-    })
+    ).afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(team => {
+          return team ? this.dataService.deleteTeam(team) : of("cancelBtn");
+        }),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
+        })
+      )
+      .subscribe(
+        cancel => {
+          if (cancel) this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          else this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+        }
+      );
   }
 
   editTeamPage() {
-    this.teamsService.editTeamsActive = !this.teamsService.editTeamsActive;
+    this.editTeamsActive = !this.editTeamsActive;
   }
 
   onNewsDeleted() {

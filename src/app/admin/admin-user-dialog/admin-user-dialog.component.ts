@@ -66,8 +66,22 @@ export class AdminUserDialogComponent {
   saveUser() {
     // TODO: Add this to component
     this.adminService.addNewUser(
-      new Credentials(this.emailFormControl.value, this.passwordFormControl.value),
-      new SghUser(this.preNameFormControl.value, this.lastNameFormControl.value))
+      {
+        email: this.emailFormControl.value,
+        password: this.passwordFormControl.value
+      },
+      {
+        id: '',
+        admin: false,
+        eventsAdmin: false,
+        hallsAdmin: false,
+        teamsAdmin: false,
+        trainingsAdmin: false,
+        documentsAdmin: false,
+        teams: [],
+        preName: this.preNameFormControl.value,
+        lastName: this.lastNameFormControl.value
+      })
       .then(success => {
         if (success) {
           this.dialogRef.close(true);

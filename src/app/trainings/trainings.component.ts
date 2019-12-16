@@ -20,7 +20,6 @@ import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-ed
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
-import {TeamsService} from "../teams/teams.service";
 import {HallsService} from "../halls/halls.service";
 
 @Component({
@@ -40,7 +39,6 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
   constructor(public breakpointObserver: BreakpointObserver,
               private trainingsService: TrainingsService,
               public translationService: TranslationService,
-              public teamService: TeamsService,
               public hallsService: HallsService,
               private dialog: MatDialog,
               public adminService: AdminService,

@@ -16,11 +16,11 @@ import {
   NAVIGATION_ITEMS_OTHER, NavigationItem
 } from "./navigation-item";
 import {MatSidenav, MatSnackBar} from "@angular/material";
-import {TeamsService} from "../../teams/teams.service";
 import {Team} from "../../teams/team";
 import {Observable, Subject} from "rxjs";
 import {map, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
+import {DEFAULT_YEAR} from "../../constants";
 
 @Component({
   selector: 'app-sidenav',
@@ -57,7 +57,6 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
               private router: Router,
               public translationService: TranslationService,
               snackBar: MatSnackBar,
-              public teamsService: TeamsService,
               private dataService: DataService
   ) {
     super(breakpointObserver, snackBar);
@@ -99,7 +98,7 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
   }
 
   initTeamNavItems() {
-    this.dataService.getTeamsBySeason(this.teamsService.seasonToLoad)
+    this.dataService.getTeamsBySeason(DEFAULT_YEAR)
       .pipe(
         takeUntil(this.destroy$),
         map((teams: Team[]) =>

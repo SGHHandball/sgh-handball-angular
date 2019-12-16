@@ -12,8 +12,8 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AdminService} from "../../admin/admin.service";
 import {AbstractComponent} from "../../abstract/abstract.component";
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {Observable, of, Subject} from "rxjs";
+import {map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
 
 @Component({
@@ -61,36 +61,58 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
     return getTeamsWithScoreAsString(news);
   }
 
-  isEditMenuVisible(news: News): boolean {
+  isEditMenuVisible(news: News): Observable<boolean> {
     return this.hasRightsToEdit(news);
   }
 
-  isNewsStateVisible(news: News): boolean {
+  isNewsStateVisible(news: News): Observable<boolean> {
     return this.hasRightsToEdit(news);
   }
 
-  isExportVisible(news: News): boolean {
-    return this.hasRightsToEdit(news) && this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
+  isExportVisible(news: News): Observable<boolean> {
+    return this.hasRightsToEdit(news)
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          editRights => {
+            return of(editRights && this.newsCard.type === NewsType.NEWS_TYPE_REPORT)
+          }
+        )
+      );
   }
 
   isNewsCardReport(): boolean {
     return this.newsCard.type === NewsType.NEWS_TYPE_REPORT;
   }
 
-  hasRightsToEdit(news: News): boolean {
-    return (this.adminService.user && this.adminService.user.uid === news.creator ||
-      this.adminService.isUserAdmin() || this.adminService.hasUserRightsForTeam(news.teamAge, news.teamSeason));
+  hasRightsToEdit(news: News): Observable<boolean> {
+    return this.dataService
+      .hasUserRightsForTeam(news.teamAge, news.teamSeason)
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          rightsForTeam => {
+            return of(this.adminService.user && this.adminService.user.uid === news.creator && rightsForTeam);
+          }
+        )
+      );
   }
 
-  getNewsStateIcon(news: News): string {
-    if (this.hasRightsToEdit(news))
-      if (news.send && !news.checked) {
-        return 'done';
-      } else if (news.checked) {
-        return 'done_all';
-      } else {
-        return 'new_releases';
-      }
+  getNewsStateIcon(news: News): Observable<string> {
+    return this.hasRightsToEdit(news)
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(editRights => {
+          if (!editRights) return of('');
+          if (news.send && !news.checked) {
+            return of('done');
+          } else if (news.checked) {
+            return of('done_all');
+          } else {
+            return of('new_releases');
+          }
+        })
+      );
   }
 
   getBodyHeaderOfType(type: string): string {

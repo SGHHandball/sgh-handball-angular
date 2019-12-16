@@ -37,17 +37,14 @@ export class LoginDialogComponent {
   }
 
   getCredentials(): Credentials {
-    return new Credentials(this.emailFormControl.value, this.passwordFormControl.value);
+    return {
+      email: this.emailFormControl.value,
+      password: this.passwordFormControl.value
+    };
   }
 }
 
-export class Credentials {
+export interface Credentials {
   email: string;
   password: string;
-
-
-  constructor(email: string, password: string) {
-    this.email = email;
-    this.password = password;
-  }
 }

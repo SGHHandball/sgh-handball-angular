@@ -16,6 +16,10 @@ export class DataService {
   protected constructor(public service: FireApiService) {
   }
 
+  hasUserRightsForTeam(teamAge: string, teamSeason: string): Observable<boolean> {
+    return this.service.hasUserRightsForTeam(teamAge, teamSeason);
+  }
+
   getAllNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
     return this.service.getAllNews(orderAsc, limit, newsType);
   }
