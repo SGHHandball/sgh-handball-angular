@@ -64,15 +64,9 @@ export class AdminService {
     return this.user && this.sghUser && this.sghUser.documentsAdmin;
   }
 
-  hasUserRightsForTeam(teamAge: string, teamSeason: string): boolean {
-    if (!this.sghUser || !this.sghUser.teams) return false;
-    let hasRight = false;
-    this.sghUser.teams.forEach(team => {
-      if (team.includes(teamAge) && team.includes(teamSeason)) {
-        hasRight = true;
-      }
-    });
-    return hasRight;
+  hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {
+    if (!user || !user.teams) return false;
+    return user.teams.filter(team => team.includes(teamAge) && team.includes(teamSeason)).length > 0;
   }
 
   getTeamRights(): string[] {

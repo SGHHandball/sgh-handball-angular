@@ -28,6 +28,10 @@ export class DataService {
     return this.service.getNormalUserNews(orderAsc, limit, newsType);
   }
 
+  getTeamNews(teamAge: string, teamSeason: string): Observable<News[]> {
+    return this.service.getTeamNews(teamAge, teamSeason);
+  }
+
   addNewNews(newsType: NewsType, newsTeam?: Team): Observable<News> {
     return this.service.addNewNews(newsType, newsTeam);
   }

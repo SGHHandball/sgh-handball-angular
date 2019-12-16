@@ -39,6 +39,7 @@ import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../common/data.service";
 import {switchMap, takeUntil} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-teams',
@@ -99,16 +100,18 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
 
   changeNews() {
     if (this.currentTeam) {
-      this.newsService
-        .getFilterNews(
-          [
-            this.currentTeam.teamAge,
-            this.currentTeam.teamSeason
-          ]
+      this.dataService
+        .getTeamNews(
+          this.currentTeam.teamAge,
+          this.currentTeam.teamSeason
         )
         .pipe(takeUntil(this.destroy$))
         .subscribe(
           news => {
+            if (!environment.production) {
+              console.log("changeNews");
+              console.log(news);
+            }
             this.filteredNews = news;
           }
         )

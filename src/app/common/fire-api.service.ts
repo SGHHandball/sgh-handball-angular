@@ -15,6 +15,8 @@ import {Team} from "../teams/team";
 import {environment} from "../../environments/environment";
 import {ImageProgress} from "../model/image-progress";
 import {DB_COLLECTION_TEAMS} from "../teams/teams.service";
+import {SghUser} from "../admin/sgh-user";
+import {SGH_USERS} from "../admin/admin.service";
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +28,42 @@ export class FireApiService {
                         public afStorage: AngularFireStorage) {
   }
 
-  //NEWS
+  //USER
 
+  getUser(): Observable<SghUser> {
+    return this.afAuth.user
+      .pipe(
+        switchMap(
+          user => {
+            if (user) {
+              return this.db
+                .collection(SGH_USERS)
+                .doc<SghUser>(user.uid)
+                .get()
+                .pipe(
+                  switchMap(
+                    snap => {
+                      return of(snap.data() as SghUser)
+                    }
+                  )
+                )
+            }
+            return of(undefined);
+          }
+        )
+      );
+  }
+
+  hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {
+    if (!user || !user.teams) return false;
+    return user.teams.filter(team => team.includes(teamAge) && team.includes(teamSeason)).length > 0;
+  }
+
+  isUserAdmin(user: SghUser): boolean {
+    return user && user.admin;
+  }
+
+  //NEWS
 
   getAllNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
     return this.afAuth.user.pipe(
@@ -95,6 +131,28 @@ export class FireApiService {
         return query;
       }
     ).valueChanges();
+  }
+
+
+  getTeamNews(teamAge: string, teamSeason: string): Observable<News[]> {
+    return this.getUser().pipe(
+      switchMap(
+        (user: SghUser) =>
+          this.db.collection<News>(DB_COLLECTION_NEWS, ref => {
+              let query: CollectionReference | Query = ref;
+              if (!this.hasUserRightsForTeam(user, teamAge, teamSeason) && !this.isUserAdmin(user)) {
+                query = query.where(FireBaseModel.CHECKED, '==', true);
+              }
+              query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_REPORT);
+              query = query.where(FireBaseModel.TEAM_AGE, '==', teamAge);
+              query = query.where(FireBaseModel.TEAM_SEASON, '==', teamSeason);
+              query = query.orderBy(FireBaseModel.DATE, 'asc');
+              return query;
+            }
+          )
+            .valueChanges()
+      )
+    );
   }
 
   addNewNews(newsType: NewsType, newsTeam?: Team): Observable<News> {
