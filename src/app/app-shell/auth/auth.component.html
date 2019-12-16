@@ -4,7 +4,7 @@
 </button>
 
 <mat-menu #authMenu="matMenu">
-  <button mat-menu-item *ngIf="adminService.isUserAdmin()" (click)="routeToAdmin()">
+  <button mat-menu-item *ngIf="adminService.isUserAdmin()|async" (click)="routeToAdmin()">
     {{translationService.get(usersTC)}}
   </button>
   <button mat-menu-item (click)="handleCLick()">

@@ -15,7 +15,9 @@ import {Team} from "../teams/team";
 import {environment} from "../../environments/environment";
 import {ImageProgress} from "../model/image-progress";
 import {SghUser} from "../admin/sgh-user";
-import {SGH_USERS} from "../admin/admin.service";
+import {AngularFireFunctions} from "@angular/fire/functions";
+import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
+import {FB_FUNCTIONS_ADD_USER, SGH_USERS} from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +29,59 @@ export class FireApiService {
 
   protected constructor(public db: AngularFirestore,
                         public afAuth: AngularFireAuth,
-                        public afStorage: AngularFireStorage) {
+                        public afStorage: AngularFireStorage,
+                        private afFunctions: AngularFireFunctions
+  ) {
   }
 
   //USER
   getUser(): Observable<User> {
     return this.afAuth.user;
+  }
+
+  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<boolean> {
+    return this.afFunctions.httpsCallable(FB_FUNCTIONS_ADD_USER)
+      .apply(JSON.parse(JSON.stringify(credentials)))
+      .pipe(
+        switchMap((uid: string) => {
+          return from(
+            this.db
+              .collection(SGH_USERS)
+              .doc(uid)
+              .set(JSON.parse(JSON.stringify(
+                {
+                  id: '',
+                  admin: false,
+                  eventsAdmin: false,
+                  hallsAdmin: false,
+                  teamsAdmin: false,
+                  trainingsAdmin: false,
+                  documentsAdmin: false,
+                  teams: [],
+                  preName: prename,
+                  lastName: lastName
+                }
+              )))
+          )
+        })
+      );
+  }
+
+  changeUserRights(sghUser: SghUser): Observable<any> {
+    return from(
+      this.db.collection(SGH_USERS)
+        .doc(sghUser.id)
+        .update(
+          {
+            admin: sghUser.admin,
+            hallsAdmin: sghUser.hallsAdmin,
+            eventsAdmin: sghUser.eventsAdmin,
+            teamsAdmin: sghUser.teamsAdmin,
+            trainingsAdmin: sghUser.trainingsAdmin,
+            teams: sghUser.teams
+          }
+        )
+    )
   }
 
   getSghUser(): Observable<SghUser> {
@@ -57,6 +106,21 @@ export class FireApiService {
           }
         )
       );
+  }
+
+  getAllSghUsers(): Observable<SghUser[]> {
+    return this.db.collection<SghUser>(SGH_USERS)
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as SghUser;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      )
   }
 
   hasUserRightsForTeam(teamAge: string, teamSeason: string): Observable<boolean> {

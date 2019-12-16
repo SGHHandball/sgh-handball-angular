@@ -13,10 +13,6 @@ import {
   TC_GENERAL_REQUIRED_ERROR,
   TC_OK,
   TC_ROUTE_DOCUMENTS,
-  TC_TEAMS_ADD_NEW_TEAM,
-  TC_TEAMS_ADD_NEW_TEAM_FAIL,
-  TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
-  TC_TEAMS_TEAM,
   TranslationService
 } from "../translation.service";
 import {AdminService} from "../admin/admin.service";

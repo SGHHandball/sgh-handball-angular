@@ -9,7 +9,7 @@
         <!-- use a disabled button to provide padding for tree leaf -->
         <button mat-icon-button disabled></button>
         <span class="folder-name"> {{document.name}}</span>
-        <div *ngIf="adminService.isUserDocumentsAdmin()" class="icon-button-holder">
+        <div *ngIf="adminService.isUserDocumentsAdmin()|async" class="icon-button-holder">
           <button mat-icon-button (click)="addNewFolder(document)" class="icon-buttons">
             <mat-icon>create_new_folder</mat-icon>
           </button>
@@ -30,7 +30,7 @@
             </mat-icon>
           </button>
           <span class="folder-name"> {{document.name}}</span>
-          <div *ngIf="adminService.isUserDocumentsAdmin()" class="icon-button-holder">
+          <div *ngIf="adminService.isUserDocumentsAdmin()|async" class="icon-button-holder">
             <button mat-icon-button (click)="addNewFolder(document)" class="icon-buttons">
               <mat-icon>create_new_folder</mat-icon>
             </button>
@@ -46,7 +46,7 @@
     </mat-nested-tree-node>
   </mat-tree>
 
-  <app-add-btn *ngIf="adminService.isUserDocumentsAdmin()"
+  <app-add-btn *ngIf="adminService.isUserDocumentsAdmin()|async"
                (clickListener)="addNewFolder(undefined)"
   >
   </app-add-btn>

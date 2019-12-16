@@ -24,20 +24,20 @@
   </ng-container>
 
   <app-add-btn
-    *ngIf="adminService.isUserTeamsAdmin() ||
+    *ngIf="(adminService.isUserTeamsAdmin()|async) ||
              (currentTeam && dataService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)|async)"
     [matMenu]="menu"
     [moreIcon]="true"
   ></app-add-btn>
 
   <mat-menu #menu="matMenu">
-    <ng-container *ngIf="adminService.isUserTeamsAdmin() ||
+    <ng-container *ngIf="(adminService.isUserTeamsAdmin()|async) ||
              (currentTeam && dataService.hasUserRightsForTeam(currentTeam.teamAge,currentTeam.teamSeason)|async)">
       <button mat-menu-item
               (click)="dataService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
       <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
     </ng-container>
-    <ng-container *ngIf="adminService.isUserTeamsAdmin()">
+    <ng-container *ngIf="(adminService.isUserTeamsAdmin()|async)">
       <button mat-menu-item (click)="deleteTeam()">{{translationService.get(deleteTeamTC)}}</button>
       <button mat-menu-item (click)="changeOrderOfTeams()">{{translationService.get(orderChangeTC)}}</button>
       <button mat-menu-item (click)="addNewTeam()">{{translationService.get(addTeamTC)}}</button>

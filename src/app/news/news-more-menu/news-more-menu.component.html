@@ -13,7 +13,7 @@
     <mat-icon>send</mat-icon>
   </button>
   <button mat-icon-button [matTooltip]="translationService.get(makeVisibleTC)" (click)="checkClickListener.next()"
-          *ngIf="sendInvisible && adminService.isUserAdmin() && !checkedInvisible">
+          *ngIf="sendInvisible && (adminService.isUserAdmin()|async) && !checkedInvisible">
     <mat-icon>check</mat-icon>
   </button>
 </mat-menu>

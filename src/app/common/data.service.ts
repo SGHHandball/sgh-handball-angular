@@ -8,6 +8,8 @@ import {Team} from "../teams/team";
 import {AngularFireUploadTask} from "@angular/fire/storage";
 import {ImageProgress} from "../model/image-progress";
 import {User} from "firebase";
+import {SghUser} from "../admin/sgh-user";
+import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,23 @@ export class DataService {
   getUser(): Observable<User> {
     return this.service.getUser();
   }
+
+  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<boolean> {
+    return this.service.addNewUser(credentials, prename, lastName)
+  }
+
+  changeUserRights(sghUser: SghUser): Observable<any> {
+    return this.service.changeUserRights(sghUser);
+  }
+
+  getSghUser(): Observable<SghUser> {
+    return this.service.getSghUser();
+  }
+
+  getAllSghUsers(): Observable<SghUser[]> {
+    return this.service.getAllSghUsers();
+  }
+
 
   hasUserRightsForTeam(teamAge: string, teamSeason: string): Observable<boolean> {
     return this.service.hasUserRightsForTeam(teamAge, teamSeason);

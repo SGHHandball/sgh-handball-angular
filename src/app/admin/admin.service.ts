@@ -1,123 +1,109 @@
 import {Injectable} from '@angular/core';
-import {AngularFireAuth} from "@angular/fire/auth";
-import {User} from "firebase";
 import {SghUser} from "./sgh-user";
-import {AngularFirestore} from "@angular/fire/firestore";
 import {Observable, of} from "rxjs";
+import {DataService} from "../common/data.service";
+import {switchMap} from "rxjs/operators";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
-import {AngularFireFunctions} from "@angular/fire/functions";
-import {map} from "rxjs/operators";
-import {Team} from "../teams/team";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  user: User;
-  sghUser: SghUser;
+  constructor(private dataService: DataService) {
+  }
 
-  addUserFunction: any;
-
-  constructor(private  afAuth: AngularFireAuth,
-              private db: AngularFirestore,
-              private afFunctions: AngularFireFunctions) {
-    this.addUserFunction = this.afFunctions.httpsCallable(FB_FUNCTIONS_ADD_USER);
-    afAuth.user.subscribe(user => {
-      this.user = user;
-      if (user) {
-        db.collection(SGH_USERS).doc<SghUser>(user.uid).get().toPromise().then(snap => {
-          this.sghUser = snap.data() as SghUser;
+  hasUserAddNewsAccess(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.admin || sghUser.eventsAdmin || sghUser.teams && sghUser.teams.length > 0);
         })
-      } else {
-        this.sghUser = undefined;
-      }
-    })
+      );
   }
 
-  hasUserAddNewsAccess() {
-    return this.isUserAdmin() || this.isUserEventAdmin() ||
-      (this.sghUser && this.sghUser.teams && this.sghUser.teams.length > 0)
+  isUserAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.admin);
+        })
+      );
   }
 
-  isUserAdmin(): boolean {
-    return this.user && this.sghUser && this.sghUser.admin;
+  hasUserTeamRights(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.teams && sghUser.teams.length > 0);
+        })
+      );
   }
 
-  isUserHallAdmin() {
-    return this.user && this.sghUser && this.sghUser.hallsAdmin;
+  isUserHallAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.hallsAdmin);
+        })
+      );
   }
 
-  isUserEventAdmin() {
-    return this.user && this.sghUser && this.sghUser.eventsAdmin;
+  isUserEventAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.eventsAdmin);
+        })
+      );
   }
 
-  isUserTeamsAdmin() {
-    return this.user && this.sghUser && this.sghUser.teamsAdmin;
+  isUserTeamsAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.teamsAdmin);
+        })
+      );
   }
 
-  isUserTrainingsAdmin() {
-    return this.user && this.sghUser && this.sghUser.trainingsAdmin;
+  isUserTrainingsAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.trainingsAdmin);
+        })
+      );
   }
 
-  isUserDocumentsAdmin() {
-    return this.user && this.sghUser && this.sghUser.documentsAdmin;
-  }
-
-  hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {
-    if (!user || !user.teams) return false;
-    return user.teams.filter(team => team.includes(teamAge) && team.includes(teamSeason)).length > 0;
-  }
-
-  getTeamRights(): string[] {
-    return [];
+  isUserDocumentsAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.documentsAdmin);
+        })
+      );
   }
 
   getAllUsers(): Observable<SghUser[]> {
-    if (this.isUserAdmin()) {
-      return this.db.collection<SghUser>(SGH_USERS).snapshotChanges()
-        .pipe(
-          map(actions => {
-              return actions.map(action => {
-                const data = action.payload.doc.data() as SghUser;
-                data.id = action.payload.doc.id;
-                return data;
-              })
-            }
-          )
-        )
-    } else {
-      return of([]);
-    }
+    return this.dataService.getAllSghUsers();
   }
 
-  addNewUser(credentials: Credentials, sghUser: SghUser): Promise<boolean> {
-    return new Promise<boolean>(((resolve, reject) => {
-      this.addUserFunction(JSON.parse(JSON.stringify(credentials))).toPromise()
-        .then(uid => {
-          this.db.collection(SGH_USERS).doc(uid).set(JSON.parse(JSON.stringify(sghUser)))
-            .then(() => resolve(true))
-            .catch(error => {
-              console.error(error);
-              reject(false)
-            });
-        });
-    }))
+  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<boolean> {
+    return this.dataService.addNewUser(credentials, prename, lastName);
   }
 
-  changeAdminMode(sghUser: SghUser): Promise<any> {
-    return this.db.collection(SGH_USERS).doc(sghUser.id).update({
-      admin: sghUser.admin,
-      hallsAdmin: sghUser.hallsAdmin,
-      eventsAdmin: sghUser.eventsAdmin,
-      teamsAdmin: sghUser.teamsAdmin,
-      trainingsAdmin: sghUser.trainingsAdmin,
-      teams: sghUser.teams
-    })
+  changeUserRights(sghUser: SghUser): Observable<any> {
+    return this.dataService.changeUserRights(sghUser);
   }
+
 }
 
-// @ts-ignore
-export const SGH_USERS = 'user';
-// @ts-ignore
-export const FB_FUNCTIONS_ADD_USER = 'addUser';

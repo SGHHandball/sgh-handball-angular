@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {AdminService} from "../../admin/admin.service";
 import {MatMenu, MatSnackBar} from "@angular/material";
 
 @Component({
@@ -18,7 +17,6 @@ export class AddBtnComponent extends AbstractComponent {
   menuOpen: boolean;
 
   constructor(breakpointObserver: BreakpointObserver,
-              public adminService: AdminService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }

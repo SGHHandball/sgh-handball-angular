@@ -10,7 +10,6 @@ import {
 } from "../../translation.service";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
-import {AdminService} from "../../admin/admin.service";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {Observable, of, Subject} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
@@ -44,7 +43,6 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
 
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
-              public adminService: AdminService,
               public translationService: TranslationService,
               private dataService: DataService
   ) {

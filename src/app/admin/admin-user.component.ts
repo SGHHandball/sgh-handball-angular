@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {BreakpointObserver} from '@angular/cdk/layout';
@@ -13,6 +13,8 @@ import {
 } from "../translation.service";
 import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.component";
 import {environment} from "../../environments/environment";
+import {of, Subject} from "rxjs";
+import {catchError, switchMap, takeUntil} from "rxjs/operators";
 
 /**
  * @title Table with expandable rows
@@ -29,7 +31,7 @@ import {environment} from "../../environments/environment";
     ]),
   ],
 })
-export class AdminUserComponent extends AbstractComponent implements AfterViewInit {
+export class AdminUserComponent extends AbstractComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -40,6 +42,8 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
   dataLoaded = false;
 
   filterTC = TC_FILTER;
+
+  destroy$ = new Subject();
 
   constructor(public breakpointObserver: BreakpointObserver,
               private adminService: AdminService,
@@ -59,13 +63,30 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
     }
   }
 
-  ngAfterViewInit(): void {
-    this.adminService.getAllUsers().subscribe(users => {
-      this.dataSource = new MatTableDataSource<SghUser>(users);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataLoaded = true;
-    })
+
+  ngOnInit(): void {
+    this.adminService.isUserAdmin()
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          adminRight => {
+            if (adminRight) {
+              return this.adminService.getAllUsers();
+            }
+            return of(undefined)
+          }
+        )
+      )
+      .subscribe(
+        users => {
+          if (users) {
+            this.dataSource = new MatTableDataSource<SghUser>(users);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
+          this.dataLoaded = true;
+        }
+      );
   }
 
   openAddUserDialog() {
@@ -76,12 +97,25 @@ export class AdminUserComponent extends AbstractComponent implements AfterViewIn
   }
 
   changeAdminMode(sghUser: SghUser) {
-    this.adminService.changeAdminMode(sghUser).then(() => {
-      this.openSnackBar(this.translationService.get(TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS));
-    }).catch(error => {
-      if (!environment.production) console.log(error);
-      this.openSnackBar(this.translationService.get(TC_GENERAL_ERROR));
-    });
+    this.adminService.changeUserRights(sghUser)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(error => {
+          if (!environment.production) console.log(error);
+          this.openSnackBar(this.translationService.get(TC_GENERAL_ERROR));
+          return error;
+        })
+      ).subscribe(
+      _ => {
+        this.openSnackBar(this.translationService.get(TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS));
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
 
 }

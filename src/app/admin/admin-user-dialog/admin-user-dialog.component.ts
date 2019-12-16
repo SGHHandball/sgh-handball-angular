@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {
   TC_ADMIN_ADD_NEW_USER,
   TC_ADMIN_ADD_NEW_USER_ERROR, TC_ADMIN_ADD_NEW_USER_SUCCESS,
@@ -14,17 +14,17 @@ import {
   TranslationService
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
-import {Credentials} from "../../app-shell/auth/login-dialog/login-dialog.component";
 import {AdminService} from "../admin.service";
-import {SghUser} from "../sgh-user";
 import {MatDialogRef, MatSnackBar} from "@angular/material";
+import {Subject} from "rxjs";
+import {catchError, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-admin-user-dialog',
   templateUrl: './admin-user-dialog.component.html',
   styleUrls: ['./admin-user-dialog.component.css']
 })
-export class AdminUserDialogComponent {
+export class AdminUserDialogComponent implements OnDestroy {
 
   addNewUserHeader = TC_ADMIN_ADD_NEW_USER;
   backTc = TC_BACK;
@@ -37,6 +37,8 @@ export class AdminUserDialogComponent {
   lastNameTC = TC_ADMIN_SGH_USER_LAST_NAME;
   requiredFieldErrorTC = TC_GENERAL_REQUIRED_ERROR;
   pwToShortTC = TC_ADMIN_USER_DIALOG_PW_TO_SHORT;
+
+  destroy$ = new Subject();
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -64,40 +66,42 @@ export class AdminUserDialogComponent {
   }
 
   saveUser() {
-    // TODO: Add this to component
     this.adminService.addNewUser(
       {
         email: this.emailFormControl.value,
         password: this.passwordFormControl.value
       },
-      {
-        id: '',
-        admin: false,
-        eventsAdmin: false,
-        hallsAdmin: false,
-        teamsAdmin: false,
-        trainingsAdmin: false,
-        documentsAdmin: false,
-        teams: [],
-        preName: this.preNameFormControl.value,
-        lastName: this.lastNameFormControl.value
-      })
-      .then(success => {
-        if (success) {
-          this.dialogRef.close(true);
-          this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_SUCCESS))
-        } else {
+      this.preNameFormControl.value,
+      this.lastNameFormControl.value)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(err => {
           this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_ERROR))
+          return err;
+        })
+      )
+      .subscribe(
+        success => {
+          if (success) {
+            this.dialogRef.close(true);
+            this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_SUCCESS))
+          } else {
+            this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_ERROR))
+          }
         }
-      }).catch(() => {
-      this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_ERROR))
-    });
+      );
   }
 
   openSnackBar(message: string) {
     this.snackBar.open(message, null, {
       duration: 2000
     })
+  }
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
 
 }
