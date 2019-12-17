@@ -53,7 +53,7 @@ export class EventsComponent extends AbstractNewsComponent implements OnInit {
 
   initEvents() {
     this.dataService
-      .getAllNews(true, undefined, NewsType.NEWS_TYPE_EVENT)
+      .getAllNews(NewsType.NEWS_TYPE_EVENT)
       .pipe(takeUntil(this.destroy$))
       .subscribe(events => {
         this.eventNews = events;

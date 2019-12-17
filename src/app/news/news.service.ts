@@ -12,6 +12,8 @@ import {Observable, of, Subject} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../common/data.service";
 import {Location} from '@angular/common';
+import {AdminService} from "../admin/admin.service";
+import {SghUser} from "../admin/sgh-user";
 
 @Injectable({
   providedIn: 'root'
@@ -25,21 +27,59 @@ export class NewsService {
     private router: Router,
     private location: Location,
     private dataService: DataService,
-    private translationService: TranslationService) {
+    private translationService: TranslationService,
+    private adminService: AdminService
+  ) {
   }
 
   getFilterNews(filterValues: string[]): Observable<News[]> {
-    return this.dataService.getAllNews(true)
+    return this.adminService.hasUserAddNewsAccess()
       .pipe(
-        map(
-          (newsList: News[]) => {
-            return newsList
-              .filter(
-                (news: News) =>
-                  this.areFiltersInNews(news, filterValues)
-              )
+        switchMap(
+          access => {
+            if (access) {
+              return this.dataService.getSghUser()
+                .pipe(
+                  switchMap(user => {
+                    return this.dataService.getAllNews()
+                      .pipe(
+                        map(news => this.enableAccessFilter(user, news))
+                      )
+                  })
+                )
+            }
+            return this.dataService.getNormalUserNews(true)
           }
-        )
+        ),
+        map((newsList: News[]) => this.filterNews(filterValues, newsList))
+      );
+  }
+
+  enableAccessFilter(sghUser: SghUser, newsList: News[]): News[] {
+    return newsList.filter(news =>
+      news.checked ||
+      news.creator === sghUser.id ||
+      this.hasUserRightsForTeam(sghUser, news.teamAge, news.teamSeason)
+    )
+  }
+
+  hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {
+    if (!user || !user.teams) return false;
+    return user.teams
+      .filter(
+        team =>
+          user.admin ||
+          team.includes(teamAge) &&
+          team.includes(teamSeason)
+      ).length > 0;
+  }
+
+
+  filterNews(filterValues: string[], newsList: News[]): News[] {
+    return newsList
+      .filter(
+        (news: News) =>
+          this.areFiltersInNews(news, filterValues)
       )
   }
 

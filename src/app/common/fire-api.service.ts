@@ -107,7 +107,9 @@ export class FireApiService {
                 .pipe(
                   switchMap(
                     snap => {
-                      return of(snap.data() as SghUser)
+                      const sghUser = snap.data() as SghUser;
+                      sghUser.id = user.uid;
+                      return of(sghUser)
                     }
                   )
                 )
@@ -150,24 +152,21 @@ export class FireApiService {
       )
   }
 
+
+
   //NEWS
 
-  getAllNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
-    return this.afAuth.user.pipe(
-      switchMap((user: User) => user ? this.getAuthCreatorNews(user.uid, newsType) : of([])),
-      switchMap((newsWithCreator: News[]) =>
-        this.getNormalUserNews(orderAsc, limit, newsType)
-          .pipe(
-            map((normalNews: News[]) => {
-              const jointArray = [...newsWithCreator, ...normalNews];
-              if (!environment.production) {
-                console.log("allNews");
-                console.log(jointArray);
-              }
-              return this.sortNewsByDate(jointArray);
-            })
-          )
-      ));
+  getAllNews(newsType?: NewsType): Observable<News[]> {
+    return this.getNewsByType(newsType)
+      .pipe(
+        map((normalNews: News[]) => {
+          if (!environment.production) {
+            console.log("allNews");
+            console.log(normalNews);
+          }
+          return this.sortNewsByDate(normalNews);
+        })
+      )
   }
 
 
@@ -181,13 +180,11 @@ export class FireApiService {
       ).valueChanges();
   }
 
-  getAuthCreatorNews(userId: string, newsType?: NewsType): Observable<News[]> {
+  getNewsByType(newsType?: NewsType): Observable<News[]> {
     return this.db.collection<News>(
       DB_COLLECTION_NEWS,
       ref => {
         let query: CollectionReference | Query = ref;
-        query = query.where(FireBaseModel.CREATOR, '==', userId);
-        query = query.where(FireBaseModel.CHECKED, '==', false);
         switch (newsType) {
           case NewsType.NEWS_TYPE_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_EVENT);

@@ -48,15 +48,15 @@ export class DataService {
     return this.service.hasUserRightsForTeam(teamAge, teamSeason);
   }
 
-  getAllNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
-    return this.service.getAllNews(orderAsc, limit, newsType);
+  getAllNews(newsType?: NewsType): Observable<News[]> {
+    return this.service.getAllNews(newsType);
   }
 
   getNewsById(id: string): Observable<News[]> {
     return this.service.getNewsById(id);
   }
 
-  getNormalUserNews(orderAsc: boolean, limit: number, newsType?: NewsType): Observable<News[]> {
+  getNormalUserNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
     return this.service.getNormalUserNews(orderAsc, limit, newsType);
   }
 
