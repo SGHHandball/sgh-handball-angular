@@ -7,6 +7,9 @@
   <button mat-menu-item *ngIf="adminUser|async" (click)="routeToAdmin()">
     {{translationService.get(usersTC)}}
   </button>
+  <button mat-menu-item *ngIf="adminUser|async" (click)="routeToSeasons()">
+    Saisons
+  </button>
   <button mat-menu-item (click)="handleCLick()">
     {{(afAuth.user|async) ?
     this.translationService.get(logoutTC) :

@@ -20,7 +20,7 @@ import {DB_COLLECTION_SEASONS} from "../constants";
 })
 export class DataService {
 
-  protected constructor(public service: FireApiService) {
+  protected constructor(private service: FireApiService) {
   }
 
   getUser(): Observable<User> {

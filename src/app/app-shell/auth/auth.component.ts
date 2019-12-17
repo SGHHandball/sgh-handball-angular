@@ -6,7 +6,7 @@ import {
   TC_AUTH_LOGIN_SUCCESS, TC_AUTH_LOGOUT_ERROR, TC_AUTH_LOGOUT_SUCCESS,
   TC_LOGIN,
   TC_LOGOUT,
-  TC_ROUTE_IMPRINT, TC_USERS,
+  TC_ROUTE_IMPRINT, TC_ROUTE_SEASONS, TC_USERS,
   TranslationService
 } from "../../translation.service";
 import {AbstractComponent} from "../../abstract/abstract.component";
@@ -56,7 +56,12 @@ export class AuthComponent extends AbstractComponent implements OnInit, OnDestro
     this.router.navigate([TC_USERS])
   }
 
+  routeToSeasons() {
+    this.router.navigate([TC_ROUTE_SEASONS])
+  }
+
   ngOnInit(): void {
+    this.initUser();
   }
 
   initUser() {

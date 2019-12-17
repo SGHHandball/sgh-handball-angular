@@ -45,6 +45,7 @@ export const TC_ROUTE_SPONSORS = 'sponsoren';
 export const TC_ROUTE_CDH = 'club-der-hunderter';
 export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
+export const TC_ROUTE_SEASONS = 'saisons';
 
 export const TC_NEWS_PATH_EDIT = 'bearbeiten';
 

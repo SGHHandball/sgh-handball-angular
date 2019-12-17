@@ -644,7 +644,7 @@ export class FireApiService {
     return from(this.db
       .collection<Season>(DB_COLLECTION_CURRENT_SEASON)
       .doc<Season>(DB_COLLECTION_CURRENT_SEASON)
-      .update(season));
+      .set(season));
   }
 
 }

@@ -12,7 +12,7 @@ import {
   TC_ROUTE_HALLS,
   TC_ROUTE_HOME,
   TC_ROUTE_IMPRINT,
-  TC_ROUTE_NEWS, TC_ROUTE_REFEREES,
+  TC_ROUTE_NEWS, TC_ROUTE_REFEREES, TC_ROUTE_SEASONS,
   TC_ROUTE_SPONSORS,
   TC_ROUTE_TEAMS, TC_ROUTE_TIME_KEEPER,
   TC_ROUTE_TRAINING,
@@ -29,9 +29,9 @@ import {TrainingsComponent} from "./trainings/trainings.component";
 import {DocumentsComponent} from "./documents/documents.component";
 import {HomeComponent} from "./home/home.component";
 import {EmptyComponent} from "./empty/empty.component";
+import {SeasonsComponent} from "./seasons/seasons.component";
 
 export const routes = [
-  {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
   {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_NEWS, component: NewsComponent},
   {path: [TC_ROUTE_TEAMS, ':season', ':teamAge'].join('/'), component: TeamsComponent},
@@ -56,6 +56,12 @@ export const routes = [
     canActivate: [AuthGuard]
   },
   {path: TC_ROUTE_IMPRINT, component: ImprintComponent},
+  {
+    path: TC_ROUTE_SEASONS,
+    component: SeasonsComponent,
+    canActivate: [AuthGuard]
+  },
+  {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
 ];
 
 
