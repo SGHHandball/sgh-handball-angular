@@ -99,12 +99,12 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
           result => {
             if (result) {
               if (result.existing) {
-                return this.dataService.addHall(result.hall);
-              } else {
                 return this.dataService.changeHall(result.hall);
+              } else {
+                return this.dataService.addHall(result.hall);
               }
             }
-            return of(false)
+            return of("Error")
           }
         ),
         catchError(error => {
@@ -114,11 +114,11 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
         })
       )
       .subscribe(
-        success => {
-          if (success) {
-            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
+        error => {
+          if (error) {
+            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL));
           } else {
-            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL))
+            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
           }
         }
       );
@@ -139,7 +139,7 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
             if (result) {
               return this.dataService.deleteHall(hall);
             }
-            return of(false)
+            return of("Error")
           }
         ),
         catchError(error => {
@@ -149,11 +149,11 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
         })
       )
       .subscribe(
-        success => {
-          if (success) {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+        error => {
+          if (error) {
+            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
           } else {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))
+            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
           }
         }
       );
