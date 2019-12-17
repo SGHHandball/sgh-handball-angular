@@ -105,6 +105,16 @@ export class NewsService {
       ;
   }
 
+  filterEvents(events: News[]): Observable<News[]> {
+    return this.dataService.getSghUser()
+      .pipe(
+        map(user => {
+          if (user && user.eventsAdmin) return events;
+          return events.filter(event => event.checked)
+        })
+      )
+  }
+
 
   getTeamAges(): Observable<string[]> {
     const youthTC = this.translationService.get(TC_NEWS_TEAM_YOUTH);

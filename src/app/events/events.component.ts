@@ -7,7 +7,7 @@ import {MatDialog, MatSnackBar} from "@angular/material";
 import {AdminService} from "../admin/admin.service";
 import {News, NewsType} from "../news/news";
 import {DataService} from "../common/data.service";
-import {share, takeUntil} from "rxjs/operators";
+import {share, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-events',
@@ -54,7 +54,12 @@ export class EventsComponent extends AbstractNewsComponent implements OnInit {
   initEvents() {
     this.dataService
       .getAllNews(NewsType.NEWS_TYPE_EVENT)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(events => {
+          return this.newsService.filterEvents(events);
+        })
+      )
       .subscribe(events => {
         this.eventNews = events;
       })

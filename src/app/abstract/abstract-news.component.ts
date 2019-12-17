@@ -58,15 +58,12 @@ export abstract class AbstractNewsComponent extends AbstractComponent implements
           )
           .subscribe(
             _ => {
-              this.onNewsDeleted();
               this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
             }
           )
       }
     });
   }
-
-  abstract onNewsDeleted();
 
 
   openSendNewsDialog(news: News) {
@@ -87,7 +84,6 @@ export abstract class AbstractNewsComponent extends AbstractComponent implements
           )
           .subscribe(
             _ => {
-              this.onNewsDeleted();
               this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
             }
           )
@@ -113,7 +109,6 @@ export abstract class AbstractNewsComponent extends AbstractComponent implements
           )
           .subscribe(
             _ => {
-              this.onNewsDeleted();
               this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS))
             }
           )
