@@ -45,7 +45,8 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
   teams: Team[];
   halls: Hall[];
 
-  trainingsAdmin$ = this.adminService.isUserTrainingsAdmin().pipe(share());
+  trainingsAdmin: boolean;
+  trainingsAdminOnceReceived = false;
 
   constructor(public breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
@@ -59,9 +60,20 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
   }
 
   ngOnInit() {
+    this.initTrainingsAdmin();
     this.initHalls();
     this.initTeams();
     this.initTrainings();
+  }
+
+  initTrainingsAdmin() {
+    this.adminService
+      .isUserTrainingsAdmin()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(admin => {
+        this.trainingsAdmin = admin;
+        this.trainingsAdminOnceReceived = true;
+      })
   }
 
   initTrainings() {

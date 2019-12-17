@@ -259,8 +259,4 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   editTeamLink() {
     this.editTeamLinkActive = !this.editTeamLinkActive;
   }
-
-  onNewsDeleted() {
-    this.changeNews();
-  }
 }

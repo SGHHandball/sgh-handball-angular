@@ -103,9 +103,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
       })
   }
 
-  onNewsDeleted() {
-  }
-
   changeExportNews(news: News) {
     if (this.exportNews.includes(news)) {
       this.exportNews.splice(this.exportNews.indexOf(news), 1);
