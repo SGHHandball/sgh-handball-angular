@@ -30,8 +30,8 @@ import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../common/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
-import {MonoTypeOperatorFunction, Observable, of} from "rxjs";
-import {DEFAULT_YEAR} from "../constants";
+import {Observable, of} from "rxjs";
+import {SeasonService} from "../seasons/season.service";
 
 @Component({
   selector: 'app-teams',
@@ -70,7 +70,8 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
               dataService: DataService,
               private adminService: AdminService,
               snackBar: MatSnackBar,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private seasonService: SeasonService) {
     super(breakpointObserver, translationService, dialog, dataService, snackBar);
   }
 
@@ -141,28 +142,18 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
     }
   }
 
+
   addNewTeam() {
     this.newsService.getTeamAges()
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(
-          ages => {
-            return this.dialog.open(
-              DefaultInputDialogComponent, {
-                width: this.dialogWidth,
-                data: new DefaultInputDialogData(
-                  this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
-                  this.translationService.get(TC_TEAMS_TEAM),
-                  this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-                  this.translationService.get(TC_CANCEL),
-                  this.translationService.get(TC_OK)
-                ).withAutocompleteValues(ages)
-              }
-            ).afterClosed()
+        switchMap(ages => this.getInputDialogObservable(ages)),
+        switchMap(result => {
+            if (result) {
+              return this.getOnAddNewTeamObservable(result);
+            }
+            return of(false);
           }
-        ),
-        switchMap(result =>
-          result ? this.dataService.addNewTeam(this.allTeams.length - 1, DEFAULT_YEAR, result) : of(false)
         ),
         catchError(error => {
           this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
@@ -176,6 +167,37 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
           else this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
         }
       );
+  }
+
+  getOnAddNewTeamObservable(team: string): Observable<string> {
+    return this.dataService.getCurrentSeason()
+      .pipe(
+        switchMap(
+          currentSeason =>
+            this.dataService
+              .addNewTeam(
+                this.allTeams.length - 1,
+                this.seasonService.getSeasonAsString(currentSeason),
+                team
+              )
+        )
+      );
+  }
+
+
+  getInputDialogObservable(teamAges: string[]): Observable<string | undefined> {
+    return this.dialog.open(
+      DefaultInputDialogComponent, {
+        width: this.dialogWidth,
+        data: new DefaultInputDialogData(
+          this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
+          this.translationService.get(TC_TEAMS_TEAM),
+          this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+          this.translationService.get(TC_CANCEL),
+          this.translationService.get(TC_OK)
+        ).withAutocompleteValues(teamAges)
+      }
+    ).afterClosed()
   }
 
   changeOrderOfTeams() {

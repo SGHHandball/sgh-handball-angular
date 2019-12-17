@@ -1,18 +1,15 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component,  OnDestroy, OnInit} from '@angular/core';
 import {
   TC_CANCEL,
-  TC_SAVE,
-  TC_TEAMS_CHANGE_ORDER,
   TC_TEAMS_DELETE_TEAM,
   TranslationService
 } from "../../translation.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import { MatDialogRef} from "@angular/material";
 import {Team} from "../team";
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {DEFAULT_YEAR} from "../../constants";
-import {takeUntil} from "rxjs/operators";
+import {switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
 import {Subject} from "rxjs";
+import {SeasonService} from "../../seasons/season.service";
 
 @Component({
   selector: 'app-teams-delete-dialog',
@@ -31,15 +28,16 @@ export class TeamsDeleteDialogComponent implements OnInit, OnDestroy {
 
   constructor(public translationService: TranslationService,
               public dialogRef: MatDialogRef<TeamsDeleteDialogComponent>,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private seasonService: SeasonService) {
   }
 
 
   ngOnInit(): void {
-    this.dataService
-      .getTeamsBySeason(DEFAULT_YEAR)
+    this.dataService.getCurrentSeason()
       .pipe(
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
+        switchMap(currentSeason => this.dataService.getTeamsBySeason(this.seasonService.getSeasonAsString(currentSeason))),
       )
       .subscribe(teams => {
           this.teams = teams;

@@ -17,9 +17,17 @@ import {ImageProgress} from "../model/image-progress";
 import {SghUser} from "../admin/sgh-user";
 import {AngularFireFunctions} from "@angular/fire/functions";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
-import {DB_COLLECTION_HALLS, DB_COLLECTION_TRAININGS, FB_FUNCTIONS_ADD_USER, SGH_USERS} from "../constants";
+import {
+  DB_COLLECTION_CURRENT_SEASON,
+  DB_COLLECTION_HALLS,
+  DB_COLLECTION_SEASONS,
+  DB_COLLECTION_TRAININGS,
+  FB_FUNCTIONS_ADD_USER,
+  SGH_USERS
+} from "../constants";
 import {Hall} from "../halls/hall";
 import {Training} from "../trainings/training";
+import {Season} from "../seasons/season";
 
 @Injectable({
   providedIn: 'root'
@@ -618,6 +626,25 @@ export class FireApiService {
         .collection<Training>(DB_COLLECTION_TRAININGS)
         .doc(training.id)
         .delete());
+  }
+
+  //SEASONS
+
+  getSeasons(): Observable<Season[]> {
+    return this.db.collection<Season>(DB_COLLECTION_SEASONS).valueChanges();
+  }
+
+  getCurrentSeason(): Observable<Season> {
+    return this.db
+      .collection<Season>(DB_COLLECTION_CURRENT_SEASON)
+      .doc<Season>(DB_COLLECTION_CURRENT_SEASON).valueChanges();
+  }
+
+  changeCurrentSeason(season: Season): Observable<void> {
+    return from(this.db
+      .collection<Season>(DB_COLLECTION_CURRENT_SEASON)
+      .doc<Season>(DB_COLLECTION_CURRENT_SEASON)
+      .update(season));
   }
 
 }

@@ -18,9 +18,9 @@ import {
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {DataService} from "../../common/data.service";
-import {DEFAULT_YEAR} from "../../constants";
 import {Subject} from "rxjs";
 import {switchMap, takeUntil} from "rxjs/operators";
+import {SeasonService} from "../../seasons/season.service";
 
 @Component({
   selector: 'app-admin-user-detail',
@@ -47,7 +47,8 @@ export class AdminUserDetailComponent extends AbstractComponent implements OnDes
               snackBar: MatSnackBar,
               public translationService: TranslationService,
               public dialog: MatDialog,
-              private dataService: DataService
+              private dataService: DataService,
+              private seasonService: SeasonService
   ) {
     super(breakpointObserver, snackBar);
   }
@@ -86,9 +87,10 @@ export class AdminUserDetailComponent extends AbstractComponent implements OnDes
   }
 
   openAddTeamDialog() {
-    this.dataService.getTeamsBySeason(DEFAULT_YEAR)
+    this.dataService.getCurrentSeason()
       .pipe(
         takeUntil(this.destroy$),
+        switchMap(currentSeason => this.dataService.getTeamsBySeason(this.seasonService.getSeasonAsString(currentSeason))),
         switchMap(teams => {
           const teamsAsStrings = teams.map(team => [team.teamAge, team.teamSeason].join(" - "));
           return this.dialog.open(DefaultInputDialogComponent, {
@@ -102,8 +104,7 @@ export class AdminUserDetailComponent extends AbstractComponent implements OnDes
             )
               .withAutocompleteValues(teamsAsStrings)
           }).afterClosed();
-        })
-      )
+        }))
       .subscribe(result => {
         if (result) {
           if (!this.sghUser.teams) this.sghUser.teams = [];

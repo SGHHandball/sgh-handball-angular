@@ -4,8 +4,8 @@ import {Team} from "../team";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {DataService} from "../../common/data.service";
 import {Subject} from "rxjs";
-import {DEFAULT_YEAR} from "../../constants";
-import {takeUntil} from "rxjs/operators";
+import {switchMap, takeUntil} from "rxjs/operators";
+import {SeasonService} from "../../seasons/season.service";
 
 @Component({
   selector: 'app-teams-change-dialog',
@@ -26,7 +26,8 @@ export class TeamsChangeDialogComponent implements OnInit, OnDestroy {
   teams: Team[];
 
   constructor(public translationService: TranslationService,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private seasonService: SeasonService) {
   }
 
   drop(event: CdkDragDrop<Team[]>) {
@@ -35,10 +36,10 @@ export class TeamsChangeDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataService
-      .getTeamsBySeason(DEFAULT_YEAR)
+    this.dataService.getCurrentSeason()
       .pipe(
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
+        switchMap(currentSeason => this.dataService.getTeamsBySeason(this.seasonService.getSeasonAsString(currentSeason))),
       )
       .subscribe(teams => {
           this.teams = teams;

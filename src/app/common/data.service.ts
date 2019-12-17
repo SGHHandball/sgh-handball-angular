@@ -12,6 +12,8 @@ import {SghUser} from "../admin/sgh-user";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {Hall} from "../halls/hall";
 import {Training} from "../trainings/training";
+import {Season} from "../seasons/season";
+import {DB_COLLECTION_SEASONS} from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -173,5 +175,17 @@ export class DataService {
 
   deleteTraining(training: Training): Observable<void> {
     return this.service.deleteTraining(training);
+  }
+
+  getSeasons(): Observable<Season[]> {
+    return this.service.getSeasons();
+  }
+
+  getCurrentSeason(): Observable<Season> {
+    return this.service.getCurrentSeason();
+  }
+
+  changeCurrentSeason(season: Season): Observable<void> {
+    return this.service.changeCurrentSeason(season);
   }
 }

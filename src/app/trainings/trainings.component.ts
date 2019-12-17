@@ -23,9 +23,9 @@ import {DataService} from "../common/data.service";
 import {Observable, of, Subject} from "rxjs";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
-import {DEFAULT_YEAR} from "../constants";
 import {Team} from "../teams/team";
 import {Hall} from "../halls/hall";
+import {SeasonService} from "../seasons/season.service";
 
 @Component({
   selector: 'app-trainings',
@@ -53,7 +53,8 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
               public adminService: AdminService,
               private dataService: DataService,
               public teamService: TeamService,
-              snackBar: MatSnackBar) {
+              snackBar: MatSnackBar,
+              private seasonService: SeasonService) {
     super(breakpointObserver, snackBar);
   }
 
@@ -76,9 +77,11 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
   }
 
   initTeams() {
-    this.dataService
-      .getTeamsBySeason(DEFAULT_YEAR)
-      .pipe(takeUntil(this.destroy$))
+    this.dataService.getCurrentSeason()
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(currentSeason => this.dataService.getTeamsBySeason(this.seasonService.getSeasonAsString(currentSeason)))
+      )
       .subscribe(teams => {
         this.teams = teams;
       })
