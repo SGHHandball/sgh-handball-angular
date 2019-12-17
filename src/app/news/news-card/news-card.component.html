@@ -51,7 +51,7 @@
     </mat-accordion>
   </mat-card-content>
   <mat-checkbox (change)="exportChangeListener.next($event.checked)" class="export-checkbox"
-                *ngIf="exportVisible">
+                *ngIf="(exportRight$|async)&&exportVisible">
     {{translationService.get(exportCheckBoxTC)}}
   </mat-checkbox>
   <mat-icon class="news-state" *ngIf="newsStateVisible">

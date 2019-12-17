@@ -12,8 +12,9 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {Observable, of, Subject} from "rxjs";
-import {map, switchMap, takeUntil} from "rxjs/operators";
+import {map, share, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
+import {AdminService} from "../../admin/admin.service";
 
 @Component({
   selector: 'app-news-card',
@@ -41,10 +42,13 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
   exportVisible = false;
   rightsToEdit = false;
 
+  exportRight$ = this.adminService.isUserEventAdmin().pipe(share());
+
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
               public translationService: TranslationService,
-              private dataService: DataService
+              private dataService: DataService,
+              private adminService: AdminService
   ) {
     super(breakpointObserver, snackBar);
   }
@@ -95,7 +99,7 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
             .pipe(
               switchMap(
                 rightsForTeam => {
-                  return of(user && user.uid === news.creator && rightsForTeam);
+                  return of(user && user.uid === news.creator || rightsForTeam);
                 }
               )
             );
