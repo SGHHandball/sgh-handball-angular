@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {
   TC_BACK,
-  TC_GENERAL_REQUIRED_ERROR, TC_HALLS_ADD_NEW_HALL_SUCCESS,
+  TC_GENERAL_REQUIRED_ERROR,
   TC_HALLS_CITY,
-  TC_HALLS_EDIT_HALL, TC_HALLS_EDIT_HALL_FAIL, TC_HALLS_EDIT_HALL_SUCCESS,
+  TC_HALLS_EDIT_HALL,
   TC_HALLS_HALL_ID,
   TC_HALLS_NAME, TC_HALLS_POST_CODE,
   TC_HALLS_STREET,
@@ -11,8 +11,7 @@ import {
   TranslationService
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
-import {HallsService} from "../halls.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Hall} from "../hall";
 
 @Component({
@@ -20,7 +19,7 @@ import {Hall} from "../hall";
   templateUrl: './halls-edit-dialog.component.html',
   styleUrls: ['./halls-edit-dialog.component.css']
 })
-export class HallsEditDialogComponent {
+export class HallsEditDialogComponent implements OnInit {
 
   editHallHeader = TC_HALLS_EDIT_HALL;
 
@@ -55,22 +54,28 @@ export class HallsEditDialogComponent {
     Validators.required
   ]);
 
-  hall: Hall = new Hall();
+  hall: Hall = {
+    name: '',
+    street: '',
+    city: '',
+  };
   existing: boolean = false;
 
   constructor(public translationService: TranslationService,
-              private hallService: HallsService,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<HallsEditDialogComponent>) {
-    if (data) {
-      this.hall = data;
+  }
+
+  ngOnInit(): void {
+    if (this.data) {
+      this.hall = this.data;
       this.existing = true;
     }
-    this.hallIdFormControl.setValue(this.hall.hallId);
+    this.hallIdFormControl.setValue(this.hall.hallId ? this.hall.hallId : undefined);
     this.hallNameFormControl.setValue(this.hall.name);
     this.hallStreetFormControl.setValue(this.hall.street);
     this.hallCityFormControl.setValue(this.hall.city);
-    this.postalCodeControl.setValue(this.hall.postCode);
+    this.postalCodeControl.setValue(this.hall.postCode ? this.hall.postCode : undefined);
   }
 
 

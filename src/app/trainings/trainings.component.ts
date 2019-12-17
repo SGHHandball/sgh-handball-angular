@@ -20,7 +20,6 @@ import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-ed
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
-import {HallsService} from "../halls/halls.service";
 
 @Component({
   selector: 'app-trainings',
@@ -39,7 +38,6 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
   constructor(public breakpointObserver: BreakpointObserver,
               private trainingsService: TrainingsService,
               public translationService: TranslationService,
-              public hallsService: HallsService,
               private dialog: MatDialog,
               public adminService: AdminService,
               snackBar: MatSnackBar) {
@@ -99,11 +97,12 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
 
   getTrainingDateAsString(date: TrainingDate): string {
     let hallString = '';
-    this.hallsService.halls.forEach(hall => {
+    // TODO: Add this
+   /* this.hallsService.halls.forEach(hall => {
       if (hall.id === date.hallId) {
         hallString = hall.name;
       }
-    });
+    });*/
     return date.day + ' ' + date.time + '/ ' + hallString;
   }
 

@@ -17,7 +17,8 @@ import {ImageProgress} from "../model/image-progress";
 import {SghUser} from "../admin/sgh-user";
 import {AngularFireFunctions} from "@angular/fire/functions";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
-import {FB_FUNCTIONS_ADD_USER, SGH_USERS} from "../constants";
+import {DB_COLLECTION_HALLS, FB_FUNCTIONS_ADD_USER, SGH_USERS} from "../constants";
+import {Hall} from "../halls/hall";
 
 @Injectable({
   providedIn: 'root'
@@ -501,5 +502,59 @@ export class FireApiService {
     return this.afStorage.ref(path).delete();
   }
 
+  //HALLS
+
+  getAllHalls(): Observable<Hall[]> {
+    return this.db
+      .collection<Hall>(DB_COLLECTION_HALLS)
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Hall;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      );
+  }
+
+  addHall(hall: Hall): Observable<string> {
+    return from(this.db
+      .collection<Hall>(DB_COLLECTION_HALLS)
+      .add(JSON.parse(JSON.stringify(hall))))
+      .pipe(
+        switchMap(
+          response => {
+            return of(response.id);
+          }
+        )
+      )
+  }
+
+  changeHall(hall: Hall): Observable<void> {
+    return from(this.db.collection<Hall>(DB_COLLECTION_HALLS)
+      .doc(hall.id)
+      .update(
+        {
+          hallId: hall.hallId,
+          name: hall.name,
+          street: hall.street,
+          postCode: hall.postCode,
+          city: hall.city,
+        }
+      )
+    )
+  }
+
+  deleteHall(hall: Hall): Observable<void> {
+    return from(
+      this.db
+        .collection<Hall>(DB_COLLECTION_HALLS)
+        .doc(hall.id)
+        .delete()
+    );
+  }
 
 }

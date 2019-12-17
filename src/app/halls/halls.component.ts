@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
 import {Hall} from "./hall";
-import {HallsService} from "./halls.service";
 import {
   TC_FILTER,
   TC_HALLS_CITY,
@@ -24,13 +23,16 @@ import {HallsEditDialogComponent} from "./halls-edit-dialog/halls-edit-dialog.co
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
+import {of, Subject} from "rxjs";
+import {DataService} from "../common/data.service";
+import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-halls',
   templateUrl: './halls.component.html',
   styleUrls: ['./halls.component.css']
 })
-export class HallsComponent extends AbstractComponent implements OnInit {
+export class HallsComponent extends AbstractComponent implements OnInit, OnDestroy {
 
   editConst = 'edit';
   deleteConst = 'delete';
@@ -43,28 +45,36 @@ export class HallsComponent extends AbstractComponent implements OnInit {
 
   filterTC = TC_FILTER;
 
+  destroy$ = new Subject();
+
+  hallAdmin = this.adminService.isUserHallAdmin().pipe(share());
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(public breakpointObserver: BreakpointObserver,
-              private hallsService: HallsService,
               public translationService: TranslationService,
               private dialog: MatDialog,
               public adminService: AdminService,
+              private dataService: DataService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
 
   ngOnInit() {
-    this.hallsService.loadAllHalls().then(() => {
-      this.reloadData();
-    });
+    this.initHalls();
   }
 
-  reloadData() {
-    this.dataSource = new MatTableDataSource(this.hallsService.halls);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  initHalls() {
+    this.dataService.getAllHalls()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(halls => {
+        this.dataSource = new MatTableDataSource(halls);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      })
   }
 
   applyFilter(filterValue: string) {
@@ -76,49 +86,83 @@ export class HallsComponent extends AbstractComponent implements OnInit {
   }
 
   openHallsEditDialog(hall: Hall | undefined) {
-    if (this.adminService.isUserHallAdmin()) {
-      const dialogRef = this.dialog.open(HallsEditDialogComponent, {
+    this.dialog
+      .open(
+        HallsEditDialogComponent, {
           width: this.dialogWidth,
           data: hall
         }
-      );
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.hallsService.changeHall(result.hall, result.existing)
-            .then((success) => {
-              if (success) {
-                this.openSnackBar(this.translationService.get(result.existing ? TC_HALLS_EDIT_HALL_SUCCESS : TC_HALLS_ADD_NEW_HALL_SUCCESS));
-                this.reloadData();
+      )
+      .afterClosed()
+      .pipe(
+        switchMap(
+          result => {
+            if (result) {
+              if (result.existing) {
+                return this.dataService.addHall(result.hall);
               } else {
-                this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL))
+                return this.dataService.changeHall(result.hall);
               }
-            })
-            .catch(() => this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL)))
+            }
+            return of(false)
+          }
+        ),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
+        })
+      )
+      .subscribe(
+        success => {
+          if (success) {
+            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
+          } else {
+            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL))
+          }
         }
-      });
-    }
+      );
   }
 
   deleteHall(hall: Hall) {
-    if (this.adminService.isUserHallAdmin()) {
-      const dialogRef = this.dialog.open(DefaultDialogComponent, {
+    this.dialog
+      .open(
+        DefaultDialogComponent, {
           width: this.dialogWidth,
           data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
         }
-      );
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.hallsService.deleteHall(hall).then(() => {
+      )
+      .afterClosed()
+      .pipe(
+        switchMap(
+          result => {
+            if (result) {
+              return this.dataService.deleteHall(hall);
+            }
+            return of(false)
+          }
+        ),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
+        })
+      )
+      .subscribe(
+        success => {
+          if (success) {
             this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
-            this.reloadData();
-          }).catch(error => {
-            if (!environment.production) console.log(error);
+          } else {
             this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))
-          });
+          }
         }
-      });
+      );
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
     }
   }
 }

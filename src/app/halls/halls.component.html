@@ -6,9 +6,9 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container *ngFor="let hallValue of
-    !(isHandset$|async) ? ((adminService.isUserHallAdmin()|async)
+    !(isHandset$|async) ? ((hallAdmin|async)
     ? displayedColumnsAdmin :displayedColumns) :
-    ((adminService.isUserHallAdmin()|async) ? displayedColumnsMobileAdmin : displayedColumnsMobile)"
+    ((hallAdmin|async) ? displayedColumnsMobileAdmin : displayedColumnsMobile)"
                   matColumnDef="{{hallValue}}">
       <ng-container *ngIf="hallValue === editConst">
         <th mat-header-cell *matHeaderCellDef></th>
@@ -34,19 +34,19 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="
-    !(isHandset$|async) ? ((adminService.isUserHallAdmin()|async)
+    !(isHandset$|async) ? ((hallAdmin|async)
     ? displayedColumnsAdmin :displayedColumns) :
-    ((adminService.isUserHallAdmin()|async) ? displayedColumnsMobileAdmin : displayedColumnsMobile)"></tr>
+    ((hallAdmin|async) ? displayedColumnsMobileAdmin : displayedColumnsMobile)"></tr>
     <tr mat-row *matRowDef="let row; columns:
-    !(isHandset$|async) ? ((adminService.isUserHallAdmin()|async)
+    !(isHandset$|async) ? ((hallAdmin|async)
     ? displayedColumnsAdmin :displayedColumns) :
-    ((adminService.isUserHallAdmin()|async)? displayedColumnsMobileAdmin : displayedColumnsMobile)">
+    ((hallAdmin|async)? displayedColumnsMobileAdmin : displayedColumnsMobile)">
     </tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
 
-<app-add-btn *ngIf="(adminService.isUserHallAdmin()|async)"
+<app-add-btn *ngIf="(hallAdmin|async)"
              (clickListener)="openHallsEditDialog(undefined)"
 ></app-add-btn>

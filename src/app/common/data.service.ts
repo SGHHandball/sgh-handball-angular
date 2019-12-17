@@ -10,6 +10,7 @@ import {ImageProgress} from "../model/image-progress";
 import {User} from "firebase";
 import {SghUser} from "../admin/sgh-user";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
+import {Hall} from "../halls/hall";
 
 @Injectable({
   providedIn: 'root'
@@ -135,5 +136,21 @@ export class DataService {
 
   changeOrderOfTeams(teams: Team[]): Observable<void> {
     return this.service.changeOrderOfTeams(teams);
+  }
+
+  getAllHalls(): Observable<Hall[]> {
+    return this.service.getAllHalls();
+  }
+
+  addHall(hall: Hall): Observable<string> {
+    return this.service.addHall(hall);
+  }
+
+  changeHall(hall: Hall): Observable<void> {
+    return this.service.changeHall(hall);
+  }
+
+  deleteHall(hall: Hall): Observable<void> {
+    return this.service.deleteHall(hall);
   }
 }
