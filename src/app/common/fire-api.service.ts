@@ -41,9 +41,9 @@ export class FireApiService {
     return this.afAuth.user;
   }
 
-  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<boolean> {
-    return this.afFunctions.httpsCallable(FB_FUNCTIONS_ADD_USER)
-      .apply(JSON.parse(JSON.stringify(credentials)))
+  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<void> {
+    const addUserFunction = this.afFunctions.httpsCallable(FB_FUNCTIONS_ADD_USER);
+    return addUserFunction(JSON.parse(JSON.stringify(credentials)))
       .pipe(
         switchMap((uid: string) => {
           return from(

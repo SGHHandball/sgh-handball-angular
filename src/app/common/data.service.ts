@@ -25,7 +25,7 @@ export class DataService {
     return this.service.getUser();
   }
 
-  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<boolean> {
+  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<void> {
     return this.service.addNewUser(credentials, prename, lastName)
   }
 

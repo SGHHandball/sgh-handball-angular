@@ -14,25 +14,27 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {Credentials, LoginDialogComponent} from "./login-dialog/login-dialog.component";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {auth, User} from 'firebase/app';
 import {AdminService} from "../../admin/admin.service";
 import {environment} from "../../../environments/environment";
 import {DataService} from "../../common/data.service";
 import {share, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {User} from "firebase";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent extends AbstractComponent implements OnDestroy {
+export class AuthComponent extends AbstractComponent implements OnInit, OnDestroy {
   loginTC = TC_LOGIN;
   logoutTC = TC_LOGOUT;
   usersTC = TC_USERS;
 
   destroy$ = new Subject();
   adminUser = this.adminService.isUserAdmin().pipe(share());
+
+  user: User;
 
   constructor(breakpointObserver: BreakpointObserver,
               private router: Router,
@@ -54,19 +56,26 @@ export class AuthComponent extends AbstractComponent implements OnDestroy {
     this.router.navigate([TC_USERS])
   }
 
-  handleCLick() {
+  ngOnInit(): void {
+  }
+
+  initUser() {
     this.dataService.getUser()
       .pipe(
         takeUntil(this.destroy$)
       )
       .subscribe(user => {
-          if (user) {
-            this.logout();
-          } else {
-            this.openLoginDialog();
-          }
+          this.user = user;
         }
       );
+  }
+
+  handleCLick() {
+    if (this.user) {
+      this.logout();
+    } else {
+      this.openLoginDialog();
+    }
   }
 
   logout() {

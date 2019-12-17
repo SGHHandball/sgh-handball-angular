@@ -72,22 +72,19 @@ export class AdminUserDialogComponent implements OnDestroy {
         password: this.passwordFormControl.value
       },
       this.preNameFormControl.value,
-      this.lastNameFormControl.value)
+      this.lastNameFormControl.value
+    )
       .pipe(
         takeUntil(this.destroy$),
         catchError(err => {
-          this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_ERROR))
+          this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_ERROR));
           return err;
         })
       )
       .subscribe(
-        success => {
-          if (success) {
-            this.dialogRef.close(true);
-            this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_SUCCESS))
-          } else {
-            this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_ERROR))
-          }
+        _ => {
+          this.dialogRef.close(true);
+          this.openSnackBar(this.translationService.get(TC_ADMIN_ADD_NEW_USER_SUCCESS))
         }
       );
   }

@@ -97,7 +97,7 @@ export class AdminService {
     return this.dataService.getAllSghUsers();
   }
 
-  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<boolean> {
+  addNewUser(credentials: Credentials, prename: string, lastName: string): Observable<void> {
     return this.dataService.addNewUser(credentials, prename, lastName);
   }
 
