@@ -1,9 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
-import {Trainer, Training, TrainingDate, TrainingGroup} from "./training";
-import {TrainingsService} from "./trainings.service";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatPaginator, MatSnackBar, MatTableDataSource} from "@angular/material";
+import {Training, TrainingDate, TrainingGroup} from "./training";
 import {
-  TC_FILTER,
   TC_GENERAL_DELETE_HEADER,
   TranslationService,
   TC_GENERAL_DELETE_SUCCESS,
@@ -12,7 +10,8 @@ import {
   TC_TRAININGS_TRAINING_TEAM,
   TC_TRAININGS_TRAINING_DATE,
   TC_TRAININGS_TRAINING_TRAINER,
-  TC_TRAININGS_EDIT_TRAINING_SUCCESS, TC_TRAININGS_ADD_NEW_TRAINING_SUCCESS, TC_TRAININGS_EDIT_TRAINING_FAIL
+  TC_TRAININGS_EDIT_TRAINING_SUCCESS,
+  TC_TRAININGS_EDIT_TRAINING_FAIL,
 } from "../translation.service";
 import {AbstractComponent} from "../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
@@ -20,14 +19,20 @@ import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-ed
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
+import {DataService} from "../common/data.service";
+import {Observable, of, Subject} from "rxjs";
+import {catchError, switchMap, takeUntil} from "rxjs/operators";
+import {TeamService} from "../teams/team.service";
+import {DEFAULT_YEAR} from "../constants";
+import {Team} from "../teams/team";
+import {Hall} from "../halls/hall";
 
 @Component({
   selector: 'app-trainings',
   templateUrl: './trainings.component.html',
   styleUrls: ['./trainings.component.css']
 })
-export class TrainingsComponent extends AbstractComponent implements OnInit {
-
+export class TrainingsComponent extends AbstractComponent implements OnInit, OnDestroy {
 
   displayedColumnsAdmin: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER, 'edit', 'delete'];
   displayedColumns: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER];
@@ -35,97 +40,154 @@ export class TrainingsComponent extends AbstractComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  destroy$ = new Subject();
+
+  teams: Team[];
+  halls: Hall[];
+
   constructor(public breakpointObserver: BreakpointObserver,
-              private trainingsService: TrainingsService,
               public translationService: TranslationService,
               private dialog: MatDialog,
               public adminService: AdminService,
+              private dataService: DataService,
+              public teamService: TeamService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
 
   ngOnInit() {
-    this.trainingsService.trainingsObservable.subscribe(trainings => {
-      this.dataSource = new MatTableDataSource(this.getAllTrainingGroups(trainings));
-      this.dataSource.paginator = this.paginator;
-    });
+    this.initHalls();
+    this.initTeams();
+    this.initTrainings();
+  }
+
+  initTrainings() {
+    this.dataService
+      .getAllTrainings()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(trainings => {
+        this.dataSource = new MatTableDataSource(this.getAllTrainingGroups(trainings));
+        this.dataSource.paginator = this.paginator;
+      })
+  }
+
+  initTeams() {
+    this.dataService
+      .getTeamsBySeason(DEFAULT_YEAR)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(teams => {
+        this.teams = teams;
+      })
+  }
+
+  initHalls() {
+    this.dataService
+      .getAllHalls()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(halls => {
+        this.halls = halls;
+      })
   }
 
 
   getAllTrainingGroups(trainings: Training[]): TrainingGroup[] {
     const trainingGroups: TrainingGroup[] = [];
-    trainings.forEach(training => {
-      let existingGroup: TrainingGroup;
-      trainingGroups.forEach(group => {
-        if (training.team.teamId === group.teamId) {
-          existingGroup = group;
+    trainings.forEach(
+      training => {
+        const existingGroups = trainingGroups.filter(group => training.team.teamId === group.teamId);
+        if (existingGroups.length > 0) {
+          existingGroups[0].trainings.push(training);
+        } else {
+          trainingGroups.push({
+            teamId: training.team.teamId,
+            trainings: [training]
+          })
         }
-      });
-      if (existingGroup) {
-        existingGroup.trainings.push(training);
-      } else {
-        trainingGroups.push(new TrainingGroup(training.team.teamId, [training]))
       }
-    });
+    );
     return trainingGroups;
   }
 
-
   openTrainingsEditDialog(training: Training | undefined) {
-    if (this.adminService.isUserAdmin()) {
-      const dialogRef = this.dialog.open(TrainingsEditDialogComponent, {
+    return this.dialog
+      .open(
+        TrainingsEditDialogComponent, {
           width: this.dialogWidth,
-          data: training
+          data: {training: training, halls: this.halls, teams: this.teams}
+        }
+      )
+      .afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          result => {
+            if (result) {
+              if (result.existing) {
+                return this.dataService.changeTraining(result.training);
+              } else {
+                return this.dataService.addTraining(result.training);
+              }
+            }
+            return of("Cancel")
+          }
+        ),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
+        })
+      )
+      .subscribe(
+        error => {
+          if (!error) this.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_SUCCESS));
         }
       );
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.trainingsService.changeTraining(result.training, result.existing)
-            .then((success) => {
-              if (success) {
-                this.openSnackBar(this.translationService.get(result.existing ? TC_TRAININGS_EDIT_TRAINING_SUCCESS : TC_TRAININGS_ADD_NEW_TRAINING_SUCCESS));
-              } else {
-                this.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_FAIL))
-              }
-            })
-            .catch(() => this.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_FAIL)))
-        }
-      });
-    }
   }
 
   getTrainingDateAsString(date: TrainingDate): string {
-    let hallString = '';
-    // TODO: Add this
-   /* this.hallsService.halls.forEach(hall => {
-      if (hall.id === date.hallId) {
-        hallString = hall.name;
-      }
-    });*/
-    return date.day + ' ' + date.time + '/ ' + hallString;
+    const possibleHalls = this.halls.filter(hall => hall.id === date.hallId);
+    return [date.day, date.time, '/', possibleHalls.length > 0 ? possibleHalls[0].name : ''].join(' ');
   }
 
 
   deleteTraining(training: Training) {
-    //TODO: CHANGE THIS
-    if (this.adminService.isUserAdmin()) {
-      const dialogRef = this.dialog.open(DefaultDialogComponent, {
+    this.dialog
+      .open(
+        DefaultDialogComponent, {
           width: this.dialogWidth,
           data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
         }
-      );
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.trainingsService.deleteTraining(training).then(() => {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
-          }).catch(error => {
-            if (!environment.production) console.log(error);
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL))
-          });
+      )
+      .afterClosed()
+      .pipe(
+        switchMap(
+          result => {
+            if (result) {
+              return this.dataService.deleteTraining(training);
+            }
+            return of("Error")
+          }
+        ),
+        catchError(error => {
+          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          if (!environment.production) console.log(error);
+          return error;
+        })
+      )
+      .subscribe(
+        error => {
+          if (!error) {
+            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+          }
         }
-      });
+      );
+  }
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
     }
   }
 }

@@ -11,6 +11,7 @@ import {User} from "firebase";
 import {SghUser} from "../admin/sgh-user";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {Hall} from "../halls/hall";
+import {Training} from "../trainings/training";
 
 @Injectable({
   providedIn: 'root'
@@ -118,6 +119,10 @@ export class DataService {
     return this.service.getTeamsBySeason(season);
   }
 
+  getTeamById(id: string): Observable<Team> {
+    return this.service.getTeamById(id);
+  }
+
   getTeamsBySeasonAndAge(season: string, teamAge: string): Observable<Team[]> {
     return this.service.getTeamsBySeasonAndAge(season, teamAge);
   }
@@ -152,5 +157,21 @@ export class DataService {
 
   deleteHall(hall: Hall): Observable<void> {
     return this.service.deleteHall(hall);
+  }
+
+  getAllTrainings(): Observable<Training[]> {
+    return this.service.getAllTrainings();
+  }
+
+  addTraining(training: Training): Observable<string> {
+    return this.service.addTraining(training);
+  }
+
+  changeTraining(training: Training): Observable<void> {
+    return this.service.changeTraining(training);
+  }
+
+  deleteTraining(training: Training): Observable<void> {
+    return this.service.deleteTraining(training);
   }
 }

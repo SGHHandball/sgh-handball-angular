@@ -1,4 +1,4 @@
-import {Component, Inject, Optional} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {
   TC_BACK,
   TC_GENERAL_REQUIRED_ERROR,
@@ -14,16 +14,19 @@ import {
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
-import {Training} from "../training";
+import {Trainer, Training, TrainingDate, TrainingsDialogData, TrainingTeam} from "../training";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {Hall} from "../../halls/hall";
+import {Team} from "../../teams/team";
+import {TeamService} from "../../teams/team.service";
 
 @Component({
   selector: 'app-trainings-edit-dialog',
   templateUrl: './trainings-edit-dialog.component.html',
   styleUrls: ['./trainings-edit-dialog.component.css']
 })
-export class TrainingsEditDialogComponent extends AbstractComponent {
+export class TrainingsEditDialogComponent extends AbstractComponent implements OnInit {
 
   editTrainingHeader = TC_TRAININGS_EDIT_TRAINING;
 
@@ -63,19 +66,44 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
   trainerNameFormControl = new FormControl();
   trainerMailFormControl = new FormControl();
 
-  training: Training = new Training();
+  training: Training = {
+    team: {
+      teamId: '',
+      teamVintage: ''
+    },
+    date: {
+      day: '',
+      time: '',
+      hallId: ''
+    },
+    trainer: {
+      name: '',
+      email: '',
+      phoneNumber: '',
+    },
+    editTime: new Date()
+  };
+  halls: Hall[];
+  teams: Team[];
   existing: boolean = false;
 
 
-  constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar,
+  constructor(breakpointObserver: BreakpointObserver,
+              snackBar: MatSnackBar,
+              public teamService: TeamService,
               public translationService: TranslationService,
-              @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: TrainingsDialogData,
               public dialogRef: MatDialogRef<TrainingsEditDialogComponent>) {
     super(breakpointObserver, snackBar);
-    if (data) {
-      this.training = data;
+  }
+
+  ngOnInit(): void {
+    if (this.data.training) {
+      this.training = this.data.training;
       this.existing = true;
     }
+    this.halls = this.data.halls;
+    this.teams = this.data.teams;
 
     this.teamIdFormControl.setValue(this.training.team.teamId);
     this.teamVintageFormControl.setValue(this.training.team.teamVintage);
@@ -85,6 +113,7 @@ export class TrainingsEditDialogComponent extends AbstractComponent {
     this.trainerNameFormControl.setValue(this.training.trainer.name);
     this.trainerMailFormControl.setValue(this.training.trainer.email);
   }
+
 
   saveTraining() {
     this.training.team.teamId = this.teamIdFormControl.value;

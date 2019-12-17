@@ -17,8 +17,9 @@ import {ImageProgress} from "../model/image-progress";
 import {SghUser} from "../admin/sgh-user";
 import {AngularFireFunctions} from "@angular/fire/functions";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
-import {DB_COLLECTION_HALLS, FB_FUNCTIONS_ADD_USER, SGH_USERS} from "../constants";
+import {DB_COLLECTION_HALLS, DB_COLLECTION_TRAININGS, FB_FUNCTIONS_ADD_USER, SGH_USERS} from "../constants";
 import {Hall} from "../halls/hall";
+import {Training} from "../trainings/training";
 
 @Injectable({
   providedIn: 'root'
@@ -363,6 +364,13 @@ export class FireApiService {
       );
   }
 
+  getTeamById(id: string): Observable<Team> {
+    return this.db
+      .collection<Team>(this.DB_COLLECTION_TEAMS)
+      .doc<Team>(id)
+      .valueChanges();
+  }
+
   getTeamsBySeasonAndAge(season: string, teamAge: string): Observable<Team[]> {
     return this.db.collection<Team>(this.DB_COLLECTION_TEAMS,
       ref =>
@@ -555,6 +563,61 @@ export class FireApiService {
         .doc(hall.id)
         .delete()
     );
+  }
+
+  // TRAINING
+
+  getAllTrainings(): Observable<Training[]> {
+    return this.db.collection<Training>(DB_COLLECTION_TRAININGS,
+      ref => ref.orderBy(FireBaseModel.EDIT_TIME, "asc"))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Training;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      )
+  }
+
+  addTraining(training: Training): Observable<string> {
+    return from(
+      this.db
+        .collection<Training>(DB_COLLECTION_TRAININGS)
+        .add(JSON.parse(JSON.stringify(training)))
+    )
+      .pipe(
+        switchMap(result => {
+          return of(result.id)
+        })
+      )
+  }
+
+  changeTraining(training: Training): Observable<void> {
+    return from(
+      this.db
+        .collection<Training>(DB_COLLECTION_TRAININGS)
+        .doc(training.id)
+        .update(
+          {
+            team: training.team,
+            trainer: training.trainer,
+            date: training.date,
+            editTime: new Date()
+          }
+        )
+    );
+  }
+
+  deleteTraining(training: Training): Observable<void> {
+    return from(
+      this.db
+        .collection<Training>(DB_COLLECTION_TRAININGS)
+        .doc(training.id)
+        .delete());
   }
 
 }

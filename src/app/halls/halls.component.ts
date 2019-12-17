@@ -115,11 +115,7 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
       )
       .subscribe(
         error => {
-          if (error) {
-            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL));
-          } else {
-            this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
-          }
+          if (!error) this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
         }
       );
   }
@@ -150,11 +146,7 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
       )
       .subscribe(
         error => {
-          if (error) {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
-          } else {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
-          }
+          if (!error) this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
         }
       );
   }

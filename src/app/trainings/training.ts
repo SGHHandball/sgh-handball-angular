@@ -1,35 +1,38 @@
-export class Training {
-  id: string;
-  team: TrainingTeam = new TrainingTeam();
-  date: TrainingDate = new TrainingDate();
-  trainer: Trainer = new Trainer();
-  editTime: Date = new Date();
+import {Hall} from "../halls/hall";
+import {Team} from "../teams/team";
+
+export interface Training {
+  id?: string;
+  team?: TrainingTeam;
+  date?: TrainingDate;
+  trainer?: Trainer;
+  editTime?: Date;
 }
 
-export class TrainingTeam {
+export interface TrainingTeam {
   teamId: string;
   teamVintage: string;
 }
 
-export class TrainingDate {
+export interface TrainingDate {
   day: string;
   time: string;
   hallId: string;
 }
 
-export class Trainer {
+export interface Trainer {
   name: string;
   email: string;
   phoneNumber: string;
 }
 
-export class TrainingGroup {
+export interface TrainingGroup {
   teamId: string;
   trainings: Training[];
+}
 
-
-  constructor(teamId: string, trainings: Training[]) {
-    this.teamId = teamId;
-    this.trainings = trainings;
-  }
+export interface TrainingsDialogData {
+  training: Training,
+  halls: Hall[],
+  teams: Team[]
 }
