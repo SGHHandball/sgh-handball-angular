@@ -73,14 +73,8 @@
             <div [fxFlex]="!(isHandset$ | async) ? 100 : 70" fxLayoutAlign="center center">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsHomeTeam}}</mat-label>
-                <input [formControl]="homeTeamFormControl" type="text" matInput [matAutocomplete]="autoHomeTeam"
+                <input [formControl]="homeTeamFormControl" type="text" matInput
                        (change)="onChangeValue()">
-                <mat-autocomplete #autoHomeTeam="matAutocomplete">
-                  <mat-option *ngFor="let club of newsService.clubs" [value]="club.name"
-                              (onSelectionChange)="onChangeValue()">
-                    {{club.name}}
-                  </mat-option>
-                </mat-autocomplete>
               </mat-form-field>
             </div>
 
@@ -103,14 +97,8 @@
             <div [fxFlex]="!(isHandset$ | async) ? 66 : 70" fxLayoutAlign="center center">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsEnemyTeam}}</mat-label>
-                <input [formControl]="enemyTeamFormControl" type="text" matInput [matAutocomplete]="autoEnemyTeam"
+                <input [formControl]="enemyTeamFormControl" type="text" matInput
                        (change)="onChangeValue()">
-                <mat-autocomplete #autoEnemyTeam="matAutocomplete">
-                  <mat-option *ngFor="let club of newsService.clubs" [value]="club.name"
-                              (onSelectionChange)="onChangeValue()">
-                    {{club.name}}
-                  </mat-option>
-                </mat-autocomplete>
               </mat-form-field>
             </div>
 

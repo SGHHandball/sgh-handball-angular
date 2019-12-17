@@ -21,7 +21,7 @@ import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/def
 import {environment} from "../../environments/environment";
 import {DataService} from "../common/data.service";
 import {Observable, of, Subject} from "rxjs";
-import {catchError, switchMap, takeUntil} from "rxjs/operators";
+import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
 import {DEFAULT_YEAR} from "../constants";
 import {Team} from "../teams/team";
@@ -44,6 +44,8 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
 
   teams: Team[];
   halls: Hall[];
+
+  trainingsAdmin$ = this.adminService.isUserTrainingsAdmin().pipe(share());
 
   constructor(public breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
