@@ -15,13 +15,13 @@
 
 
   <app-add-btn [matMenu]="newsTypeMenu" [moreIcon]="true"
-               *ngIf="adminService.hasUserAddNewsAccess()|async"></app-add-btn>
+               *ngIf="addNewsAccess|async"></app-add-btn>
   <mat-menu #newsTypeMenu="matMenu">
-    <button mat-menu-item *ngIf="(adminService.isUserEventAdmin()|async) && exportNews.length>0"
+    <button mat-menu-item *ngIf="(eventAdmin|async) && exportNews.length>0"
             (click)="exportNewsToText()"> {{translationService.get(exportTC)}}</button>
-    <button mat-menu-item *ngIf="adminService.isUserEventAdmin() |async"
+    <button mat-menu-item *ngIf="eventAdmin |async"
             (click)="addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
-    <button mat-menu-item *ngIf="adminService.hasUserTeamRights()|async"
+    <button mat-menu-item *ngIf="teamRights|async"
             (click)="addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
   </mat-menu>
 

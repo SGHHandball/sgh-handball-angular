@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AdminService} from "../../admin/admin.service";
 import {TC_DELETE, TC_EDIT, TC_MAKE_VISIBLE, TC_SEND, TranslationService} from "../../translation.service";
+import {share} from "rxjs/operators";
 
 @Component({
   selector: 'app-news-more-menu',
@@ -14,7 +15,10 @@ export class NewsMoreMenuComponent {
   sendTC = TC_SEND;
   makeVisibleTC = TC_MAKE_VISIBLE;
 
-  constructor(public adminService: AdminService, public translationService: TranslationService) {
+  adminUser = this.adminService.isUserAdmin().pipe(share());
+
+  constructor(public adminService: AdminService,
+              public translationService: TranslationService) {
   }
 
   @Input() sendInvisible: boolean;

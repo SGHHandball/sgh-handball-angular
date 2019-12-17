@@ -7,7 +7,7 @@ import {MatDialog, MatSnackBar} from "@angular/material";
 import {AdminService} from "../admin/admin.service";
 import {News, NewsType} from "../news/news";
 import {DataService} from "../common/data.service";
-import {takeUntil} from "rxjs/operators";
+import {share, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-events',
@@ -21,6 +21,9 @@ export class EventsComponent extends AbstractNewsComponent implements OnInit {
   newsTypeEvent = NewsType.NEWS_TYPE_EVENT;
 
   eventNews: News[];
+
+
+  eventsAdmin = this.adminService.isUserEventAdmin().pipe(share());
 
   constructor(breakpointObserver: BreakpointObserver,
               private newsService: NewsService,

@@ -11,7 +11,7 @@ import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {AdminService} from "../admin/admin.service";
 import {exportNewsToText} from "./news-export/news-export";
 import {DataService} from "../common/data.service";
-import {switchMap, takeUntil} from "rxjs/operators";
+import {share, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-news',
@@ -32,6 +32,11 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   exportNews: News[] = [];
 
   possibleFilterValues: string[];
+
+  addNewsAccess = this.adminService.hasUserAddNewsAccess().pipe(share());
+  eventAdmin = this.adminService.isUserEventAdmin().pipe(share());
+  teamRights = this.adminService.hasUserTeamRights().pipe(share());
+
 
   constructor(breakpointObserver: BreakpointObserver,
               translationService: TranslationService,

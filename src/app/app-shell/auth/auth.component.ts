@@ -18,7 +18,7 @@ import {auth, User} from 'firebase/app';
 import {AdminService} from "../../admin/admin.service";
 import {environment} from "../../../environments/environment";
 import {DataService} from "../../common/data.service";
-import {takeUntil} from "rxjs/operators";
+import {share, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 
 @Component({
@@ -32,6 +32,7 @@ export class AuthComponent extends AbstractComponent implements OnDestroy {
   usersTC = TC_USERS;
 
   destroy$ = new Subject();
+  adminUser = this.adminService.isUserAdmin().pipe(share());
 
   constructor(breakpointObserver: BreakpointObserver,
               private router: Router,

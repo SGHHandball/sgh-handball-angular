@@ -22,6 +22,7 @@ import {
 } from "../abstract/default-input-dialog/default-input-dialog.component";
 import {AbstractComponent} from "../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {share} from "rxjs/operators";
 
 @Component({
   selector: 'app-documents',
@@ -36,6 +37,7 @@ export class DocumentsComponent extends AbstractComponent implements OnInit {
   noDocumentsTC = TC_DOCUMENTS_NO_DOCUMENTS;
   documentTC = TC_ROUTE_DOCUMENTS;
 
+  documentsAdmin = this.adminService.isUserDocumentsAdmin().pipe(share());
 
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,

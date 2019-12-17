@@ -10,7 +10,7 @@
   ></app-news-card-list>
 </div>
 
-<app-add-btn [matMenu]="newsTypeMenu" *ngIf="adminService.isUserEventAdmin()|async"></app-add-btn>
+<app-add-btn [matMenu]="newsTypeMenu" *ngIf="eventsAdmin|async"></app-add-btn>
 <mat-menu #newsTypeMenu="matMenu">
   <button mat-menu-item
           (click)="addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>

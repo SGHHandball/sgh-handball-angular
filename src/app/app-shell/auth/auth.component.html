@@ -1,10 +1,10 @@
-<button mat-icon-button  class="auth-container"
+<button mat-icon-button class="auth-container"
         [matMenuTriggerFor]="authMenu">
   <mat-icon>person</mat-icon>
 </button>
 
 <mat-menu #authMenu="matMenu">
-  <button mat-menu-item *ngIf="adminService.isUserAdmin()|async" (click)="routeToAdmin()">
+  <button mat-menu-item *ngIf="adminUser|async" (click)="routeToAdmin()">
     {{translationService.get(usersTC)}}
   </button>
   <button mat-menu-item (click)="handleCLick()">

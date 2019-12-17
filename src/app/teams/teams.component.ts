@@ -28,9 +28,9 @@ import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../common/data.service";
-import {catchError, switchMap, takeUntil} from "rxjs/operators";
+import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
-import {of} from "rxjs";
+import {MonoTypeOperatorFunction, Observable, of} from "rxjs";
 import {DEFAULT_YEAR} from "../constants";
 
 @Component({
@@ -57,8 +57,10 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   currentTeam: Team;
   allTeams: Team[];
 
-
   editTeamsActive = false;
+
+  teamsAdmin = this.adminService.isUserTeamsAdmin().pipe(share());
+  rightsForTeam: Observable<boolean>;
 
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
@@ -103,6 +105,13 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
       .subscribe(teams => {
         if (teams.length > 0) {
           this.currentTeam = teams[0];
+          this.rightsForTeam =
+            this.dataService
+              .hasUserRightsForTeam(
+                this.currentTeam.teamAge,
+                this.currentTeam.teamSeason
+              )
+              .pipe(share());
           this.changeNews();
         }
       });
