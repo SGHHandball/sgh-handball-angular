@@ -3,11 +3,23 @@
   margin: 16px auto;
 }
 
+.full-width {
+   width: 100%;
+ }
+
 .slideshow-container {
   max-width: 800px;
   margin: auto;
 }
 
-.team-header{
+.team-header {
   text-align: center;
+}
+
+.nu-league-img {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  height: 24px;
+  width: 24px;
 }

@@ -399,7 +399,7 @@ export class FireApiService {
               teamAge,
               teamSeason: season,
               imgPaths: [],
-              imgLinks: []
+              imgLinks: [],
             }
           )
         )

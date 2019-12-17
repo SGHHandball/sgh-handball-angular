@@ -58,6 +58,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   allTeams: Team[];
 
   editTeamsActive = false;
+  editTeamLinkActive = false;
 
   teamsAdmin = this.adminService.isUserTeamsAdmin().pipe(share());
   rightsForTeam: Observable<boolean>;
@@ -231,6 +232,10 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
 
   editTeamPage() {
     this.editTeamsActive = !this.editTeamsActive;
+  }
+
+  editTeamLink() {
+    this.editTeamLinkActive = !this.editTeamLinkActive;
   }
 
   onNewsDeleted() {

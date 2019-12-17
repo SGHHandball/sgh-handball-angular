@@ -4,6 +4,7 @@
   <app-teams-detail
     [team]="currentTeam"
     [editTeamsActive]="editTeamsActive"
+    [editTeamLinkActive]="editTeamLinkActive"
   ></app-teams-detail>
 
 
@@ -36,6 +37,7 @@
       <button mat-menu-item
               (click)="dataService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
       <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
+      <button mat-menu-item (click)="editTeamLink()">NuLiga Link ändern</button>
     </ng-container>
     <ng-container *ngIf="(teamsAdmin|async)">
       <button mat-menu-item (click)="deleteTeam()">{{translationService.get(deleteTeamTC)}}</button>

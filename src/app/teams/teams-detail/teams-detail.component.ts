@@ -15,6 +15,7 @@ import {
 } from "../../translation.service";
 import {DataService} from "../../common/data.service";
 import {ɵAnimationRendererFactory} from "@angular/platform-browser/animations";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-teams-detail',
@@ -24,7 +25,8 @@ import {ɵAnimationRendererFactory} from "@angular/platform-browser/animations";
 export class TeamsDetailComponent extends AbstractComponent {
 
   @Input() team: Team;
-  @Input() editTeamsActive:boolean;
+  @Input() editTeamsActive: boolean;
+  @Input() editTeamLinkActive: boolean;
 
   uploadProgress: Observable<number>;
   changedValues = false;
@@ -34,7 +36,7 @@ export class TeamsDetailComponent extends AbstractComponent {
   cancelTC = TC_CANCEL;
   saveTC = TC_SAVE;
 
-
+  linkEditFormControl = new FormControl();
 
   constructor(breakpointObserver: BreakpointObserver,
               snackBar: MatSnackBar,
@@ -101,5 +103,16 @@ export class TeamsDetailComponent extends AbstractComponent {
 
   disableEditMode() {
     this.editTeamsActive = false;
+  }
+
+  disableEditLinkMode() {
+    console.log(this.linkEditFormControl.value);
+    this.team.nuLeagueLink = this.linkEditFormControl.value;
+    this.dataService
+      .updateTeam(this.team)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(_ => {
+        this.editTeamLinkActive = false;
+      })
   }
 }
