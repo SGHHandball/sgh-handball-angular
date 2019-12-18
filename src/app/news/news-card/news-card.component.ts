@@ -19,7 +19,7 @@ import {AdminService} from "../../admin/admin.service";
 @Component({
   selector: 'app-news-card',
   templateUrl: './news-card.component.html',
-  styleUrls: ['./news-card.component.css']
+  styleUrls: ['./news-card.component.scss']
 })
 export class NewsCardComponent extends AbstractComponent implements OnInit {
 
@@ -30,9 +30,8 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
   @Output() sendClickListener = new EventEmitter();
   @Output() checkClickListener = new EventEmitter();
   @Output() exportChangeListener = new EventEmitter<boolean>();
+  @Output() openDetailClickListener = new EventEmitter();
 
-  summaryTC = TC_NEWS_SUMMARY;
-  playersTC = TC_NEWS_PLAYERS;
   exportCheckBoxTC = TC_NEWS_EXPORT_CHECK_BOX;
 
   destroy$ = new Subject();
@@ -70,10 +69,6 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
           this.rightsToEdit = editRights;
         }
       )
-  }
-
-  getDateWithTeamAgeAsString(news: News): string {
-    return getDateWithTeamAgeAsString(news);
   }
 
   getDateAsString(news: News): string {
@@ -119,12 +114,18 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
     }
   }
 
-  getBodyHeaderOfType(type: string): string {
-    switch (type) {
-      case NewsType.NEWS_TYPE_REPORT:
-        return this.translationService.get(TC_NEWS_TYPE_REPORT);
-      default:
-        return this.translationService.get(TC_NEWS_TYPE_DESCRIPTION);
+  getText(news: News): string {
+    return news.summary ?
+      this.getFirst100Characters(news.summary) :
+      news.body ?
+        this.getFirst100Characters(news.body) :
+        '';
+  }
+
+  getFirst100Characters(string: string): string {
+    if (string.length > 100) {
+      return [string.substring(0, 100), "..."].join(" ");
     }
+    return string;
   }
 }

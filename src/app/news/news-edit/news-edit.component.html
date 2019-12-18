@@ -122,7 +122,8 @@
 
           <mat-form-field appearance="outline">
             <mat-label>{{newsTitleTC}}</mat-label>
-            <input [formControl]="titleFormControl" matInput (input)="onChangeValue()">
+            <input [formControl]="titleFormControl" matInput (input)="onChangeValue()" maxlength="100">
+            <mat-hint align="end">{{titleFormControl.value ? titleFormControl.value.length : 0}} / 100</mat-hint>
           </mat-form-field>
         </div>
 

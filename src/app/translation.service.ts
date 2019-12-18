@@ -31,6 +31,7 @@ export const TC_ROUTE_HEADER_OTHER = 'other';
 
 export const TC_ROUTE_HOME = 'home';
 export const TC_ROUTE_NEWS = 'aktuelles';
+export const TC_ROUTE_DETAIL= 'detail';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 
 export const TC_ROUTE_GENERAL_INFORMATION = 'allgemeine-informationen';

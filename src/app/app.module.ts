@@ -59,7 +59,6 @@ import {TeamsComponent} from './teams/teams.component';
 import {HallsComponent} from './halls/halls.component';
 import {SidenavListItemComponent} from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
 import {HallsEditDialogComponent} from './halls/halls-edit-dialog/halls-edit-dialog.component';
-import {NewsFilterComponent} from './news/news-filter/news-filter.component';
 import {AddBtnComponent} from './abstract/add-btn/add-btn.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-change-dialog.component';
@@ -84,6 +83,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { SidenavSubMenuComponent } from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
 import { EmptyComponent } from './empty/empty.component';
 import {NgMatSearchBarModule} from "ng-mat-search-bar";
+import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detail.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +106,6 @@ import {NgMatSearchBarModule} from "ng-mat-search-bar";
     HallsComponent,
     SidenavListItemComponent,
     HallsEditDialogComponent,
-    NewsFilterComponent,
     AddBtnComponent,
     TeamsChangeDialogComponent,
     DefaultInputDialogComponent,
@@ -127,6 +126,7 @@ import {NgMatSearchBarModule} from "ng-mat-search-bar";
     NewsCardComponent,
     SidenavSubMenuComponent,
     EmptyComponent,
+    NewsCardDetailComponent,
   ],
   imports: [
     BrowserModule,

@@ -50,6 +50,9 @@ export class EventsComponent extends AbstractNewsComponent implements OnInit {
         this.newsService.openNewsEdit(news.id);
       })
   }
+  openNewsDetail(news: News) {
+    this.newsService.openNewsDetail(news.id);
+  }
 
   initEvents() {
     this.dataService

@@ -1,60 +1,60 @@
 <mat-card class="dashboard-card">
-  <mat-card-header>
-    <mat-card-title>
-      <span class="card-title"> {{newsCard.title}}</span>
-      <app-news-more-menu
-        *ngIf="editMenuVisible"
-        class="more-button"
-        [sendInvisible]="newsCard.send"
-        [checkedInvisible]="newsCard.checked"
-        (editClickListener)="editClickListener.next()"
-        (deleteClickListener)="deleteClickListener.next()"
-        (sendClickListener)="sendClickListener.next()"
-        (checkClickListener)="checkClickListener.next()"
-      ></app-news-more-menu>
-    </mat-card-title>
-    <mat-card-subtitle *ngIf="newsCard.date || newsCard.teamAge">
-      {{newsCard.teamAge ? getDateWithTeamAgeAsString(newsCard) : getDateAsString(newsCard)}}
-    </mat-card-subtitle>
-    <mat-card-subtitle *ngIf="isNewsCardReport() && (newsCard.homeTeam || newsCard.enemyTeam || newsCard.score)">
-      {{getTeamsWithScoreAsString(newsCard)}}
-    </mat-card-subtitle>
-  </mat-card-header>
 
+  <div fxLayout="column">
 
-  <mat-card-content class="dashboard-card-content">
-    <slideshow [minHeight]="(isHandset$|async)?'250px':'300px'"
-               [showDots]="true"
-               [imageUrls]="newsCard && newsCard.imgLinks.length>0 ? newsCard.imgLinks :['assets/img/SghLogo.png'] "
-               backgroundSize="contain"
-    ></slideshow>
-    <mat-accordion class="card-content">
-      <mat-expansion-panel *ngIf="newsCard.body">
-        <mat-expansion-panel-header>
-          <mat-panel-title> {{getBodyHeaderOfType(newsCard.type)}}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <span>{{newsCard.body}}</span>
-      </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="newsCard.summary">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{translationService.get(summaryTC)}}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <span>{{newsCard.summary}}</span>
-      </mat-expansion-panel>
+    <div fxLayout="column"
+         fxFlex="90"
+         class="card-container"
+         (click)="openDetailClickListener.next()"
+    >
+      <div fxFlex="40">
+        <img
+          class="news-img"
+          [src]="newsCard && newsCard.imgLinks.length>0 ? newsCard.imgLinks[0] :['assets/img/SghLogo.png'] "
+        >
+      </div>
 
-      <mat-expansion-panel *ngIf="newsCard.players">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{translationService.get(playersTC)}}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <span>{{newsCard.players}}</span>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </mat-card-content>
-  <mat-checkbox (change)="exportChangeListener.next($event.checked)" class="export-checkbox"
-                *ngIf="(exportRight$|async)&&exportVisible">
-    {{translationService.get(exportCheckBoxTC)}}
-  </mat-checkbox>
-  <mat-icon class="news-state" *ngIf="newsStateVisible">
-    {{getNewsStateIcon(newsCard)}}
-  </mat-icon>
+      <div fxFlex="50" class="card-content">
+        <span class="card-title">{{newsCard.title}}</span>
+        <p class="card-sub-title"
+           *ngIf="isNewsCardReport() && (newsCard.homeTeam || newsCard.enemyTeam || newsCard.score)">
+          {{getTeamsWithScoreAsString(newsCard)}}
+        </p>
+        <p class="card-sub-title">
+          {{getText(newsCard)}}
+        </p>
+
+        <span class="card-extra-info">{{newsCard.teamAge ? newsCard.teamAge : 'Veranstaltung'}}</span>
+        <span class="card-extra-info">{{getDateAsString(newsCard)}}</span>
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" fxFlex="10" class="card-sub-actions">
+
+      <div fxFlex="50" class="card-export">
+        <mat-checkbox (change)="exportChangeListener.next($event.checked)"
+                      class="export-checkbox"
+                      *ngIf="(exportRight$|async)&&exportVisible">
+          {{translationService.get(exportCheckBoxTC)}}
+        </mat-checkbox>
+      </div>
+
+      <div fxFlex="50" fxLayoutAlign="end center" class="card-more-btn-container">
+        <mat-icon class="news-state" *ngIf="newsStateVisible">
+          {{getNewsStateIcon(newsCard)}}
+        </mat-icon>
+        <app-news-more-menu
+          *ngIf="editMenuVisible"
+          class="more-button"
+          [sendInvisible]="newsCard.send"
+          [checkedInvisible]="newsCard.checked"
+          (editClickListener)="editClickListener.next()"
+          (deleteClickListener)="deleteClickListener.next()"
+          (sendClickListener)="sendClickListener.next()"
+          (checkClickListener)="checkClickListener.next()"
+        ></app-news-more-menu>
+      </div>
+
+    </div>
+  </div>
 </mat-card>

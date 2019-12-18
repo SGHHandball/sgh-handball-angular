@@ -115,4 +115,8 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
     exportNewsToText(this.exportNews);
   }
 
+  openNewsDetail(news: News) {
+    this.newsService.openNewsDetail(news.id);
+  }
+
 }

@@ -5,7 +5,7 @@ import {NewsComponent} from "./news/news.component";
 import {NewsEditComponent} from "./news/news-edit/news-edit.component";
 import {
   TC_NEWS_PATH_EDIT,
-  TC_ROUTE_CDH,
+  TC_ROUTE_CDH, TC_ROUTE_DETAIL,
   TC_ROUTE_DOCUMENTS,
   TC_ROUTE_EVENTS,
   TC_ROUTE_EXECUTIVES,
@@ -30,11 +30,13 @@ import {DocumentsComponent} from "./documents/documents.component";
 import {HomeComponent} from "./home/home.component";
 import {EmptyComponent} from "./empty/empty.component";
 import {SeasonsComponent} from "./seasons/seasons.component";
+import {NewsCardDetailComponent} from "./news/news-card-detail/news-card-detail.component";
 
 export const routes = [
   {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_NEWS, component: NewsComponent},
   {path: [TC_ROUTE_TEAMS, ':season', ':teamAge'].join('/'), component: TeamsComponent},
+  {path: [TC_ROUTE_DETAIL, ':newsId'].join('/'), component: NewsCardDetailComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_EVENTS, component: EventsComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},

@@ -1,33 +1,26 @@
 <h3 class="no-news" *ngIf="!(news && news.length>0)">{{translationService.get(noNewsTC)}}</h3>
 <ng-container *ngIf="news && news.length>0">
-
-
-  <ng-container *ngIf="!(isHandset$ | async)">
-    <div *ngFor="let newsCard of news" class="web-list">
+  <div
+    fxLayout="row wrap"
+    fxLayout.lt-sm="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="space-evenly flex-start"
+  >
+    <div
+      fxFlex="0 1 calc(33.3% - 16px)"
+      fxFlex.lt-md="0 1 calc(50% - 16px)"
+      fxFlex.lt-sm="100%"
+      *ngFor="let newsCard of news"
+    >
       <app-news-card [newsCard]="newsCard"
                      (editClickListener)="editClickListener.next(newsCard)"
                      (deleteClickListener)="deleteClickListener.next(newsCard)"
                      (sendClickListener)="sendClickListener.next(newsCard)"
                      (checkClickListener)="checkClickListener.next(newsCard)"
                      (exportChangeListener)="exportChangeListener.next(newsCard)"
+                     (openDetailClickListener)="openDetailClickListener.next(newsCard)"
       >
       </app-news-card>
     </div>
-
-  </ng-container>
-
-
-  <ng-container *ngIf="(isHandset$ | async)">
-    <ng-container *ngFor="let newsCard of news">
-      <app-news-card [newsCard]="newsCard"
-                     (editClickListener)="editClickListener.next(newsCard)"
-                     (deleteClickListener)="deleteClickListener.next(newsCard)"
-                     (sendClickListener)="sendClickListener.next(newsCard)"
-                     (checkClickListener)="checkClickListener.next(newsCard)"
-                     (exportChangeListener)="exportChangeListener.next(newsCard)"
-      >
-      </app-news-card>
-    </ng-container>
-  </ng-container>
-
+  </div>
 </ng-container>
