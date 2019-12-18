@@ -1,6 +1,6 @@
 <h2 class="team-header" *ngIf="!editTeamLinkActive">
   <a target="_blank" href="{{team.nuLeagueLink}}" *ngIf="team.nuLeagueLink">{{team.teamAge}} - {{team.teamSeason}}</a>
-  <span *ngIf="!team.nuLeagueLink">{{team.teamAge}} - {{team.teamSeason}}</span>
+  <span *ngIf="!team.nuLeagueLink">{{team.teamAge}}: {{team.teamSeason}}</span>
 </h2>
 
 <mat-card class="image-edit-container" *ngIf="editTeamLinkActive">

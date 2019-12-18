@@ -30,7 +30,7 @@ export class ToolbarComponent extends AbstractComponent implements OnInit, OnDes
 
   constructor(public breakpointObserver: BreakpointObserver,
               private router: Router,
-              private newsService: NewsService,
+              public newsService: NewsService,
               snackBar: MatSnackBar) {
     super(breakpointObserver, snackBar);
   }
