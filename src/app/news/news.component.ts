@@ -52,7 +52,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllPossibleFilterValues();
     this.getFilterNews();
-    this.initFilterNews();
   }
 
   addNewNews(newsType: NewsType) {
@@ -63,26 +62,9 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
       })
   }
 
-  initFilterNews() {
-    this.newsService.filterVisible = true;
-    this.destroy$.subscribe(_ => {
-      this.newsService.filterVisible = false;
-    });
-
-    this.newsService.filterChange$
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(filterValue =>
-          this.newsService.getFilterNews([filterValue])
-        )
-      )
-      .subscribe(news => {
-        this.filteredNews = news;
-      });
-  }
 
   getFilterNews() {
-    this.newsService.getFilterNews([this.newsService.filter])
+    this.newsService.getFilterNews([])
       .pipe(
         takeUntil(this.destroy$)
       )

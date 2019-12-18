@@ -51,7 +51,6 @@ export class HomeService {
   }
 
   gotoDetailNews(news: News) {
-    this.newsService.filterChange$.next(news.title);
-    this.router.navigate([TC_ROUTE_NEWS])
+    this.newsService.openNewsDetail(news.id);
   }
 }

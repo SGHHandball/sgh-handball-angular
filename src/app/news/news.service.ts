@@ -19,9 +19,6 @@ import {SghUser} from "../admin/sgh-user";
   providedIn: 'root'
 })
 export class NewsService {
-  filterVisible: boolean;
-  filter: string;
-  filterChange$ = new Subject<string>();
 
   constructor(
     private router: Router,

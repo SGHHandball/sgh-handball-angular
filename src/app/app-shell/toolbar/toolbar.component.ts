@@ -26,8 +26,6 @@ export class ToolbarComponent extends AbstractComponent implements OnInit, OnDes
 
   appNameVisible: boolean = true;
 
-  searchControl = new FormControl();
-
   constructor(public breakpointObserver: BreakpointObserver,
               private router: Router,
               public newsService: NewsService,
@@ -36,28 +34,8 @@ export class ToolbarComponent extends AbstractComponent implements OnInit, OnDes
   }
 
   ngOnInit(): void {
-    this.initSearchControl();
   }
 
-  initSearchControl() {
-    this.newsService.filterChange$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
-        if (value !== this.searchControl.value) {
-          this.searchControl.setValue(value);
-        }
-      });
-    this.searchControl.valueChanges
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(value => {
-        this.setFilterValue(value);
-      });
-  }
-
-  setFilterValue(value: string) {
-    this.newsService.filterChange$.next(value);
-    this.newsService.filter = value;
-  }
 
   goToHome() {
     this.router.navigate(['/']);

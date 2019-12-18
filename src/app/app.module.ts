@@ -82,7 +82,6 @@ import { NewsCardComponent } from './news/news-card/news-card.component';
 import {HttpClientModule} from "@angular/common/http";
 import { SidenavSubMenuComponent } from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
 import { EmptyComponent } from './empty/empty.component';
-import {NgMatSearchBarModule} from "ng-mat-search-bar";
 import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detail.component';
 
 @NgModule({
@@ -171,7 +170,6 @@ import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detai
     MatTreeModule,
     MatCheckboxModule,
     HttpClientModule,
-    NgMatSearchBarModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

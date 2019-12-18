@@ -8,14 +8,6 @@
   <h1 class="toolbar-title"
       (click)="goToHome()">{{(isHandset$|async) ? (appNameVisible ? appNameShort : '') : appName}}</h1>
   <span class="example-spacer"></span>
-  <mat-search-bar
-    [style.display]="newsService.filterVisible ? '':'none'"
-    #search
-    (ngModelChange)="searchControl.value ? search.open():''"
-    (onOpen)="changeVisibilityAppName(false)"
-    (onClose)="changeVisibilityAppName(true)"
-    [formControl]="searchControl"
-  ></mat-search-bar>
   <app-auth></app-auth>
 </mat-toolbar>
 
