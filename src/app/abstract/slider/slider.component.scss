@@ -1,0 +1,22 @@
+.slider-container {
+  position: relative;
+  display: flex;
+
+  img {
+    margin: auto;
+  }
+
+  .text-container {
+    padding: 16px;
+    bottom: 4px;
+    position: absolute;
+    width: calc(100% - 32px);
+    background-color: rgba(0, 0, 0, 0.50);
+
+    span, p {
+      color: white;
+    }
+  }
+}
+
+
