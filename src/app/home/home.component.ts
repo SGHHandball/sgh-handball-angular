@@ -4,10 +4,10 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AbstractComponent} from "../abstract/abstract.component";
 import {HomeService} from "./home.service";
-import {IImage} from "ng-simple-slideshow";
 import {DataService} from "../common/data.service";
 import {Subject} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
+import {SliderImage} from "../model/slider-image";
 
 @Component({
   selector: 'app-home',
@@ -15,8 +15,6 @@ import {map, switchMap, takeUntil} from "rxjs/operators";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent extends AbstractComponent implements OnInit, OnDestroy {
-
-  @ViewChild('slideshow', {static: false}) slideshow: any;
 
   destroy$ = new Subject();
 
@@ -29,7 +27,7 @@ export class HomeComponent extends AbstractComponent implements OnInit, OnDestro
   }
 
   news: News[];
-  images: IImage[] = [];
+  images: SliderImage[] = [];
 
   ngOnInit(): void {
     this.getNews();
@@ -46,10 +44,8 @@ export class HomeComponent extends AbstractComponent implements OnInit, OnDestro
       })
   }
 
-  gotoDetailNews() {
-    let slideIndex = this.slideshow.slideIndex;
-    let news = this.news[slideIndex];
-    this.homeService.gotoDetailNews(news);
+  gotoDetailNews(newsIndex: string) {
+    this.homeService.gotoDetailNews(newsIndex);
   }
 
 

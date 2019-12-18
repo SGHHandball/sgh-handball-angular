@@ -3,10 +3,10 @@ import {Router} from "@angular/router";
 import {TC_ROUTE_NEWS} from "../translation.service";
 import {getDateString, News} from "../news/news";
 import {NewsService} from "../news/news.service";
-import {IImage} from "ng-simple-slideshow";
 import {DataService} from "../common/data.service";
 import {from, Observable, of} from "rxjs";
 import {map, switchMap} from "rxjs/operators";
+import {SliderImage} from "../model/slider-image";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class HomeService {
   }
 
 
-  getImageUrls(news: News[]): IImage[] {
-    const images: IImage[] = [];
+  getImageUrls(news: News[]): SliderImage[] {
+    const images: SliderImage[] = [];
     news.forEach(news => {
       if (news.imgLinks.length > 0) {
         images.push(this.getIImage(news, news.imgLinks[0]))
@@ -32,11 +32,12 @@ export class HomeService {
 
   }
 
-  getIImage(news: News, link: string): IImage {
+  getIImage(news: News, link: string): SliderImage {
     return {
-      url: link,
-      title: news.title,
-      caption: this.getCaption(news)
+      newsId: news.id,
+      img: link,
+      text: this.getCaption(news),
+      alt: news.title
     };
   }
 
@@ -44,13 +45,12 @@ export class HomeService {
   getCaption(news: News): string {
     let caption = "";
     if (news.date) caption += getDateString(news.date) + ': ';
-    if (news.title) caption += news.title;
-    if (news.score) caption += ' ' + news.score;
-    if (news.summary) caption += ' - ' + news.summary;
+    if (news.teamAge) caption += ' ' + news.teamAge;
+    if (news.score) caption += ' - ' + news.score;
     return caption;
   }
 
-  gotoDetailNews(news: News) {
-    this.newsService.openNewsDetail(news.id);
+  gotoDetailNews(newsIndex: string) {
+    this.newsService.openNewsDetail(newsIndex);
   }
 }

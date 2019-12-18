@@ -1,37 +1,35 @@
 <mat-card class="content" [class.web-content]="!(isHandset$|async)">
-  <img mat-card-image src="assets/img/Handballer2019.jpg">
+  <div fxLayout="column">
 
-  <mat-card-content>
-    <div
-      *ngIf="!news"
-    [style.min-height]="(isHandset$|async)?'200px' : '250'"
-    >
-      <mat-spinner [diameter]="30" class="loading-spinner"></mat-spinner>
+    <div class="spinner-container">
+      <mat-spinner *ngIf="!news" [diameter]="30" class="loading-spinner"></mat-spinner>
+      <app-slider
+        class="slideshow"
+        *ngIf="news && news.length>0"
+        [sliderArray]="images.length>0 ? images : []"
+        [height]="(isHandset$|async)?'250px':'500px'"
+        [objectFit]="'cover'"
+        [imageBorderRadius]="'4px 4px 0 0'"
+        (onSlideClickListener)="gotoDetailNews($event)"
+      >
+      </app-slider>
     </div>
-    <slideshow
-      *ngIf="news && news.length>0"
-      #slideshow
-      [minHeight]="(isHandset$|async)?'250px' : '300px'"
-      [imageUrls]="images.length>0 ? images : []"
-      [autoPlay]="true"
-      [showArrows]="false"
-      backgroundSize="contain"
-      (click)="gotoDetailNews()"
-      class="slideshow"
-    ></slideshow>
 
-    <!--TODO: Make this editable -->
-    <h2>Handball in Hainhausen</h2>
-    <p>Seit fast 100 Jahren wird in Hainhausen Handball gespielt. Bereits im Jahr 1923 fanden sich einige junge Männer
-      in der Turngemeinde zusammen, um gemeinsam diesen Sport zu betreiben.</p>
-    <p>Der Schwerpunkt unserer Abteilung liegt in der Förderung des Kinder - und Jugendsports. Wie jeder bei den Spielen
-      der Weltmeitsterschaft 2019 in Dänemark und Deutschland sehen konnte, wird Teamgeist und Fairness im Handball auf
-      allen Ebenen groß geschrieben.</p>
-    <p>Interessenten an dieser tollen Sportart können bei unseren Heimspielen in der Hainhäuser Sporthalle zuschauen -
-      und wer gerne Handball spielen will - ob Anfänger oder erfahrener Spieler - kommt einfach mal beim Training
-      vorbeit oder schickt eine Mail an <a href="mailto:handball@sg-hainhausen.de">handball@sg-hainhausen.de</a>.</p>
-
-  </mat-card-content>
+    <div class="static-content">
+      <!--TODO: Make this editable -->
+      <h2>Handball in Hainhausen</h2>
+      <p>Seit fast 100 Jahren wird in Hainhausen Handball gespielt. Bereits im Jahr 1923 fanden sich einige junge Männer
+        in der Turngemeinde zusammen, um gemeinsam diesen Sport zu betreiben.</p>
+      <p>Der Schwerpunkt unserer Abteilung liegt in der Förderung des Kinder - und Jugendsports. Wie jeder bei den
+        Spielen
+        der Weltmeitsterschaft 2019 in Dänemark und Deutschland sehen konnte, wird Teamgeist und Fairness im Handball
+        auf
+        allen Ebenen groß geschrieben.</p>
+      <p>Interessenten an dieser tollen Sportart können bei unseren Heimspielen in der Hainhäuser Sporthalle zuschauen -
+        und wer gerne Handball spielen will - ob Anfänger oder erfahrener Spieler - kommt einfach mal beim Training
+        vorbeit oder schickt eine Mail an <a href="mailto:handball@sg-hainhausen.de">handball@sg-hainhausen.de</a>.</p>
+    </div>
+  </div>
 </mat-card>
 
 

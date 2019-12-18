@@ -1,5 +1,6 @@
 .content {
   margin: 16px;
+  padding: 0;
 }
 
 .web-content {
@@ -16,5 +17,9 @@
 }
 
 .spinner-container {
-  min-height: 300px;
 }
+
+.static-content {
+  padding: 0 16px 16px 16px;
+}
+

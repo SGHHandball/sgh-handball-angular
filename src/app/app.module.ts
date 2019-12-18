@@ -35,7 +35,7 @@ import {
   MatSnackBarModule,
   MatDividerModule,
   MatChipsModule,
-  MatTabsModule, MatTooltipModule, MatTreeModule, MatCheckboxModule
+  MatTabsModule, MatTooltipModule, MatTreeModule, MatCheckboxModule, MatProgressBarModule
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
@@ -66,7 +66,6 @@ import {DefaultInputDialogComponent} from './abstract/default-input-dialog/defau
 import {TeamsDetailComponent} from './teams/teams-detail/teams-detail.component';
 import {NewsCardListComponent} from './news/news-card-list/news-card-list.component';
 import {AngularFireStorageModule} from "@angular/fire/storage";
-import {SlideshowModule} from "ng-simple-slideshow";
 import {ImageUploadComponent} from './abstract/image-upload/image-upload.component';
 import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-delete-dialog.component";
 import {ImageUploadManagerComponent} from './abstract/image-upload-manager/image-upload-manager.component';
@@ -83,6 +82,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { SidenavSubMenuComponent } from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
 import { EmptyComponent } from './empty/empty.component';
 import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detail.component';
+import {SliderComponent} from "./abstract/slider/slider.component";
 
 @NgModule({
   declarations: [
@@ -126,6 +126,7 @@ import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detai
     SidenavSubMenuComponent,
     EmptyComponent,
     NewsCardDetailComponent,
+    SliderComponent
   ],
   imports: [
     BrowserModule,
@@ -165,11 +166,11 @@ import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detai
     MatChipsModule,
     MatTabsModule,
     DragDropModule,
-    SlideshowModule,
     MatTooltipModule,
     MatTreeModule,
     MatCheckboxModule,
     HttpClientModule,
+    MatProgressBarModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

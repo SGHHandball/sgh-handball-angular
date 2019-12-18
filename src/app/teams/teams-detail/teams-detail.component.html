@@ -32,10 +32,14 @@
 
 <div class="slideshow-container"
      *ngIf="!editTeamsActive">
-  <slideshow [minHeight]="(isHandset$|async)?'250px' : '400px'"
-             [showDots]="true"
-             [imageUrls]="team.imgLinks"
-             backgroundSize="contain"
-             *ngIf="team.imgLinks && team.imgLinks.length>0"
-  ></slideshow>
+  <app-slider
+    class="slideshow"
+    *ngIf="team.imgLinks && team.imgLinks.length>0"
+    [sliderArray]="getSlideArrayByImageLinks(team.imgLinks)"
+    [height]="(isHandset$|async)?'250px':'400px'"
+    [width]="''"
+    [objectFit]="'contains'"
+    [imageBorderRadius]="'4px'"
+  >
+  </app-slider>
 </div>
