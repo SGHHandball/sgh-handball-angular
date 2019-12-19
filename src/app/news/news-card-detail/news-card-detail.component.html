@@ -1,3 +1,68 @@
-<p>
-  news-card-detail works!
-</p>
+<mat-card
+  *ngIf="news"
+  class="card-detail-container"
+  [style.margin]="(isHandset$|async) ? '16px':'16px auto'"
+>
+
+  <button mat-icon-button color="warn" class="cancel-btn" (click)="closeNews()">
+    <mat-icon>clear</mat-icon>
+  </button>
+
+  <mat-card-title class="title" *ngIf="news.title">
+    {{news.title}}
+  </mat-card-title>
+  <mat-card-subtitle *ngIf="news.type === reportType">
+    <p *ngIf="news.teamAge || news.date">{{getDateWithTeamAgeAsString(news)}}</p>
+    <p *ngIf="news.homeTeam || news.enemyTeam || news.score">{{getTeamsWithScoreAsString(news)}}</p>
+  </mat-card-subtitle>
+  <mat-card-subtitle *ngIf="news.type !== reportType">
+    <p *ngIf=" news.date">{{getDateString(news)}}</p>
+  </mat-card-subtitle>
+
+
+  <p *ngIf="news.body">{{news.body}}</p>
+  <mat-divider></mat-divider>
+  <div *ngIf="news.summary">
+    <p class="label">Zusammenfassung:</p>
+    <p>{{news.summary}}</p>
+    <mat-divider></mat-divider>
+  </div>
+  <div *ngIf="news.players">
+    <p class="label">Es spielten:</p>
+    <p>{{news.players}}</p>
+    <mat-divider></mat-divider>
+  </div>
+
+  <div fxLayout="row"
+       class="img-container"
+       *ngIf="news.imgLinks && news.imgLinks.length>0"
+  >
+    <div fxFlex="10" class="arrow-container">
+      <button mat-icon-button (click)="lastSlide()" *ngIf="news.imgLinks.length>1">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+    </div>
+    <div fxFlex="80"
+         class="slideshow">
+      <app-slider
+        (click)="openImage(news.imgLinks[sliderService.currentIndex])"
+        #slider
+        [sliderArray]="sliderService.getSlideArrayByImageLinks(news.imgLinks)"
+        [objectFit]="'contains'"
+        [imageBorderRadius]="'4px'"
+        [autoPlay]="false"
+      >
+      </app-slider>
+    </div>
+    <div fxFlex="10" class="arrow-container">
+      <button mat-icon-button (click)="nextSlide()" *ngIf="news.imgLinks.length>1">
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="index-container"
+       *ngIf="news.imgLinks && news.imgLinks.length>0"
+  >
+    <span>{{getSliderIndex()}}</span>
+  </div>
+</mat-card>

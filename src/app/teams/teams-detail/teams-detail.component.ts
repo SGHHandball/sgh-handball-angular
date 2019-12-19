@@ -17,6 +17,7 @@ import {DataService} from "../../common/data.service";
 import {ɵAnimationRendererFactory} from "@angular/platform-browser/animations";
 import {FormControl} from "@angular/forms";
 import {SliderImage} from "../../model/slider-image";
+import {SliderService} from "../../abstract/slider/slider.service";
 
 @Component({
   selector: 'app-teams-detail',
@@ -43,17 +44,10 @@ export class TeamsDetailComponent extends AbstractComponent {
               snackBar: MatSnackBar,
               private dialog: MatDialog,
               private dataService: DataService,
-              public translationService: TranslationService) {
+              public translationService: TranslationService,
+              public sliderService:SliderService
+  ) {
     super(breakpointObserver, snackBar);
-  }
-
-  getSlideArrayByImageLinks(links: string[]): SliderImage[] {
-    return links.map(link => {
-        return {
-          img: link
-        }
-      }
-    )
   }
 
 

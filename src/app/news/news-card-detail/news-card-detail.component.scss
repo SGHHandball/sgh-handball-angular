@@ -1,0 +1,50 @@
+.card-detail-container {
+  max-width: 600px;
+
+  .cancel-btn {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    margin: -16px;
+  }
+
+  .title {
+    margin-right: 24px;
+  }
+
+  mat-divider {
+    position: relative;
+  }
+
+  .label {
+    font-size: 18px;
+  }
+
+  .img-container {
+    margin-top: 8px;
+
+    .slideshow {
+      :hover {
+        cursor: pointer;
+      }
+    }
+
+    .arrow-container {
+      display: flex;
+
+      button {
+        margin: auto;
+      }
+    }
+
+  }
+
+  .index-container {
+    display: flex;
+    margin: 8px;
+
+    span {
+      margin: auto;
+    }
+  }
+}

@@ -1,17 +1,17 @@
-<div class="slider-container" (click)="onSlideClickListener.next(sliderArray[currentIndex].newsId)">
+<div class="slider-container" (click)="onSlideClickListener.next(sliderArray[sliderService.currentIndex].newsId)">
   <img
     [style.object-fit]="objectFit"
     [style.height]="height"
     [style.width]="width"
     [style.border-radius]="imageBorderRadius"
-    src="{{sliderArray[currentIndex].img}}"
-    alt="{{sliderArray[currentIndex].alt}}"
+    src="{{sliderArray[sliderService.currentIndex].img}}"
+    alt="{{sliderArray[sliderService.currentIndex].alt}}"
   >
   <div
     class="text-container"
-    *ngIf="sliderArray[currentIndex].text"
+    *ngIf="sliderArray[sliderService.currentIndex].text"
   >
-    <p>{{sliderArray[currentIndex].alt}}</p>
-    <span>{{sliderArray[currentIndex].text}}</span>
+    <p>{{sliderArray[sliderService.currentIndex].alt}}</p>
+    <span>{{sliderArray[sliderService.currentIndex].text}}</span>
   </div>
 </div>

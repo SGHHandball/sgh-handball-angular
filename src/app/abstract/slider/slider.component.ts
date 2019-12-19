@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsula
 import {SliderImage} from "../../model/slider-image";
 import {interval, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {SliderService} from "./slider.service";
 
 @Component({
   selector: 'app-slider',
@@ -22,10 +23,13 @@ export class SliderComponent implements OnInit, OnDestroy {
 
   @Output() onSlideClickListener = new EventEmitter<string>();
 
-  currentIndex = 0;
+  constructor(public sliderService: SliderService) {
+
+  }
 
   ngOnInit(): void {
     if (this.autoPlay) this.initAutoPlay();
+    this.sliderService.currentIndex = 0;
   }
 
   initAutoPlay() {
@@ -42,20 +46,20 @@ export class SliderComponent implements OnInit, OnDestroy {
 
   increaseIndex() {
     if (this.sliderArray) {
-      if (this.sliderArray.length - 1 == this.currentIndex) {
-        this.currentIndex = 0;
+      if (this.sliderArray.length - 1 == this.sliderService.currentIndex) {
+        this.sliderService.currentIndex = 0;
       } else {
-        this.currentIndex++;
+        this.sliderService.currentIndex++;
       }
     }
   }
 
   decreaseIndex() {
     if (this.sliderArray) {
-      if (0 == this.currentIndex) {
-        this.currentIndex = this.sliderArray.length - 1;
+      if (0 == this.sliderService.currentIndex) {
+        this.sliderService.currentIndex = this.sliderArray.length - 1;
       } else {
-        this.currentIndex--;
+        this.sliderService.currentIndex--;
       }
     }
   }
