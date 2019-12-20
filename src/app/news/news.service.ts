@@ -1,18 +1,21 @@
 import {Injectable} from '@angular/core';
-import {News, NEWS_TEAM_YOUTH_AGES} from "./news";
+import {News, NEWS_TEAM_YOUTH_AGES, NewsType} from "./news";
 import {Router} from "@angular/router";
 import {
-  TC_NEWS_GENDER_M, TC_NEWS_GENDER_W,
+  TC_NEWS_GENDER_M,
+  TC_NEWS_GENDER_W,
+  TC_NEWS_TEAM_MEN,
+  TC_NEWS_TEAM_WOMEN,
+  TC_NEWS_TEAM_YOUTH,
   TC_PATH_EDIT,
-  TC_NEWS_TEAM_MEN, TC_NEWS_TEAM_WOMEN, TC_NEWS_TEAM_YOUTH, TC_ROUTE_DETAIL, TC_ROUTE_NEWS,
+  TC_ROUTE_DETAIL,
   TranslationService
 } from "../translation.service";
 import {Club,} from "../clubs/club";
-import {Observable, of, Subject} from "rxjs";
-import {map, switchMap, takeUntil} from "rxjs/operators";
+import {Observable, of} from "rxjs";
+import {map, switchMap} from "rxjs/operators";
 import {DataService} from "../common/data.service";
 import {Location} from '@angular/common';
-import {AdminService} from "../admin/admin.service";
 import {SghUser} from "../admin/sgh-user";
 
 @Injectable({
@@ -29,6 +32,7 @@ export class NewsService {
   }
 
   isNewsVisibleForUser(sghUser: SghUser, news: News): boolean {
+    if (news.type === NewsType.NEWS_TYPE_EVENT) return true;
     if (news.checked) return true;
     else if (!sghUser) return false;
     return news.creator === sghUser.id ||

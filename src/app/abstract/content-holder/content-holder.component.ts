@@ -82,8 +82,8 @@ export class ContentHolderComponent extends AbstractComponent implements OnInit,
         .addContent(contentTopic,
           {
             contentText: content,
-            imgLinks: this.content.imgLinks ? this.content.imgLinks : [],
-            imgPaths: this.content.imgPaths ? this.content.imgPaths : []
+            imgLinks: this.content && this.content.imgLinks ? this.content.imgLinks : [],
+            imgPaths: this.content && this.content.imgPaths ? this.content.imgPaths : []
           }
         )
         .pipe(
