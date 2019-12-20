@@ -11,12 +11,13 @@ import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {AdminService} from "../admin/admin.service";
 import {exportNewsToText} from "./news-export/news-export";
 import {DataService} from "../common/data.service";
-import {share, switchMap, takeUntil} from "rxjs/operators";
+import {first, last, share, switchMap, takeUntil} from "rxjs/operators";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+  styleUrls: ['./news.component.css'],
 })
 export class NewsComponent extends AbstractNewsComponent implements OnInit {
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
@@ -37,7 +38,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   eventAdmin = this.adminService.isUserEventAdmin().pipe(share());
   teamRights = this.adminService.hasUserTeamRights().pipe(share());
 
-
   constructor(breakpointObserver: BreakpointObserver,
               translationService: TranslationService,
               dialog: MatDialog,
@@ -52,6 +52,24 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllPossibleFilterValues();
     this.getFilterNews();
+    this.getNews();
+  }
+
+  lastItem: any;
+  finished = true;
+
+  getNews() {
+    console.log("getNews");
+    this.dataService.getNewsWithInfinite(this.lastItem)
+      .pipe(
+        first()
+      )
+      .subscribe(news => {
+        console.log(news);
+          this.lastItem = news.lastItem;
+          if (!news.lastItem || news.news.length == 0) this.finished = true;
+        }
+      );
   }
 
   addNewNews(newsType: NewsType) {

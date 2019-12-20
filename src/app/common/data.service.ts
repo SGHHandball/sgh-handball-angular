@@ -19,6 +19,7 @@ import {IImage} from "ng2-image-compress";
 import {environment} from "../../environments/environment";
 import {Sponsor} from "../model/sponsor";
 import {map, switchMap} from "rxjs/operators";
+import {InfiniteNews} from "../model/infinite-news";
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,11 @@ export class DataService {
 
   getAllNews(newsType?: NewsType): Observable<News[]> {
     return this.service.getAllNews(newsType);
+  }
+
+
+  getNewsWithInfinite(lastDoc?): Observable<InfiniteNews> {
+    return this.service.getNewsWithInfinite(lastDoc);
   }
 
   getNewsById(id: string): Observable<News> {

@@ -32,6 +32,7 @@ import {Season} from "../seasons/season";
 import {Content} from "../model/content";
 import {IImage} from "ng2-image-compress";
 import {Sponsor} from "../model/sponsor";
+import {InfiniteNews} from "../model/infinite-news";
 
 @Injectable({
   providedIn: 'root'
@@ -172,6 +173,30 @@ export class FireApiService {
       )
   }
 
+  getNewsWithInfinite(lastDoc?: any): Observable<InfiniteNews> {
+    return this.db.collection<News>(
+      DB_COLLECTION_NEWS,
+      ref => {
+        let query: CollectionReference | Query = ref;
+        query = query.orderBy(FireBaseModel.DATE, 'desc');
+        if (lastDoc) query = query.startAfter(lastDoc);
+        query = query.limit(5);
+        return query;
+      }
+    ).get()
+      .pipe(
+        switchMap(snap => {
+          var lastVisible = snap.docs[snap.docs.length - 1];
+          const news = snap.docs.map(doc => doc.data() as News);
+          const infiniteNews: InfiniteNews = {
+            news: news,
+            lastItem: lastVisible
+          };
+          return of(infiniteNews);
+        })
+      );
+  }
+
 
   getNewsById(id: string): Observable<News> {
     return this.db
@@ -259,6 +284,7 @@ export class FireApiService {
               creator: user.uid,
               teamAge: newsTeam ? newsTeam.teamAge : undefined,
               teamSeason: newsTeam ? newsTeam.teamSeason : undefined,
+              date: new Date().getTime()
             };
             return from(this.db.collection<News>(DB_COLLECTION_NEWS)
               .add(JSON.parse(JSON.stringify(newNews))))

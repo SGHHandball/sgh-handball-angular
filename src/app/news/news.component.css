@@ -1,5 +1,7 @@
 .grid-container {
   margin: 16px 16px 56px;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .dashboard-card {
