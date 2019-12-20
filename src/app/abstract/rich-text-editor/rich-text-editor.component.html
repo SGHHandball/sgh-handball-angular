@@ -1,0 +1,16 @@
+<div *ngIf="editMode">
+  <app-ngx-editor [(ngModel)]="editContent.contentText"
+                  [config]="config"></app-ngx-editor>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="warn"
+            (click)="cancel()">Abbrechen
+    </button>
+    <button mat-raised-button color="primary"
+            [disabled]="editContent === htmlContent"
+            (click)="saveContent()">Speichern
+    </button>
+  </mat-card-actions>
+</div>
+<div *ngIf="!editMode" [innerHTML]="htmlContent?.contentText">
+</div>

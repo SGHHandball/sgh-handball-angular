@@ -43,7 +43,7 @@ import {AbstractComponent} from './abstract/abstract.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NewsComponent} from './news/news.component';
 import {NewsEditComponent} from './news/news-edit/news-edit.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NewsMoreMenuComponent} from './news/news-more-menu/news-more-menu.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
@@ -83,6 +83,8 @@ import { SidenavSubMenuComponent } from './app-shell/sidenav/sidenav-sub-menu/si
 import { EmptyComponent } from './empty/empty.component';
 import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detail.component';
 import {SliderComponent} from "./abstract/slider/slider.component";
+import { RichTextEditorComponent } from './abstract/rich-text-editor/rich-text-editor.component';
+import {NgxEditorModule} from "ngx-editor";
 
 @NgModule({
   declarations: [
@@ -126,7 +128,8 @@ import {SliderComponent} from "./abstract/slider/slider.component";
     SidenavSubMenuComponent,
     EmptyComponent,
     NewsCardDetailComponent,
-    SliderComponent
+    SliderComponent,
+    RichTextEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -171,6 +174,8 @@ import {SliderComponent} from "./abstract/slider/slider.component";
     MatCheckboxModule,
     HttpClientModule,
     MatProgressBarModule,
+    NgxEditorModule,
+    FormsModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

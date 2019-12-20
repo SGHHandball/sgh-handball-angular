@@ -15,21 +15,28 @@
       </app-slider>
     </div>
 
+
     <div class="static-content">
-      <!--TODO: Make this editable -->
-      <h2>Handball in Hainhausen</h2>
-      <p>Seit fast 100 Jahren wird in Hainhausen Handball gespielt. Bereits im Jahr 1923 fanden sich einige junge Männer
-        in der Turngemeinde zusammen, um gemeinsam diesen Sport zu betreiben.</p>
-      <p>Der Schwerpunkt unserer Abteilung liegt in der Förderung des Kinder - und Jugendsports. Wie jeder bei den
-        Spielen
-        der Weltmeitsterschaft 2019 in Dänemark und Deutschland sehen konnte, wird Teamgeist und Fairness im Handball
-        auf
-        allen Ebenen groß geschrieben.</p>
-      <p>Interessenten an dieser tollen Sportart können bei unseren Heimspielen in der Hainhäuser Sporthalle zuschauen -
-        und wer gerne Handball spielen will - ob Anfänger oder erfahrener Spieler - kommt einfach mal beim Training
-        vorbeit oder schickt eine Mail an <a href="mailto:handball@sg-hainhausen.de">handball@sg-hainhausen.de</a>.</p>
+      <app-rich-text-editor
+        *ngIf="contentLoaded"
+        [htmlContent]="homeContent"
+        [editMode]="editContent"
+        (saveListener)="saveContent($event)"
+      >
+      </app-rich-text-editor>
     </div>
   </div>
 </mat-card>
+
+<app-add-btn [matMenu]="newsTypeMenu" [moreIcon]="true"
+             *ngIf="adminRight$|async"></app-add-btn>
+<mat-menu #newsTypeMenu="matMenu">
+  <button mat-menu-item
+          (click)="editContent = !editContent">
+    Seite Bearbeiten
+  </button>
+</mat-menu>
+
+
 
 

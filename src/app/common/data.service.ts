@@ -13,7 +13,8 @@ import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component
 import {Hall} from "../halls/hall";
 import {Training} from "../trainings/training";
 import {Season} from "../seasons/season";
-import {DB_COLLECTION_SEASONS} from "../constants";
+import {DB_COLLECTION_CONTENT, DB_COLLECTION_SEASONS} from "../constants";
+import {Content} from "../model/content";
 
 @Injectable({
   providedIn: 'root'
@@ -188,4 +189,13 @@ export class DataService {
   changeCurrentSeason(season: Season): Observable<void> {
     return this.service.changeCurrentSeason(season);
   }
+
+  getContent(topic: string): Observable<Content> {
+    return this.service.getContent(topic);
+  }
+
+  addContent(topic: string, content: Content): Observable<void> {
+    return this.service.addContent(topic, content);
+  }
+
 }

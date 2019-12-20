@@ -18,6 +18,7 @@ import {SghUser} from "../admin/sgh-user";
 import {AngularFireFunctions} from "@angular/fire/functions";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {
+  DB_COLLECTION_CONTENT, DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CURRENT_SEASON,
   DB_COLLECTION_HALLS,
   DB_COLLECTION_SEASONS,
@@ -28,6 +29,7 @@ import {
 import {Hall} from "../halls/hall";
 import {Training} from "../trainings/training";
 import {Season} from "../seasons/season";
+import {Content} from "../model/content";
 
 @Injectable({
   providedIn: 'root'
@@ -151,7 +153,6 @@ export class FireApiService {
         })
       )
   }
-
 
 
   //NEWS
@@ -642,6 +643,22 @@ export class FireApiService {
       .collection<Season>(DB_COLLECTION_CURRENT_SEASON)
       .doc<Season>(DB_COLLECTION_CURRENT_SEASON)
       .set(season));
+  }
+
+  //CONTENT
+
+  getContent(topic: string): Observable<Content> {
+    return this.db
+      .collection<Content>(DB_COLLECTION_CONTENT)
+      .doc<Content>(topic)
+      .valueChanges();
+  }
+
+  addContent(topic: string, content: Content): Observable<void> {
+    return from(this.db
+      .collection<Content>(DB_COLLECTION_CONTENT)
+      .doc<Content>(topic)
+      .set(content))
   }
 
 }
