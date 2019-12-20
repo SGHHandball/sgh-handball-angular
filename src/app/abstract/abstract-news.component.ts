@@ -74,7 +74,8 @@ export abstract class AbstractNewsComponent extends AbstractComponent implements
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataService.updateNewsSendToTrue(news)
+        news.send = true;
+        this.dataService.updateNews(news)
           .pipe(takeUntil(this.destroy$),
             catchError(error => {
               if (!environment.production) console.log(error);
@@ -99,7 +100,8 @@ export abstract class AbstractNewsComponent extends AbstractComponent implements
     );
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataService.updateNewsCheckToTrue(news)
+        news.checked = true;
+        this.dataService.updateNews(news)
           .pipe(takeUntil(this.destroy$),
             catchError(error => {
               if (!environment.production) console.log(error);

@@ -25,39 +25,14 @@ export class NewsService {
     private location: Location,
     private dataService: DataService,
     private translationService: TranslationService,
-    private adminService: AdminService
   ) {
   }
 
-  getFilterNews(filterValues: string[]): Observable<News[]> {
-    return this.adminService.hasUserAddNewsAccess()
-      .pipe(
-        switchMap(
-          access => {
-            if (access) {
-              return this.dataService.getSghUser()
-                .pipe(
-                  switchMap(user => {
-                    return this.dataService.getAllNews()
-                      .pipe(
-                        map(news => this.enableAccessFilter(user, news))
-                      )
-                  })
-                )
-            }
-            return this.dataService.getNormalUserNews(true)
-          }
-        ),
-        map((newsList: News[]) => this.filterNews(filterValues, newsList))
-      );
-  }
-
-  enableAccessFilter(sghUser: SghUser, newsList: News[]): News[] {
-    return newsList.filter(news =>
-      news.checked ||
-      news.creator === sghUser.id ||
-      this.hasUserRightsForTeam(sghUser, news.teamAge, news.teamSeason)
-    )
+  isNewsVisibleForUser(sghUser: SghUser, news: News): boolean {
+    if (news.checked) return true;
+    else if (!sghUser) return false;
+    return news.creator === sghUser.id ||
+      this.hasUserRightsForTeam(sghUser, news.teamAge, news.teamSeason);
   }
 
   hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {
@@ -69,37 +44,6 @@ export class NewsService {
           team.includes(teamAge) &&
           team.includes(teamSeason)
       ).length > 0;
-  }
-
-
-  filterNews(filterValues: string[], newsList: News[]): News[] {
-    return newsList
-      .filter(
-        (news: News) =>
-          this.areFiltersInNews(news, filterValues)
-      )
-  }
-
-  areFiltersInNews(news: News, filterValues: string[]): boolean {
-    let allFiltersInNews = true;
-    filterValues.forEach(filter => {
-      if (filter && !this.isFilterInNews(news, filter.toLowerCase())) {
-        allFiltersInNews = false;
-      }
-    });
-    return allFiltersInNews;
-  }
-
-
-  isFilterInNews(news: News, filter: string): boolean {
-    return (news.homeTeam && news.homeTeam.toLowerCase().includes(filter)) ||
-      (news.enemyTeam && news.enemyTeam.toLowerCase().includes(filter)) ||
-      (news.body && news.body.toLowerCase().includes(filter)) ||
-      (news.title && news.title.toLowerCase().includes(filter)) ||
-      (news.summary && news.summary.toLowerCase().includes(filter)) ||
-      (news.teamAge && news.teamAge.toLowerCase() === filter) ||
-      (news.teamSeason && news.teamSeason.toLowerCase() === filter)
-      ;
   }
 
   filterEvents(events: News[]): Observable<News[]> {

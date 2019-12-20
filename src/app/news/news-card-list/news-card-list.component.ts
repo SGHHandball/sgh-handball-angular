@@ -6,14 +6,17 @@ import {
 } from "../../translation.service";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
+import {NewsService} from "../news.service";
+import {SghUser} from "../../admin/sgh-user";
 
 @Component({
   selector: 'app-news-card-list',
   templateUrl: './news-card-list.component.html',
   styleUrls: ['./news-card-list.component.css']
 })
-export class NewsCardListComponent extends AbstractComponent  {
+export class NewsCardListComponent extends AbstractComponent {
   @Input() news: News[];
+  @Input() user: SghUser;
 
   @Output() editClickListener = new EventEmitter<News>();
   @Output() deleteClickListener = new EventEmitter<News>();
@@ -24,7 +27,10 @@ export class NewsCardListComponent extends AbstractComponent  {
 
   noNewsTC = TC_NEWS_NO_NEWS;
 
-  constructor(breakpointObserver: BreakpointObserver, snackBar: MatSnackBar, public translationService: TranslationService) {
+  constructor(breakpointObserver: BreakpointObserver,
+              snackBar: MatSnackBar,
+              public translationService: TranslationService,
+              public newsService: NewsService) {
     super(breakpointObserver, snackBar);
   }
 

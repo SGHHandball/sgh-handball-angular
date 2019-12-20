@@ -88,10 +88,11 @@ import {NgxEditorModule} from "ngx-editor";
 import {NgxImageCompressService} from "ngx-image-compress";
 import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
 import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
-import { SponsorsComponent } from './sponsors/sponsors.component';
-import { SponsorCardComponent } from './sponsors/sponsor-card/sponsor-card.component';
-import { SponsorEditComponent } from './sponsors/sponsor-edit/sponsor-edit.component';
+import {SponsorsComponent} from './sponsors/sponsors.component';
+import {SponsorCardComponent} from './sponsors/sponsor-card/sponsor-card.component';
+import {SponsorEditComponent} from './sponsors/sponsor-edit/sponsor-edit.component';
 import {LazyLoadImageDirective, LazyLoadImageModule, scrollPreset} from "ng-lazyload-image";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
   declarations: [
@@ -187,8 +188,8 @@ import {LazyLoadImageDirective, LazyLoadImageModule, scrollPreset} from "ng-lazy
     MatProgressBarModule,
     NgxEditorModule,
     FormsModule,
-    LazyLoadImageModule.forRoot({
-    }),
+    LazyLoadImageModule.forRoot({}),
+    InfiniteScrollModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

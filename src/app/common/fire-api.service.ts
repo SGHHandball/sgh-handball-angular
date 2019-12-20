@@ -173,11 +173,12 @@ export class FireApiService {
       )
   }
 
-  getNewsWithInfinite(lastDoc?: any): Observable<InfiniteNews> {
+  getNewsWithInfinite(lastDoc?: any, checked?: boolean): Observable<InfiniteNews> {
     return this.db.collection<News>(
       DB_COLLECTION_NEWS,
       ref => {
         let query: CollectionReference | Query = ref;
+        if (checked) query = query.where(FireBaseModel.CHECKED, '==', true);
         query = query.orderBy(FireBaseModel.DATE, 'desc');
         if (lastDoc) query = query.startAfter(lastDoc);
         query = query.limit(5);
@@ -186,7 +187,7 @@ export class FireApiService {
     ).get()
       .pipe(
         switchMap(snap => {
-          var lastVisible = snap.docs[snap.docs.length - 1];
+          const lastVisible = snap.docs[snap.docs.length - 1];
           const news = snap.docs.map(doc => doc.data() as News);
           const infiniteNews: InfiniteNews = {
             news: news,
@@ -332,23 +333,13 @@ export class FireApiService {
     return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).delete());
   }
 
-  updateNewsSendToTrue(news: News): Observable<void> {
-    return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
-      send: true
-    }));
-  }
-
-  updateNewsCheckToTrue(news: News): Observable<void> {
-    return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
-      checked: true
-    }));
-  }
-
-  updateImagesInNews(news: News): Observable<void> {
-    return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).update({
-      imgLinks: news.imgLinks,
-      imgPaths: news.imgPaths
-    }));
+  updateNews(news: News): Observable<void> {
+    return from(
+      this.db
+        .collection(DB_COLLECTION_NEWS)
+        .doc(news.id)
+        .set(news)
+    );
   }
 
 

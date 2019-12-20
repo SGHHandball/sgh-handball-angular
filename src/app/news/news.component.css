@@ -1,7 +1,15 @@
 .grid-container {
   margin: 16px 16px 56px;
+}
+
+.news-container {
   height: 100%;
   overflow-y: scroll;
+}
+
+.search-results {
+  height: 100%;
+  overflow: auto;
 }
 
 .dashboard-card {
@@ -52,18 +60,26 @@
   margin: 8px !important;
 }
 
-.card-title{
+.card-title {
 
 }
 
-.dashboard-card-content:hover, .card-img:hover , .mat-card-subtitle:hover, .card-title:hover{
+.dashboard-card-content:hover, .card-img:hover, .mat-card-subtitle:hover, .card-title:hover {
   cursor: pointer;
 }
 
-.loading-spinner{
+.loading-spinner {
   margin: 25% auto;
 }
 
-.filter{
+.finished-spinner-container {
+  margin: 0 0 32px;
+}
+
+.finished-spinner {
+  margin: auto;
+}
+
+.filter {
   margin: 16px;
 }

@@ -59,8 +59,8 @@ export class DataService {
   }
 
 
-  getNewsWithInfinite(lastDoc?): Observable<InfiniteNews> {
-    return this.service.getNewsWithInfinite(lastDoc);
+  getNewsWithInfinite(lastDoc?, checked?: boolean): Observable<InfiniteNews> {
+    return this.service.getNewsWithInfinite(lastDoc, checked);
   }
 
   getNewsById(id: string): Observable<News> {
@@ -91,21 +91,12 @@ export class DataService {
     return this.service.deleteNews(news);
   }
 
-  updateNewsSendToTrue(news: News): Observable<void> {
-    return this.service.updateNewsSendToTrue(news);
+  updateNews(news: News): Observable<void> {
+    return this.service.updateNews(news);
   }
-
-  updateNewsCheckToTrue(news: News): Observable<void> {
-    return this.service.updateNewsCheckToTrue(news);
-  }
-
 
   saveNewsToDataBase(news: News): Observable<void> {
     return this.service.saveNewsToDataBase(news);
-  }
-
-  updateImagesInNews(news: News): Observable<void> {
-    return this.service.updateImagesInNews(news);
   }
 
   updateImagesInTeam(team: Team): Observable<void> {

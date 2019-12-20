@@ -13,6 +13,7 @@ import {exportNewsToText} from "./news-export/news-export";
 import {DataService} from "../common/data.service";
 import {first, last, share, switchMap, takeUntil} from "rxjs/operators";
 import {BehaviorSubject} from "rxjs";
+import {SghUser} from "../admin/sgh-user";
 
 @Component({
   selector: 'app-news',
@@ -28,15 +29,18 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
 
   exportTC = TC_NEWS_EXPORT;
 
-  filteredNews: News[];
-
   exportNews: News[] = [];
 
-  possibleFilterValues: string[];
+  lastItem: any;
+  finished = true;
+  allNewsLoaded = false;
+  news: News[] = [];
 
   addNewsAccess = this.adminService.hasUserAddNewsAccess().pipe(share());
   eventAdmin = this.adminService.isUserEventAdmin().pipe(share());
   teamRights = this.adminService.hasUserTeamRights().pipe(share());
+
+  user: SghUser;
 
   constructor(breakpointObserver: BreakpointObserver,
               translationService: TranslationService,
@@ -50,24 +54,39 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllPossibleFilterValues();
-    this.getFilterNews();
+    this.initUser();
     this.getNews();
   }
 
-  lastItem: any;
-  finished = true;
+  initUser() {
+    this.dataService.getSghUser()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => this.user = user)
+  }
+
+  onScroll() {
+    if (!this.allNewsLoaded) {
+      this.finished = false;
+      this.getNews();
+    }
+  }
 
   getNews() {
-    console.log("getNews");
-    this.dataService.getNewsWithInfinite(this.lastItem)
+    this.adminService.hasUserAddNewsAccess()
       .pipe(
-        first()
+        first(),
+        switchMap(
+          access =>
+            this.dataService.getNewsWithInfinite(this.lastItem, !access)
+        )
       )
       .subscribe(news => {
-        console.log(news);
           this.lastItem = news.lastItem;
-          if (!news.lastItem || news.news.length == 0) this.finished = true;
+          this.finished = true;
+          if (!news.lastItem || news.news.length == 0) this.allNewsLoaded = true;
+          else {
+            this.news = this.news.concat(news.news);
+          }
         }
       );
   }
@@ -80,28 +99,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
       })
   }
 
-
-  getFilterNews() {
-    this.newsService.getFilterNews([])
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(news => {
-          this.filteredNews = news;
-        }
-      );
-  }
-
-  getAllPossibleFilterValues() {
-    this.newsService
-      .getAllPossibleFilterValues()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(values => {
-        this.possibleFilterValues = values;
-      })
-  }
 
   changeExportNews(news: News) {
     if (this.exportNews.includes(news)) {

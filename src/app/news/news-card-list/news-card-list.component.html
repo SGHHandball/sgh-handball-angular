@@ -11,13 +11,15 @@
       fxFlex.lt-sm="100%"
       *ngFor="let newsCard of news"
     >
-      <app-news-card [newsCard]="newsCard"
-                     (editClickListener)="editClickListener.next(newsCard)"
-                     (deleteClickListener)="deleteClickListener.next(newsCard)"
-                     (sendClickListener)="sendClickListener.next(newsCard)"
-                     (checkClickListener)="checkClickListener.next(newsCard)"
-                     (exportChangeListener)="exportChangeListener.next(newsCard)"
-                     (openDetailClickListener)="openDetailClickListener.next(newsCard)"
+      <app-news-card
+        *ngIf="newsService.isNewsVisibleForUser(user,newsCard)"
+        [newsCard]="newsCard"
+        (editClickListener)="editClickListener.next(newsCard)"
+        (deleteClickListener)="deleteClickListener.next(newsCard)"
+        (sendClickListener)="sendClickListener.next(newsCard)"
+        (checkClickListener)="checkClickListener.next(newsCard)"
+        (exportChangeListener)="exportChangeListener.next(newsCard)"
+        (openDetailClickListener)="openDetailClickListener.next(newsCard)"
       >
       </app-news-card>
     </div>
