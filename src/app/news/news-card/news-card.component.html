@@ -9,8 +9,9 @@
     >
       <div fxFlex="40">
         <img
+          [lazyLoad]="newsCard && newsCard.imgLinks.length>0 ? newsCard.imgLinks[0] :['assets/img/SghLogo.png']"
+          defaultImage="assets\img\SghLogo.png"
           class="news-img"
-          [src]="newsCard && newsCard.imgLinks.length>0 ? newsCard.imgLinks[0] :['assets/img/SghLogo.png'] "
         >
       </div>
 

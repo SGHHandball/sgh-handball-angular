@@ -91,6 +91,7 @@ import {ContentHolderComponent} from "./abstract/content-holder/content-holder.c
 import { SponsorsComponent } from './sponsors/sponsors.component';
 import { SponsorCardComponent } from './sponsors/sponsor-card/sponsor-card.component';
 import { SponsorEditComponent } from './sponsors/sponsor-edit/sponsor-edit.component';
+import {LazyLoadImageDirective, LazyLoadImageModule, scrollPreset} from "ng-lazyload-image";
 
 @NgModule({
   declarations: [
@@ -186,6 +187,8 @@ import { SponsorEditComponent } from './sponsors/sponsor-edit/sponsor-edit.compo
     MatProgressBarModule,
     NgxEditorModule,
     FormsModule,
+    LazyLoadImageModule.forRoot({
+    }),
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

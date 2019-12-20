@@ -9,8 +9,9 @@
     >
       <div fxFlex="40">
         <img
+          [lazyLoad]="sponsor &&sponsor.imgLinks &&  sponsor.imgLinks.length>0 ? sponsor.imgLinks[0] :['assets/img/SghLogo.png']"
+          defaultImage="assets\img\SghLogo.png"
           class="sponsor-img"
-          [src]="sponsor &&sponsor.imgLinks &&  sponsor.imgLinks.length>0 ? sponsor.imgLinks[0] :['assets/img/SghLogo.png'] "
         >
       </div>
 

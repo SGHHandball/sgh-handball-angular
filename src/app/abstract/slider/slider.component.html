@@ -4,7 +4,8 @@
     [style.height]="height"
     [style.width]="width"
     [style.border-radius]="imageBorderRadius"
-    src="{{sliderArray[sliderService.currentIndex].img}}"
+    [lazyLoad]="sliderArray[sliderService.currentIndex].img"
+    defaultImage="assets\img\SghLogo.png"
     alt="{{sliderArray[sliderService.currentIndex].alt}}"
   >
   <div

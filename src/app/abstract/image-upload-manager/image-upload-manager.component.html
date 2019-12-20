@@ -4,7 +4,11 @@
     <div cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="urls"
          (cdkDropListDropped)="moveImage($event)" class="img-previews">
       <div *ngFor="let url of urls; let i = index">
-        <img class="img-preview" [src]="url" cdkDrag>
+        <img
+          [lazyLoad]="url"
+          defaultImage="assets\img\SghLogo.png"
+          class="img-preview"
+          cdkDrag>
         <button mat-icon-button (click)="itemDeleteEventListener.next(i)" class="img-upload-delete-btn">
           <mat-icon>delete</mat-icon>
         </button>
