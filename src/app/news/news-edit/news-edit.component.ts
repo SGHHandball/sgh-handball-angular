@@ -27,13 +27,14 @@ import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
-import {delay, map, startWith, switchMap, takeUntil} from "rxjs/operators";
+import {delay, map, startWith, switchMap, take, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../seasons/season.service";
 import {DataService} from "../../common/data.service";
 import {ActivatedRoute} from "@angular/router";
 import {ImageProgress} from "../../model/image-progress";
 import {IImage} from "ng2-image-compress";
+import {Season} from "../../seasons/season";
 
 @Component({
   selector: 'app-news-edit',
@@ -79,11 +80,13 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
 
   filteredTeamAgesOptions: Observable<string[]>;
 
+  currentSeason: Season;
+
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
               private dialog: MatDialog,
               public newsService: NewsService,
-              public seasonService: SeasonService,
+              private seasonService: SeasonService,
               private route: ActivatedRoute,
               private dataService: DataService,
               snackBar: MatSnackBar) {
@@ -110,6 +113,7 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
   }
 
   ngOnInit(): void {
+    this.initCurrentSeason();
     this.initNews();
   }
 
@@ -125,6 +129,12 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
       this.news = news;
       this.initFormControls();
     })
+  }
+
+  initCurrentSeason() {
+    this.dataService.getCurrentSeason()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(currentSeason => this.currentSeason = currentSeason)
   }
 
   initFormControls() {
