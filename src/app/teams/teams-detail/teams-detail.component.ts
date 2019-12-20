@@ -111,7 +111,6 @@ export class TeamsDetailComponent extends AbstractComponent {
   }
 
   disableEditLinkMode() {
-    console.log(this.linkEditFormControl.value);
     this.team.nuLeagueLink = this.linkEditFormControl.value;
     this.dataService
       .updateTeam(this.team)
