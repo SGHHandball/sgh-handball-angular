@@ -3,9 +3,6 @@ import {Router} from "@angular/router";
 import {TC_ROUTE_NEWS} from "../translation.service";
 import {getDateString, News} from "../news/news";
 import {NewsService} from "../news/news.service";
-import {DataService} from "../common/data.service";
-import {from, Observable, of} from "rxjs";
-import {map, switchMap} from "rxjs/operators";
 import {SliderImage} from "../model/slider-image";
 
 @Injectable({
@@ -15,8 +12,7 @@ export class HomeService {
 
   constructor(
     public router: Router,
-    private newsService: NewsService,
-    private dataService: DataService) {
+    private newsService: NewsService,) {
   }
 
 

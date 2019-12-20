@@ -1,0 +1,25 @@
+.content {
+  margin: 16px;
+  padding: 0;
+}
+
+.web-content {
+  width: 70%;
+  margin: 16px auto;
+}
+
+.slideshow:hover {
+  cursor: pointer;
+}
+
+.loading-spinner {
+  margin: 25% auto;
+}
+
+.spinner-container {
+}
+
+.static-content {
+  padding: 16px;
+}
+

@@ -76,17 +76,18 @@ import {AdminUserToggleComponent} from './admin/admin-user-toggle/admin-user-tog
 import {TrainingsComponent} from "./trainings/trainings.component";
 import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 import {DocumentsComponent} from './documents/documents.component';
-import { HomeComponent } from './home/home.component';
-import { NewsCardComponent } from './news/news-card/news-card.component';
+import {HomeComponent} from './home/home.component';
+import {NewsCardComponent} from './news/news-card/news-card.component';
 import {HttpClientModule} from "@angular/common/http";
-import { SidenavSubMenuComponent } from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
-import { EmptyComponent } from './empty/empty.component';
-import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detail.component';
+import {SidenavSubMenuComponent} from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
+import {EmptyComponent} from './empty/empty.component';
+import {NewsCardDetailComponent} from './news/news-card-detail/news-card-detail.component';
 import {SliderComponent} from "./abstract/slider/slider.component";
-import { RichTextEditorComponent } from './abstract/rich-text-editor/rich-text-editor.component';
+import {RichTextEditorComponent} from './abstract/rich-text-editor/rich-text-editor.component';
 import {NgxEditorModule} from "ngx-editor";
 import {NgxImageCompressService} from "ngx-image-compress";
 import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
+import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
     EmptyComponent,
     NewsCardDetailComponent,
     SliderComponent,
-    RichTextEditorComponent
+    RichTextEditorComponent,
+    ContentHolderComponent
   ],
   imports: [
     BrowserModule,
@@ -185,7 +187,7 @@ import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
     {provide: FirestoreSettingsToken, useValue: {}},
     PendingChangesGuard,
     NgxImageCompressService,
-    ImageCompressService,ResizeOptions
+    ImageCompressService, ResizeOptions
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginDialogComponent, AdminUserDialogComponent,

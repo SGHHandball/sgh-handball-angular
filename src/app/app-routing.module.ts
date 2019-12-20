@@ -31,6 +31,7 @@ import {HomeComponent} from "./home/home.component";
 import {EmptyComponent} from "./empty/empty.component";
 import {SeasonsComponent} from "./seasons/seasons.component";
 import {NewsCardDetailComponent} from "./news/news-card-detail/news-card-detail.component";
+import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
 
 export const routes = [
   {path: TC_ROUTE_HOME, component: HomeComponent},
@@ -41,12 +42,11 @@ export const routes = [
   {path: TC_ROUTE_EVENTS, component: EventsComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
   {path: TC_ROUTE_DOCUMENTS, component: DocumentsComponent},
-  {path: TC_ROUTE_CDH, component: EmptyComponent},
-  {path: TC_ROUTE_SPONSORS, component: EmptyComponent},
-  {path: TC_ROUTE_EXECUTIVES, component: EmptyComponent},
-  {path: TC_ROUTE_REFEREES, component: EmptyComponent},
-  {path: TC_ROUTE_TIME_KEEPER, component: EmptyComponent},
-  {path: TC_ROUTE_DOCUMENTS, component: EmptyComponent},
+  {path: TC_ROUTE_CDH, component: ContentHolderComponent},
+  {path: TC_ROUTE_SPONSORS, component: ContentHolderComponent},
+  {path: TC_ROUTE_EXECUTIVES, component: ContentHolderComponent},
+  {path: TC_ROUTE_REFEREES, component: ContentHolderComponent},
+  {path: TC_ROUTE_TIME_KEEPER, component: ContentHolderComponent},
   {
     path: [TC_NEWS_PATH_EDIT, ':newsId'].join('/'),
     component: NewsEditComponent,

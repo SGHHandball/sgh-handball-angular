@@ -12,5 +12,5 @@
     </button>
   </mat-card-actions>
 </div>
-<div *ngIf="!editMode" [innerHTML]="htmlContent?.contentText">
+<div *ngIf="!editMode" [innerHTML]="htmlContent? htmlContent.contentText : 'Kein Inhalt vorhanden.'">
 </div>

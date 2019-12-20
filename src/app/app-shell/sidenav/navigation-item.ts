@@ -61,7 +61,7 @@ export const NAVIGATION_ITEMS_GEN_INFOS = [
   new NavigationItem(TC_ROUTE_EXECUTIVES, TC_ROUTE_EXECUTIVES),
   new NavigationItem(TC_ROUTE_REFEREES, TC_ROUTE_REFEREES),
   new NavigationItem(TC_ROUTE_TIME_KEEPER, TC_ROUTE_TIME_KEEPER),
-  new NavigationItem(TC_ROUTE_DOCUMENTS, TC_ROUTE_DOCUMENTS),
+  /*new NavigationItem(TC_ROUTE_DOCUMENTS, TC_ROUTE_DOCUMENTS),*/
 ];
 
 export const NAVIGATION_ITEMS_INFO = [
@@ -70,8 +70,7 @@ export const NAVIGATION_ITEMS_INFO = [
 ];
 
 export const NAVIGATION_ITEMS_OTHER = [
-  new NavigationItem(TC_ROUTE_CDH, TC_ROUTE_CDH).withRouterIcon('sports_handball'),
-  new NavigationItem(TC_ROUTE_SPONSORS, TC_ROUTE_SPONSORS).withRouterIcon('people'),
+  new NavigationItem(TC_ROUTE_SPONSORS, TC_ROUTE_SPONSORS).withRouterIcon('sports_handball'),
   new NavigationItem(TC_ROUTE_HALLS, TC_ROUTE_HALLS).withRouterIcon('account_balance'),
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
 ];

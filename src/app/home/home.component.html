@@ -2,7 +2,7 @@
   <div fxLayout="column">
 
     <div class="spinner-container">
-      <mat-spinner *ngIf="!news" [diameter]="30" class="loading-spinner"></mat-spinner>
+      <mat-spinner *ngIf="!news && !contentLoaded" [diameter]="30" class="loading-spinner"></mat-spinner>
       <app-slider
         class="slideshow"
         *ngIf="news && news.length>0"
