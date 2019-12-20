@@ -37,20 +37,20 @@ import {SponsorEditComponent} from "./sponsors/sponsor-edit/sponsor-edit.compone
 export const routes = [
   {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_NEWS, component: NewsComponent},
-  {path: [TC_ROUTE_TEAMS, ':season', ':teamAge'].join('/'), component: TeamsComponent},
-  {path: [TC_ROUTE_DETAIL, ':newsId'].join('/'), component: NewsCardDetailComponent},
+  {path: TC_ROUTE_TEAMS + '/' + ':season' + '/' + ':teamAge', component: TeamsComponent},
+  {path: TC_ROUTE_DETAIL + '/' + ':newsId', component: NewsCardDetailComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_EVENTS, component: EventsComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
   {path: TC_ROUTE_DOCUMENTS, component: DocumentsComponent},
   {path: TC_ROUTE_CDH, component: ContentHolderComponent},
   {path: TC_ROUTE_SPONSORS, component: SponsorsComponent},
-  {path: [TC_ROUTE_SPONSORS, TC_PATH_EDIT, ':sponsorId'].join('/'), component: SponsorEditComponent},
+  {path: TC_ROUTE_SPONSORS + '/' + TC_PATH_EDIT + '/' + ':sponsorId', component: SponsorEditComponent},
   {path: TC_ROUTE_EXECUTIVES, component: ContentHolderComponent},
   {path: TC_ROUTE_REFEREES, component: ContentHolderComponent},
   {path: TC_ROUTE_TIME_KEEPER, component: ContentHolderComponent},
   {
-    path: [TC_PATH_EDIT, ':newsId'].join('/'),
+    path: TC_PATH_EDIT + '/' + ':newsId',
     component: NewsEditComponent,
     canDeactivate: [PendingChangesGuard]
   },
@@ -66,6 +66,7 @@ export const routes = [
     canActivate: [AuthGuard]
   },
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
+  {path: '**', redirectTo: TC_ROUTE_HOME}
 ];
 
 
