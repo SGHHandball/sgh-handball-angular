@@ -38,6 +38,7 @@ export const routes = [
   {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_NEWS, component: NewsComponent},
   {path: TC_ROUTE_TEAMS + '/' + ':season' + '/' + ':teamAge', component: TeamsComponent},
+  {path: TC_ROUTE_TEAMS + '/' + ':season', component: TeamsComponent},
   {path: TC_ROUTE_DETAIL + '/' + ':newsId', component: NewsCardDetailComponent},
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_EVENTS, component: EventsComponent},

@@ -17,10 +17,11 @@ import {
 } from "./navigation-item";
 import {MatSidenav, MatSnackBar} from "@angular/material";
 import {Team} from "../../teams/team";
-import {Observable, Subject} from "rxjs";
+import {Observable, of, Subject} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
 import {SeasonService} from "../../seasons/season.service";
+import {AdminService} from "../../admin/admin.service";
 
 @Component({
   selector: 'app-sidenav',
@@ -53,12 +54,15 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
 
   generalInformationNavItemsVisible = false;
 
+  teamsAdmin: boolean;
+
   constructor(public breakpointObserver: BreakpointObserver,
               private router: Router,
               public translationService: TranslationService,
               snackBar: MatSnackBar,
               private dataService: DataService,
-              private seasonService: SeasonService
+              private seasonService: SeasonService,
+              private adminService: AdminService
   ) {
     super(breakpointObserver, snackBar);
     this.isHandset$.subscribe(handset => {
@@ -95,14 +99,30 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
   }
 
   ngOnInit(): void {
+    this.initTeamsAdmin();
     this.initTeamNavItems()
   }
 
+  initTeamsAdmin() {
+    let season: string;
+    this.adminService.isUserTeamsAdmin()
+      .pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(teamsAdmin => {
+        this.teamsAdmin = teamsAdmin;
+      }
+    );
+  }
+
   initTeamNavItems() {
+    let season: string;
     this.dataService.getCurrentSeason()
       .pipe(
         takeUntil(this.destroy$),
-        switchMap(currentSeason => this.dataService.getTeamsBySeason(this.seasonService.getSeasonAsString(currentSeason))),
+        switchMap(currentSeason => {
+          season = this.seasonService.getSeasonAsString(currentSeason);
+          return this.dataService.getTeamsBySeason(season)
+        }),
         map((teams: Team[]) =>
           teams.map(
             team =>
@@ -113,8 +133,15 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
       )
       .subscribe(navItems => {
         this.teamsNavItems = navItems;
+        if (this.teamsAdmin) {
+          this.teamsNavItems.push(
+            new NavigationItem(TC_ROUTE_TEAMS, "Neu")
+              .withRouterIcon("add")
+              .withRouterDeepLink([season, ""].join('/')))
+        }
       })
   }
+
 
   ngOnDestroy(): void {
     if (this.destroy$) {

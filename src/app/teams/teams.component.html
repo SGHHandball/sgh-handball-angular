@@ -1,4 +1,4 @@
-<mat-spinner [diameter]="30" *ngIf="!currentTeam" class="loading-spinner"></mat-spinner>
+<mat-spinner [diameter]="30" *ngIf="!currentTeam && !teamLoaded" class="loading-spinner"></mat-spinner>
 
 <ng-container *ngIf="currentTeam">
   <app-teams-detail
@@ -25,25 +25,29 @@
     </div>
   </ng-container>
 
-  <app-add-btn
-    *ngIf="(teamsAdmin|async) ||
-             (currentTeam && rightsForTeam|async)"
-    [matMenu]="menu"
-    [moreIcon]="true"
-  ></app-add-btn>
-
-  <mat-menu #menu="matMenu">
-    <ng-container *ngIf="(teamsAdmin|async) ||
-             (currentTeam && rightsForTeam|async)">
-      <button mat-menu-item
-              (click)="dataService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
-      <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
-      <button mat-menu-item (click)="editTeamLink()">NuLiga Link ändern</button>
-    </ng-container>
-    <ng-container *ngIf="(teamsAdmin|async)">
-      <button mat-menu-item (click)="deleteTeam()">{{translationService.get(deleteTeamTC)}}</button>
-      <button mat-menu-item (click)="changeOrderOfTeams()">{{translationService.get(orderChangeTC)}}</button>
-      <button mat-menu-item (click)="addNewTeam()">{{translationService.get(addTeamTC)}}</button>
-    </ng-container>
-  </mat-menu>
 </ng-container>
+
+
+<app-add-btn
+  *ngIf="(teamsAdmin|async) ||
+             (currentTeam && rightsForTeam|async)"
+  [matMenu]="menu"
+  [moreIcon]="true"
+></app-add-btn>
+
+<mat-menu #menu="matMenu">
+
+  <ng-container *ngIf="(currentTeam && teamsAdmin|async) ||
+             (currentTeam && rightsForTeam|async)">
+    <button mat-menu-item
+            (click)="dataService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
+    <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
+    <button mat-menu-item (click)="editTeamLink()">NuLiga Link ändern</button>
+  </ng-container>
+
+  <ng-container *ngIf="(teamsAdmin|async)">
+    <button mat-menu-item (click)="deleteTeam()">{{translationService.get(deleteTeamTC)}}</button>
+    <button mat-menu-item (click)="changeOrderOfTeams()">{{translationService.get(orderChangeTC)}}</button>
+    <button mat-menu-item (click)="addNewTeam()">{{translationService.get(addTeamTC)}}</button>
+  </ng-container>
+</mat-menu>

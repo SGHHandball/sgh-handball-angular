@@ -55,6 +55,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   filteredNews: News[];
 
   currentTeam: Team;
+  teamLoaded = false;
   allTeams: Team[];
 
   editTeamsActive = false;
@@ -101,11 +102,12 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
         switchMap(_ => {
           let teamAge = this.route.snapshot.paramMap.get('teamAge');
           let season = this.route.snapshot.paramMap.get('season');
+          if (!teamAge) return of(undefined);
           return this.dataService.getTeamsBySeasonAndAge(season, teamAge);
         })
       )
       .subscribe(teams => {
-        if (teams.length > 0) {
+        if (teams && teams.length > 0) {
           this.currentTeam = teams[0];
           this.rightsForTeam =
             this.dataService
@@ -116,6 +118,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
               .pipe(share());
           this.changeNews();
         }
+        this.teamLoaded = true;
       });
   }
 
