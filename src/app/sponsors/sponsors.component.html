@@ -1,0 +1,29 @@
+<h3 class="no-news" *ngIf="sponsorsLoaded && !(sponsors && sponsors.length>0)">Keine Sponsoren eingetragen.</h3>
+<mat-progress-spinner [diameter]="30" *ngIf="!sponsorsLoaded" class="loading-spinner"></mat-progress-spinner>
+
+<div
+  class="sponsor-container"
+  fxLayout="row wrap"
+  fxLayout.lt-sm="column"
+  fxLayoutAlign="space-evenly flex-start"
+  *ngIf="sponsorsLoaded && sponsors && sponsors.length>0"
+>
+  <div
+    fxFlex="0 1 calc(33.3% - 16px)"
+    fxFlex.lt-md="0 1 calc(50% - 16px)"
+    fxFlex.lt-sm="100%"
+    *ngFor="let sponsor of sponsors"
+  >
+    <app-sponsor-card
+      [sponsor]="sponsor"
+      (editClickListener)="openEditSponsorPage(sponsor.id)"
+    >
+    </app-sponsor-card>
+  </div>
+</div>
+
+<app-add-btn [matMenu]="newsTypeMenu" [moreIcon]="true"
+             *ngIf="admin$|async"></app-add-btn>
+<mat-menu #newsTypeMenu="matMenu">
+  <button mat-menu-item (click)="addNewSponsor()">Sponsor hinzufügen</button>
+</mat-menu>

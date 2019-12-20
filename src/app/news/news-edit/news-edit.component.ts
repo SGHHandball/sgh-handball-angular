@@ -121,11 +121,9 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
           const newsId = params['newsId'];
           return this.dataService.getNewsById(newsId)
         })
-      ).subscribe(newsList => {
-      if (newsList.length > 0) {
-        this.news = newsList[0];
-        this.initFormControls();
-      }
+      ).subscribe(news => {
+      this.news = news;
+      this.initFormControls();
     })
   }
 

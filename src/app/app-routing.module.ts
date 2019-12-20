@@ -4,7 +4,7 @@ import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {NewsComponent} from "./news/news.component";
 import {NewsEditComponent} from "./news/news-edit/news-edit.component";
 import {
-  TC_NEWS_PATH_EDIT,
+  TC_PATH_EDIT,
   TC_ROUTE_CDH, TC_ROUTE_DETAIL,
   TC_ROUTE_DOCUMENTS,
   TC_ROUTE_EVENTS,
@@ -28,10 +28,11 @@ import {EventsComponent} from "./events/events.component";
 import {TrainingsComponent} from "./trainings/trainings.component";
 import {DocumentsComponent} from "./documents/documents.component";
 import {HomeComponent} from "./home/home.component";
-import {EmptyComponent} from "./empty/empty.component";
 import {SeasonsComponent} from "./seasons/seasons.component";
 import {NewsCardDetailComponent} from "./news/news-card-detail/news-card-detail.component";
 import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
+import {SponsorsComponent} from "./sponsors/sponsors.component";
+import {SponsorEditComponent} from "./sponsors/sponsor-edit/sponsor-edit.component";
 
 export const routes = [
   {path: TC_ROUTE_HOME, component: HomeComponent},
@@ -43,12 +44,13 @@ export const routes = [
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
   {path: TC_ROUTE_DOCUMENTS, component: DocumentsComponent},
   {path: TC_ROUTE_CDH, component: ContentHolderComponent},
-  {path: TC_ROUTE_SPONSORS, component: ContentHolderComponent},
+  {path: TC_ROUTE_SPONSORS, component: SponsorsComponent},
+  {path: [TC_ROUTE_SPONSORS, TC_PATH_EDIT, ':sponsorId'].join('/'), component: SponsorEditComponent},
   {path: TC_ROUTE_EXECUTIVES, component: ContentHolderComponent},
   {path: TC_ROUTE_REFEREES, component: ContentHolderComponent},
   {path: TC_ROUTE_TIME_KEEPER, component: ContentHolderComponent},
   {
-    path: [TC_NEWS_PATH_EDIT, ':newsId'].join('/'),
+    path: [TC_PATH_EDIT, ':newsId'].join('/'),
     component: NewsEditComponent,
     canDeactivate: [PendingChangesGuard]
   },

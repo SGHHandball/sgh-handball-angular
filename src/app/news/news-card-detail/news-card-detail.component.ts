@@ -47,10 +47,8 @@ export class NewsCardDetailComponent extends AbstractComponent implements OnInit
           const newsId = params['newsId'];
           return this.dataService.getNewsById(newsId)
         })
-      ).subscribe(newsList => {
-      if (newsList.length > 0) {
-        this.news = newsList[0];
-      }
+      ).subscribe(news => {
+        this.news = news;
     })
   }
 

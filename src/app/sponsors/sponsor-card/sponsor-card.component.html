@@ -1,0 +1,35 @@
+<mat-card class="dashboard-card">
+
+  <div fxLayout="column">
+
+    <div fxLayout="column"
+         fxFlex="90"
+         class="card-container"
+         (click)="openLink()"
+    >
+      <div fxFlex="40">
+        <img
+          class="sponsor-img"
+          [src]="sponsor &&sponsor.imgLinks &&  sponsor.imgLinks.length>0 ? sponsor.imgLinks[0] :['assets/img/SghLogo.png'] "
+        >
+      </div>
+
+      <div fxFlex="50" class="card-content">
+        <span class="card-title">{{sponsor.sponsorName}}</span>
+        <p>{{sponsor.sponsorDescription}}</p>
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" fxFlex="10" class="card-sub-actions">
+      <div fxFlex="80">
+
+      </div>
+      <div fxFlex="20" fxLayoutAlign="end center" class="card-more-btn-container">
+        <button mat-icon-button (click)="editClickListener.next()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</mat-card>

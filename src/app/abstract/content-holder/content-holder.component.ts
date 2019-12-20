@@ -39,8 +39,8 @@ export class ContentHolderComponent extends AbstractComponent implements OnInit,
   uploadProgress: Observable<number>;
 
   constructor(breakpointObserver: BreakpointObserver,
-              private adminService: AdminService,
               snackBar: MatSnackBar,
+              private adminService: AdminService,
               private dataService: DataService,
               private router: Router,
               private dialog: MatDialog,

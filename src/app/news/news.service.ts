@@ -3,7 +3,7 @@ import {News, NEWS_TEAM_YOUTH_AGES} from "./news";
 import {Router} from "@angular/router";
 import {
   TC_NEWS_GENDER_M, TC_NEWS_GENDER_W,
-  TC_NEWS_PATH_EDIT,
+  TC_PATH_EDIT,
   TC_NEWS_TEAM_MEN, TC_NEWS_TEAM_WOMEN, TC_NEWS_TEAM_YOUTH, TC_ROUTE_DETAIL, TC_ROUTE_NEWS,
   TranslationService
 } from "../translation.service";
@@ -131,7 +131,7 @@ export class NewsService {
 
   openNewsEdit(toExpandNewsId: string) {
     const url = [
-      TC_NEWS_PATH_EDIT,
+      TC_PATH_EDIT,
       toExpandNewsId
     ].join('/');
     this.router.navigate([url])

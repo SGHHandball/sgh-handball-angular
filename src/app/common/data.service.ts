@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {from, Observable} from "rxjs";
+import {from, Observable, of} from "rxjs";
 import {DB_COLLECTION_NEWS, News, NewsType} from "../news/news";
 import {FireApiService} from "./fire-api.service";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
@@ -13,10 +13,12 @@ import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component
 import {Hall} from "../halls/hall";
 import {Training} from "../trainings/training";
 import {Season} from "../seasons/season";
-import {DB_COLLECTION_CONTENT, DB_COLLECTION_SEASONS} from "../constants";
+import {DB_COLLECTION_CONTENT, DB_COLLECTION_SEASONS, DB_COLLECTION_SPONSORS} from "../constants";
 import {Content} from "../model/content";
 import {IImage} from "ng2-image-compress";
 import {environment} from "../../environments/environment";
+import {Sponsor} from "../model/sponsor";
+import {map, switchMap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +57,7 @@ export class DataService {
     return this.service.getAllNews(newsType);
   }
 
-  getNewsById(id: string): Observable<News[]> {
+  getNewsById(id: string): Observable<News> {
     return this.service.getNewsById(id);
   }
 
@@ -104,7 +106,7 @@ export class DataService {
     return this.service.updateImagesInTeam(team);
   }
 
-  uploadImage(image:IImage, subPath?: string): Observable<ImageProgress> {
+  uploadImage(image: IImage, subPath?: string): Observable<ImageProgress> {
     return this.service.uploadImage(image, subPath);
   }
 
@@ -199,5 +201,26 @@ export class DataService {
   addContent(topic: string, content: Content): Observable<void> {
     return this.service.addContent(topic, content);
   }
+
+  getSponsors(): Observable<Sponsor[]> {
+    return this.service.getSponsors();
+  }
+
+  getSponsorsById(id: string): Observable<Sponsor> {
+    return this.service.getSponsorsById(id);
+  }
+
+  addSponsor(sponsor: Sponsor): Observable<string> {
+    return this.service.addSponsor(sponsor);
+  }
+
+  changeSponsor(sponsor: Sponsor): Observable<void> {
+    return this.service.changeSponsor(sponsor);
+  }
+
+  deleteSponsor(sponsor: Sponsor): Observable<void> {
+    return this.service.deleteSponsor(sponsor);
+  }
+
 
 }

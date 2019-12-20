@@ -1,0 +1,46 @@
+<mat-card class="card-container">
+  <mat-card-content>
+    <app-image-upload-manager
+      [urls]="sponsor && sponsor.imgLinks && sponsor.imgLinks.length>0 ? sponsor.imgLinks : []"
+      (itemDeleteEventListener)="deleteImage($event)"
+      (afterItemMovedEventListener)="changeSponsor()"
+      [uploadProgress]="uploadProgress"
+      (uploadEventListener)="upload($event)"
+    ></app-image-upload-manager>
+
+    <mat-form-field appearance="outline">
+      <input
+        placeholder="Sponsor Name"
+        matInput
+        [formControl]="nameFormControl"
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <input
+        placeholder="Sponsor Link"
+        matInput
+        [formControl]="linkFormControl"
+      >
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <textarea
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="5"
+        placeholder="Sponsor Beschreibung"
+        matInput
+        [formControl]="descriptionFormControl"
+      ></textarea>
+    </mat-form-field>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="warn" (click)="closeEditMode()">Zurück</button>
+    <button mat-raised-button
+            color="primary"
+            (click)="saveSponsorValues()"
+    >Speichern
+    </button>
+  </mat-card-actions>
+</mat-card>

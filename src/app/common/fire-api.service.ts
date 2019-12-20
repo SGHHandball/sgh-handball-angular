@@ -21,7 +21,7 @@ import {
   DB_COLLECTION_CONTENT, DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CURRENT_SEASON,
   DB_COLLECTION_HALLS,
-  DB_COLLECTION_SEASONS,
+  DB_COLLECTION_SEASONS, DB_COLLECTION_SPONSORS,
   DB_COLLECTION_TRAININGS,
   FB_FUNCTIONS_ADD_USER,
   SGH_USERS
@@ -31,6 +31,7 @@ import {Training} from "../trainings/training";
 import {Season} from "../seasons/season";
 import {Content} from "../model/content";
 import {IImage} from "ng2-image-compress";
+import {Sponsor} from "../model/sponsor";
 
 @Injectable({
   providedIn: 'root'
@@ -172,14 +173,12 @@ export class FireApiService {
   }
 
 
-  getNewsById(id: string): Observable<News[]> {
+  getNewsById(id: string): Observable<News> {
     return this.db
       .collection<News>(
-        DB_COLLECTION_NEWS,
-        ref => {
-          return ref.where(FireBaseModel.ID, '==', id)
-        }
-      ).valueChanges();
+        DB_COLLECTION_NEWS)
+      .doc<News>(id)
+      .valueChanges()
   }
 
   getNewsByType(newsType?: NewsType): Observable<News[]> {
@@ -661,5 +660,66 @@ export class FireApiService {
       .doc<Content>(topic)
       .set(content))
   }
+
+  //SPONSORS
+  getSponsors(): Observable<Sponsor[]> {
+    return this.db.collection<Sponsor>(DB_COLLECTION_SPONSORS)
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Sponsor;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      )
+  }
+
+  getSponsorsById(id: string): Observable<Sponsor> {
+    return this.db
+      .collection<Sponsor>(
+        DB_COLLECTION_SPONSORS)
+      .doc<Sponsor>(id)
+      .valueChanges()
+      .pipe(
+        map(sponsor => {
+          sponsor.id = id;
+          return sponsor;
+        })
+      );
+  }
+
+  addSponsor(sponsor: Sponsor): Observable<string> {
+    return from(
+      this.db
+        .collection<Sponsor>(DB_COLLECTION_SPONSORS)
+        .add(JSON.parse(JSON.stringify(sponsor)))
+    )
+      .pipe(
+        switchMap(result => {
+          return of(result.id)
+        })
+      )
+  }
+
+  changeSponsor(sponsor: Sponsor): Observable<void> {
+    return from(
+      this.db
+        .collection<Sponsor>(DB_COLLECTION_SPONSORS)
+        .doc<Sponsor>(sponsor.id)
+        .set(JSON.parse(JSON.stringify(sponsor)))
+    );
+  }
+
+  deleteSponsor(sponsor: Sponsor): Observable<void> {
+    return from(
+      this.db
+        .collection<Sponsor>(DB_COLLECTION_SPONSORS)
+        .doc<Sponsor>(sponsor.id)
+        .delete());
+  }
+
 
 }

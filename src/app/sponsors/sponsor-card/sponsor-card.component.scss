@@ -1,0 +1,46 @@
+.dashboard-card {
+  padding: 0;
+  margin-bottom: 16px;
+
+  .card-container {
+
+    :hover {
+      cursor: pointer;
+    }
+
+    .sponsor-img {
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-top-right-radius: 4px;
+      -moz-border-radius-topleft: 4px;
+      -moz-border-radius-topright: 4px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      width: 100%;
+    }
+
+    .card-content {
+      padding: 16px;
+
+      .card-title {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .card-sub-actions {
+
+    .card-more-btn-container {
+      display: flex;
+
+      .news-state {
+        margin: auto 4px;
+      }
+
+      .more-button {
+      }
+    }
+  }
+
+}
+
+

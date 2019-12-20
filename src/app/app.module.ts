@@ -88,6 +88,9 @@ import {NgxEditorModule} from "ngx-editor";
 import {NgxImageCompressService} from "ngx-image-compress";
 import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
 import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
+import { SponsorsComponent } from './sponsors/sponsors.component';
+import { SponsorCardComponent } from './sponsors/sponsor-card/sponsor-card.component';
+import { SponsorEditComponent } from './sponsors/sponsor-edit/sponsor-edit.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +136,10 @@ import {ContentHolderComponent} from "./abstract/content-holder/content-holder.c
     NewsCardDetailComponent,
     SliderComponent,
     RichTextEditorComponent,
-    ContentHolderComponent
+    ContentHolderComponent,
+    SponsorsComponent,
+    SponsorCardComponent,
+    SponsorEditComponent
   ],
   imports: [
     BrowserModule,
