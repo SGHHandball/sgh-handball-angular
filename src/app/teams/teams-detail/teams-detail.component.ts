@@ -18,6 +18,7 @@ import {ɵAnimationRendererFactory} from "@angular/platform-browser/animations";
 import {FormControl} from "@angular/forms";
 import {SliderImage} from "../../model/slider-image";
 import {SliderService} from "../../abstract/slider/slider.service";
+import {IImage} from "ng2-image-compress";
 
 @Component({
   selector: 'app-teams-detail',
@@ -51,9 +52,9 @@ export class TeamsDetailComponent extends AbstractComponent {
   }
 
 
-  upload(event) {
+  upload(image: IImage) {
     this.uploadProgress = undefined;
-    this.dataService.uploadImage(event, this.team.id)
+    this.dataService.uploadImage(image, this.team.id)
       .pipe(
         takeUntil(this.destroy$),
         switchMap(

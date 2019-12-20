@@ -33,6 +33,7 @@ import {SeasonService} from "../../seasons/season.service";
 import {DataService} from "../../common/data.service";
 import {ActivatedRoute} from "@angular/router";
 import {ImageProgress} from "../../model/image-progress";
+import {IImage} from "ng2-image-compress";
 
 @Component({
   selector: 'app-news-edit',
@@ -221,9 +222,9 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
   }
 
 
-  upload(event) {
+  upload(image: IImage) {
     this.uploadProgress = undefined;
-    this.dataService.uploadImage(event, this.news.id)
+    this.dataService.uploadImage(image, this.news.id)
       .pipe(
         takeUntil(this.destroy$),
         switchMap(

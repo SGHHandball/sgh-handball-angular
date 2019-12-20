@@ -15,6 +15,8 @@ import {Training} from "../trainings/training";
 import {Season} from "../seasons/season";
 import {DB_COLLECTION_CONTENT, DB_COLLECTION_SEASONS} from "../constants";
 import {Content} from "../model/content";
+import {IImage} from "ng2-image-compress";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -102,8 +104,8 @@ export class DataService {
     return this.service.updateImagesInTeam(team);
   }
 
-  uploadImage(event, subPath?: string): Observable<ImageProgress> {
-    return this.service.uploadImage(event, subPath);
+  uploadImage(image:IImage, subPath?: string): Observable<ImageProgress> {
+    return this.service.uploadImage(image, subPath);
   }
 
   getDownloadPath(path: string): Observable<string> {

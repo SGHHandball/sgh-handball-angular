@@ -85,6 +85,8 @@ import { NewsCardDetailComponent } from './news/news-card-detail/news-card-detai
 import {SliderComponent} from "./abstract/slider/slider.component";
 import { RichTextEditorComponent } from './abstract/rich-text-editor/rich-text-editor.component';
 import {NgxEditorModule} from "ngx-editor";
+import {NgxImageCompressService} from "ngx-image-compress";
+import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
 
 @NgModule({
   declarations: [
@@ -181,7 +183,9 @@ import {NgxEditorModule} from "ngx-editor";
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
     {provide: FunctionsRegionToken, useValue: 'europe-west1'},
     {provide: FirestoreSettingsToken, useValue: {}},
-    PendingChangesGuard
+    PendingChangesGuard,
+    NgxImageCompressService,
+    ImageCompressService,ResizeOptions
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginDialogComponent, AdminUserDialogComponent,

@@ -1,8 +1,9 @@
 <button mat-icon-button class="img" (click)="openFileUpload()" *ngIf="!uploadProgress">
   <mat-icon>attach_file</mat-icon>
 </button>
-<mat-progress-spinner [diameter]="30" *ngIf="uploadProgress && (uploadProgress | async) !== 100" [value]="(uploadProgress | async)"></mat-progress-spinner>
+<mat-progress-spinner [diameter]="30" *ngIf="uploadProgress && (uploadProgress | async) !== 100"
+                      [value]="(uploadProgress | async)"></mat-progress-spinner>
 <mat-spinner [diameter]="30" *ngIf="uploadProgress && (uploadProgress | async) === 100"></mat-spinner>
 
 
-<input id="fileUpload" class="file-upload" type="file" (change)="uploadEventListener.next($event)" accept=".png,.jpg"/>
+<input id="fileUpload" class="file-upload" type="file" (change)="onChange($event)" accept=".png,.jpg"/>

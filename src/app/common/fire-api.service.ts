@@ -30,6 +30,7 @@ import {Hall} from "../halls/hall";
 import {Training} from "../trainings/training";
 import {Season} from "../seasons/season";
 import {Content} from "../model/content";
+import {IImage} from "ng2-image-compress";
 
 @Injectable({
   providedIn: 'root'
@@ -456,10 +457,10 @@ export class FireApiService {
 
   IMAGES_PATH = 'images';
 
-  uploadImage(event, subPath?: string): Observable<ImageProgress> {
+  uploadImage(image: IImage, subPath?: string): Observable<ImageProgress> {
     const randomId = Math.random().toString(36).substring(2);
     const path = [this.IMAGES_PATH, subPath, randomId].join('/');
-    const ref = this.afStorage.ref(path).put(event.target.files[0]);
+    const ref = this.afStorage.ref(path).putString(image.imageDataUrl, 'data_url');
     return ref
       .snapshotChanges()
       .pipe(
