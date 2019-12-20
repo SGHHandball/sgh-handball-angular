@@ -181,7 +181,7 @@ export class FireApiService {
         if (checked) query = query.where(FireBaseModel.CHECKED, '==', true);
         query = query.orderBy(FireBaseModel.DATE, 'desc');
         if (lastDoc) query = query.startAfter(lastDoc);
-        query = query.limit(5);
+        query = query.limit(9);
         return query;
       }
     ).get()

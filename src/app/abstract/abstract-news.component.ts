@@ -30,6 +30,7 @@ import {catchError, takeUntil} from "rxjs/operators";
 export abstract class AbstractNewsComponent extends AbstractComponent implements OnDestroy {
 
   destroy$ = new Subject();
+  news: News[] = [];
 
   constructor(breakpointObserver: BreakpointObserver,
               public translationService: TranslationService,
@@ -58,6 +59,9 @@ export abstract class AbstractNewsComponent extends AbstractComponent implements
           )
           .subscribe(
             _ => {
+              if (this.news.includes(news)) {
+                this.news.splice(this.news.indexOf(news), 1);
+              }
               this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS))
             }
           )

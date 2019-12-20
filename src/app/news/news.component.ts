@@ -34,8 +34,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   lastItem: any;
   finished = true;
   allNewsLoaded = false;
-  news: News[] = [];
-
   addNewsAccess = this.adminService.hasUserAddNewsAccess().pipe(share());
   eventAdmin = this.adminService.isUserEventAdmin().pipe(share());
   teamRights = this.adminService.hasUserTeamRights().pipe(share());
