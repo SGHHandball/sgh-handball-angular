@@ -6,7 +6,7 @@
       <div *ngFor="let url of urls; let i = index">
         <img
           [lazyLoad]="url"
-          defaultImage="assets\img\SghLogo.png"
+          defaultImage="assets/img/SghLogoOnlyTransparent.png"
           class="img-preview"
           cdkDrag>
         <button mat-icon-button (click)="itemDeleteEventListener.next(i)" class="img-upload-delete-btn">
