@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DocumentService} from "./document.service";
 import {NestedTreeControl} from "@angular/cdk/tree";
-import {MatDialog, MatSnackBar, MatTreeNestedDataSource} from "@angular/material";
+import {MatDialog,  MatTreeNestedDataSource} from "@angular/material";
 import {Document} from "./document";
 import {
   TC_CANCEL,
@@ -20,17 +20,16 @@ import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
 } from "../abstract/default-input-dialog/default-input-dialog.component";
-import {AbstractComponent} from "../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {share} from "rxjs/operators";
+import {share, switchMap, takeUntil} from "rxjs/operators";
+import {AbstractService} from "../abstract/abstract.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.css']
 })
-export class DocumentsComponent extends AbstractComponent implements OnInit {
-
+export class DocumentsComponent implements OnInit, OnDestroy {
   treeControl = new NestedTreeControl<Document>(document => document.documents);
   dataSource = new MatTreeNestedDataSource<Document>();
 
@@ -39,13 +38,13 @@ export class DocumentsComponent extends AbstractComponent implements OnInit {
 
   documentsAdmin = this.adminService.isUserDocumentsAdmin().pipe(share());
 
-  constructor(breakpointObserver: BreakpointObserver,
-              snackBar: MatSnackBar,
-              public documentService: DocumentService,
+  destroy$ = new Subject();
+
+  constructor(public documentService: DocumentService,
               public translationService: TranslationService,
               public adminService: AdminService,
-              private dialog: MatDialog) {
-    super(breakpointObserver, snackBar);
+              private dialog: MatDialog,
+              public abstractService: AbstractService) {
   }
 
   hasChild = (_: number, document: Document) => !!document.documents && document.documents.length > 0;
@@ -61,17 +60,23 @@ export class DocumentsComponent extends AbstractComponent implements OnInit {
   }
 
   addNewFolder(document: Document) {
-    const dialogRef = this.dialog.open(DefaultInputDialogComponent, {
-      width: this.dialogWidth,
-      data: new DefaultInputDialogData(
-        this.translationService.get(TC_DOCUMENTS_ADD_NEW_FOLDER),
-        this.translationService.get(TC_DOCUMENTS_FOLDER_NAME),
-        this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-        this.translationService.get(TC_CANCEL),
-        this.translationService.get(TC_OK)
-      )
-    });
-    dialogRef.afterClosed().subscribe(result => {
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(DefaultInputDialogComponent, {
+            width: dialogWidth,
+            data: new DefaultInputDialogData(
+              this.translationService.get(TC_DOCUMENTS_ADD_NEW_FOLDER),
+              this.translationService.get(TC_DOCUMENTS_FOLDER_NAME),
+              this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+              this.translationService.get(TC_CANCEL),
+              this.translationService.get(TC_OK)
+            )
+          }).afterClosed()
+        )
+      ).subscribe(result => {
       if (result) {
         let documentExisting = false;
         if (document) {
@@ -82,16 +87,23 @@ export class DocumentsComponent extends AbstractComponent implements OnInit {
         }
         this.documentService.changeDocument(document, documentExisting)
           .then(() => {
-            this.openSnackBar(this.translationService.get(documentExisting ? TC_DOCUMENTS_ADD_NEW_FOLDER_SUCCESS : TC_GENERAL_EDIT_SUCCESS));
+            this.abstractService.openSnackBar(this.translationService.get(documentExisting ? TC_DOCUMENTS_ADD_NEW_FOLDER_SUCCESS : TC_GENERAL_EDIT_SUCCESS));
             this.reloadData();
           })
-          .catch(() => this.openSnackBar(this.translationService.get(documentExisting ? TC_DOCUMENTS_ADD_NEW_FOLDER_FAIL : TC_GENERAL_EDIT_FAIL)));
+          .catch(() => this.abstractService.openSnackBar(this.translationService.get(documentExisting ? TC_DOCUMENTS_ADD_NEW_FOLDER_FAIL : TC_GENERAL_EDIT_FAIL)));
       }
     })
   }
 
   addNewFiles(document: Document) {
 
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.destroy$) {
+      this.destroy$.next();
+    }
   }
 
 }

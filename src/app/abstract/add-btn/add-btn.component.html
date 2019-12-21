@@ -1,5 +1,5 @@
 <button mat-mini-fab class="add-btn"
-        [ngClass]="!(isHandset$ | async) ? 'add-btn-web' : 'add-btn-mobile'"
+        [ngClass]="!(abstractService.isHandset$ | async) ? 'add-btn-web' : 'add-btn-mobile'"
         *ngIf="!matMenu"
         (click)="clickListener.next()"
 >
@@ -8,7 +8,7 @@
 
 <button mat-mini-fab class="add-btn"
         [matMenuTriggerFor]="matMenu"
-        [ngClass]="!(isHandset$ | async) ? 'add-btn-web' : 'add-btn-mobile'"
+        [ngClass]="!(abstractService.isHandset$ | async) ? 'add-btn-web' : 'add-btn-mobile'"
         *ngIf="matMenu"
         (menuOpened)="menuOpen = true"
         (menuClosed)="menuOpen = false"

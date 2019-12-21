@@ -9,17 +9,16 @@ import {IImage} from "ng2-image-compress";
 import {environment} from "../../../environments/environment";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
 import {TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE} from "../../translation.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
+import {MatDialog} from "@angular/material";
 import {Location} from '@angular/common';
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-sponsor-edit',
   templateUrl: './sponsor-edit.component.html',
   styleUrls: ['./sponsor-edit.component.scss']
 })
-export class SponsorEditComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class SponsorEditComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
   uploadProgress: Observable<number>;
@@ -33,10 +32,8 @@ export class SponsorEditComponent extends AbstractComponent implements OnInit, O
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
               private dialog: MatDialog,
-              breakpointObserver: BreakpointObserver,
               private location: Location,
-              snackBar: MatSnackBar,) {
-    super(breakpointObserver, snackBar);
+              private abstractService: AbstractService) {
   }
 
   ngOnInit() {
@@ -108,39 +105,44 @@ export class SponsorEditComponent extends AbstractComponent implements OnInit, O
 
 
   changeSponsor() {
-    console.log(this.sponsor);
     this.dataService
       .changeSponsor(this.sponsor)
       .pipe(
         takeUntil(this.destroy$)
       )
       .subscribe(_ => {
-        this.openSnackBar("Sponsor erfolgreich geändert")
+        this.abstractService.openSnackBar("Sponsor erfolgreich geändert")
       });
   }
 
 
   deleteImage(index: number) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataService.deleteImage(this.sponsor.imgPaths[index])
-          .pipe(
-            takeUntil(this.destroy$),
-            switchMap(_ => {
-              this.sponsor.imgLinks.splice(index, 1);
-              this.sponsor.imgPaths.splice(index, 1);
-              return this.dataService.changeSponsor(this.sponsor);
-            })
-          )
-          .subscribe()
-      }
-    });
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth => this.dialog.open(DefaultDialogComponent, {
+            width: dialogWidth,
+            data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
+          }
+          ).afterClosed()
+        ),
+        switchMap(result => {
+            if (result) {
+              return this.dataService.deleteImage(this.sponsor.imgPaths[index]);
+            }
+            return of("Cancel")
+          }
+        ),
+        switchMap(result => {
+          if (!result) {
+            this.sponsor.imgLinks.splice(index, 1);
+            this.sponsor.imgPaths.splice(index, 1);
+            return this.dataService.changeSponsor(this.sponsor);
+          }
+          return of(undefined)
+        })
+      ).subscribe();
   }
 
   ngOnDestroy(): void {

@@ -1,7 +1,7 @@
 <mat-card
   *ngIf="news"
   class="card-detail-container"
-  [style.margin]="(isHandset$|async) ? '16px':'16px auto'"
+  [style.margin]="(abstractService.isHandset$|async) ? '16px':'16px auto'"
 >
 
   <button mat-icon-button color="warn" class="cancel-btn" (click)="closeNews()">

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSnackBar, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
 import {Training, TrainingDate, TrainingGroup} from "./training";
 import {
   TC_GENERAL_DELETE_HEADER,
@@ -13,26 +13,25 @@ import {
   TC_TRAININGS_EDIT_TRAINING_SUCCESS,
   TC_TRAININGS_EDIT_TRAINING_FAIL,
 } from "../translation.service";
-import {AbstractComponent} from "../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-edit-dialog.component";
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
 import {DataService} from "../common/data.service";
-import {Observable, of, Subject} from "rxjs";
-import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
+import {of, Subject} from "rxjs";
+import {catchError,  switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
 import {Team} from "../teams/team";
 import {Hall} from "../halls/hall";
 import {SeasonService} from "../seasons/season.service";
+import {AbstractService} from "../abstract/abstract.service";
 
 @Component({
   selector: 'app-trainings',
   templateUrl: './trainings.component.html',
   styleUrls: ['./trainings.component.css']
 })
-export class TrainingsComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class TrainingsComponent implements OnInit, OnDestroy {
 
   displayedColumnsAdmin: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER, 'edit', 'delete'];
   displayedColumns: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER];
@@ -48,22 +47,32 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
   trainingsAdmin: boolean;
   trainingsAdminOnceReceived = false;
 
-  constructor(public breakpointObserver: BreakpointObserver,
-              public translationService: TranslationService,
-              private dialog: MatDialog,
-              public adminService: AdminService,
-              private dataService: DataService,
-              public teamService: TeamService,
-              snackBar: MatSnackBar,
-              private seasonService: SeasonService) {
-    super(breakpointObserver, snackBar);
+  dialogWidth: string;
+
+  constructor(
+    public translationService: TranslationService,
+    private dialog: MatDialog,
+    public adminService: AdminService,
+    private dataService: DataService,
+    public teamService: TeamService,
+    private seasonService: SeasonService,
+    public abstractService: AbstractService
+  ) {
   }
 
   ngOnInit() {
+    this.initDialogWidth();
     this.initTrainingsAdmin();
     this.initHalls();
     this.initTeams();
     this.initTrainings();
+  }
+
+  initDialogWidth() {
+    this.abstractService
+      .dialogWidth$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(dialogWidth => this.dialogWidth = dialogWidth);
   }
 
   initTrainingsAdmin() {
@@ -151,14 +160,14 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
           }
         ),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
       )
       .subscribe(
         error => {
-          if (!error) this.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_SUCCESS));
+          if (!error) this.abstractService.openSnackBar(this.translationService.get(TC_TRAININGS_EDIT_TRAINING_SUCCESS));
         }
       );
   }
@@ -188,7 +197,7 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
           }
         ),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
@@ -196,7 +205,7 @@ export class TrainingsComponent extends AbstractComponent implements OnInit, OnD
       .subscribe(
         error => {
           if (!error) {
-            this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+            this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
           }
         }
       );

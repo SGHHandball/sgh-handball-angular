@@ -6,7 +6,7 @@
   </button>
   <img src="assets/img/SghLogoOnlyTran.png" class="logo" (click)="goToHome()">
   <h1 class="toolbar-title"
-      (click)="goToHome()">{{(isHandset$|async) ? (appNameVisible ? appNameShort : '') : appName}}</h1>
+      (click)="goToHome()">{{(abstractService.isHandset$|async) ? (appNameVisible ? appNameShort : '') : appName}}</h1>
   <span class="example-spacer"></span>
   <app-auth></app-auth>
 </mat-toolbar>

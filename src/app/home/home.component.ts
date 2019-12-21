@@ -1,8 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {News} from "../model/news";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatSnackBar} from "@angular/material";
-import {AbstractComponent} from "../abstract/abstract.component";
 import {HomeService} from "./home.service";
 import {DataService} from "../common/data.service";
 import {Subject} from "rxjs";

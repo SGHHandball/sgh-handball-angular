@@ -13,7 +13,7 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card class="content" [class.web-content]="!(isHandset$|async)">
+<mat-card class="content" [class.web-content]="!(abstractService.isHandset$|async)">
   <div fxLayout="column">
 
 

@@ -1,8 +1,6 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {News, NewsType,} from "../../model/news";
 import {FormControl} from "@angular/forms";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {
   TC_EDIT_NEWS,
   TC_GENERAL_DELETE_HEADER,
@@ -22,26 +20,26 @@ import {
   TC_SAVE,
   TranslationService
 } from "../../translation.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
-import {delay, map, startWith, switchMap, take, takeUntil} from "rxjs/operators";
+import {map, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../seasons/season.service";
 import {DataService} from "../../common/data.service";
 import {ActivatedRoute} from "@angular/router";
-import {ImageProgress} from "../../model/image-progress";
 import {IImage} from "ng2-image-compress";
 import {Season} from "../../seasons/season";
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-news-edit',
   templateUrl: './news-edit.component.html',
   styleUrls: ['./news-edit.component.css']
 })
-export class NewsEditComponent extends AbstractComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   news: News;
 
@@ -82,15 +80,14 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
 
   currentSeason: Season;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              public translationService: TranslationService,
-              private dialog: MatDialog,
-              public newsService: NewsService,
-              private seasonService: SeasonService,
-              private route: ActivatedRoute,
-              private dataService: DataService,
-              snackBar: MatSnackBar) {
-    super(breakpointObserver, snackBar);
+  constructor(
+    public translationService: TranslationService,
+    private dialog: MatDialog,
+    public newsService: NewsService,
+    private seasonService: SeasonService,
+    private route: ActivatedRoute,
+    private dataService: DataService,
+    public abstractService: AbstractService) {
   }
 
 
@@ -215,13 +212,16 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
 
 
   openChangedValuesDialog() {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_NEWS_UNSAVED_DATA_WARNING_HEADER, TC_NEWS_UNSAVED_DATA_WARNING)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth => this.dialog.open(DefaultDialogComponent, {
+            width: dialogWidth,
+            data: new DialogData(TC_NEWS_UNSAVED_DATA_WARNING_HEADER, TC_NEWS_UNSAVED_DATA_WARNING)
+          }
+        ).afterClosed())
+      ).subscribe(result => {
       if (result) {
         this.changedValues = false;
         this.closeNews()
@@ -262,26 +262,31 @@ export class NewsEditComponent extends AbstractComponent implements OnInit, OnDe
 
 
   deleteImage(index: number) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataService.deleteImage(this.news.imgPaths[index])
-          .pipe(
-            takeUntil(this.destroy$),
-            switchMap(_ => {
-              this.news.imgLinks.splice(index, 1);
-              this.news.imgPaths.splice(index, 1);
-              return this.dataService.updateNews(this.news);
-            })
-          )
-          .subscribe()
-      }
-    });
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth => this.dialog.open(DefaultDialogComponent, {
+            width: dialogWidth,
+            data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
+          }
+          ).afterClosed()
+        ),
+        switchMap(result => {
+          if (result) {
+            return this.dataService.deleteImage(this.news.imgPaths[index]);
+          }
+          return of("Cancel")
+        }),
+        switchMap(result => {
+          if (!result) {
+            this.news.imgLinks.splice(index, 1);
+            this.news.imgPaths.splice(index, 1);
+            return this.dataService.updateNews(this.news);
+          }
+          return of(undefined);
+        })
+      ).subscribe();
   }
 
 

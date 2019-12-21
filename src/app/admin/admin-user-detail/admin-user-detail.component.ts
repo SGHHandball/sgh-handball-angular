@@ -9,25 +9,23 @@ import {
   TC_TEAMS_TEAM,
   TranslationService
 } from "../../translation.service";
-import {Team} from "../../teams/team";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
 } from "../../abstract/default-input-dialog/default-input-dialog.component";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {DataService} from "../../common/data.service";
 import {Subject} from "rxjs";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {SeasonService} from "../../seasons/season.service";
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-admin-user-detail',
   templateUrl: './admin-user-detail.component.html',
   styleUrls: ['./admin-user-detail.component.css']
 })
-export class AdminUserDetailComponent extends AbstractComponent implements OnDestroy {
+export class AdminUserDetailComponent implements OnDestroy {
   @Input() sghUser: SghUser;
   @Output() toggleChangeListener = new EventEmitter();
 
@@ -43,14 +41,12 @@ export class AdminUserDetailComponent extends AbstractComponent implements OnDes
 
   trainingsTC = TC_ROUTE_TRAINING;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              snackBar: MatSnackBar,
-              public translationService: TranslationService,
+  constructor(public translationService: TranslationService,
               public dialog: MatDialog,
               private dataService: DataService,
-              private seasonService: SeasonService
+              private seasonService: SeasonService,
+              private abstractService: AbstractService
   ) {
-    super(breakpointObserver, snackBar);
   }
 
   changeAdminMode() {
@@ -93,17 +89,22 @@ export class AdminUserDetailComponent extends AbstractComponent implements OnDes
         switchMap(currentSeason => this.dataService.getTeamsBySeason(this.seasonService.getSeasonAsString(currentSeason))),
         switchMap(teams => {
           const teamsAsStrings = teams.map(team => [team.teamAge, team.teamSeason].join(" - "));
-          return this.dialog.open(DefaultInputDialogComponent, {
-            width: this.dialogWidth,
-            data: new DefaultInputDialogData(
-              this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
-              this.translationService.get(TC_TEAMS_TEAM),
-              this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-              this.translationService.get(TC_CANCEL),
-              this.translationService.get(TC_OK)
+          return this.abstractService.dialogWidth$
+            .pipe(
+              switchMap(dialogWidth =>
+                this.dialog.open(DefaultInputDialogComponent, {
+                  width: dialogWidth,
+                  data: new DefaultInputDialogData(
+                    this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
+                    this.translationService.get(TC_TEAMS_TEAM),
+                    this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+                    this.translationService.get(TC_CANCEL),
+                    this.translationService.get(TC_OK)
+                  )
+                    .withAutocompleteValues(teamsAsStrings)
+                }).afterClosed()
+              )
             )
-              .withAutocompleteValues(teamsAsStrings)
-          }).afterClosed();
         }))
       .subscribe(result => {
         if (result) {

@@ -15,7 +15,7 @@
 
         <div fxLayoutGap="4px">
           <!-- Date - TeamAge -->
-          <div [fxFlex]="!(isHandset$ | async) ? 20 : 50"
+          <div [fxFlex]="!(abstractService.isHandset$ | async) ? 20 : 50"
                fxLayoutAlign="center center"
                class="news-date-container"
           >
@@ -32,7 +32,7 @@
           </div>
 
           <ng-container *ngIf="isNewsTypeReport()">
-            <div [fxFlex]="!(isHandset$ | async) ? 40 : 50"
+            <div [fxFlex]="!(abstractService.isHandset$ | async) ? 40 : 50"
                  fxLayoutAlign="center center"
                  class="news-team-age-container"
             >
@@ -51,7 +51,7 @@
               </mat-form-field>
             </div>
 
-            <div *ngIf="!(isHandset$ | async)" [fxFlex]="40" fxLayoutAlign="center center">
+            <div *ngIf="!(abstractService.isHandset$ | async)" [fxFlex]="40" fxLayoutAlign="center center">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsTeamSeasonTC}}</mat-label>
                 <mat-select [formControl]="teamSeasonFormControl">
@@ -66,11 +66,11 @@
           </ng-container>
         </div>
 
-        <div fxLayoutGap="4px" [fxLayout]="!(isHandset$ | async) ? 'row' : 'column'" *ngIf="isNewsTypeReport()">
+        <div fxLayoutGap="4px" [fxLayout]="!(abstractService.isHandset$ | async) ? 'row' : 'column'" *ngIf="isNewsTypeReport()">
           <!-- Teams - Score -->
 
-          <div [fxFlex]="!(isHandset$ | async) ? 40 : 100">
-            <div [fxFlex]="!(isHandset$ | async) ? 100 : 70" fxLayoutAlign="center center">
+          <div [fxFlex]="!(abstractService.isHandset$ | async) ? 40 : 100">
+            <div [fxFlex]="!(abstractService.isHandset$ | async) ? 100 : 70" fxLayoutAlign="center center">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsHomeTeam}}</mat-label>
                 <input [formControl]="homeTeamFormControl" type="text" matInput
@@ -78,7 +78,7 @@
               </mat-form-field>
             </div>
 
-            <div *ngIf="(isHandset$ | async)" [fxFlex]="30" fxLayoutAlign="center center">
+            <div *ngIf="(abstractService.isHandset$ | async)" [fxFlex]="30" fxLayoutAlign="center center">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsTeamSeasonTC}}</mat-label>
                 <mat-select [formControl]="teamSeasonFormControl">
@@ -92,9 +92,9 @@
             </div>
           </div>
 
-          <div [fxFlex]="!(isHandset$ | async) ? 60 : 100" fxLayoutGap="4px">
+          <div [fxFlex]="!(abstractService.isHandset$ | async) ? 60 : 100" fxLayoutGap="4px">
 
-            <div [fxFlex]="!(isHandset$ | async) ? 66 : 70" fxLayoutAlign="center center">
+            <div [fxFlex]="!(abstractService.isHandset$ | async) ? 66 : 70" fxLayoutAlign="center center">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsEnemyTeam}}</mat-label>
                 <input [formControl]="enemyTeamFormControl" type="text" matInput
@@ -102,7 +102,7 @@
               </mat-form-field>
             </div>
 
-            <div [fxFlex]="!(isHandset$ | async) ? 34 : 30" fxLayoutAlign="center center" class="news-score-container">
+            <div [fxFlex]="!(abstractService.isHandset$ | async) ? 34 : 30" fxLayoutAlign="center center" class="news-score-container">
               <mat-form-field appearance="outline">
                 <mat-label>{{newsScoreTC}}</mat-label>
                 <input matInput [formControl]="scoreFormControl"
@@ -117,7 +117,7 @@
         </div>
 
 
-        <div [fxFlex]="!(isHandset$ | async) ? 50 : 100" fxLayoutAlign="center center"
+        <div [fxFlex]="!(abstractService.isHandset$ | async) ? 50 : 100" fxLayoutAlign="center center"
              class="news-title-container">
 
           <mat-form-field appearance="outline">

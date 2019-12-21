@@ -39,7 +39,6 @@ import {
 } from "@angular/material";
 import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
-import {AbstractComponent} from './abstract/abstract.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NewsComponent} from './news/news.component';
 import {NewsEditComponent} from './news/news-edit/news-edit.component';
@@ -102,7 +101,6 @@ import {CookieService} from "ngx-cookie-service";
     AppShellComponent,
     ToolbarComponent,
     SidenavComponent,
-    AbstractComponent,
     NewsComponent,
     NewsEditComponent,
     NewsMoreMenuComponent,

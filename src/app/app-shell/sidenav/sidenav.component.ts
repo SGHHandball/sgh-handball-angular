@@ -1,6 +1,4 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {BreakpointObserver} from '@angular/cdk/layout';
-import {AbstractComponent} from "../../abstract/abstract.component";
 import {Router} from "@angular/router";
 import {
   TC_ROUTE_HEADER_CLUB,
@@ -15,26 +13,25 @@ import {
   NAVIGATION_ITEMS_INFO,
   NAVIGATION_ITEMS_OTHER, NavigationItem
 } from "./navigation-item";
-import {MatSidenav, MatSnackBar} from "@angular/material";
+import {MatSidenav} from "@angular/material";
 import {Team} from "../../teams/team";
-import {Observable, of, Subject} from "rxjs";
-import {map, switchMap, takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
+import {first, map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
 import {SeasonService} from "../../seasons/season.service";
 import {AdminService} from "../../admin/admin.service";
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class SidenavComponent implements OnInit, OnDestroy {
 
   @ViewChild('drawer', {static: true}) drawer: MatSidenav;
 
   destroy$ = new Subject();
-
-  handset: boolean;
 
   navItemsHeaderClubTC = TC_ROUTE_HEADER_CLUB;
   navItemsHeaderInfoTC = TC_ROUTE_HEADER_INFO;
@@ -56,18 +53,14 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
 
   teamsAdmin: boolean;
 
-  constructor(public breakpointObserver: BreakpointObserver,
-              private router: Router,
-              public translationService: TranslationService,
-              snackBar: MatSnackBar,
-              private dataService: DataService,
-              private seasonService: SeasonService,
-              private adminService: AdminService
+  constructor(
+    private router: Router,
+    public translationService: TranslationService,
+    private dataService: DataService,
+    private seasonService: SeasonService,
+    private adminService: AdminService,
+    public abstractService: AbstractService
   ) {
-    super(breakpointObserver, snackBar);
-    this.isHandset$.subscribe(handset => {
-      this.handset = handset;
-    })
   }
 
   goToHome() {
@@ -75,9 +68,14 @@ export class SidenavComponent extends AbstractComponent implements OnInit, OnDes
   }
 
   closeSideNavOnHandheldMode() {
-    if (this.handset) {
-      this.drawer.close();
-    }
+    this.abstractService
+      .isHandset$
+      .pipe(first())
+      .subscribe(handset => {
+        if (handset) {
+          this.drawer.close();
+        }
+      })
   }
 
   toogleSideNav() {

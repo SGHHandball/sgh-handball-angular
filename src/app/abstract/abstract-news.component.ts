@@ -1,6 +1,4 @@
 import {Component, OnDestroy} from '@angular/core';
-import {BreakpointObserver} from '@angular/cdk/layout';
-import {AbstractComponent} from "./abstract.component";
 import {
   TC_NEWS_CHECKED_HEADER,
   TC_NEWS_CHECKED_MESSAGE,
@@ -14,7 +12,7 @@ import {
   TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_EDIT_FAIL,
 } from "../translation.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {environment} from "../../environments/environment";
 import {News} from "../model/news";
 import {NewsService} from "../news/news.service";
@@ -29,9 +27,11 @@ import {SeasonService} from "../seasons/season.service";
 
 @Component({
   selector: 'app-abstract-news',
-  templateUrl: './abstract.component.html'
+  template: ''
 })
 export abstract class AbstractNewsComponent implements OnDestroy {
+
+  //TODO: Change this to an Service
 
   destroy$ = new Subject();
   news: News[] = [];

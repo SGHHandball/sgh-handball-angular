@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {
-  TC_ADMIN,
   TC_AUTH_LOGIN_ERROR,
   TC_AUTH_LOGIN_SUCCESS, TC_AUTH_LOGOUT_ERROR, TC_AUTH_LOGOUT_SUCCESS,
   TC_LOGIN,
@@ -9,24 +8,23 @@ import {
   TC_ROUTE_IMPRINT, TC_ROUTE_SEASONS, TC_USERS,
   TranslationService
 } from "../../translation.service";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {Credentials, LoginDialogComponent} from "./login-dialog/login-dialog.component";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AdminService} from "../../admin/admin.service";
 import {environment} from "../../../environments/environment";
 import {DataService} from "../../common/data.service";
-import {share, takeUntil} from "rxjs/operators";
+import {share, switchMap, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {User} from "firebase";
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class AuthComponent implements OnInit, OnDestroy {
   loginTC = TC_LOGIN;
   logoutTC = TC_LOGOUT;
   usersTC = TC_USERS;
@@ -36,16 +34,15 @@ export class AuthComponent extends AbstractComponent implements OnInit, OnDestro
 
   user: User;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              private router: Router,
-              public translationService: TranslationService,
-              private dialog: MatDialog,
-              public adminService: AdminService,
-              private dataService: DataService,
-              public afAuth: AngularFireAuth,
-              snackBar: MatSnackBar
+  constructor(
+    private router: Router,
+    public translationService: TranslationService,
+    private dialog: MatDialog,
+    public adminService: AdminService,
+    private dataService: DataService,
+    public afAuth: AngularFireAuth,
+    private abstractService: AbstractService
   ) {
-    super(breakpointObserver, snackBar);
   }
 
   isAuthBtnVisible() {
@@ -85,20 +82,25 @@ export class AuthComponent extends AbstractComponent implements OnInit, OnDestro
 
   logout() {
     this.afAuth.auth.signOut().then(() => {
-      this.openSnackBar(this.translationService.get(TC_AUTH_LOGOUT_SUCCESS));
+      this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGOUT_SUCCESS));
     }).catch(error => {
       if (!environment.production) console.log(error);
-      this.openSnackBar(this.translationService.get(TC_AUTH_LOGOUT_ERROR));
+      this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGOUT_ERROR));
     });
   }
 
   openLoginDialog() {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-        width: this.dialogWidth
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(LoginDialogComponent, {
+              width: dialogWidth
+            }
+          ).afterClosed()
+        )
+      ).subscribe(result => {
       this.login(result);
     });
   }
@@ -106,10 +108,10 @@ export class AuthComponent extends AbstractComponent implements OnInit, OnDestro
   login(credentials: Credentials) {
     this.afAuth.auth.signInWithEmailAndPassword(credentials.email, credentials.password)
       .finally(() => {
-        this.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_SUCCESS));
+        this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_SUCCESS));
       }).catch((error) => {
       if (!environment.production) console.error(error);
-      this.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_ERROR));
+      this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_ERROR));
     });
   }
 

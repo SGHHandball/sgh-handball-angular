@@ -1,14 +1,13 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {AbstractComponent} from "../abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatMenu, MatSnackBar} from "@angular/material";
+import {MatMenu} from "@angular/material";
+import {AbstractService} from "../abstract.service";
 
 @Component({
   selector: 'app-add-btn',
   templateUrl: './add-btn.component.html',
   styleUrls: ['./add-btn.component.css']
 })
-export class AddBtnComponent extends AbstractComponent {
+export class AddBtnComponent{
   @Input() matMenu: MatMenu;
   @Input() moreIcon: boolean;
 
@@ -16,8 +15,6 @@ export class AddBtnComponent extends AbstractComponent {
 
   menuOpen: boolean;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              snackBar: MatSnackBar) {
-    super(breakpointObserver, snackBar);
+  constructor(public abstractService:AbstractService) {
   }
 }

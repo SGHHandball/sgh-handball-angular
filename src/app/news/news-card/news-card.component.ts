@@ -1,18 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News, NewsType} from "../../model/news";
+import {getDateString, getTeamsWithScoreAsString, News, NewsType} from "../../model/news";
 import {
   TC_NEWS_EXPORT_CHECK_BOX,
-  TC_NEWS_PLAYERS,
-  TC_NEWS_SUMMARY,
-  TC_NEWS_TYPE_DESCRIPTION,
-  TC_NEWS_TYPE_REPORT,
   TranslationService
 } from "../../translation.service";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatSnackBar} from "@angular/material";
-import {AbstractComponent} from "../../abstract/abstract.component";
 import {Observable, of, Subject} from "rxjs";
-import {map, share, switchMap, takeUntil} from "rxjs/operators";
+import {share, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../common/data.service";
 import {AdminService} from "../../admin/admin.service";
 
@@ -21,7 +14,7 @@ import {AdminService} from "../../admin/admin.service";
   templateUrl: './news-card.component.html',
   styleUrls: ['./news-card.component.scss']
 })
-export class NewsCardComponent extends AbstractComponent implements OnInit {
+export class NewsCardComponent implements OnInit {
 
   @Input() newsCard: News;
 
@@ -43,13 +36,11 @@ export class NewsCardComponent extends AbstractComponent implements OnInit {
 
   exportRight$ = this.adminService.isUserEventAdmin().pipe(share());
 
-  constructor(breakpointObserver: BreakpointObserver,
-              snackBar: MatSnackBar,
+  constructor(
               public translationService: TranslationService,
               private dataService: DataService,
               private adminService: AdminService
   ) {
-    super(breakpointObserver, snackBar);
   }
 
   ngOnInit(): void {

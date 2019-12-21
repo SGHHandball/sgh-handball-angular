@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {Hall} from "./hall";
 import {
   TC_FILTER,
@@ -13,12 +13,9 @@ import {
   TC_GENERAL_DELETE_SUCCESS,
   TC_GENERAL_DELETE_FAIL,
   TC_GENERAL_DELETE_MESSAGE,
-  TC_HALLS_ADD_NEW_HALL_SUCCESS,
   TC_HALLS_EDIT_HALL_SUCCESS,
   TC_HALLS_EDIT_HALL_FAIL
 } from "../translation.service";
-import {AbstractComponent} from "../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {HallsEditDialogComponent} from "./halls-edit-dialog/halls-edit-dialog.component";
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
@@ -26,13 +23,14 @@ import {environment} from "../../environments/environment";
 import {of, Subject} from "rxjs";
 import {DataService} from "../common/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
+import {AbstractService} from "../abstract/abstract.service";
 
 @Component({
   selector: 'app-halls',
   templateUrl: './halls.component.html',
   styleUrls: ['./halls.component.css']
 })
-export class HallsComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class HallsComponent implements OnInit, OnDestroy {
 
   editConst = 'edit';
   deleteConst = 'delete';
@@ -52,13 +50,12 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(public breakpointObserver: BreakpointObserver,
-              public translationService: TranslationService,
-              private dialog: MatDialog,
-              public adminService: AdminService,
-              private dataService: DataService,
-              snackBar: MatSnackBar) {
-    super(breakpointObserver, snackBar);
+  constructor(
+    public translationService: TranslationService,
+    private dialog: MatDialog,
+    public adminService: AdminService,
+    private dataService: DataService,
+    public abstractService: AbstractService) {
   }
 
   ngOnInit() {
@@ -86,15 +83,19 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
   }
 
   openHallsEditDialog(hall: Hall | undefined) {
-    this.dialog
-      .open(
-        HallsEditDialogComponent, {
-          width: this.dialogWidth,
-          data: hall
-        }
-      )
-      .afterClosed()
+    this.abstractService
+      .dialogWidth$
       .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth => this.dialog
+          .open(
+            HallsEditDialogComponent, {
+              width: dialogWidth,
+              data: hall
+            }
+          )
+          .afterClosed()
+        ),
         switchMap(
           result => {
             if (result) {
@@ -108,28 +109,33 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
           }
         ),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
       )
       .subscribe(
         error => {
-          if (!error) this.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
+          if (!error) this.abstractService.openSnackBar(this.translationService.get(TC_HALLS_EDIT_HALL_SUCCESS));
         }
       );
   }
 
   deleteHall(hall: Hall) {
-    this.dialog
-      .open(
-        DefaultDialogComponent, {
-          width: this.dialogWidth,
-          data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-        }
-      )
-      .afterClosed()
+    this.abstractService
+      .dialogWidth$
       .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog
+            .open(
+              DefaultDialogComponent, {
+                width: dialogWidth,
+                data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
+              }
+            )
+            .afterClosed()
+        ),
         switchMap(
           result => {
             if (result) {
@@ -139,14 +145,14 @@ export class HallsComponent extends AbstractComponent implements OnInit, OnDestr
           }
         ),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
       )
       .subscribe(
         error => {
-          if (!error) this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+          if (!error) this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
         }
       );
   }

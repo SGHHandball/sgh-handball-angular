@@ -1,9 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Team} from "../team";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {map, switchMap, takeUntil} from "rxjs/operators";
+import {MatDialog} from "@angular/material";
+import {switchMap, takeUntil} from "rxjs/operators";
 import {Observable, of, Subject} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
@@ -14,18 +12,17 @@ import {
   TranslationService
 } from "../../translation.service";
 import {DataService} from "../../common/data.service";
-import {ɵAnimationRendererFactory} from "@angular/platform-browser/animations";
 import {FormControl} from "@angular/forms";
-import {SliderImage} from "../../model/slider-image";
 import {SliderService} from "../../abstract/slider/slider.service";
 import {IImage} from "ng2-image-compress";
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-teams-detail',
   templateUrl: './teams-detail.component.html',
   styleUrls: ['./teams-detail.component.css']
 })
-export class TeamsDetailComponent extends AbstractComponent {
+export class TeamsDetailComponent {
 
   @Input() team: Team;
   @Input() editTeamsActive: boolean;
@@ -41,14 +38,12 @@ export class TeamsDetailComponent extends AbstractComponent {
 
   linkEditFormControl = new FormControl();
 
-  constructor(breakpointObserver: BreakpointObserver,
-              snackBar: MatSnackBar,
+  constructor(public abstractService: AbstractService,
               private dialog: MatDialog,
               private dataService: DataService,
               public translationService: TranslationService,
-              public sliderService:SliderService
+              public sliderService: SliderService
   ) {
-    super(breakpointObserver, snackBar);
   }
 
 
@@ -84,26 +79,35 @@ export class TeamsDetailComponent extends AbstractComponent {
 
 
   deleteImage(index: number) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataService.deleteImage(this.team.imgPaths[index])
-          .pipe(
-            takeUntil(this.destroy$),
-            switchMap(_ => {
-              this.team.imgLinks.splice(index, 1);
-              this.team.imgPaths.splice(index, 1);
-              return this.dataService.updateImagesInTeam(this.team);
-            })
-          )
-          .subscribe()
-      }
-    });
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(DefaultDialogComponent, {
+              width: dialogWidth,
+              data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
+            }
+          ).afterClosed()
+        ),
+        switchMap(
+          result => {
+            if (result) {
+              return this.dataService.deleteImage(this.team.imgPaths[index]);
+            }
+            return of("Cancel")
+          }
+        ),
+        switchMap(result => {
+          if (!result) {
+            this.team.imgLinks.splice(index, 1);
+            this.team.imgPaths.splice(index, 1);
+            return this.dataService.updateImagesInTeam(this.team);
+          }
+          return of(undefined)
+        })
+      )
+      .subscribe();
   }
 
   disableEditMode() {

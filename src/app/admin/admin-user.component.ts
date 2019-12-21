@@ -1,9 +1,7 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
-import {BreakpointObserver} from '@angular/cdk/layout';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SghUser} from "./sgh-user";
-import {AbstractComponent} from "../abstract/abstract.component";
 import {AdminService} from "./admin.service";
 import {
   TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS,
@@ -15,6 +13,7 @@ import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.co
 import {environment} from "../../environments/environment";
 import {of, Subject} from "rxjs";
 import {catchError, switchMap, takeUntil} from "rxjs/operators";
+import {AbstractService} from "../abstract/abstract.service";
 
 /**
  * @title Table with expandable rows
@@ -31,7 +30,7 @@ import {catchError, switchMap, takeUntil} from "rxjs/operators";
     ]),
   ],
 })
-export class AdminUserComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class AdminUserComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -45,13 +44,12 @@ export class AdminUserComponent extends AbstractComponent implements OnInit, OnD
 
   destroy$ = new Subject();
 
-  constructor(public breakpointObserver: BreakpointObserver,
-              private adminService: AdminService,
-              public translationService: TranslationService,
-              private dialog: MatDialog,
-              snackBar: MatSnackBar,
+  constructor(
+    private adminService: AdminService,
+    public translationService: TranslationService,
+    private dialog: MatDialog,
+    public abstractService: AbstractService,
   ) {
-    super(breakpointObserver, snackBar);
   }
 
 
@@ -90,10 +88,15 @@ export class AdminUserComponent extends AbstractComponent implements OnInit, OnD
   }
 
   openAddUserDialog() {
-    this.dialog.open(AdminUserDialogComponent, {
-        width: this.dialogWidth
-      }
-    );
+    this.abstractService
+      .dialogWidth$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(dialogWidth =>
+        this.dialog.open(AdminUserDialogComponent, {
+            width: dialogWidth
+          }
+        )
+      )
   }
 
   changeAdminMode(sghUser: SghUser) {
@@ -102,12 +105,12 @@ export class AdminUserComponent extends AbstractComponent implements OnInit, OnD
         takeUntil(this.destroy$),
         catchError(error => {
           if (!environment.production) console.log(error);
-          this.openSnackBar(this.translationService.get(TC_GENERAL_ERROR));
+          this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_ERROR));
           return error;
         })
       ).subscribe(
       _ => {
-        this.openSnackBar(this.translationService.get(TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS));
+        this.abstractService.openSnackBar(this.translationService.get(TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS));
       }
     );
   }

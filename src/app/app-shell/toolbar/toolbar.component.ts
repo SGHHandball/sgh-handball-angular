@@ -1,13 +1,9 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material";
-import {FormControl} from "@angular/forms";
 import {NewsService} from "../../news/news.service";
 import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {AbstractService} from "../../abstract/abstract.service";
 
 
 @Component({
@@ -15,7 +11,7 @@ import {takeUntil} from "rxjs/operators";
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class ToolbarComponent implements OnInit, OnDestroy {
   @Input() sideNavButtonIcon: string = 'menu';
   @Output() sideNavButtonListener = new EventEmitter();
 
@@ -26,11 +22,9 @@ export class ToolbarComponent extends AbstractComponent implements OnInit, OnDes
 
   appNameVisible: boolean = true;
 
-  constructor(public breakpointObserver: BreakpointObserver,
+  constructor(public abstractService: AbstractService,
               private router: Router,
-              public newsService: NewsService,
-              snackBar: MatSnackBar) {
-    super(breakpointObserver, snackBar);
+              public newsService: NewsService) {
   }
 
   ngOnInit(): void {

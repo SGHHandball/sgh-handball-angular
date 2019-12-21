@@ -5,18 +5,16 @@ import {DataService} from "../../common/data.service";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {SliderService} from "../../abstract/slider/slider.service";
-import {AbstractComponent} from "../../abstract/abstract.component";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {MatSnackBar} from "@angular/material";
 import {NewsService} from "../news.service";
 import {SliderComponent} from "../../abstract/slider/slider.component";
+import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({
   selector: 'app-news-card-detail',
   templateUrl: './news-card-detail.component.html',
   styleUrls: ['./news-card-detail.component.scss']
 })
-export class NewsCardDetailComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class NewsCardDetailComponent implements OnInit, OnDestroy {
   @ViewChild('slider', {static: false}) slider: SliderComponent;
 
   destroy$ = new Subject();
@@ -28,11 +26,9 @@ export class NewsCardDetailComponent extends AbstractComponent implements OnInit
     private dataService: DataService,
     private route: ActivatedRoute,
     public sliderService: SliderService,
-    breakpointObserver: BreakpointObserver,
-    snackBar: MatSnackBar,
-    private newsService: NewsService
+    private newsService: NewsService,
+    public abstractService: AbstractService
   ) {
-    super(breakpointObserver, snackBar)
   }
 
   ngOnInit() {
@@ -48,7 +44,7 @@ export class NewsCardDetailComponent extends AbstractComponent implements OnInit
           return this.dataService.getNewsById(newsId)
         })
       ).subscribe(news => {
-        this.news = news;
+      this.news = news;
     })
   }
 

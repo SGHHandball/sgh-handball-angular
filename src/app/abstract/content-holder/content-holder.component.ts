@@ -1,14 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractComponent} from "../abstract.component";
 import {Observable, of, Subject} from "rxjs";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {AdminService} from "../../admin/admin.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import {DataService} from "../../common/data.service";
 import {Content} from "../../model/content";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {SliderImage} from "../../model/slider-image";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {
   DB_COLLECTION_CONTENT_CDH,
   DB_COLLECTION_CONTENT_EXECUTIVES,
@@ -26,6 +24,7 @@ import {
 import {IImage} from "ng2-image-compress";
 import {environment} from "../../../environments/environment";
 import {DefaultDialogComponent, DialogData} from "../default-dialog/default-dialog.component";
+import {AbstractService} from "../abstract.service";
 
 
 @Component({
@@ -33,19 +32,17 @@ import {DefaultDialogComponent, DialogData} from "../default-dialog/default-dial
   templateUrl: './content-holder.component.html',
   styleUrls: ['./content-holder.component.css']
 })
-export class ContentHolderComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class ContentHolderComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
   uploadProgress: Observable<number>;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              snackBar: MatSnackBar,
-              private adminService: AdminService,
+  constructor(private adminService: AdminService,
               private dataService: DataService,
               private router: Router,
               private dialog: MatDialog,
+              public abstractService: AbstractService
   ) {
-    super(breakpointObserver, snackBar);
   }
 
 
@@ -90,7 +87,7 @@ export class ContentHolderComponent extends AbstractComponent implements OnInit,
           takeUntil(this.destroy$)
         )
         .subscribe(_ => {
-          this.openSnackBar("Inhalt erfolgreich bearbeitet")
+          this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
         });
   }
 
@@ -103,7 +100,7 @@ export class ContentHolderComponent extends AbstractComponent implements OnInit,
           takeUntil(this.destroy$)
         )
         .subscribe(_ => {
-          this.openSnackBar("Reihenfolge erfolgreich geändert")
+          this.abstractService.openSnackBar("Reihenfolge erfolgreich geändert")
         });
   }
 
@@ -150,26 +147,35 @@ export class ContentHolderComponent extends AbstractComponent implements OnInit,
 
 
   deleteImage(index: number) {
-    const dialogRef = this.dialog.open(DefaultDialogComponent, {
-        width: this.dialogWidth,
-        data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataService.deleteImage(this.content.imgPaths[index])
-          .pipe(
-            takeUntil(this.destroy$),
-            switchMap(_ => {
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(DefaultDialogComponent, {
+              width: dialogWidth,
+              data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
+            }
+          ).afterClosed()
+        ),
+        switchMap(result => {
+            if (result) {
+              return this.dataService.deleteImage(this.content.imgPaths[index])
+            }
+            return of("Cancel")
+          }
+        ),
+        switchMap(result => {
+            if (!result) {
               this.content.imgLinks.splice(index, 1);
               this.content.imgPaths.splice(index, 1);
               return this.dataService.addContent(this.getContentTopic(), this.content);
-            })
-          )
-          .subscribe()
-      }
-    });
+            }
+            return of(undefined)
+          }
+        )
+      )
+      .subscribe();
   }
 
 
@@ -184,6 +190,5 @@ export class ContentHolderComponent extends AbstractComponent implements OnInit,
       this.destroy$.next();
     }
   }
-
 
 }
