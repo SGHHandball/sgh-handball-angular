@@ -37,12 +37,6 @@ $md-mcgpalette0: (
 );
 
 
-
-
-
-
-
-
 $app-primary: mat-palette($md-mcgpalette0);
 $app-theme: mat-light-theme($app-primary,$app-primary);
 @include angular-material-theme($app-theme)

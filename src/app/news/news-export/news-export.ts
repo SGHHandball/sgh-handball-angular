@@ -1,7 +1,6 @@
 import {Document, Media, Packer, Paragraph, TextRun} from "docx";
 import {getDateString, News} from "../news";
 import {saveAs} from 'file-saver';
-import {HttpClient} from "@angular/common/http";
 
 export function exportNewsToText(exportNews: News[]) {
   const doc = new Document();
