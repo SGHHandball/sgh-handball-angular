@@ -5,6 +5,7 @@ import {MatButtonModule, MatCardModule, MatMenuModule, MatProgressSpinnerModule}
 import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-manager.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {SharedModule} from "../shared/shared.module";
+import {RichTextEditorModule} from "../rich-text-editor/rich-text-editor.module";
 
 @NgModule({
   declarations: [ContentHolderComponent],
@@ -16,7 +17,8 @@ import {SharedModule} from "../shared/shared.module";
     FlexLayoutModule,
     MatProgressSpinnerModule,
     SharedModule,
-    MatMenuModule
+    MatMenuModule,
+    RichTextEditorModule
   ],
   exports: [ContentHolderComponent],
 })

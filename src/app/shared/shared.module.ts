@@ -16,13 +16,13 @@ import {DefaultInputDialogComponent} from "./default-input-dialog/default-input-
 import {DefaultDialogComponent} from "./default-dialog/default-dialog.component";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {SliderComponent} from "./slider/slider.component";
-import {RichTextEditorComponent} from "./rich-text-editor/rich-text-editor.component";
+import {RichTextEditorComponent} from "../rich-text-editor/rich-text-editor.component";
 import {NgxEditorModule} from "ngx-editor";
 
 @NgModule({
   declarations: [AddBtnComponent,
     DefaultInputDialogComponent,
-    DefaultDialogComponent, SliderComponent,RichTextEditorComponent],
+    DefaultDialogComponent, SliderComponent],
   imports: [
     CommonModule,
     MatMenuModule,
@@ -44,8 +44,7 @@ import {NgxEditorModule} from "ngx-editor";
     AddBtnComponent,
     DefaultInputDialogComponent,
     DefaultDialogComponent,
-    SliderComponent,
-    RichTextEditorComponent
+    SliderComponent
   ]
 })
 export class SharedModule {

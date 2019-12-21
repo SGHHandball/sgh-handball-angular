@@ -21,7 +21,7 @@ import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-dele
 import {AbstractNewsComponent} from "./abstract/abstract-news.component";
 import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 import {HomeComponent} from './home/home.component';
-import {RichTextEditorComponent} from './shared/rich-text-editor/rich-text-editor.component';
+import {RichTextEditorComponent} from './rich-text-editor/rich-text-editor.component';
 import {CookieDisclaimerComponent} from './cookie-disclaimer/cookie-disclaimer.component';
 import {CookieService} from "ngx-cookie-service";
 import {DataModule} from "./data/data.module";
@@ -37,6 +37,7 @@ import {ContentHolderModule} from "./content-holder/content-holder.module";
 import {SponsorsModule} from "./sponsors/sponsors.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RichTextEditorModule} from "./rich-text-editor/rich-text-editor.module";
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ContentHolderModule,
     SponsorsModule,
     LazyLoadImageModule.forRoot({}),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RichTextEditorModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
