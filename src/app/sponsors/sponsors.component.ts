@@ -3,7 +3,7 @@ import {Sponsor} from "../model/sponsor";
 import {AdminService} from "../admin/admin.service";
 import {share, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {Router} from "@angular/router";
 import {TC_PATH_EDIT, TC_ROUTE_SPONSORS} from "../translation.service";
 

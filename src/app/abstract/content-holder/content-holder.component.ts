@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, of, Subject} from "rxjs";
 import {AdminService} from "../../admin/admin.service";
 import {MatDialog} from "@angular/material";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {Content} from "../../model/content";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {SliderImage} from "../../model/slider-image";

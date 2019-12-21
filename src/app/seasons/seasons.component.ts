@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 

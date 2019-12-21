@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {
   AngularFirestore, CollectionReference,
-  DocumentReference, Query, QueryFn
+  DocumentReference, Query
 } from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {from, Observable, of} from "rxjs";
@@ -9,14 +9,13 @@ import {DB_COLLECTION_NEWS, News, NewsType} from "../model/news";
 import {filter, map, mergeMap, switchMap} from "rxjs/operators";
 import {FireBaseModel} from "../model/fire-base.model";
 import {User} from "firebase";
-import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
+import {Club, CLUBS_COLLECTION_NAME} from "../model/club";
 import {AngularFireStorage} from "@angular/fire/storage";
-import {Team} from "../teams/team";
+import {Team} from "../model/team";
 import {environment} from "../../environments/environment";
 import {ImageProgress} from "../model/image-progress";
-import {SghUser} from "../admin/sgh-user";
+import {SghUser} from "../model/sgh-user";
 import {AngularFireFunctions} from "@angular/fire/functions";
-import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 import {
   DB_COLLECTION_CONTENT, DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CURRENT_SEASON,
@@ -26,13 +25,14 @@ import {
   FB_FUNCTIONS_ADD_USER,
   SGH_USERS
 } from "../constants";
-import {Hall} from "../halls/hall";
-import {Training} from "../trainings/training";
-import {Season} from "../seasons/season";
+import {Hall} from "../model/hall";
+import {Training} from "../model/training";
+import {Season} from "../model/season";
 import {Content} from "../model/content";
 import {IImage} from "ng2-image-compress";
 import {Sponsor} from "../model/sponsor";
 import {InfiniteNews} from "../model/infinite-news";
+import {Credentials} from "../model/Credentials";
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {SghUser} from "../sgh-user";
+import {SghUser} from "../../model/sgh-user";
 import {
   TC_ADMIN, TC_CANCEL, TC_GENERAL_REQUIRED_ERROR, TC_OK,
   TC_ROUTE_EVENTS,
@@ -14,7 +14,7 @@ import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
 } from "../../abstract/default-input-dialog/default-input-dialog.component";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {Subject} from "rxjs";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {SeasonService} from "../../seasons/season.service";

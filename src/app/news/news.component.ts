@@ -7,7 +7,7 @@ import {
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {exportNewsToText} from "./news-export/news-export";
 import {first,  share, switchMap, takeUntil} from "rxjs/operators";
-import {SghUser} from "../admin/sgh-user";
+import {SghUser} from "../model/sgh-user";
 
 @Component({
   selector: 'app-news',

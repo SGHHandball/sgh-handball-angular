@@ -1,25 +1,21 @@
 import {Injectable} from "@angular/core";
-import {from, Observable, of} from "rxjs";
-import {DB_COLLECTION_NEWS, News, NewsType} from "../model/news";
+import { Observable} from "rxjs";
+import { News, NewsType} from "../model/news";
 import {FireApiService} from "./fire-api.service";
-import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
+import {Club} from "../model/club";
 import {DocumentReference} from "@angular/fire/firestore";
-import {Team} from "../teams/team";
-import {AngularFireUploadTask} from "@angular/fire/storage";
+import {Team} from "../model/team";
 import {ImageProgress} from "../model/image-progress";
 import {User} from "firebase";
-import {SghUser} from "../admin/sgh-user";
-import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
-import {Hall} from "../halls/hall";
-import {Training} from "../trainings/training";
-import {Season} from "../seasons/season";
-import {DB_COLLECTION_CONTENT, DB_COLLECTION_SEASONS, DB_COLLECTION_SPONSORS} from "../constants";
+import {SghUser} from "../model/sgh-user";
+import {Hall} from "../model/hall";
+import {Training} from "../model/training";
+import {Season} from "../model/season";
 import {Content} from "../model/content";
 import {IImage} from "ng2-image-compress";
-import {environment} from "../../environments/environment";
 import {Sponsor} from "../model/sponsor";
-import {map, switchMap} from "rxjs/operators";
 import {InfiniteNews} from "../model/infinite-news";
+import {Credentials} from "../model/Credentials";
 
 @Injectable({
   providedIn: 'root'

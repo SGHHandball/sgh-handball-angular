@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, of, Subject} from "rxjs";
 import {Sponsor} from "../../model/sponsor";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {FormControl} from "@angular/forms";

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
-import {Training, TrainingDate, TrainingGroup} from "./training";
+import {Training, TrainingDate, TrainingGroup} from "../model/training";
 import {
   TC_GENERAL_DELETE_HEADER,
   TranslationService,
@@ -17,12 +17,12 @@ import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-ed
 import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {of, Subject} from "rxjs";
 import {catchError,  switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
-import {Team} from "../teams/team";
-import {Hall} from "../halls/hall";
+import {Team} from "../model/team";
+import {Hall} from "../model/hall";
 import {SeasonService} from "../seasons/season.service";
 import {AbstractService} from "../abstract/abstract.service";
 

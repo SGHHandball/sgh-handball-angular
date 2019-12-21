@@ -1,5 +1,5 @@
-import {Hall} from "../halls/hall";
-import {Team} from "../teams/team";
+import {Hall} from "./hall";
+import {Team} from "./team";
 
 export interface Training {
   id?: string;

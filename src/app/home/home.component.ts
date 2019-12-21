@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {News} from "../model/news";
 import {HomeService} from "./home.service";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {Subject} from "rxjs";
 import {share, takeUntil} from "rxjs/operators";
 import {SliderImage} from "../model/slider-image";

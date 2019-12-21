@@ -11,12 +11,12 @@ import {
   TC_ROUTE_DETAIL,
   TranslationService
 } from "../translation.service";
-import {Club,} from "../clubs/club";
+import {Club,} from "../model/club";
 import {Observable, of} from "rxjs";
 import {map, switchMap} from "rxjs/operators";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {Location} from '@angular/common';
-import {SghUser} from "../admin/sgh-user";
+import {SghUser} from "../model/sgh-user";
 
 @Injectable({
   providedIn: 'root'

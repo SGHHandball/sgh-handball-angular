@@ -12,9 +12,9 @@ import {
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {Training, TrainingsDialogData} from "../training";
-import {Hall} from "../../halls/hall";
-import {Team} from "../../teams/team";
+import {Training, TrainingsDialogData} from "../../model/training";
+import {Hall} from "../../model/hall";
+import {Team} from "../../model/team";
 import {TeamService} from "../../teams/team.service";
 import {AbstractService} from "../../abstract/abstract.service";
 

@@ -5,9 +5,9 @@ import {
   TranslationService
 } from "../../translation.service";
 import { MatDialogRef} from "@angular/material";
-import {Team} from "../team";
+import {Team} from "../../model/team";
 import {switchMap, takeUntil} from "rxjs/operators";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {Subject} from "rxjs";
 import {SeasonService} from "../../seasons/season.service";
 

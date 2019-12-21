@@ -17,7 +17,7 @@ import {environment} from "../../environments/environment";
 import {News} from "../model/news";
 import {NewsService} from "../news/news.service";
 import {DefaultDialogComponent, DialogData} from "./default-dialog/default-dialog.component";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {of, Subject} from "rxjs";
 import {catchError, switchMap, takeUntil} from "rxjs/operators";
 import {AbstractService} from "./abstract.service";

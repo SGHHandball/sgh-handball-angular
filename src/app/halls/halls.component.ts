@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
-import {Hall} from "./hall";
+import {Hall} from "../model/hall";
 import {
   TC_FILTER,
   TC_HALLS_CITY,
@@ -21,7 +21,7 @@ import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
 import {of, Subject} from "rxjs";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {AbstractService} from "../abstract/abstract.service";
 

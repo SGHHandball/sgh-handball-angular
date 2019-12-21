@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {SghUser} from "./sgh-user";
+import {SghUser} from "../model/sgh-user";
 import {AdminService} from "./admin.service";
 import {
   TC_ADMIN_CHANGE_ADMIN_RIGHT_SUCCESS,

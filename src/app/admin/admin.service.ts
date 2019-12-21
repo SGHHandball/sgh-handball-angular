@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {SghUser} from "./sgh-user";
+import {SghUser} from "../model/sgh-user";
 import {Observable, of} from "rxjs";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {switchMap} from "rxjs/operators";
 import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
 

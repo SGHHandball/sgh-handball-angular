@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TC_CANCEL, TC_SAVE, TC_TEAMS_CHANGE_ORDER, TranslationService} from "../../translation.service";
-import {Team} from "../team";
+import {Team} from "../../model/team";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {Subject} from "rxjs";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {SeasonService} from "../../seasons/season.service";

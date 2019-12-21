@@ -94,6 +94,7 @@ import {LazyLoadImageDirective, LazyLoadImageModule, scrollPreset} from "ng-lazy
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {CookieDisclaimerComponent} from './abstract/cookie-disclaimer/cookie-disclaimer.component';
 import {CookieService} from "ngx-cookie-service";
+import {DataModule} from "./data/data.module";
 
 @NgModule({
   declarations: [
@@ -145,13 +146,9 @@ import {CookieService} from "ngx-cookie-service";
     CookieDisclaimerComponent
   ],
   imports: [
+    DataModule,
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule, // imports firebase/auth, only needed for auth features,
-    AngularFireFunctionsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -197,8 +194,6 @@ import {CookieService} from "ngx-cookie-service";
     {provide: FunctionsRegionToken, useValue: 'europe-west1'},
     {provide: FirestoreSettingsToken, useValue: {}},
     PendingChangesGuard,
-    NgxImageCompressService,
-    ImageCompressService, ResizeOptions,
     CookieService
   ],
   bootstrap: [AppComponent],

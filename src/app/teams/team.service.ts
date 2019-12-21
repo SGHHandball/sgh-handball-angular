@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {map, switchMap, takeUntil} from "rxjs/operators";
-import {DataService} from "../common/data.service";
-import {Team} from "./team";
+import {DataService} from "../data/data.service";
+import {Team} from "../model/team";
 
 @Injectable({
   providedIn: 'root'

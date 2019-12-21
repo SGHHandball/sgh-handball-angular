@@ -9,15 +9,16 @@ import {
   TranslationService
 } from "../../translation.service";
 import {MatDialog} from "@angular/material";
-import {Credentials, LoginDialogComponent} from "./login-dialog/login-dialog.component";
+import {LoginDialogComponent} from "./login-dialog/login-dialog.component";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AdminService} from "../../admin/admin.service";
 import {environment} from "../../../environments/environment";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {User} from "firebase";
 import {AbstractService} from "../../abstract/abstract.service";
+import {Credentials} from "../../model/Credentials";
 
 @Component({
   selector: 'app-auth',

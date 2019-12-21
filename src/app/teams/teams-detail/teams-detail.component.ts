@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Team} from "../team";
+import {Team} from "../../model/team";
 import {MatDialog} from "@angular/material";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {Observable, of, Subject} from "rxjs";
@@ -11,7 +11,7 @@ import {
   TC_GENERAL_DELETE_MESSAGE, TC_SAVE,
   TranslationService
 } from "../../translation.service";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {FormControl} from "@angular/forms";
 import {SliderService} from "../../abstract/slider/slider.service";
 import {IImage} from "ng2-image-compress";

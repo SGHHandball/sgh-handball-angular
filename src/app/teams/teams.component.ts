@@ -24,10 +24,10 @@ import {
 import {NewsService} from "../news/news.service";
 import {News, NewsType} from "../model/news";
 import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
-import {Team} from "./team";
+import {Team} from "../model/team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {ActivatedRoute} from "@angular/router";
-import {DataService} from "../common/data.service";
+import {DataService} from "../data/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";

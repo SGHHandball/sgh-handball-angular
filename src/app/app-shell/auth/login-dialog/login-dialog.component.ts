@@ -7,6 +7,7 @@ import {
   TC_LOGIN, TC_PASSWORD,
   TranslationService
 } from "../../../translation.service";
+import {Credentials} from "../../../model/Credentials";
 
 @Component({
   selector: 'app-login-dialog',
@@ -42,9 +43,4 @@ export class LoginDialogComponent {
       password: this.passwordFormControl.value
     };
   }
-}
-
-export interface Credentials {
-  email: string;
-  password: string;
 }

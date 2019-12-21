@@ -28,10 +28,10 @@ import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/
 import {map, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../seasons/season.service";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {ActivatedRoute} from "@angular/router";
 import {IImage} from "ng2-image-compress";
-import {Season} from "../../seasons/season";
+import {Season} from "../../model/season";
 import {AbstractService} from "../../abstract/abstract.service";
 
 @Component({

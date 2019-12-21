@@ -4,7 +4,7 @@ import {
   TC_NEWS_NO_NEWS, TranslationService
 } from "../../translation.service";
 import {NewsService} from "../news.service";
-import {SghUser} from "../../admin/sgh-user";
+import {SghUser} from "../../model/sgh-user";
 
 @Component({
   selector: 'app-news-card-list',

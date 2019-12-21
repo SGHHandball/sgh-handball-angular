@@ -6,7 +6,7 @@ import {
 } from "../../translation.service";
 import {Observable, of, Subject} from "rxjs";
 import {share, switchMap, takeUntil} from "rxjs/operators";
-import {DataService} from "../../common/data.service";
+import {DataService} from "../../data/data.service";
 import {AdminService} from "../../admin/admin.service";
 
 @Component({
