@@ -16,8 +16,6 @@ import {DefaultInputDialogComponent} from "./default-input-dialog/default-input-
 import {DefaultDialogComponent} from "./default-dialog/default-dialog.component";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {SliderComponent} from "./slider/slider.component";
-import {NgxEditorModule} from "ngx-editor";
-
 @NgModule({
   declarations: [AddBtnComponent,
     DefaultInputDialogComponent,
@@ -35,7 +33,6 @@ import {NgxEditorModule} from "ngx-editor";
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatSnackBarModule,
-    NgxEditorModule,
     LazyLoadImageModule.forRoot({}),
     MatCardModule,
   ],
