@@ -2,7 +2,7 @@
   flex: 1 1 auto;
 }
 
-.logo{
+.logo {
   height: 32px;
 }
 
@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
-.toolbar-container{
+.toolbar-container {
   position: sticky;
+}
+
+.menu-btn {
+
 }

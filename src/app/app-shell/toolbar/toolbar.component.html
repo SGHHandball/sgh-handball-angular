@@ -1,10 +1,12 @@
 <mat-toolbar color="primary" class="toolbar-container">
   <button
+    class="menu-btn"
     mat-icon-button
     (click)="sideNavButtonListener.next()">
     <mat-icon>{{sideNavButtonIcon}}</mat-icon>
   </button>
-  <img src="assets/img/SghLogoOnlyTran.png" class="logo" (click)="goToHome()" alt="SGH - SG Hainhausen (Rodgau) Handball Logo Transparent">
+  <img src="assets/img/SghLogoOnlyTran.png" class="logo" (click)="goToHome()"
+       alt="SGH - SG Hainhausen (Rodgau) Handball Logo Transparent">
   <h1 class="toolbar-title"
       (click)="goToHome()">{{(abstractService.isHandset$|async) ? (appNameVisible ? appNameShort : '') : appName}}</h1>
   <span class="example-spacer"></span>
