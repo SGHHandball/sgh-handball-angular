@@ -11,7 +11,7 @@ import {
   MatAutocompleteModule,
   MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDividerModule, MatFormFieldModule,
   MatIconModule, MatInputModule,
-  MatMenuModule,
+  MatMenuModule, MatNativeDateModule,
   MatProgressSpinnerModule, MatSelectModule,
   MatTooltipModule
 } from "@angular/material";
@@ -54,6 +54,7 @@ import {EventsComponent} from "./events/events.component";
     ImageUploadManagerModule,
     LazyLoadImageModule.forRoot({}),
     MatCheckboxModule,
+    MatNativeDateModule
   ],
   exports: [
     NewsComponent,
