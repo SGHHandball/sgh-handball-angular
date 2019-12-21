@@ -93,6 +93,8 @@ import {SponsorCardComponent} from './sponsors/sponsor-card/sponsor-card.compone
 import {SponsorEditComponent} from './sponsors/sponsor-edit/sponsor-edit.component';
 import {LazyLoadImageDirective, LazyLoadImageModule, scrollPreset} from "ng-lazyload-image";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {CookieDisclaimerComponent} from './abstract/cookie-disclaimer/cookie-disclaimer.component';
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -141,7 +143,8 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
     ContentHolderComponent,
     SponsorsComponent,
     SponsorCardComponent,
-    SponsorEditComponent
+    SponsorEditComponent,
+    CookieDisclaimerComponent
   ],
   imports: [
     BrowserModule,
@@ -197,11 +200,13 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
     {provide: FirestoreSettingsToken, useValue: {}},
     PendingChangesGuard,
     NgxImageCompressService,
-    ImageCompressService, ResizeOptions
+    ImageCompressService, ResizeOptions,
+    CookieService
   ],
   bootstrap: [AppComponent],
   entryComponents: [LoginDialogComponent, AdminUserDialogComponent,
     DefaultDialogComponent, HallsEditDialogComponent, TeamsChangeDialogComponent, TeamsDeleteDialogComponent,
+    CookieDisclaimerComponent,
     DefaultInputDialogComponent, TrainingsEditDialogComponent]
 })
 export class AppModule {

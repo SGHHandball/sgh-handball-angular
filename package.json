@@ -33,6 +33,7 @@
     "ng-lazyload-image": "^7.0.1",
     "ng2-image-compress": "^7.0.7",
     "ngx-bootstrap": "^5.2.0",
+    "ngx-cookie-service": "^2.2.0",
     "ngx-editor": "^4.1.0",
     "ngx-image-compress": "^8.0.3",
     "ngx-infinite-scroll": "^8.0.1",
