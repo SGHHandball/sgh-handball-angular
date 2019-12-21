@@ -15,13 +15,10 @@ import {AdminUserDialogComponent} from './admin/admin-user-dialog/admin-user-dia
 import {FunctionsRegionToken} from "@angular/fire/functions";
 import {DefaultDialogComponent} from './shared/default-dialog/default-dialog.component';
 import {HallsEditDialogComponent} from './halls/halls-edit-dialog/halls-edit-dialog.component';
-import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-change-dialog.component';
 import {DefaultInputDialogComponent} from './shared/default-input-dialog/default-input-dialog.component';
-import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-delete-dialog.component";
 import {AbstractNewsComponent} from "./abstract/abstract-news.component";
 import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 import {HomeComponent} from './home/home.component';
-import {RichTextEditorComponent} from './rich-text-editor/rich-text-editor.component';
 import {CookieDisclaimerComponent} from './cookie-disclaimer/cookie-disclaimer.component';
 import {CookieService} from "ngx-cookie-service";
 import {DataModule} from "./data/data.module";
@@ -33,11 +30,9 @@ import {TrainingsModule} from "./trainings/trainings.module";
 import {DocumentsModule} from "./documents/documents.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {FormsModule} from "@angular/forms";
-import {ContentHolderModule} from "./content-holder/content-holder.module";
 import {SponsorsModule} from "./sponsors/sponsors.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {RichTextEditorModule} from "./rich-text-editor/rich-text-editor.module";
 
 @NgModule({
   declarations: [
@@ -64,11 +59,9 @@ import {RichTextEditorModule} from "./rich-text-editor/rich-text-editor.module";
     FlexLayoutModule,
     MatButtonModule,
     FormsModule,
-    ContentHolderModule,
     SponsorsModule,
     LazyLoadImageModule.forRoot({}),
     BrowserAnimationsModule,
-    RichTextEditorModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
@@ -78,9 +71,6 @@ import {RichTextEditorModule} from "./rich-text-editor/rich-text-editor.module";
     CookieService
   ],
   bootstrap: [AppComponent],
-  exports: [
-    RichTextEditorComponent
-  ],
   entryComponents: [
     LoginDialogComponent,
     AdminUserDialogComponent,

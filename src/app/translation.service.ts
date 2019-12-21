@@ -34,20 +34,24 @@ export const TC_ROUTE_SGH = 'sgh';
 export const TC_ROUTE_NEWS = 'aktuelles';
 export const TC_PATH_EDIT = 'bearbeiten';
 export const TC_ROUTE_EVENTS = 'events';
-export const TC_ROUTE_DETAIL= 'detail';
+export const TC_ROUTE_DETAIL = 'detail';
+
+
+export const TC_ROUTE_CONTENT = 'informationen';
+export const TC_ROUTE_HOME_EDIT = 'home-bearbeiten';
+export const TC_ROUTE_EXECUTIVES = 'vorstand';
+export const TC_ROUTE_REFEREES = 'schiedsrichter';
+export const TC_ROUTE_TIME_KEEPER = 'zeitnehmer';
+export const TC_ROUTE_CDH = 'club-der-hunderter';
 
 export const TC_ROUTE_HOME = 'home';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 
 export const TC_ROUTE_GENERAL_INFORMATION = 'allgemeine-informationen';
-export const TC_ROUTE_EXECUTIVES = 'vorstand';
-export const TC_ROUTE_REFEREES = 'schiedsrichter';
-export const TC_ROUTE_TIME_KEEPER = 'zeitnehmer';
 export const TC_ROUTE_TRAINING = 'trainingszeiten';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
 
 export const TC_ROUTE_SPONSORS = 'sponsoren';
-export const TC_ROUTE_CDH = 'club-der-hunderter';
 export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
 export const TC_ROUTE_SEASONS = 'saisons';

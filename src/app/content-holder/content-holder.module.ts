@@ -5,10 +5,14 @@ import {MatButtonModule, MatCardModule, MatMenuModule, MatProgressSpinnerModule}
 import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-manager.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {SharedModule} from "../shared/shared.module";
-import {RichTextEditorModule} from "../rich-text-editor/rich-text-editor.module";
+import {RichTextEditorComponent} from "./rich-text-editor/rich-text-editor.component";
+import {NgxEditorModule} from "ngx-editor";
+import {FormsModule} from "@angular/forms";
+import {ContentHolderRoutingModule} from "./content-holder-routing.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  declarations: [ContentHolderComponent],
+  declarations: [ContentHolderComponent, RichTextEditorComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -18,9 +22,12 @@ import {RichTextEditorModule} from "../rich-text-editor/rich-text-editor.module"
     MatProgressSpinnerModule,
     SharedModule,
     MatMenuModule,
-    RichTextEditorModule
+    NgxEditorModule,
+    FormsModule,
+    ContentHolderRoutingModule,
+    HttpClientModule
   ],
-  exports: [ContentHolderComponent],
+  exports: [ContentHolderComponent, RichTextEditorComponent],
 })
 export class ContentHolderModule {
 }

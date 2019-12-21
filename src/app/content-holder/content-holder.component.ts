@@ -9,14 +9,14 @@ import {SliderImage} from "../model/slider-image";
 import {Router} from "@angular/router";
 import {
   DB_COLLECTION_CONTENT_CDH,
-  DB_COLLECTION_CONTENT_EXECUTIVES,
+  DB_COLLECTION_CONTENT_EXECUTIVES, DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CONTENT_REFEREE, DB_COLLECTION_CONTENT_SPONSORS,
   DB_COLLECTION_CONTENT_TIME_KEEPER
 } from "../constants";
 import {
   TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
   TC_ROUTE_CDH,
-  TC_ROUTE_EXECUTIVES,
+  TC_ROUTE_EXECUTIVES, TC_ROUTE_HOME_EDIT,
   TC_ROUTE_REFEREES,
   TC_ROUTE_SPONSORS,
   TC_ROUTE_TIME_KEEPER
@@ -105,11 +105,11 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   }
 
   getContentTopic(): string {
+    if (this.router.url.includes(TC_ROUTE_HOME_EDIT)) return DB_COLLECTION_CONTENT_HOME;
     if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
     if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;
     if (this.router.url.includes(TC_ROUTE_TIME_KEEPER)) return DB_COLLECTION_CONTENT_TIME_KEEPER;
     if (this.router.url.includes(TC_ROUTE_CDH)) return DB_COLLECTION_CONTENT_CDH;
-    if (this.router.url.includes(TC_ROUTE_SPONSORS)) return DB_COLLECTION_CONTENT_SPONSORS;
     return undefined;
   }
 

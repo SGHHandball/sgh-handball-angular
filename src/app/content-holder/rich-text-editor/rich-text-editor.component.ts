@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
-import {FormControl} from "@angular/forms";
-import {HttpClientModule} from '@angular/common/http';
-import {Content} from "../model/content";
+import {Content} from "../../model/content";
 
 @Component({
   selector: 'app-rich-text-editor',

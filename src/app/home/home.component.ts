@@ -9,6 +9,8 @@ import {DB_COLLECTION_CONTENT_HOME} from "../constants";
 import {AdminService} from "../admin/admin.service";
 import {Content} from "../model/content";
 import {AbstractService} from "../shared/abstract.service";
+import {Router} from "@angular/router";
+import {TC_ROUTE_CONTENT, TC_ROUTE_HOME_EDIT} from "../translation.service";
 
 
 @Component({
@@ -23,14 +25,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(public abstractService: AbstractService,
               public homeService: HomeService,
               private adminService: AdminService,
-              private dataService: DataService
+              private dataService: DataService,
+              private router: Router
   ) {
   }
 
   news: News[];
   images: SliderImage[] = [];
 
-  editContent = false;
   homeContent: Content;
   contentLoaded = false;
 
@@ -79,6 +81,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   gotoDetailNews(newsIndex: string) {
     this.homeService.gotoDetailNews(newsIndex);
+  }
+
+  openEdit() {
+    this.router.navigate([[TC_ROUTE_CONTENT, TC_ROUTE_HOME_EDIT].join("/")])
   }
 
 

@@ -17,13 +17,11 @@
 
 
     <div class="static-content">
-      <app-rich-text-editor
+      <div
         *ngIf="contentLoaded"
-        [htmlContent]="homeContent"
-        [editMode]="editContent"
-        (saveListener)="saveContent($event)"
+        [innerHTML]="homeContent.contentText"
       >
-      </app-rich-text-editor>
+      </div>
     </div>
   </div>
 </mat-card>
@@ -32,7 +30,7 @@
              *ngIf="adminRight$|async"></app-add-btn>
 <mat-menu #newsTypeMenu="matMenu">
   <button mat-menu-item
-          (click)="editContent = !editContent">
+          (click)="openEdit()">
     Seite Bearbeiten
   </button>
 </mat-menu>

@@ -16,7 +16,6 @@ import {DefaultInputDialogComponent} from "./default-input-dialog/default-input-
 import {DefaultDialogComponent} from "./default-dialog/default-dialog.component";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {SliderComponent} from "./slider/slider.component";
-import {RichTextEditorComponent} from "../rich-text-editor/rich-text-editor.component";
 import {NgxEditorModule} from "ngx-editor";
 
 @NgModule({
