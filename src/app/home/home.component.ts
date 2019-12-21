@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {News} from "../news/news";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {News} from "../model/news";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSnackBar} from "@angular/material";
 import {AbstractComponent} from "../abstract/abstract.component";
@@ -11,6 +11,7 @@ import {SliderImage} from "../model/slider-image";
 import {DB_COLLECTION_CONTENT_HOME} from "../constants";
 import {AdminService} from "../admin/admin.service";
 import {Content} from "../model/content";
+import {AbstractService} from "../abstract/abstract.service";
 
 
 @Component({
@@ -18,17 +19,15 @@ import {Content} from "../model/content";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent extends AbstractComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
 
-  constructor(breakpointObserver: BreakpointObserver,
+  constructor(public abstractService: AbstractService,
               public homeService: HomeService,
               private adminService: AdminService,
-              snackBar: MatSnackBar,
               private dataService: DataService
   ) {
-    super(breakpointObserver, snackBar);
   }
 
   news: News[];
@@ -77,7 +76,7 @@ export class HomeComponent extends AbstractComponent implements OnInit, OnDestro
         takeUntil(this.destroy$)
       )
       .subscribe(_ => {
-        this.openSnackBar("Inhalt erfolgreich bearbeitet")
+        this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
       });
   }
 

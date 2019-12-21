@@ -1,5 +1,5 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {News, NewsType,} from "../news";
+import {News, NewsType,} from "../../model/news";
 import {FormControl} from "@angular/forms";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {BreakpointObserver} from "@angular/cdk/layout";

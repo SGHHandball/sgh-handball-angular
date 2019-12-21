@@ -1,5 +1,5 @@
 import {Document, Media, Packer, Paragraph, TextRun} from "docx";
-import {getDateString, News} from "../news";
+import {getDateString, News} from "../../model/news";
 import {saveAs} from 'file-saver';
 
 export function exportNewsToText(exportNews: News[]) {

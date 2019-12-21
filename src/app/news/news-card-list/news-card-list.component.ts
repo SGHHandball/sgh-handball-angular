@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {News} from "../news";
+import {News} from "../../model/news";
 import {AbstractComponent} from "../../abstract/abstract.component";
 import {
   TC_NEWS_NO_NEWS, TranslationService

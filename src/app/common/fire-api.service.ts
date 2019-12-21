@@ -5,7 +5,7 @@ import {
 } from "@angular/fire/firestore";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {from, Observable, of} from "rxjs";
-import {DB_COLLECTION_NEWS, News, NewsType} from "../news/news";
+import {DB_COLLECTION_NEWS, News, NewsType} from "../model/news";
 import {filter, map, mergeMap, switchMap} from "rxjs/operators";
 import {FireBaseModel} from "../model/fire-base.model";
 import {User} from "firebase";

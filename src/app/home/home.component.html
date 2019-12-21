@@ -1,4 +1,4 @@
-<mat-card class="content" [class.web-content]="!(isHandset$|async)">
+<mat-card class="content" [class.web-content]="!(abstractService.isHandset$|async)">
   <div fxLayout="column">
 
     <div class="spinner-container">
@@ -7,7 +7,7 @@
         class="slideshow"
         *ngIf="news && news.length>0"
         [sliderArray]="images.length>0 ? images : []"
-        [height]="(isHandset$|async)?'250px':'500px'"
+        [height]="(abstractService.isHandset$|async)?'250px':'500px'"
         [objectFit]="'cover'"
         [imageBorderRadius]="'4px 4px 0 0'"
         (onSlideClickListener)="gotoDetailNews($event)"

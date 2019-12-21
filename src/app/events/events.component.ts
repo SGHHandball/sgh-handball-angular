@@ -5,7 +5,7 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {TC_NEWS_TYPE_EVENT, TranslationService} from "../translation.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {AdminService} from "../admin/admin.service";
-import {News, NewsType} from "../news/news";
+import {News, NewsType} from "../model/news";
 import {DataService} from "../common/data.service";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 

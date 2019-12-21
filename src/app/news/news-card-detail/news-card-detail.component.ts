@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs";
-import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News, NewsType} from "../news";
+import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News, NewsType} from "../../model/news";
 import {DataService} from "../../common/data.service";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {from, Observable, of} from "rxjs";
-import {DB_COLLECTION_NEWS, News, NewsType} from "../news/news";
+import {DB_COLLECTION_NEWS, News, NewsType} from "../model/news";
 import {FireApiService} from "./fire-api.service";
 import {Club, CLUBS_COLLECTION_NAME} from "../clubs/club";
 import {DocumentReference} from "@angular/fire/firestore";

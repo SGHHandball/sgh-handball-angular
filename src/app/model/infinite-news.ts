@@ -1,4 +1,4 @@
-import {News} from "../news/news";
+import {News} from "./news";
 
 export interface InfiniteNews {
   news: News[];

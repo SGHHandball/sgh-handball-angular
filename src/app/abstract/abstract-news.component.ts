@@ -16,7 +16,7 @@ import {
 } from "../translation.service";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {environment} from "../../environments/environment";
-import {News} from "../news/news";
+import {News} from "../model/news";
 import {NewsService} from "../news/news.service";
 import {DefaultDialogComponent, DialogData} from "./default-dialog/default-dialog.component";
 import {DataService} from "../common/data.service";

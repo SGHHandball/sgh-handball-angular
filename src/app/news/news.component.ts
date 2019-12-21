@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {News, NewsType} from "./news";
+import {News, NewsType} from "../model/news";
 import {
   TC_NEWS_TYPE_REPORT,
   TranslationService, TC_NEWS_TYPE_EVENT, TC_FILTER, TC_NEWS_EXPORT

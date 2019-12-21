@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {TC_ROUTE_NEWS} from "../translation.service";
-import {getDateString, News} from "../news/news";
+import {getDateString, News} from "../model/news";
 import {NewsService} from "../news/news.service";
 import {SliderImage} from "../model/slider-image";
 

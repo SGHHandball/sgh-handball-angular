@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {News, NEWS_TEAM_YOUTH_AGES, NewsType} from "./news";
+import {News, NEWS_TEAM_YOUTH_AGES, NewsType} from "../model/news";
 import {Router} from "@angular/router";
 import {
   TC_NEWS_GENDER_M,

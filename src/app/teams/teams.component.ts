@@ -22,7 +22,7 @@ import {
   DefaultInputDialogData
 } from "../abstract/default-input-dialog/default-input-dialog.component";
 import {NewsService} from "../news/news.service";
-import {News, NewsType} from "../news/news";
+import {News, NewsType} from "../model/news";
 import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
 import {Team} from "./team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
