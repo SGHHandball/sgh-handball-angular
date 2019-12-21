@@ -18,12 +18,12 @@ import {
 } from "../translation.service";
 import {HallsEditDialogComponent} from "./halls-edit-dialog/halls-edit-dialog.component";
 import {AdminService} from "../admin/admin.service";
-import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
+import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
 import {of, Subject} from "rxjs";
 import {DataService} from "../data/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
-import {AbstractService} from "../abstract/abstract.service";
+import {AbstractService} from "../shared/abstract.service";
 
 @Component({
   selector: 'app-halls',

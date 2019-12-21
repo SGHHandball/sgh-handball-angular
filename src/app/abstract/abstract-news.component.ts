@@ -16,14 +16,14 @@ import {MatDialog} from "@angular/material";
 import {environment} from "../../environments/environment";
 import {News} from "../model/news";
 import {NewsService} from "../news/news.service";
-import {DefaultDialogComponent, DialogData} from "./default-dialog/default-dialog.component";
+import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/default-dialog.component";
 import {DataService} from "../data/data.service";
 import {of, Subject} from "rxjs";
 import {catchError, switchMap, takeUntil} from "rxjs/operators";
-import {AbstractService} from "./abstract.service";
+import {AbstractService} from "../shared/abstract.service";
 import {AdminService} from "../admin/admin.service";
 import {ActivatedRoute} from "@angular/router";
-import {SeasonService} from "../seasons/season.service";
+import {SeasonService} from "../admin/seasons/season.service";
 
 @Component({
   selector: 'app-abstract-news',

@@ -3,191 +3,79 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {AngularFireModule} from "@angular/fire";
-import {environment} from "../environments/environment";
-import {AppShellComponent} from './app-shell/app-shell.component';
-import {ToolbarComponent} from './app-shell/toolbar/toolbar.component';
-import {AngularFirestoreModule, FirestoreSettingsToken} from "@angular/fire/firestore";
-import {AngularFireAuthModule} from "@angular/fire/auth";
+import {FirestoreSettingsToken} from "@angular/fire/firestore";
 import {
-  MatButtonModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatSidenavModule,
-  MatListModule,
-  MatGridListModule,
   MatCardModule,
-  MatMenuModule,
-  MatInputModule,
-  MatSelectModule,
-  MatRadioModule,
-  MatProgressSpinnerModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MAT_DATE_LOCALE,
-  MatDialogModule,
-  MatAutocompleteModule,
-  MatPaginatorModule,
-  MatExpansionModule,
-  MatSortModule,
-  MatTableModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatDividerModule,
-  MatChipsModule,
-  MatTabsModule, MatTooltipModule, MatTreeModule, MatCheckboxModule, MatProgressBarModule
+  MAT_DATE_LOCALE, MatProgressSpinnerModule, MatMenuModule, MatButtonModule
 } from "@angular/material";
-import {SidenavComponent} from './app-shell/sidenav/sidenav.component';
-import {LayoutModule} from '@angular/cdk/layout';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NewsComponent} from './news/news.component';
-import {NewsEditComponent} from './news/news-edit/news-edit.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NewsMoreMenuComponent} from './news/news-more-menu/news-more-menu.component';
-import {FlexLayoutModule} from "@angular/flex-layout";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
 import {ImprintComponent} from './imprint/imprint.component';
-import {AuthComponent} from './app-shell/auth/auth.component';
 import {LoginDialogComponent} from './app-shell/auth/login-dialog/login-dialog.component';
-import {AdminUserComponent} from './admin/admin-user.component';
-import {AdminUserDetailComponent} from './admin/admin-user-detail/admin-user-detail.component';
 import {AdminUserDialogComponent} from './admin/admin-user-dialog/admin-user-dialog.component';
-import {AngularFireFunctionsModule, FunctionsRegionToken} from "@angular/fire/functions";
-import {DefaultDialogComponent} from './abstract/default-dialog/default-dialog.component';
-import {TeamsComponent} from './teams/teams.component';
-import {HallsComponent} from './halls/halls.component';
-import {SidenavListItemComponent} from './app-shell/sidenav/sidenav-list-item/sidenav-list-item.component';
+import {FunctionsRegionToken} from "@angular/fire/functions";
+import {DefaultDialogComponent} from './shared/default-dialog/default-dialog.component';
 import {HallsEditDialogComponent} from './halls/halls-edit-dialog/halls-edit-dialog.component';
-import {AddBtnComponent} from './abstract/add-btn/add-btn.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 import {TeamsChangeDialogComponent} from './teams/teams-change-dialog/teams-change-dialog.component';
-import {DefaultInputDialogComponent} from './abstract/default-input-dialog/default-input-dialog.component';
-import {TeamsDetailComponent} from './teams/teams-detail/teams-detail.component';
-import {NewsCardListComponent} from './news/news-card-list/news-card-list.component';
-import {AngularFireStorageModule} from "@angular/fire/storage";
-import {ImageUploadComponent} from './abstract/image-upload/image-upload.component';
+import {DefaultInputDialogComponent} from './shared/default-input-dialog/default-input-dialog.component';
 import {TeamsDeleteDialogComponent} from "./teams/teams-delete-dialog/teams-delete-dialog.component";
-import {ImageUploadManagerComponent} from './abstract/image-upload-manager/image-upload-manager.component';
-import {SeasonsComponent} from './seasons/seasons.component';
-import {EventsComponent} from './events/events.component';
 import {AbstractNewsComponent} from "./abstract/abstract-news.component";
-import {AdminUserToggleComponent} from './admin/admin-user-toggle/admin-user-toggle.component';
-import {TrainingsComponent} from "./trainings/trainings.component";
 import {TrainingsEditDialogComponent} from "./trainings/trainings-edit-dialog/trainings-edit-dialog.component";
-import {DocumentsComponent} from './documents/documents.component';
 import {HomeComponent} from './home/home.component';
-import {NewsCardComponent} from './news/news-card/news-card.component';
-import {HttpClientModule} from "@angular/common/http";
-import {SidenavSubMenuComponent} from './app-shell/sidenav/sidenav-sub-menu/sidenav-sub-menu.component';
-import {EmptyComponent} from './empty/empty.component';
-import {NewsCardDetailComponent} from './news/news-card-detail/news-card-detail.component';
-import {SliderComponent} from "./abstract/slider/slider.component";
-import {RichTextEditorComponent} from './abstract/rich-text-editor/rich-text-editor.component';
-import {NgxEditorModule} from "ngx-editor";
-import {NgxImageCompressService} from "ngx-image-compress";
-import {ImageCompressService, ResizeOptions} from "ng2-image-compress";
-import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
+import {RichTextEditorComponent} from './shared/rich-text-editor/rich-text-editor.component';
+import {ContentHolderComponent} from "./content-holder/content-holder.component";
 import {SponsorsComponent} from './sponsors/sponsors.component';
 import {SponsorCardComponent} from './sponsors/sponsor-card/sponsor-card.component';
 import {SponsorEditComponent} from './sponsors/sponsor-edit/sponsor-edit.component';
-import {LazyLoadImageDirective, LazyLoadImageModule, scrollPreset} from "ng-lazyload-image";
-import {InfiniteScrollModule} from "ngx-infinite-scroll";
-import {CookieDisclaimerComponent} from './abstract/cookie-disclaimer/cookie-disclaimer.component';
+import {CookieDisclaimerComponent} from './cookie-disclaimer/cookie-disclaimer.component';
 import {CookieService} from "ngx-cookie-service";
 import {DataModule} from "./data/data.module";
+import {SharedModule} from "./shared/shared.module";
+import {AppShellModule} from "./app-shell/app-shell.module";
+import {NewsModule} from "./news/news.module";
+import {AdminModule} from "./admin/admin.module";
+import {TeamsModule} from "./teams/teams.module";
+import {HallsModule} from "./halls/halls.module";
+import {TrainingsModule} from "./trainings/trainings.module";
+import {DocumentsModule} from "./documents/documents.module";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {NgxEditorModule} from "ngx-editor";
+import {FormsModule} from "@angular/forms";
+import {ContentHolderModule} from "./content-holder/content-holder.module";
+import {SponsorsModule} from "./sponsors/sponsors.module";
+import {LazyLoadImageModule} from "ng-lazyload-image";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppShellComponent,
-    ToolbarComponent,
-    SidenavComponent,
-    NewsComponent,
-    NewsEditComponent,
-    NewsMoreMenuComponent,
     ImprintComponent,
-    AuthComponent,
-    LoginDialogComponent,
-    AdminUserComponent,
-    AdminUserDetailComponent,
-    AdminUserDialogComponent,
-    DefaultDialogComponent,
-    TeamsComponent,
-    HallsComponent,
-    SidenavListItemComponent,
-    HallsEditDialogComponent,
-    AddBtnComponent,
-    TeamsChangeDialogComponent,
-    DefaultInputDialogComponent,
-    TeamsDetailComponent,
-    NewsCardListComponent,
-    ImageUploadComponent,
-    TeamsDeleteDialogComponent,
-    ImageUploadManagerComponent,
-    SeasonsComponent,
-    EventsComponent,
 // @ts-ignore
     AbstractNewsComponent,
-    AdminUserToggleComponent,
-    TrainingsComponent,
-    TrainingsEditDialogComponent,
-    DocumentsComponent,
     HomeComponent,
-    NewsCardComponent,
-    SidenavSubMenuComponent,
-    EmptyComponent,
-    NewsCardDetailComponent,
-    SliderComponent,
-    RichTextEditorComponent,
-    ContentHolderComponent,
-    SponsorsComponent,
-    SponsorCardComponent,
-    SponsorEditComponent,
     CookieDisclaimerComponent
   ],
   imports: [
     DataModule,
+    SharedModule,
+    NewsModule,
+    AdminModule,
+    AppShellModule,
+    TeamsModule,
     BrowserModule,
+    HallsModule,
     AppRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    LayoutModule,
-    MatSidenavModule,
-    MatListModule,
-    BrowserAnimationsModule,
-    MatGridListModule,
     MatCardModule,
-    MatMenuModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    ReactiveFormsModule,
+    TrainingsModule,
+    DocumentsModule,
     MatProgressSpinnerModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    MatMenuModule,
     FlexLayoutModule,
-    MatDialogModule,
-    MatAutocompleteModule,
-    MatPaginatorModule,
-    MatExpansionModule,
-    MatSortModule,
-    MatTableModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatDividerModule,
-    MatChipsModule,
-    MatTabsModule,
-    DragDropModule,
-    MatTooltipModule,
-    MatTreeModule,
-    MatCheckboxModule,
-    HttpClientModule,
-    MatProgressBarModule,
-    NgxEditorModule,
+    MatButtonModule,
     FormsModule,
+    ContentHolderModule,
+    SponsorsModule,
     LazyLoadImageModule.forRoot({}),
-    InfiniteScrollModule
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
@@ -197,10 +85,19 @@ import {DataModule} from "./data/data.module";
     CookieService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LoginDialogComponent, AdminUserDialogComponent,
-    DefaultDialogComponent, HallsEditDialogComponent, TeamsChangeDialogComponent, TeamsDeleteDialogComponent,
+  exports: [
+    RichTextEditorComponent
+  ],
+  entryComponents: [
+    LoginDialogComponent,
+    AdminUserDialogComponent,
+    DefaultDialogComponent,
+    HallsEditDialogComponent,
+    TeamsChangeDialogComponent,
+    TeamsDeleteDialogComponent,
     CookieDisclaimerComponent,
-    DefaultInputDialogComponent, TrainingsEditDialogComponent]
+    DefaultInputDialogComponent,
+    TrainingsEditDialogComponent]
 })
 export class AppModule {
 }

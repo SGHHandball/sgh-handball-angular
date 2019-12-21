@@ -4,7 +4,7 @@ import {MatDialog} from "@angular/material";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {Observable, of, Subject} from "rxjs";
 import {environment} from "../../../environments/environment";
-import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
+import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
 import {
   TC_CANCEL,
   TC_GENERAL_DELETE_HEADER,
@@ -13,9 +13,9 @@ import {
 } from "../../translation.service";
 import {DataService} from "../../data/data.service";
 import {FormControl} from "@angular/forms";
-import {SliderService} from "../../abstract/slider/slider.service";
+import {SliderService} from "../../shared/slider/slider.service";
 import {IImage} from "ng2-image-compress";
-import {AbstractService} from "../../abstract/abstract.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-teams-detail',

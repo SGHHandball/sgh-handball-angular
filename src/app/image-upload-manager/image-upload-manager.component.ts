@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TC_IMAGES, TranslationService} from "../../translation.service";
+import {TC_IMAGES, TranslationService} from "../translation.service";
 import {Observable} from "rxjs";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {IImage} from "ng2-image-compress";

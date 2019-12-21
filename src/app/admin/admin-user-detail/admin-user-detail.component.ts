@@ -13,12 +13,12 @@ import {MatDialog} from "@angular/material";
 import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
-} from "../../abstract/default-input-dialog/default-input-dialog.component";
+} from "../../shared/default-input-dialog/default-input-dialog.component";
 import {DataService} from "../../data/data.service";
 import {Subject} from "rxjs";
 import {switchMap, takeUntil} from "rxjs/operators";
-import {SeasonService} from "../../seasons/season.service";
-import {AbstractService} from "../../abstract/abstract.service";
+import {SeasonService} from "../seasons/season.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-admin-user-detail',

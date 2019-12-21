@@ -3,7 +3,7 @@ import {SghUser} from "../model/sgh-user";
 import {Observable, of} from "rxjs";
 import {DataService} from "../data/data.service";
 import {switchMap} from "rxjs/operators";
-import {Credentials} from "../app-shell/auth/login-dialog/login-dialog.component";
+import {Credentials} from "../model/Credentials";
 
 @Injectable({
   providedIn: 'root'

@@ -17,7 +17,7 @@ import {DataService} from "../../data/data.service";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {User} from "firebase";
-import {AbstractService} from "../../abstract/abstract.service";
+import {AbstractService} from "../../shared/abstract.service";
 import {Credentials} from "../../model/Credentials";
 
 @Component({

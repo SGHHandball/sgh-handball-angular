@@ -15,7 +15,7 @@ import {
 } from "../translation.service";
 import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-edit-dialog.component";
 import {AdminService} from "../admin/admin.service";
-import {DefaultDialogComponent, DialogData} from "../abstract/default-dialog/default-dialog.component";
+import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
 import {DataService} from "../data/data.service";
 import {of, Subject} from "rxjs";
@@ -23,8 +23,8 @@ import {catchError,  switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
 import {Team} from "../model/team";
 import {Hall} from "../model/hall";
-import {SeasonService} from "../seasons/season.service";
-import {AbstractService} from "../abstract/abstract.service";
+import {SeasonService} from "../admin/seasons/season.service";
+import {AbstractService} from "../shared/abstract.service";
 
 @Component({
   selector: 'app-trainings',

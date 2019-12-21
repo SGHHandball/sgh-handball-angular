@@ -13,7 +13,7 @@ import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.co
 import {environment} from "../../environments/environment";
 import {of, Subject} from "rxjs";
 import {catchError, switchMap, takeUntil} from "rxjs/operators";
-import {AbstractService} from "../abstract/abstract.service";
+import {AbstractService} from "../shared/abstract.service";
 
 /**
  * @title Table with expandable rows

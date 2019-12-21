@@ -19,9 +19,9 @@ import {AdminService} from "../admin/admin.service";
 import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
-} from "../abstract/default-input-dialog/default-input-dialog.component";
+} from "../shared/default-input-dialog/default-input-dialog.component";
 import {share, switchMap, takeUntil} from "rxjs/operators";
-import {AbstractService} from "../abstract/abstract.service";
+import {AbstractService} from "../shared/abstract.service";
 import {Subject} from "rxjs";
 
 @Component({

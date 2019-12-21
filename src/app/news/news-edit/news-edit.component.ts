@@ -24,15 +24,15 @@ import {MatDialog} from "@angular/material";
 import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
-import {DefaultDialogComponent, DialogData} from "../../abstract/default-dialog/default-dialog.component";
+import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
 import {map, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
-import {SeasonService} from "../../seasons/season.service";
+import {SeasonService} from "../../admin/seasons/season.service";
 import {DataService} from "../../data/data.service";
 import {ActivatedRoute} from "@angular/router";
 import {IImage} from "ng2-image-compress";
 import {Season} from "../../model/season";
-import {AbstractService} from "../../abstract/abstract.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-news-edit',

@@ -8,7 +8,7 @@ import {SliderImage} from "../model/slider-image";
 import {DB_COLLECTION_CONTENT_HOME} from "../constants";
 import {AdminService} from "../admin/admin.service";
 import {Content} from "../model/content";
-import {AbstractService} from "../abstract/abstract.service";
+import {AbstractService} from "../shared/abstract.service";
 
 
 @Component({

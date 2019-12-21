@@ -4,10 +4,10 @@ import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, Ne
 import {DataService} from "../../data/data.service";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
-import {SliderService} from "../../abstract/slider/slider.service";
+import {SliderService} from "../../shared/slider/slider.service";
 import {NewsService} from "../news.service";
-import {SliderComponent} from "../../abstract/slider/slider.component";
-import {AbstractService} from "../../abstract/abstract.service";
+import {SliderComponent} from "../../shared/slider/slider.component";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-news-card-detail',

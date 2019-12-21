@@ -16,7 +16,7 @@ import {Training, TrainingsDialogData} from "../../model/training";
 import {Hall} from "../../model/hall";
 import {Team} from "../../model/team";
 import {TeamService} from "../../teams/team.service";
-import {AbstractService} from "../../abstract/abstract.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-trainings-edit-dialog',

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractNewsComponent} from "../abstract/abstract-news.component";
-import {TC_NEWS_TYPE_EVENT} from "../translation.service";
-import {News, NewsType} from "../model/news";
+import {AbstractNewsComponent} from "../../abstract/abstract-news.component";
+import {TC_NEWS_TYPE_EVENT} from "../../translation.service";
+import {News, NewsType} from "../../model/news";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({

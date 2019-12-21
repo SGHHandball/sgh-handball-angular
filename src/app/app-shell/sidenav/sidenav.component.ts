@@ -18,9 +18,9 @@ import {Team} from "../../model/team";
 import {Subject} from "rxjs";
 import {first, map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../data/data.service";
-import {SeasonService} from "../../seasons/season.service";
+import {SeasonService} from "../../admin/seasons/season.service";
 import {AdminService} from "../../admin/admin.service";
-import {AbstractService} from "../../abstract/abstract.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-sidenav',

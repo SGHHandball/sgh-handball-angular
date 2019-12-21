@@ -5,7 +5,7 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {DataService} from "../../data/data.service";
 import {Subject} from "rxjs";
 import {switchMap, takeUntil} from "rxjs/operators";
-import {SeasonService} from "../../seasons/season.service";
+import {SeasonService} from "../../admin/seasons/season.service";
 
 @Component({
   selector: 'app-teams-change-dialog',

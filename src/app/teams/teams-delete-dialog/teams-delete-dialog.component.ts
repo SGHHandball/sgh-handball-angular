@@ -9,7 +9,7 @@ import {Team} from "../../model/team";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../data/data.service";
 import {Subject} from "rxjs";
-import {SeasonService} from "../../seasons/season.service";
+import {SeasonService} from "../../admin/seasons/season.service";
 
 @Component({
   selector: 'app-teams-delete-dialog',

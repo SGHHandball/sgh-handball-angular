@@ -24,13 +24,13 @@ import {AdminUserComponent} from "./admin/admin-user.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {TeamsComponent} from "./teams/teams.component";
 import {HallsComponent} from "./halls/halls.component";
-import {EventsComponent} from "./events/events.component";
+import {EventsComponent} from "./news/events/events.component";
 import {TrainingsComponent} from "./trainings/trainings.component";
 import {DocumentsComponent} from "./documents/documents.component";
 import {HomeComponent} from "./home/home.component";
-import {SeasonsComponent} from "./seasons/seasons.component";
+import {SeasonsComponent} from "./admin/seasons/seasons.component";
 import {NewsCardDetailComponent} from "./news/news-card-detail/news-card-detail.component";
-import {ContentHolderComponent} from "./abstract/content-holder/content-holder.component";
+import {ContentHolderComponent} from "./content-holder/content-holder.component";
 import {SponsorsComponent} from "./sponsors/sponsors.component";
 import {SponsorEditComponent} from "./sponsors/sponsor-edit/sponsor-edit.component";
 

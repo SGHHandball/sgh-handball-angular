@@ -6,7 +6,7 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container *ngFor="let hallValue of
-    !(isHandset$|async) ? ((hallAdmin|async)
+    !(abstractService.isHandset$|async) ? ((hallAdmin|async)
     ? displayedColumnsAdmin :displayedColumns) :
     ((hallAdmin|async) ? displayedColumnsMobileAdmin : displayedColumnsMobile)"
                   matColumnDef="{{hallValue}}">
@@ -34,11 +34,11 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="
-    !(isHandset$|async) ? ((hallAdmin|async)
+    !(abstractService.isHandset$|async) ? ((hallAdmin|async)
     ? displayedColumnsAdmin :displayedColumns) :
     ((hallAdmin|async) ? displayedColumnsMobileAdmin : displayedColumnsMobile)"></tr>
     <tr mat-row *matRowDef="let row; columns:
-    !(isHandset$|async) ? ((hallAdmin|async)
+    !(abstractService.isHandset$|async) ? ((hallAdmin|async)
     ? displayedColumnsAdmin :displayedColumns) :
     ((hallAdmin|async)? displayedColumnsMobileAdmin : displayedColumnsMobile)">
     </tr>

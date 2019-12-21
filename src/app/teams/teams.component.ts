@@ -20,7 +20,7 @@ import {
 import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
-} from "../abstract/default-input-dialog/default-input-dialog.component";
+} from "../shared/default-input-dialog/default-input-dialog.component";
 import {NewsService} from "../news/news.service";
 import {News, NewsType} from "../model/news";
 import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
@@ -31,7 +31,7 @@ import {DataService} from "../data/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";
-import {SeasonService} from "../seasons/season.service";
+import {SeasonService} from "../admin/seasons/season.service";
 
 @Component({
   selector: 'app-teams',

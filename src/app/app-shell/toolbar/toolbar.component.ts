@@ -3,7 +3,7 @@ import {environment} from "../../../environments/environment";
 import {Router} from "@angular/router";
 import {NewsService} from "../../news/news.service";
 import {Subject} from "rxjs";
-import {AbstractService} from "../../abstract/abstract.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 
 @Component({

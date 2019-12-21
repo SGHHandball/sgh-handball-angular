@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {TC_CANCEL, TC_OK, TranslationService} from "../../translation.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {FormControl, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
