@@ -4,7 +4,7 @@ import {
   TC_ROUTE_EVENTS, TC_ROUTE_EXECUTIVES, TC_ROUTE_GENERAL_INFORMATION,
   TC_ROUTE_HALLS, TC_ROUTE_HOME,
   TC_ROUTE_IMPRINT,
-  TC_ROUTE_NEWS, TC_ROUTE_REFEREES, TC_ROUTE_SPONSORS,
+  TC_ROUTE_NEWS, TC_ROUTE_REFEREES, TC_ROUTE_SGH, TC_ROUTE_SPONSORS,
   TC_ROUTE_TEAMS, TC_ROUTE_TIME_KEEPER, TC_ROUTE_TRAINING
 } from "../../translation.service";
 
@@ -14,7 +14,7 @@ export class NavigationItem {
   routerName: string;
   routerIcon: string;
 
-  noRouterLinkAction:boolean;
+  noRouterLinkAction: boolean;
 
   constructor(routerLink: string, routerName: string) {
     this.routerLink = routerLink;
@@ -31,7 +31,7 @@ export class NavigationItem {
     return this;
   }
 
-  withNoRouterLinkAction(noRouterLinkAction:boolean): NavigationItem {
+  withNoRouterLinkAction(noRouterLinkAction: boolean): NavigationItem {
     this.noRouterLinkAction = noRouterLinkAction;
     return this;
   }
@@ -42,7 +42,7 @@ export const ROUTE_INDEX = '';
 
 export const NAVIGATION_ITEMS_CLUB = [
   new NavigationItem(TC_ROUTE_HOME, TC_ROUTE_HOME).withRouterIcon('home'),
-  new NavigationItem(TC_ROUTE_NEWS, TC_ROUTE_NEWS).withRouterIcon('notifications'),
+  new NavigationItem([TC_ROUTE_SGH, TC_ROUTE_NEWS].join("/"), TC_ROUTE_NEWS).withRouterIcon('notifications'),
 ];
 
 export const NAVIGATION_ITEM_TEAM = [
@@ -65,7 +65,7 @@ export const NAVIGATION_ITEMS_GEN_INFOS = [
 ];
 
 export const NAVIGATION_ITEMS_INFO = [
-  new NavigationItem(TC_ROUTE_EVENTS, TC_ROUTE_EVENTS).withRouterIcon('event'),
+  new NavigationItem([TC_ROUTE_SGH, TC_ROUTE_EVENTS].join("/"), TC_ROUTE_EVENTS).withRouterIcon('event'),
   new NavigationItem(TC_ROUTE_TRAINING, TC_ROUTE_TRAINING).withRouterIcon('fitness_center'),
 ];
 

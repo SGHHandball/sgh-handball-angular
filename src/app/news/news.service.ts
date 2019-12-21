@@ -8,7 +8,7 @@ import {
   TC_NEWS_TEAM_WOMEN,
   TC_NEWS_TEAM_YOUTH,
   TC_PATH_EDIT,
-  TC_ROUTE_DETAIL,
+  TC_ROUTE_DETAIL, TC_ROUTE_SGH,
   TranslationService
 } from "../translation.service";
 import {Club,} from "../model/club";
@@ -79,6 +79,7 @@ export class NewsService {
 
   openNewsEdit(toExpandNewsId: string) {
     const url = [
+      TC_ROUTE_SGH,
       TC_PATH_EDIT,
       toExpandNewsId
     ].join('/');
@@ -88,6 +89,7 @@ export class NewsService {
 
   openNewsDetail(newsId: string) {
     const url = [
+      TC_ROUTE_SGH,
       TC_ROUTE_DETAIL,
       newsId
     ].join('/');

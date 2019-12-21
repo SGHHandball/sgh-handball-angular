@@ -18,10 +18,10 @@ import {
 import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import {AppModule} from "../app.module";
 import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-manager.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {EventsComponent} from "./events/events.component";
+import {NewsRoutingModule} from "./news-routing.module";
 
 @NgModule({
   declarations: [
@@ -54,7 +54,8 @@ import {EventsComponent} from "./events/events.component";
     ImageUploadManagerModule,
     LazyLoadImageModule.forRoot({}),
     MatCheckboxModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NewsRoutingModule
   ],
   exports: [
     NewsComponent,

@@ -29,16 +29,20 @@ export const TC_ROUTE_HEADER_CLUB = 'club';
 export const TC_ROUTE_HEADER_INFO = 'info';
 export const TC_ROUTE_HEADER_OTHER = 'other';
 
-export const TC_ROUTE_HOME = 'home';
+
+export const TC_ROUTE_SGH = 'sgh';
 export const TC_ROUTE_NEWS = 'aktuelles';
+export const TC_PATH_EDIT = 'bearbeiten';
+export const TC_ROUTE_EVENTS = 'events';
 export const TC_ROUTE_DETAIL= 'detail';
+
+export const TC_ROUTE_HOME = 'home';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 
 export const TC_ROUTE_GENERAL_INFORMATION = 'allgemeine-informationen';
 export const TC_ROUTE_EXECUTIVES = 'vorstand';
 export const TC_ROUTE_REFEREES = 'schiedsrichter';
 export const TC_ROUTE_TIME_KEEPER = 'zeitnehmer';
-export const TC_ROUTE_EVENTS = 'events';
 export const TC_ROUTE_TRAINING = 'trainingszeiten';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
 
@@ -48,7 +52,6 @@ export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
 export const TC_ROUTE_SEASONS = 'saisons';
 
-export const TC_PATH_EDIT = 'bearbeiten';
 
 export const TC_ADMIN = 'admin';
 export const TC_USERS = 'users';
@@ -170,4 +173,3 @@ export const TC_DOCUMENTS_ADD_NEW_FOLDER_SUCCESS = 'documents-add-new-folder-suc
 export const TC_DOCUMENTS_ADD_NEW_FOLDER_FAIL = 'documents-add-new-folder-fail';
 export const TC_DOCUMENTS_FOLDER_NAME = 'documents-folder-name';
 
-export const TC_EMPTY_SITE= 'empty-site';
