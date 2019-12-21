@@ -38,7 +38,6 @@ import {HallsModule} from "./halls/halls.module";
 import {TrainingsModule} from "./trainings/trainings.module";
 import {DocumentsModule} from "./documents/documents.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import {NgxEditorModule} from "ngx-editor";
 import {FormsModule} from "@angular/forms";
 import {ContentHolderModule} from "./content-holder/content-holder.module";
 import {SponsorsModule} from "./sponsors/sponsors.module";
