@@ -15,8 +15,8 @@
         [news]="news"
         (editClickListener)="newsService.openNewsEdit($event.id)"
         (deleteClickListener)="openDeleteNewsDialog($event)"
-        (sendClickListener)="openSendNewsDialog($event)"
-        (checkClickListener)="openCheckNewsDialog($event)"
+        (sendClickListener)="openSendCheckNewsDialog($event,true)"
+        (checkClickListener)="openSendCheckNewsDialog($event,false)"
         (exportChangeListener)="changeExportNews($event)"
         (openDetailClickListener)="openNewsDetail($event)"
       ></app-news-card-list>

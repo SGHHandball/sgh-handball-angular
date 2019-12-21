@@ -64,17 +64,6 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   teamsAdmin = this.adminService.isUserTeamsAdmin().pipe(share());
   rightsForTeam: Observable<boolean>;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              public translationService: TranslationService,
-              public dialog: MatDialog,
-              public newsService: NewsService,
-              dataService: DataService,
-              private adminService: AdminService,
-              snackBar: MatSnackBar,
-              private route: ActivatedRoute,
-              private seasonService: SeasonService) {
-    super(breakpointObserver, translationService, dialog, dataService, snackBar);
-  }
 
   ngOnInit(): void {
     this.initAllTeamsForSeason();
@@ -159,15 +148,15 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
           }
         ),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
       )
       .subscribe(
         cancel => {
-          if (cancel) this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS));
-          else this.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
+          if (cancel) this.abstractService.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_SUCCESS));
+          else this.abstractService.openSnackBar(this.translationService.get(TC_TEAMS_ADD_NEW_TEAM_FAIL));
         }
       );
   }
@@ -189,68 +178,78 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
 
 
   getInputDialogObservable(teamAges: string[]): Observable<string | undefined> {
-    return this.dialog.open(
-      DefaultInputDialogComponent, {
-        width: this.dialogWidth,
-        data: new DefaultInputDialogData(
-          this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
-          this.translationService.get(TC_TEAMS_TEAM),
-          this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
-          this.translationService.get(TC_CANCEL),
-          this.translationService.get(TC_OK)
-        ).withAutocompleteValues(teamAges)
-      }
-    ).afterClosed()
+    return this.abstractService.dialogWidth$
+      .pipe(
+        switchMap(dialogWidth =>
+          this.dialog.open(
+            DefaultInputDialogComponent, {
+              width: dialogWidth,
+              data: new DefaultInputDialogData(
+                this.translationService.get(TC_TEAMS_ADD_NEW_TEAM),
+                this.translationService.get(TC_TEAMS_TEAM),
+                this.translationService.get(TC_GENERAL_REQUIRED_ERROR),
+                this.translationService.get(TC_CANCEL),
+                this.translationService.get(TC_OK)
+              ).withAutocompleteValues(teamAges)
+            }
+          ).afterClosed())
+      );
   }
 
   changeOrderOfTeams() {
-    this.dialog.open(
-      TeamsChangeDialogComponent,
-      {
-        width: this.dialogWidth,
-      }
-    ).afterClosed()
+    this.abstractService.dialogWidth$
       .pipe(
         takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(
+            TeamsChangeDialogComponent,
+            {
+              width: dialogWidth,
+            }
+          ).afterClosed()
+        ),
         switchMap(teams => {
           return teams ? this.dataService.changeOrderOfTeams(teams) : of("cancelBtn");
         }),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
       )
       .subscribe(
         cancel => {
-          if (cancel) this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
-          else this.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS));
+          if (cancel) this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_FAIL));
+          else this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_EDIT_SUCCESS));
         }
       );
   }
 
   deleteTeam() {
-    this.dialog.open(
-      TeamsDeleteDialogComponent,
-      {
-        width: this.dialogWidth,
-      }
-    ).afterClosed()
+    this.abstractService.dialogWidth$
       .pipe(
         takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(
+            TeamsDeleteDialogComponent,
+            {
+              width: dialogWidth,
+            }
+          ).afterClosed()
+        ),
         switchMap(team => {
           return team ? this.dataService.deleteTeam(team) : of("cancelBtn");
         }),
         catchError(error => {
-          this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
           if (!environment.production) console.log(error);
           return error;
         })
       )
       .subscribe(
         cancel => {
-          if (cancel) this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
-          else this.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
+          if (cancel) this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_FAIL));
+          else this.abstractService.openSnackBar(this.translationService.get(TC_GENERAL_DELETE_SUCCESS));
         }
       );
   }

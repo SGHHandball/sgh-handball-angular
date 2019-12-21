@@ -1,18 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {BreakpointObserver} from '@angular/cdk/layout';
 import {News, NewsType} from "../model/news";
 import {
   TC_NEWS_TYPE_REPORT,
-  TranslationService, TC_NEWS_TYPE_EVENT, TC_FILTER, TC_NEWS_EXPORT
+   TC_NEWS_TYPE_EVENT, TC_NEWS_EXPORT
 } from "../translation.service";
-import {NewsService} from "./news.service";
-import {MatDialog, MatSnackBar} from "@angular/material";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
-import {AdminService} from "../admin/admin.service";
 import {exportNewsToText} from "./news-export/news-export";
-import {DataService} from "../common/data.service";
-import {first, last, share, switchMap, takeUntil} from "rxjs/operators";
-import {BehaviorSubject} from "rxjs";
+import {first,  share, switchMap, takeUntil} from "rxjs/operators";
 import {SghUser} from "../admin/sgh-user";
 
 @Component({
@@ -40,16 +34,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
 
   user: SghUser;
 
-  constructor(breakpointObserver: BreakpointObserver,
-              translationService: TranslationService,
-              dialog: MatDialog,
-              snackBar: MatSnackBar,
-              dataService: DataService,
-              public adminService: AdminService,
-              private newsService: NewsService
-  ) {
-    super(breakpointObserver, translationService, dialog, dataService, snackBar);
-  }
 
   ngOnInit(): void {
     this.initUser();
