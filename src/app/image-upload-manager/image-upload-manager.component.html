@@ -5,6 +5,7 @@
          (cdkDropListDropped)="moveImage($event)" class="img-previews">
       <div *ngFor="let url of urls; let i = index">
         <img
+          alt="SGH - SG Hainhausen (Rodgau) Handball Upload Image"
           [lazyLoad]="url"
           defaultImage="assets/img/SghLogoOnlyTran.png"
           class="img-preview"
