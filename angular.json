@@ -40,6 +40,8 @@
                 }
               ],
               "assets": [
+                "src/favicon.ico",
+                "src/assets",
                 "src/.htaccess"
               ],
               "optimization": true,
