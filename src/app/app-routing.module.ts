@@ -44,9 +44,12 @@ export const routes = [
     path: TC_ROUTE_SPONSORS,
     loadChildren: './sponsors/sponsors.module#SponsorsModule'
   },
+  {
+    path: TC_ROUTE_DOCUMENTS,
+    loadChildren: './documents/documents.module#DocumentsModule'
+  },
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
-  {path: TC_ROUTE_DOCUMENTS, component: DocumentsComponent},
 
   {path: TC_ROUTE_IMPRINT, component: ImprintComponent},
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},

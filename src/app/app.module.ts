@@ -10,8 +10,6 @@ import {
 } from "@angular/material";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
 import {ImprintComponent} from './imprint/imprint.component';
-import {LoginDialogComponent} from './admin/login-dialog/login-dialog.component';
-import {AdminUserDialogComponent} from './admin/admin-user-dialog/admin-user-dialog.component';
 import {FunctionsRegionToken} from "@angular/fire/functions";
 import {DefaultDialogComponent} from './shared/default-dialog/default-dialog.component';
 import {HallsEditDialogComponent} from './halls/halls-edit-dialog/halls-edit-dialog.component';
@@ -26,7 +24,6 @@ import {SharedModule} from "./shared/shared.module";
 import {AppShellModule} from "./app-shell/app-shell.module";
 import {HallsModule} from "./halls/halls.module";
 import {TrainingsModule} from "./trainings/trainings.module";
-import {DocumentsModule} from "./documents/documents.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {FormsModule} from "@angular/forms";
 import {LazyLoadImageModule} from "ng-lazyload-image";
@@ -50,7 +47,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppRoutingModule,
     MatCardModule,
     TrainingsModule,
-    DocumentsModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     FlexLayoutModule,

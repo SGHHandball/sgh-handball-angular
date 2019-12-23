@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {DocumentsComponent} from "./documents.component";
 import {MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatTreeModule} from "@angular/material";
 import {SharedModule} from "../shared/shared.module";
+import {DocumentsRoutingModule} from "./documents-routing.module";
 
 @NgModule({
   declarations: [DocumentsComponent],
@@ -12,7 +13,8 @@ import {SharedModule} from "../shared/shared.module";
     MatTreeModule,
     MatButtonModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    DocumentsRoutingModule
   ],
   exports:[DocumentsComponent]
 })
