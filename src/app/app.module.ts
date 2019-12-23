@@ -35,7 +35,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ImprintComponent,
 // @ts-ignore
     AbstractNewsComponent,
-    HomeComponent,
     CookieDisclaimerComponent
   ],
   imports: [

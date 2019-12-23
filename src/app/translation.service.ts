@@ -44,6 +44,8 @@ export const TC_ROUTE_REFEREES = 'schiedsrichter';
 export const TC_ROUTE_TIME_KEEPER = 'zeitnehmer';
 export const TC_ROUTE_CDH = 'club-der-hunderter';
 
+export const TC_ROUTE_LOADING = 'loading';
+
 export const TC_ROUTE_HOME = 'home';
 export const TC_ROUTE_TEAMS = 'mannschaften';
 
