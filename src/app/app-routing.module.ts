@@ -3,7 +3,6 @@ import {PreloadAllModules, RouterModule} from '@angular/router';
 import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {
   TC_ADMIN,
-  TC_PATH_EDIT,
   TC_ROUTE_CONTENT,
   TC_ROUTE_DOCUMENTS,
   TC_ROUTE_HALLS,
@@ -15,15 +14,9 @@ import {
   TC_ROUTE_TRAINING,
 } from "./translation.service";
 import {ImprintComponent} from "./imprint/imprint.component";
-import {HallsComponent} from "./halls/halls.component";
-import {TrainingsComponent} from "./trainings/trainings.component";
-import {DocumentsComponent} from "./documents/documents.component";
 import {HomeComponent} from "./home/home.component";
-import {SponsorsComponent} from "./sponsors/sponsors.component";
-import {SponsorEditComponent} from "./sponsors/sponsor-edit/sponsor-edit.component";
 
 export const routes = [
-  {path: TC_ROUTE_HOME, component: HomeComponent},
   {
     path: TC_ROUTE_SGH,
     loadChildren: './news/news.module#NewsModule'
@@ -52,8 +45,12 @@ export const routes = [
     path: TC_ROUTE_HALLS,
     loadChildren: './halls/halls.module#HallsModule'
   },
-  {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
+  {
+    path: TC_ROUTE_TRAINING,
+    loadChildren: './trainings/trainings.module#TrainingsModule'
+  },
 
+  {path: TC_ROUTE_HOME, component: HomeComponent},
   {path: TC_ROUTE_IMPRINT, component: ImprintComponent},
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
   {path: '**', redirectTo: TC_ROUTE_HOME}

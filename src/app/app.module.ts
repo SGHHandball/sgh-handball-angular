@@ -45,7 +45,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserModule,
     AppRoutingModule,
     MatCardModule,
-    TrainingsModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     FlexLayoutModule,
@@ -65,8 +64,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   entryComponents: [
     DefaultDialogComponent,
     CookieDisclaimerComponent,
-    DefaultInputDialogComponent,
-    TrainingsEditDialogComponent]
+    DefaultInputDialogComponent,]
 })
 export class AppModule {
 }

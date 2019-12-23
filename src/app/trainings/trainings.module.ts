@@ -12,6 +12,7 @@ import {
 } from "@angular/material";
 import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {TrainingsRoutingModule} from "./trainings-routing.module";
 
 @NgModule({
   declarations: [TrainingsComponent, TrainingsEditDialogComponent],
@@ -25,9 +26,12 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    TrainingsRoutingModule
   ],
   exports: [TrainingsComponent, TrainingsEditDialogComponent],
+  entryComponents: [
+    TrainingsEditDialogComponent]
 })
 export class TrainingsModule {
 }
