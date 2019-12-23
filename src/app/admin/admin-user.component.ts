@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SghUser} from "../model/sgh-user";
@@ -77,7 +77,8 @@ export class AdminUserComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         users => {
-          if (users) {
+          if (users && this.dataSource.data.length != users.length) {
+            console.log(users);
             this.dataSource = new MatTableDataSource<SghUser>(users);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

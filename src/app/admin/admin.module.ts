@@ -33,7 +33,8 @@ import {TrainingsEditDialogComponent} from "../trainings/trainings-edit-dialog/t
     AdminUserToggleComponent,
     AdminUserComponent,
     SeasonsComponent,
-    AuthComponent
+    AuthComponent,
+    LoginDialogComponent,
   ],
   imports: [
     CommonModule,
