@@ -40,11 +40,13 @@ export const routes = [
     path: TC_ADMIN,
     loadChildren: './admin/admin.module#AdminModule'
   },
+  {
+    path: TC_ROUTE_SPONSORS,
+    loadChildren: './sponsors/sponsors.module#SponsorsModule'
+  },
   {path: TC_ROUTE_HALLS, component: HallsComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
   {path: TC_ROUTE_DOCUMENTS, component: DocumentsComponent},
-  {path: TC_ROUTE_SPONSORS, component: SponsorsComponent},
-  {path: TC_ROUTE_SPONSORS + '/' + TC_PATH_EDIT + '/' + ':sponsorId', component: SponsorEditComponent},
 
   {path: TC_ROUTE_IMPRINT, component: ImprintComponent},
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},

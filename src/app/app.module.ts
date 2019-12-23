@@ -29,7 +29,6 @@ import {TrainingsModule} from "./trainings/trainings.module";
 import {DocumentsModule} from "./documents/documents.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {FormsModule} from "@angular/forms";
-import {SponsorsModule} from "./sponsors/sponsors.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
@@ -57,7 +56,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     FlexLayoutModule,
     MatButtonModule,
     FormsModule,
-    SponsorsModule,
     LazyLoadImageModule.forRoot({}),
     BrowserAnimationsModule,
   ],

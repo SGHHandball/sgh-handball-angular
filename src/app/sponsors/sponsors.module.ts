@@ -16,6 +16,7 @@ import {SharedModule} from "../shared/shared.module";
 import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-manager.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {LazyLoadImageModule} from "ng-lazyload-image";
+import {SponsorsRoutingModule} from "./sponsors-routing.module";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {LazyLoadImageModule} from "ng-lazyload-image";
     MatButtonModule,
     MatIconModule,
     LazyLoadImageModule.forRoot({}),
+    SponsorsRoutingModule
   ],
   exports: [
     SponsorsComponent,]
