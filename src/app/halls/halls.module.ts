@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {HallsComponent} from "./halls.component";
 import {HallsEditDialogComponent} from "./halls-edit-dialog/halls-edit-dialog.component";
 import {
@@ -12,10 +12,11 @@ import {
 } from "@angular/material";
 import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {HallsRoutingModule} from "./halls-routing.module";
 
 @NgModule({
   declarations: [HallsComponent,
-  HallsEditDialogComponent],
+    HallsEditDialogComponent],
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -27,8 +28,12 @@ import {ReactiveFormsModule} from "@angular/forms";
     MatPaginatorModule,
     SharedModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HallsRoutingModule
   ],
-  exports:[HallsComponent]
+  exports: [HallsComponent],
+  entryComponents: [
+    HallsEditDialogComponent,]
 })
-export class HallsModule { }
+export class HallsModule {
+}

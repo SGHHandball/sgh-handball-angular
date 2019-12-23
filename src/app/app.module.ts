@@ -43,7 +43,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     SharedModule,
     AppShellModule,
     BrowserModule,
-    HallsModule,
     AppRoutingModule,
     MatCardModule,
     TrainingsModule,
@@ -65,7 +64,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   bootstrap: [AppComponent],
   entryComponents: [
     DefaultDialogComponent,
-    HallsEditDialogComponent,
     CookieDisclaimerComponent,
     DefaultInputDialogComponent,
     TrainingsEditDialogComponent]

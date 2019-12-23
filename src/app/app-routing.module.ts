@@ -48,7 +48,10 @@ export const routes = [
     path: TC_ROUTE_DOCUMENTS,
     loadChildren: './documents/documents.module#DocumentsModule'
   },
-  {path: TC_ROUTE_HALLS, component: HallsComponent},
+  {
+    path: TC_ROUTE_HALLS,
+    loadChildren: './halls/halls.module#HallsModule'
+  },
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
 
   {path: TC_ROUTE_IMPRINT, component: ImprintComponent},
