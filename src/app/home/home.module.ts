@@ -5,6 +5,7 @@ import {MatCardModule, MatMenuModule, MatProgressSpinnerModule} from "@angular/m
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {SharedModule} from "../shared/shared.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
+import {HomeRoutingModule} from "./home-routing.module";
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,8 +17,9 @@ import {LazyLoadImageModule} from "ng-lazyload-image";
     SharedModule,
     MatMenuModule,
     LazyLoadImageModule.forRoot({}),
+    HomeRoutingModule
   ],
-  exports: [HomeComponent, ]
+  exports: [HomeComponent,]
 })
-export class TrainingsModule {
+export class HomeModule {
 }

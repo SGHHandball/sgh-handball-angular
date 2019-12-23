@@ -14,7 +14,6 @@ import {
   TC_ROUTE_TRAINING,
 } from "./translation.service";
 import {ImprintComponent} from "./imprint/imprint.component";
-import {HomeComponent} from "./home/home.component";
 import {LoadingComponent} from "./app-shell/loading/loading.component";
 
 export const routes = [
@@ -52,10 +51,12 @@ export const routes = [
   },
   {
     path: TC_ROUTE_HOME,
-    loadChildren: './home/home.moduleHomeModule'
+    loadChildren: './home/home.module#HomeModule'
   },
-
-  {path: TC_ROUTE_IMPRINT, component: ImprintComponent},
+  {
+    path: TC_ROUTE_IMPRINT,
+    loadChildren: './imprint/imprint.module#ImprintModule'
+  },
 
   {path: TC_ROUTE_LOADING, component: LoadingComponent},
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_LOADING, pathMatch: 'full'},

@@ -32,7 +32,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 @NgModule({
   declarations: [
     AppComponent,
-    ImprintComponent,
 // @ts-ignore
     AbstractNewsComponent,
     CookieDisclaimerComponent
@@ -43,13 +42,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppShellModule,
     BrowserModule,
     AppRoutingModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatMenuModule,
-    FlexLayoutModule,
-    MatButtonModule,
-    FormsModule,
-    LazyLoadImageModule.forRoot({}),
     BrowserAnimationsModule,
   ],
   providers: [
