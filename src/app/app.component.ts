@@ -10,7 +10,6 @@ import {COOKIE_DISCLAIMER} from "./constants";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'sg-hainhausen-web';
 
   constructor(private _snackBar: MatSnackBar,
               private cookieService: CookieService) {
