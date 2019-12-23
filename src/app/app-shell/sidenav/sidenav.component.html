@@ -8,7 +8,7 @@
   <mat-sidenav #drawer class="sidenav"
                [attr.role]="(abstractService.isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(abstractService.isHandset$ | async) ? 'over' : 'side'"
-               [opened]="!(abstractService.isHandset$ | async)"
+               [opened]="false"
   >
 
     <mat-divider></mat-divider>

@@ -97,8 +97,17 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initDrawerOnDesktop();
     this.initTeamsAdmin();
     this.initTeamNavItems()
+  }
+
+  initDrawerOnDesktop() {
+    this.abstractService.isHandset$
+      .pipe(first())
+      .subscribe(handset => {
+        if (!handset) this.toogleSideNav()
+      })
   }
 
   initTeamsAdmin() {
