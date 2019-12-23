@@ -1,24 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {
   TC_AUTH_LOGIN_ERROR,
-  TC_AUTH_LOGIN_SUCCESS, TC_AUTH_LOGOUT_ERROR, TC_AUTH_LOGOUT_SUCCESS,
-  TC_LOGIN,
-  TC_LOGOUT,
-  TC_ROUTE_IMPRINT, TC_ROUTE_LOGIN, TC_ROUTE_SEASONS, TC_USERS,
+  TC_AUTH_LOGIN_SUCCESS, TC_AUTH_LOGOUT_ERROR, TC_AUTH_LOGOUT_SUCCESS, TC_ROUTE_LOGIN,
   TranslationService
 } from "../../translation.service";
 import {MatDialog} from "@angular/material";
 import {LoginDialogComponent} from "../login-dialog/login-dialog.component";
-import {AngularFireAuth} from "@angular/fire/auth";
-import {AdminService} from "../admin.service";
 import {environment} from "../../../environments/environment";
 import {DataService} from "../../data/data.service";
-import {share, switchMap, takeUntil} from "rxjs/operators";
+import {switchMap, takeUntil} from "rxjs/operators";
 import {of, Subject} from "rxjs";
-import {User} from "firebase";
 import {AbstractService} from "../../shared/abstract.service";
-import {Credentials} from "../../model/Credentials";
 import {Location} from "@angular/common";
 
 @Component({

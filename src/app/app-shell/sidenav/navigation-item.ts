@@ -1,4 +1,5 @@
 import {
+  TC_ADMIN,
   TC_ROUTE_CDH, TC_ROUTE_CONTENT,
   TC_ROUTE_EVENTS, TC_ROUTE_EXECUTIVES, TC_ROUTE_GENERAL_INFORMATION,
   TC_ROUTE_HALLS, TC_ROUTE_HOME,
@@ -75,9 +76,9 @@ export const NAVIGATION_ITEMS_OTHER = [
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
 ];
 
-export const NAVIGATION_ITEM_ADMIN_LOGIN = new NavigationItem(TC_ROUTE_LOGIN, "Login").withRouterIcon('last_page');
+export const NAVIGATION_ITEM_ADMIN_LOGIN = new NavigationItem([TC_ADMIN, TC_ROUTE_LOGIN].join("/"), "Login").withRouterIcon('last_page');
 
-export const NAVIGATION_ITEM_ADMIN = new NavigationItem(TC_USERS, "Nutzer").withRouterIcon('vpn_key');
-export const NAVIGATION_ITEM_ADMIN_SEASONS = new NavigationItem(TC_ROUTE_SEASONS, "Saisons").withRouterIcon('date_range');
-export const NAVIGATION_ITEM_ADMIN_LOGOUT = new NavigationItem(TC_ROUTE_LOGOUT, "Logout").withRouterIcon('first_page');
+export const NAVIGATION_ITEM_ADMIN = new NavigationItem([TC_ADMIN, TC_USERS].join("/"), "Nutzer").withRouterIcon('vpn_key');
+export const NAVIGATION_ITEM_ADMIN_SEASONS = new NavigationItem([TC_ADMIN, TC_ROUTE_SEASONS].join("/"), "Saisons").withRouterIcon('date_range');
+export const NAVIGATION_ITEM_ADMIN_LOGOUT = new NavigationItem([TC_ADMIN, TC_ROUTE_LOGOUT].join("/"), "Logout").withRouterIcon('first_page');
 

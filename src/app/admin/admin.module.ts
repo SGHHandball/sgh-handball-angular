@@ -18,6 +18,13 @@ import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SeasonsComponent} from "./seasons/seasons.component";
 import {AuthComponent} from "./auth/auth.component";
+import {AdminRoutingModule} from "./admin-routing.module";
+import {LoginDialogComponent} from "./login-dialog/login-dialog.component";
+import {DefaultDialogComponent} from "../shared/default-dialog/default-dialog.component";
+import {HallsEditDialogComponent} from "../halls/halls-edit-dialog/halls-edit-dialog.component";
+import {CookieDisclaimerComponent} from "../cookie-disclaimer/cookie-disclaimer.component";
+import {DefaultInputDialogComponent} from "../shared/default-input-dialog/default-input-dialog.component";
+import {TrainingsEditDialogComponent} from "../trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 
 @NgModule({
   declarations: [
@@ -43,11 +50,15 @@ import {AuthComponent} from "./auth/auth.component";
     MatDialogModule,
     MatButtonModule,
     MatChipsModule,
-    MatIconModule
+    MatIconModule,
+    AdminRoutingModule
   ],
   exports: [AdminUserComponent,
     SeasonsComponent,
-    AuthComponent]
+    AuthComponent],
+  entryComponents: [
+    LoginDialogComponent,
+    AdminUserDialogComponent,]
 })
 export class AdminModule {
 }

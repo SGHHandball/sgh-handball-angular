@@ -24,7 +24,6 @@ import {CookieService} from "ngx-cookie-service";
 import {DataModule} from "./data/data.module";
 import {SharedModule} from "./shared/shared.module";
 import {AppShellModule} from "./app-shell/app-shell.module";
-import {AdminModule} from "./admin/admin.module";
 import {HallsModule} from "./halls/halls.module";
 import {TrainingsModule} from "./trainings/trainings.module";
 import {DocumentsModule} from "./documents/documents.module";
@@ -46,7 +45,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   imports: [
     DataModule,
     SharedModule,
-    AdminModule,
     AppShellModule,
     BrowserModule,
     HallsModule,
@@ -72,8 +70,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    LoginDialogComponent,
-    AdminUserDialogComponent,
     DefaultDialogComponent,
     HallsEditDialogComponent,
     CookieDisclaimerComponent,
