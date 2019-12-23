@@ -63,10 +63,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  goToHome() {
-    this.router.navigate(['/']);
-  }
-
   closeSideNavOnHandheldMode() {
     this.abstractService
       .isHandset$

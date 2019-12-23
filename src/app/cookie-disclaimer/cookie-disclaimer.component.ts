@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {MatSnackBarRef} from "@angular/material";
 
 @Component({
   selector: 'app-cookie-disclaimer',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./cookie-disclaimer.component.css']
 })
 export class CookieDisclaimerComponent{
+
+  constructor(public dialogRef: MatSnackBarRef<CookieDisclaimerComponent>,){}
 }
