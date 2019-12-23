@@ -4,7 +4,7 @@
     <ng-container
       matColumnDef="{{trainingsAdmin? displayedColumnsAdmin[0] : displayedColumns[0]}}">
       <th mat-header-cell
-          *matHeaderCellDef>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[0] : displayedColumns[0])}}</th>
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[0] : displayedColumns[0])}}</span></th>
       <td mat-cell *matCellDef="let row">
         <span *ngIf="teams">{{teamService.getTeamAsStringFromTeams(row.teamId, teams)}}</span>
         <span *ngIf="row.trainings && row.trainings.length>0">/ {{row.trainings[0].team.teamVintage}}</span>
@@ -14,7 +14,7 @@
     <ng-container
       matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[1] : displayedColumns[1]}}">
       <th mat-header-cell
-          *matHeaderCellDef>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[1] : displayedColumns[1])}}</th>
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[1] : displayedColumns[1])}}</span></th>
       <td mat-cell *matCellDef="let row">
         <p *ngFor="let training of row.trainings">
           <span *ngIf="halls"> {{getTrainingDateAsString(training.date) }}</span>
@@ -25,7 +25,7 @@
     <ng-container
       matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[2] : displayedColumns[2]}}">
       <th mat-header-cell
-          *matHeaderCellDef>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[2] : displayedColumns[2])}}</th>
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[2] : displayedColumns[2])}}</span></th>
       <td mat-cell *matCellDef="let row">
         <p *ngFor="let training of row.trainings">
           {{training.trainer.name ? training.trainer.name : ''}}

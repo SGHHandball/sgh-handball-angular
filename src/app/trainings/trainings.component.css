@@ -10,6 +10,7 @@ table {
   padding: 16px;
 }
 
-.mat-cell, .mat-header-cell{
+
+span{
   padding: 4px;
 }

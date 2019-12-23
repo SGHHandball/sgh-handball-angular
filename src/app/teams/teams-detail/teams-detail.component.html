@@ -37,7 +37,7 @@
     *ngIf="team.imgLinks && team.imgLinks.length>0"
     [sliderArray]="sliderService.getSlideArrayByImageLinks(team.imgLinks)"
     [height]="(abstractService.isHandset$|async)?'250px':'400px'"
-    [width]="''"
+    [width]="(abstractService.isHandset$|async)?'100%':''"
     [objectFit]="'contains'"
     [imageBorderRadius]="'4px'"
   >
