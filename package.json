@@ -9,6 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build-stage": "ng build --configuration=stage",
+    "build-prod": "ng build --configuration=production",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/dev/sg-hainhausen-web/stats.json"
   },

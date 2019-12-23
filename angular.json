@@ -39,6 +39,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "assets": [
+                "src/.htaccess"
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
