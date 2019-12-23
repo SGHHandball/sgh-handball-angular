@@ -3,8 +3,8 @@ import {CommonModule} from '@angular/common';
 import {AppShellComponent} from "./app-shell.component";
 import {ToolbarComponent} from "./toolbar/toolbar.component";
 import {SidenavComponent} from "./sidenav/sidenav.component";
-import {AuthComponent} from "./auth/auth.component";
-import {LoginDialogComponent} from "./auth/login-dialog/login-dialog.component";
+import {AuthComponent} from "../admin/auth/auth.component";
+import {LoginDialogComponent} from "../admin/login-dialog/login-dialog.component";
 import {RouterModule} from "@angular/router";
 import {
   MatButtonModule, MatDialogModule,
@@ -23,7 +23,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AppShellComponent,
     ToolbarComponent,
     SidenavComponent,
-    AuthComponent,
     LoginDialogComponent,
     SidenavListItemComponent,
     SidenavSubMenuComponent],
@@ -36,18 +35,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatSidenavModule,
     MatDividerModule,
     MatListModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   exports: [
     AppShellComponent,
     ToolbarComponent,
     SidenavComponent,
-    AuthComponent,
     LoginDialogComponent,
     SidenavListItemComponent,
     SidenavSubMenuComponent]

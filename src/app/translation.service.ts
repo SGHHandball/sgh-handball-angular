@@ -57,6 +57,10 @@ export const TC_ROUTE_IMPRINT = 'impressum';
 export const TC_ROUTE_SEASONS = 'saisons';
 
 
+export const TC_ROUTE_LOGIN = 'login';
+export const TC_ROUTE_LOGOUT = 'logout';
+
+
 export const TC_ADMIN = 'admin';
 export const TC_USERS = 'users';
 export const TC_CANCEL = 'cancel';

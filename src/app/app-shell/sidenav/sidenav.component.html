@@ -47,6 +47,15 @@
         (clickNavigationListener)="closeSideNavOnHandheldMode()"
       ></app-sidenav-list-item>
 
+      <mat-divider></mat-divider>
+
+      <app-sidenav-list-item
+        *ngIf="navItemAdmin"
+        headerTitle="Admin"
+        [navItems]="navItemAdmin"
+        (clickNavigationListener)="closeSideNavOnHandheldMode()"
+      ></app-sidenav-list-item>
+
     </mat-nav-list>
 
     <app-sidenav-sub-menu *ngIf="teamsNavItemsVisible"

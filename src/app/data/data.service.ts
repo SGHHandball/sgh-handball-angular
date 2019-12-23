@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import { Observable} from "rxjs";
-import { News, NewsType} from "../model/news";
+import {from, Observable} from "rxjs";
+import {News, NewsType} from "../model/news";
 import {FireApiService} from "./fire-api.service";
 import {Club} from "../model/club";
 import {DocumentReference} from "@angular/fire/firestore";
@@ -23,6 +23,15 @@ import {Credentials} from "../model/Credentials";
 export class DataService {
 
   protected constructor(private service: FireApiService) {
+  }
+
+
+  login(credentials: Credentials): Observable<any> {
+    return this.service.login(credentials);
+  }
+
+  logout(): Observable<void> {
+    return this.service.logout();
   }
 
   getUser(): Observable<User> {

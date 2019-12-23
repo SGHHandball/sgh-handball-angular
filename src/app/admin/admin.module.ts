@@ -17,6 +17,7 @@ import {
 import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SeasonsComponent} from "./seasons/seasons.component";
+import {AuthComponent} from "./auth/auth.component";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {SeasonsComponent} from "./seasons/seasons.component";
     AdminUserDialogComponent,
     AdminUserToggleComponent,
     AdminUserComponent,
-    SeasonsComponent
+    SeasonsComponent,
+    AuthComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import {SeasonsComponent} from "./seasons/seasons.component";
     MatIconModule
   ],
   exports: [AdminUserComponent,
-    SeasonsComponent]
+    SeasonsComponent,
+    AuthComponent]
 })
 export class AdminModule {
 }

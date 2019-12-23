@@ -50,6 +50,18 @@ export class FireApiService {
   }
 
   //USER
+  login(credentials: Credentials): Observable<any> {
+    return from(
+      this.afAuth.auth
+        .signInWithEmailAndPassword(credentials.email, credentials.password)
+    )
+  }
+
+  logout(): Observable<void> {
+    return from(this.afAuth.auth.signOut())
+  }
+
+
   getUser(): Observable<User> {
     return this.afAuth.user;
   }

@@ -7,6 +7,8 @@ import {
   TranslationService
 } from "../../translation.service";
 import {
+  NAVIGATION_ITEM_ADMIN,
+  NAVIGATION_ITEM_ADMIN_LOGIN, NAVIGATION_ITEM_ADMIN_LOGOUT, NAVIGATION_ITEM_ADMIN_SEASONS,
   NAVIGATION_ITEM_GENERAL_INFORMATION,
   NAVIGATION_ITEM_TEAM,
   NAVIGATION_ITEMS_CLUB, NAVIGATION_ITEMS_GEN_INFOS,
@@ -42,6 +44,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   navItemGeneralInformation = NAVIGATION_ITEM_GENERAL_INFORMATION;
   navItemsInfo = NAVIGATION_ITEMS_INFO;
   navItemsOther = NAVIGATION_ITEMS_OTHER;
+
+  navItemAdmin: NavigationItem[];
 
   teamsNavItems: NavigationItem[];
 
@@ -95,7 +99,28 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initDrawerOnDesktop();
     this.initTeamsAdmin();
-    this.initTeamNavItems()
+    this.initTeamNavItems();
+    this.initAdmin();
+  }
+
+  initAdmin() {
+    this.dataService
+      .getSghUser()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        user => {
+          this.navItemAdmin = [];
+          if (user) {
+            if (user.admin) {
+              this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN);
+              this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN_SEASONS);
+            }
+            this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN_LOGOUT);
+          } else {
+            this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN_LOGIN);
+          }
+        }
+      )
   }
 
   initDrawerOnDesktop() {
@@ -107,7 +132,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   initTeamsAdmin() {
-    let season: string;
     this.adminService.isUserTeamsAdmin()
       .pipe(
         takeUntil(this.destroy$)

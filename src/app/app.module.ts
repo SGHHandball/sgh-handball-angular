@@ -10,7 +10,7 @@ import {
 } from "@angular/material";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
 import {ImprintComponent} from './imprint/imprint.component';
-import {LoginDialogComponent} from './app-shell/auth/login-dialog/login-dialog.component';
+import {LoginDialogComponent} from './admin/login-dialog/login-dialog.component';
 import {AdminUserDialogComponent} from './admin/admin-user-dialog/admin-user-dialog.component';
 import {FunctionsRegionToken} from "@angular/fire/functions";
 import {DefaultDialogComponent} from './shared/default-dialog/default-dialog.component';

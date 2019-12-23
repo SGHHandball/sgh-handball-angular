@@ -2,8 +2,9 @@ import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule} from '@angular/router';
 import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {
+  TC_LOGIN, TC_LOGOUT,
   TC_PATH_EDIT,
- TC_ROUTE_CONTENT,
+  TC_ROUTE_CONTENT,
   TC_ROUTE_DOCUMENTS,
   TC_ROUTE_HALLS,
   TC_ROUTE_HOME,
@@ -24,6 +25,7 @@ import {HomeComponent} from "./home/home.component";
 import {SeasonsComponent} from "./admin/seasons/seasons.component";
 import {SponsorsComponent} from "./sponsors/sponsors.component";
 import {SponsorEditComponent} from "./sponsors/sponsor-edit/sponsor-edit.component";
+import {AuthComponent} from "./admin/auth/auth.component";
 
 export const routes = [
   {path: TC_ROUTE_HOME, component: HomeComponent},
@@ -40,6 +42,8 @@ export const routes = [
     loadChildren: './content-holder/content-holder.module#ContentHolderModule'
   },
   {path: TC_ROUTE_HALLS, component: HallsComponent},
+  {path: TC_LOGIN, component: AuthComponent},
+  {path: TC_LOGOUT, component: AuthComponent},
   {path: TC_ROUTE_TRAINING, component: TrainingsComponent},
   {path: TC_ROUTE_DOCUMENTS, component: DocumentsComponent},
   {path: TC_ROUTE_SPONSORS, component: SponsorsComponent},

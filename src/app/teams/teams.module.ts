@@ -18,7 +18,7 @@ import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-man
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {TeamsRoutingModule} from "./teams-routing.module";
-import {LoginDialogComponent} from "../app-shell/auth/login-dialog/login-dialog.component";
+import {LoginDialogComponent} from "../admin/login-dialog/login-dialog.component";
 import {AdminUserDialogComponent} from "../admin/admin-user-dialog/admin-user-dialog.component";
 import {DefaultDialogComponent} from "../shared/default-dialog/default-dialog.component";
 import {HallsEditDialogComponent} from "../halls/halls-edit-dialog/halls-edit-dialog.component";
