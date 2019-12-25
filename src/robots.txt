@@ -1,0 +1,8 @@
+# Sitemaps
+Sitemap: http://test.handball-hainhausen.de/sitemap.xml
+# Configs
+User-agent: *
+Crawl-delay: 10
+# Pages excluded from indexing
+Disallow: /admin/*
+Disallow: /mannschaften/2019-2020

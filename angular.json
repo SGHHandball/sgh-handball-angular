@@ -42,7 +42,8 @@
               "assets": [
                 "src/favicon.ico",
                 "src/assets",
-                "src/.htaccess"
+                "src/.htaccess",
+                "src/robots.txt"
               ],
               "optimization": true,
               "outputHashing": "all",

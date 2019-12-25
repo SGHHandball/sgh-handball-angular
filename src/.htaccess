@@ -35,18 +35,17 @@
   RewriteRule ^(.*) /index.html [NC,L]
 </IfModule>
 
-#------------ BROWSER CACHING
-# Disable browser caching in production. You can add/remove file extension as you wish.
-#<FilesMatch "\.(html|htm|js|json|css)$">
-#	<IfModule mod_headers.c>
-#		FileETag None
-#		Header unset ETag
-#		Header unset Pragma
-#		Header unset Cache-Control
-#		Header unset Last-Modified
-#		Header set Pragma "no-cache"
-#		Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
-#		Header set Expires "Mon, 10 Apr 1972 00:00:00 GMT"
-#	</IfModule>
-#</FilesMatch>
-#------------
+# 480 weeks
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+Header set Cache-Control "max-age=290304000, public"
+</FilesMatch>
+
+# 2 DAYS
+<FilesMatch "\.(xml|txt)$">
+Header set Cache-Control "max-age=172800, public, must-revalidate"
+</FilesMatch>
+
+# 20 min
+<FilesMatch "\.(html|htm)$">
+Header set Cache-Control "max-age=1200, must-revalidate"
+</FilesMatch>
