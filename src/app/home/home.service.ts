@@ -40,7 +40,7 @@ export class HomeService {
 
   getCaption(news: News): string {
     let caption = "";
-    if (news.date) caption += getDateString(news.date) + ': ';
+    if (news.eventDate) caption += getDateString(news.eventDate) + ': ';
     if (news.teamAge) caption += ' ' + news.teamAge;
     if (news.score) caption += ' - ' + news.score;
     return caption;

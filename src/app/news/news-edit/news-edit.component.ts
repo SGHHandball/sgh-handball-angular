@@ -135,7 +135,7 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   }
 
   initFormControls() {
-    this.date.setValue(new Date(this.news.date));
+    this.date.setValue(new Date(this.news.eventDate));
     this.date.registerOnChange(this.getOnChangeFunction);
     if (this.news.title) this.titleFormControl.setValue(this.news.title);
     if (this.news.score) this.scoreFormControl.setValue(this.news.score);
@@ -186,7 +186,7 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   }
 
   saveNews() {
-    this.news.date = new Date(this.date.value.toString()).getTime();
+    this.news.eventDate = new Date(this.date.value.toString()).getTime();
     this.news.title = this.titleFormControl.value;
     this.news.score = this.scoreFormControl.value;
     this.news.body = this.bodyFormControl.value;

@@ -39,7 +39,7 @@ export function getDateLine(news: News): Paragraph {
   return new Paragraph({
     children: [
       new TextRun({
-        text: getDateString(news.date) + " - " + news.teamAge + ":",
+        text: getDateString(news.eventDate) + " - " + news.teamAge + ":",
         bold: true,
       })
     ],

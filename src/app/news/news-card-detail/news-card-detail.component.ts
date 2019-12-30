@@ -49,7 +49,7 @@ export class NewsCardDetailComponent implements OnInit, OnDestroy {
   }
 
   getDateString(news: News): string {
-    return getDateString(news.date);
+    return getDateString(news.eventDate);
   }
 
   getDateWithTeamAgeAsString(news: News): string {

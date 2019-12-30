@@ -12,11 +12,11 @@
     {{news.title}}
   </mat-card-title>
   <mat-card-subtitle *ngIf="news.type === reportType">
-    <p *ngIf="news.teamAge || news.date">{{getDateWithTeamAgeAsString(news)}}</p>
+    <p *ngIf="news.teamAge || news.eventDate">{{getDateWithTeamAgeAsString(news)}}</p>
     <p *ngIf="news.homeTeam || news.enemyTeam || news.score">{{getTeamsWithScoreAsString(news)}}</p>
   </mat-card-subtitle>
   <mat-card-subtitle *ngIf="news.type !== reportType">
-    <p *ngIf=" news.date">{{getDateString(news)}}</p>
+    <p *ngIf=" news.eventDate">{{getDateString(news)}}</p>
   </mat-card-subtitle>
 
 

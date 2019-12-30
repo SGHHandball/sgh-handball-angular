@@ -297,7 +297,8 @@ export class FireApiService {
               creator: user.uid,
               teamAge: newsTeam ? newsTeam.teamAge : undefined,
               teamSeason: newsTeam ? newsTeam.teamSeason : undefined,
-              date: new Date().getTime()
+              date: new Date().getTime(),
+              eventDate: new Date().getTime()
             };
             return from(this.db.collection<News>(DB_COLLECTION_NEWS)
               .add(JSON.parse(JSON.stringify(newNews))))
@@ -337,7 +338,7 @@ export class FireApiService {
 
   sortNewsByDate(news: News[]): News[] {
     return news.sort((val1, val2) => {
-      return (val2.date - val1.date)
+      return (val2.eventDate - val1.eventDate)
     });
   }
 

@@ -14,6 +14,7 @@ export interface News {
   checked?: boolean;
   send?: boolean;
   date?: number;
+  eventDate?: number;
   teamSeason?: string;
   type?: NewsType;
 }
@@ -32,7 +33,7 @@ export function getDateString(date: number | string | Date): string {
 }
 
 export function getDateWithTeamAgeAsString(news: News): string {
-  return (news.date ? getDateString(news.date) + ' - ' : '') + (news.teamAge ? news.teamAge : '???')
+  return (news.eventDate ? getDateString(news.eventDate) + ' - ' : '') + (news.teamAge ? news.teamAge : '???')
 }
 
 export function getTeamsWithScoreAsString(news: News): string {

@@ -63,7 +63,7 @@ export class NewsCardComponent implements OnInit {
   }
 
   getDateAsString(news: News): string {
-    return getDateString(news.date);
+    return getDateString(news.eventDate);
   }
 
   getTeamsWithScoreAsString(news: News): string {
