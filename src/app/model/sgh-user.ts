@@ -4,6 +4,7 @@ export interface SghUser {
   eventsAdmin: boolean;
   hallsAdmin: boolean;
   teamsAdmin: boolean;
+  sponsorAdmin: boolean;
   trainingsAdmin: boolean;
   documentsAdmin: boolean;
   teams: string[];

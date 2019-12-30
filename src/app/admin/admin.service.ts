@@ -33,6 +33,16 @@ export class AdminService {
       );
   }
 
+  isUserSponsorAdmin(): Observable<boolean> {
+    return this.dataService.getSghUser()
+      .pipe(
+        switchMap(sghUser => {
+          if (!sghUser) return of(false);
+          return of(sghUser.sponsorAdmin);
+        })
+      );
+  }
+
   hasUserTeamRights(): Observable<boolean> {
     return this.dataService.getSghUser()
       .pipe(

@@ -22,7 +22,12 @@
       </div>
     </div>
 
-    <div fxLayout="row wrap" fxFlex="10" class="card-sub-actions">
+    <div
+      *ngIf="sponsorAdmin$|async"
+      fxLayout="row wrap"
+      fxFlex="10"
+      class="card-sub-actions"
+    >
       <div fxFlex="80">
 
       </div>

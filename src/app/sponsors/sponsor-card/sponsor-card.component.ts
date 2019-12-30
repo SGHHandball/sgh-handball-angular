@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Sponsor} from "../../model/sponsor";
+import {AdminService} from "../../admin/admin.service";
+import {share} from "rxjs/operators";
 
 @Component({
   selector: 'app-sponsor-card',
@@ -12,7 +14,9 @@ export class SponsorCardComponent implements OnInit {
 
   @Output() editClickListener = new EventEmitter();
 
-  constructor() {
+  sponsorAdmin$ = this.adminService.isUserSponsorAdmin().pipe(share());
+
+  constructor(private adminService: AdminService) {
   }
 
   ngOnInit() {

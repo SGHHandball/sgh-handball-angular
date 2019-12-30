@@ -76,6 +76,11 @@ export class AdminUserDetailComponent implements OnDestroy {
     this.toggleChangeListener.next();
   }
 
+  changeSponsorAdminMode() {
+    this.sghUser.sponsorAdmin = !this.sghUser.sponsorAdmin;
+    this.toggleChangeListener.next();
+  }
+
   removeTeam(team: string) {
     this.sghUser.teams.splice(this.sghUser.teams.indexOf(team), 1);
 

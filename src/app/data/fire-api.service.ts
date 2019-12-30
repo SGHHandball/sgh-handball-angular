@@ -84,9 +84,12 @@ export class FireApiService {
                   teamsAdmin: false,
                   trainingsAdmin: false,
                   documentsAdmin: false,
+                  sponsorAdmin: false,
                   teams: [],
-                  preName: prename,
-                  lastName: lastName
+                  preName:
+                  prename,
+                  lastName:
+                  lastName
                 }
               )))
           )
@@ -98,16 +101,7 @@ export class FireApiService {
     return from(
       this.db.collection(SGH_USERS)
         .doc(sghUser.id)
-        .update(
-          {
-            admin: sghUser.admin,
-            hallsAdmin: sghUser.hallsAdmin,
-            eventsAdmin: sghUser.eventsAdmin,
-            teamsAdmin: sghUser.teamsAdmin,
-            trainingsAdmin: sghUser.trainingsAdmin,
-            teams: sghUser.teams
-          }
-        )
+        .set(sghUser)
     )
   }
 

@@ -29,6 +29,12 @@
   (toggleChangeListener)="changeTrainingsAdminMode()"
 ></app-admin-user-toggle>
 
+<app-admin-user-toggle
+  toggleDesc="Sponsor"
+  [toggleValue]="sghUser.sponsorAdmin"
+  (toggleChangeListener)="changeSponsorAdminMode()"
+></app-admin-user-toggle>
+
 <mat-divider></mat-divider>
 
 <div>

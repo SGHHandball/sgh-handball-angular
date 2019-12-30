@@ -26,7 +26,7 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  admin$ = this.adminService.isUserAdmin().pipe(share());
+  admin$ = this.adminService.isUserSponsorAdmin().pipe(share());
 
   ngOnInit() {
     this.initAllSponsors();
