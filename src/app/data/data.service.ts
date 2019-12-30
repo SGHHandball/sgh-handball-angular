@@ -172,6 +172,10 @@ export class DataService {
     return this.service.getAllTrainings();
   }
 
+  getTrainingsByTeamId(teamId: string): Observable<Training[]> {
+    return this.service.getTrainingsByTeamId(teamId);
+  }
+
   addTraining(training: Training): Observable<string> {
     return this.service.addTraining(training);
   }

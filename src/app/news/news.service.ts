@@ -35,8 +35,8 @@ export class NewsService {
     if (news.type === NewsType.NEWS_TYPE_EVENT) return true;
     if (news.checked) return true;
     else if (!sghUser) return false;
-    return news.creator === sghUser.id ||
-      this.hasUserRightsForTeam(sghUser, news.teamAge, news.teamSeason);
+    else if (news.creator === sghUser.id) return true;
+    return this.hasUserRightsForTeam(sghUser, news.teamAge, news.teamSeason);
   }
 
   hasUserRightsForTeam(user: SghUser, teamAge: string, teamSeason: string): boolean {

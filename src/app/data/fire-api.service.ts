@@ -613,6 +613,22 @@ export class FireApiService {
       )
   }
 
+  getTrainingsByTeamId(teamId: string): Observable<Training[]> {
+    return this.db.collection<Training>(DB_COLLECTION_TRAININGS,
+      ref => ref.where(FireBaseModel.TEAM_ID, '==', teamId))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+            return actions.map(action => {
+              const data = action.payload.doc.data() as Training;
+              data.id = action.payload.doc.id;
+              return data;
+            })
+          }
+        )
+      )
+  }
+
   addTraining(training: Training): Observable<string> {
     return from(
       this.db
@@ -631,14 +647,7 @@ export class FireApiService {
       this.db
         .collection<Training>(DB_COLLECTION_TRAININGS)
         .doc(training.id)
-        .update(
-          {
-            team: training.team,
-            trainer: training.trainer,
-            date: training.date,
-            editTime: new Date()
-          }
-        )
+        .set(training)
     );
   }
 

@@ -16,6 +16,7 @@ import {FormControl} from "@angular/forms";
 import {SliderService} from "../../shared/slider/slider.service";
 import {IImage} from "ng2-image-compress";
 import {AbstractService} from "../../shared/abstract.service";
+import {Content} from "../../model/content";
 
 @Component({
   selector: 'app-teams-detail',
@@ -25,7 +26,8 @@ import {AbstractService} from "../../shared/abstract.service";
 export class TeamsDetailComponent {
 
   @Input() team: Team;
-  @Input() editTeamsActive: boolean;
+  @Input() editTeamTextActive: boolean;
+  @Input() editTeamImagesActive: boolean;
   @Input() editTeamLinkActive: boolean;
 
   uploadProgress: Observable<number>;
@@ -41,9 +43,28 @@ export class TeamsDetailComponent {
   constructor(public abstractService: AbstractService,
               private dialog: MatDialog,
               private dataService: DataService,
-              public translationService: TranslationService,
-              public sliderService: SliderService
+              public translationService: TranslationService
   ) {
+  }
+
+  getContentOfTeam(team: Team): Content {
+    return {
+      contentText: team.teamText,
+      imgPaths: team.imgPaths,
+      imgLinks: team.imgLinks
+    }
+  }
+
+  editTeam(content: Content) {
+    console.log(content);
+    this.team.imgLinks = content.imgLinks;
+    this.team.imgPaths = content.imgPaths;
+    this.team.teamText = content.contentText;
+    this.dataService.updateTeam(this.team)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(_ => {
+
+      })
   }
 
 
@@ -111,7 +132,7 @@ export class TeamsDetailComponent {
   }
 
   disableEditMode() {
-    this.editTeamsActive = false;
+    this.editTeamTextActive = false;
   }
 
   disableEditLinkMode() {

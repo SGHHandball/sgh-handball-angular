@@ -5,5 +5,6 @@ export enum FireBaseModel {
   TEAM_SEASON = 'teamSeason',
   TEAM_AGE = 'teamAge',
   POSITION = 'position',
-  EDIT_TIME = 'editTime'
+  EDIT_TIME = 'editTime',
+  TEAM_ID = 'teamId'
 }

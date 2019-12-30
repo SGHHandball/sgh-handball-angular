@@ -32,6 +32,9 @@ import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";
 import {SeasonService} from "../admin/seasons/season.service";
+import {AbstractService} from "../shared/abstract.service";
+import {TeamService} from "./team.service";
+import {SghUser} from "../model/sgh-user";
 
 @Component({
   selector: 'app-teams',
@@ -50,24 +53,44 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
 
   newsTypeReportTC = TC_NEWS_TYPE_REPORT;
 
-  newsTypeReport = NewsType.NEWS_TYPE_REPORT;
-
   filteredNews: News[];
+  user: SghUser;
 
   currentTeam: Team;
   teamLoaded = false;
   allTeams: Team[];
 
-  editTeamsActive = false;
+  editTeamTextActive = false;
+  editTeamImgActive = false;
   editTeamLinkActive = false;
 
   teamsAdmin = this.adminService.isUserTeamsAdmin().pipe(share());
   rightsForTeam: Observable<boolean>;
 
+  constructor(
+    public translationService: TranslationService,
+    public dialog: MatDialog,
+    public dataService: DataService,
+    public abstractService: AbstractService,
+    public adminService: AdminService,
+    public newsService: NewsService,
+    public route: ActivatedRoute,
+    public seasonService: SeasonService,
+    private teamService: TeamService
+  ) {
+    super(translationService, dialog, dataService, abstractService, adminService, newsService, route, seasonService)
+  }
 
   ngOnInit(): void {
+    this.initUser();
     this.initAllTeamsForSeason();
     this.initTeam();
+  }
+
+  initUser() {
+    this.dataService.getSghUser()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => this.user = user)
   }
 
   initAllTeamsForSeason() {
@@ -98,6 +121,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
       .subscribe(teams => {
         if (teams && teams.length > 0) {
           this.currentTeam = teams[0];
+          this.teamService.teamDetail$.next(this.currentTeam);
           this.rightsForTeam =
             this.dataService
               .hasUserRightsForTeam(
@@ -255,7 +279,11 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   editTeamPage() {
-    this.editTeamsActive = !this.editTeamsActive;
+    this.editTeamTextActive = !this.editTeamTextActive;
+  }
+
+  editTeamImgPage() {
+    this.editTeamImgActive = !this.editTeamImgActive;
   }
 
   editTeamLink() {
@@ -264,6 +292,14 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
 
   openNewsDetail(news: News) {
     this.newsService.openNewsDetail(news.id);
+  }
+
+  addNewNews() {
+    this.dataService.addNewNews(NewsType.NEWS_TYPE_REPORT, this.currentTeam)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(news => {
+        this.newsService.openNewsEdit(news.id);
+      })
   }
 
 }

@@ -7,4 +7,5 @@ export interface Team {
   imgPaths: string[];
   imgLinks: string[];
   nuLeagueLink?: string;
+  teamText?: string;
 }

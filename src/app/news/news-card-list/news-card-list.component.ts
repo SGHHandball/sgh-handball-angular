@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {News} from "../../model/news";
-import {
-  TC_NEWS_NO_NEWS, TranslationService
-} from "../../translation.service";
+import {TC_NEWS_NO_NEWS, TranslationService} from "../../translation.service";
 import {NewsService} from "../news.service";
 import {SghUser} from "../../model/sgh-user";
 
@@ -27,6 +25,10 @@ export class NewsCardListComponent {
   constructor(
     public translationService: TranslationService,
     public newsService: NewsService) {
+  }
+
+  isNewsVisibleForUser(sghUser: SghUser, news: News): boolean {
+    return this.newsService.isNewsVisibleForUser(sghUser, news);
   }
 
 }

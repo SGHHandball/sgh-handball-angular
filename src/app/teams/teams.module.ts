@@ -6,10 +6,10 @@ import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dia
 import {TeamsComponent} from "./teams.component";
 import {
   MatButtonModule,
-  MatCardModule, MatDialogModule, MatIconModule,
+  MatCardModule, MatDialogModule, MatDividerModule, MatIconModule,
   MatInputModule,
   MatMenuModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule, MatTabsModule
 } from "@angular/material";
 import {NewsModule} from "../news/news.module";
 import {SharedModule} from "../shared/shared.module";
@@ -18,13 +18,17 @@ import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-man
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {TeamsRoutingModule} from "./teams-routing.module";
+import {ContentHolderModule} from "../content-holder/content-holder.module";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { TeamInformation } from './teams-detail/team-information/team-information';
 
 @NgModule({
   declarations: [
     TeamsChangeDialogComponent,
     TeamsDeleteDialogComponent,
     TeamsDetailComponent,
-    TeamsComponent,],
+    TeamsComponent,
+    TeamInformation,],
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
@@ -40,7 +44,11 @@ import {TeamsRoutingModule} from "./teams-routing.module";
     MatDialogModule,
     DragDropModule,
     LazyLoadImageModule.forRoot({}),
-    TeamsRoutingModule
+    TeamsRoutingModule,
+    ContentHolderModule,
+    FlexLayoutModule,
+    MatTabsModule,
+    MatDividerModule
   ],
   exports: [
     TeamsComponent,

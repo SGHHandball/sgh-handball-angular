@@ -1,0 +1,40 @@
+<mat-card *ngIf="trainings && trainings.length>0">
+  <div class="tab-group">
+    <div class="tab-item">
+      <button class="btn" (click)="changeToContact()" [class.active-btn]="contactVisible" mat-stroked-button>Informationen
+      </button>
+    </div>
+    <div class="tab-item" *ngIf="false">
+      <button class="btn" (click)="changeToTable()" [class.active-btn]="nuTableVisible" mat-stroked-button>Tabelle
+      </button>
+    </div>
+    <div class="tab-item" *ngIf="false">
+      <button class="btn" (click)="changeToGames()" [class.active-btn]="nuGamesVisible" mat-stroked-button>Nächste
+        Spiele
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div *ngIf="contactVisible && trainings && trainings.length>0">
+    <p *ngIf="trainings[0].trainer && trainings[0].trainer.name">
+      <b>Trainer: </b> <span>{{trainings[0].trainer.name}}</span>
+    </p>
+    <p *ngIf="trainings[0].trainer && trainings[0].trainer.email">
+      <b>E-Mail: </b> <span>{{trainings[0].trainer.email}}</span>
+    </p>
+    <p *ngIf="trainings[0].trainer && trainings[0].trainer.phoneNumber">
+      <b>Telefon: </b> <span>{{trainings[0].trainer.phoneNumber}}</span>
+    </p>
+    <p *ngIf="trainings[0].team && trainings[0].team.teamVintage">
+      <b>Jahrgänge: </b> <span>{{trainings[0].team.teamVintage}}</span>
+    </p>
+    <ng-container *ngFor="let training of trainings">
+      <p *ngIf="training.date && training.date.day && training.date.time">
+        <b>Trainingszeit: </b> <span>{{training.date.day }}</span><span>: </span> <span>{{training.date.time}}</span>
+      </p>
+    </ng-container>
+  </div>
+
+
+</mat-card>

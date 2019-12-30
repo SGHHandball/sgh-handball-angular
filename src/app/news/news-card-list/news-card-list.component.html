@@ -5,14 +5,15 @@
     fxLayout.lt-sm="column"
     fxLayoutAlign="space-evenly flex-start"
   >
+    <ng-container
+      *ngFor="let newsCard of news">
     <div
       fxFlex="0 1 calc(33.3% - 16px)"
       fxFlex.lt-md="0 1 calc(50% - 16px)"
       fxFlex.lt-sm="100%"
-      *ngFor="let newsCard of news"
+      *ngIf="isNewsVisibleForUser(user,newsCard)"
     >
       <app-news-card
-        *ngIf="newsService.isNewsVisibleForUser(user,newsCard)"
         [newsCard]="newsCard"
         (editClickListener)="editClickListener.next(newsCard)"
         (deleteClickListener)="deleteClickListener.next(newsCard)"
@@ -23,5 +24,6 @@
       >
       </app-news-card>
     </div>
+    </ng-container>
   </div>
 </ng-container>

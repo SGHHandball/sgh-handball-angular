@@ -1,0 +1,15 @@
+.tab-item {
+  display: contents;
+}
+
+.tab-group {
+}
+
+.btn {
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.active-btn {
+  background-color: lightgray;
+}

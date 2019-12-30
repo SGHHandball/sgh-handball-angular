@@ -76,6 +76,7 @@ export class TrainingsEditDialogComponent implements OnInit {
       email: '',
       phoneNumber: '',
     },
+    teamId: '',
     editTime: new Date()
   };
   halls: Hall[];
@@ -99,7 +100,7 @@ export class TrainingsEditDialogComponent implements OnInit {
     this.halls = this.data.halls;
     this.teams = this.data.teams;
 
-    this.teamIdFormControl.setValue(this.training.team.teamId);
+    this.teamIdFormControl.setValue(this.training.teamId);
     this.teamVintageFormControl.setValue(this.training.team.teamVintage);
     this.dayFormControl.setValue(this.training.date.day);
     this.timeFormControl.setValue(this.training.date.time);
@@ -110,6 +111,7 @@ export class TrainingsEditDialogComponent implements OnInit {
 
 
   saveTraining() {
+    this.training.teamId = this.teamIdFormControl.value;
     this.training.team.teamId = this.teamIdFormControl.value;
     this.training.team.teamVintage = this.teamVintageFormControl.value;
     this.training.date.day = this.dayFormControl.value;

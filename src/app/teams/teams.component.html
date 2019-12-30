@@ -1,9 +1,10 @@
 <mat-spinner [diameter]="30" *ngIf="!currentTeam && !teamLoaded" class="loading-spinner"></mat-spinner>
 
-<ng-container *ngIf="currentTeam">
+<div class="container" *ngIf="currentTeam">
   <app-teams-detail
     [team]="currentTeam"
-    [editTeamsActive]="editTeamsActive"
+    [editTeamTextActive]="editTeamTextActive"
+    [editTeamImagesActive]="editTeamImgActive"
     [editTeamLinkActive]="editTeamLinkActive"
   ></app-teams-detail>
 
@@ -13,9 +14,10 @@
   <ng-container *ngIf="currentTeam">
     <h2 class="news-header">{{translationService.get(newsHeaderTC)}}</h2>
 
-    <div class="container">
+    <div>
       <app-news-card-list
         [news]="filteredNews"
+        [user]="user"
         (editClickListener)="newsService.openNewsEdit($event.id)"
         (deleteClickListener)="openDeleteNewsDialog($event)"
         (sendClickListener)="openSendCheckNewsDialog($event,true)"
@@ -25,7 +27,7 @@
     </div>
   </ng-container>
 
-</ng-container>
+</div>
 
 
 <app-add-btn
@@ -40,8 +42,9 @@
   <ng-container *ngIf="(currentTeam && teamsAdmin|async) ||
              (currentTeam && rightsForTeam|async)">
     <button mat-menu-item
-            (click)="dataService.addNewNews(newsTypeReport, currentTeam)"> {{translationService.get(newsTypeReportTC)}}</button>
-    <button mat-menu-item (click)="editTeamPage()">{{translationService.get(editTeamPageTC)}}</button>
+            (click)="addNewNews()"> {{translationService.get(newsTypeReportTC)}}</button>
+    <button mat-menu-item (click)="editTeamPage()">Mannschaftstext bearbeiten</button>
+    <button mat-menu-item (click)="editTeamImgPage()">{{translationService.get(editTeamPageTC)}}</button>
     <button mat-menu-item (click)="editTeamLink()">NuLiga Link ändern</button>
   </ng-container>
 

@@ -1,16 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {map, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../data/data.service";
 import {Team} from "../model/team";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
 
-  constructor(private dataService: DataService) {
-  }
+  teamDetail$ = new Subject<Team>();
 
   getTeamAsStringFromTeams(teamId: string, teams: Team[]): string {
     const teamList = teams.filter(team => team.id === teamId);

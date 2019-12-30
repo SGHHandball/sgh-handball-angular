@@ -3,6 +3,7 @@ import {Team} from "./team";
 
 export interface Training {
   id?: string;
+  teamId?: string;
   team?: TrainingTeam;
   date?: TrainingDate;
   trainer?: Trainer;
