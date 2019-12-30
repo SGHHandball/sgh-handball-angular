@@ -13,7 +13,11 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card class="content"  [class.content-margin]="!nonStaticContent" [class.web-content]="!(abstractService.isHandset$|async) && !nonStaticContent">
+<mat-card
+  *ngIf="editImages ||editContent|| content &&(!!content.contentText ||  content.imgLinks && content.imgLinks.length>0)"
+  class="content"
+  [class.content-margin]="!nonStaticContent"
+  [class.web-content]="!(abstractService.isHandset$|async) && !nonStaticContent">
   <div fxLayout="column">
 
 
