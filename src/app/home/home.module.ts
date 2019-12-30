@@ -6,9 +6,10 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {SharedModule} from "../shared/shared.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {HomeRoutingModule} from "./home-routing.module";
+import { FbIconComponent } from './fb-icon/fb-icon.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, FbIconComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -17,9 +18,9 @@ import {HomeRoutingModule} from "./home-routing.module";
     SharedModule,
     MatMenuModule,
     LazyLoadImageModule.forRoot({}),
-    HomeRoutingModule
+    HomeRoutingModule,
   ],
-  exports: [HomeComponent,]
+  exports: [HomeComponent,FbIconComponent]
 })
 export class HomeModule {
 }
