@@ -19,7 +19,7 @@ import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/defau
 import {environment} from "../../environments/environment";
 import {DataService} from "../data/data.service";
 import {of, Subject} from "rxjs";
-import {catchError,  switchMap, takeUntil} from "rxjs/operators";
+import {catchError, switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
 import {Team} from "../model/team";
 import {Hall} from "../model/hall";
@@ -174,7 +174,11 @@ export class TrainingsComponent implements OnInit, OnDestroy {
 
   getTrainingDateAsString(date: TrainingDate): string {
     const possibleHalls = this.halls.filter(hall => hall.id === date.hallId);
-    return [date.day, date.time, '/', possibleHalls.length > 0 ? possibleHalls[0].name : ''].join(' ');
+    return [date.day, date.time, '/', possibleHalls.length > 0 ? this.getHallName(possibleHalls[0]) : ''].join(' ');
+  }
+
+  getHallName(hall: Hall): string {
+    return [hall.name, hall.street, hall.city].join("; ")
   }
 
 

@@ -7,7 +7,7 @@ import {
   TranslationService
 } from "../../translation.service";
 import {
-  NAVIGATION_ITEM_ADMIN,
+  NAVIGATION_ITEM_ADMIN, NAVIGATION_ITEM_ADMIN_HALLS,
   NAVIGATION_ITEM_ADMIN_LOGIN, NAVIGATION_ITEM_ADMIN_LOGOUT, NAVIGATION_ITEM_ADMIN_SEASONS,
   NAVIGATION_ITEM_GENERAL_INFORMATION,
   NAVIGATION_ITEM_TEAM,
@@ -119,6 +119,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
             if (user.admin) {
               this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN);
               this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN_SEASONS);
+            }
+            if (user.hallsAdmin) {
+              this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN_HALLS);
             }
             this.navItemAdmin.push(NAVIGATION_ITEM_ADMIN_LOGOUT);
           } else {

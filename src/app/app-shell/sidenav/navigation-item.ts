@@ -72,13 +72,13 @@ export const NAVIGATION_ITEMS_INFO = [
 
 export const NAVIGATION_ITEMS_OTHER = [
   new NavigationItem(TC_ROUTE_SPONSORS, TC_ROUTE_SPONSORS).withRouterIcon('sports_handball'),
-  new NavigationItem(TC_ROUTE_HALLS, TC_ROUTE_HALLS).withRouterIcon('account_balance'),
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
 ];
 
 export const NAVIGATION_ITEM_ADMIN_LOGIN = new NavigationItem([TC_ADMIN, TC_ROUTE_LOGIN].join("/"), "Login").withRouterIcon('last_page');
 
 export const NAVIGATION_ITEM_ADMIN = new NavigationItem([TC_ADMIN, TC_USERS].join("/"), "Nutzer").withRouterIcon('vpn_key');
+export const NAVIGATION_ITEM_ADMIN_HALLS = new NavigationItem(TC_ROUTE_HALLS, TC_ROUTE_HALLS).withRouterIcon('account_balance');
 export const NAVIGATION_ITEM_ADMIN_SEASONS = new NavigationItem([TC_ADMIN, TC_ROUTE_SEASONS].join("/"), "Saisons").withRouterIcon('date_range');
 export const NAVIGATION_ITEM_ADMIN_LOGOUT = new NavigationItem([TC_ADMIN, TC_ROUTE_LOGOUT].join("/"), "Logout").withRouterIcon('first_page');
 
