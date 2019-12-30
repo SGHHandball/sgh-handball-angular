@@ -5,7 +5,7 @@ import {AdminUserDetailComponent} from "./admin-user-detail/admin-user-detail.co
 import {AdminUserDialogComponent} from "./admin-user-dialog/admin-user-dialog.component";
 import {AdminUserToggleComponent} from "./admin-user-toggle/admin-user-toggle.component";
 import {
-  MatButtonModule, MatChipsModule,
+  MatButtonModule, MatCardModule, MatChipsModule,
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule, MatIconModule,
@@ -19,12 +19,6 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {SeasonsComponent} from "./seasons/seasons.component";
 import {AuthComponent} from "./auth/auth.component";
 import {AdminRoutingModule} from "./admin-routing.module";
-import {LoginDialogComponent} from "./login-dialog/login-dialog.component";
-import {DefaultDialogComponent} from "../shared/default-dialog/default-dialog.component";
-import {HallsEditDialogComponent} from "../halls/halls-edit-dialog/halls-edit-dialog.component";
-import {CookieDisclaimerComponent} from "../cookie-disclaimer/cookie-disclaimer.component";
-import {DefaultInputDialogComponent} from "../shared/default-input-dialog/default-input-dialog.component";
-import {TrainingsEditDialogComponent} from "../trainings/trainings-edit-dialog/trainings-edit-dialog.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +28,6 @@ import {TrainingsEditDialogComponent} from "../trainings/trainings-edit-dialog/t
     AdminUserComponent,
     SeasonsComponent,
     AuthComponent,
-    LoginDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -52,13 +45,13 @@ import {TrainingsEditDialogComponent} from "../trainings/trainings-edit-dialog/t
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MatCardModule
   ],
   exports: [AdminUserComponent,
     SeasonsComponent,
     AuthComponent],
   entryComponents: [
-    LoginDialogComponent,
     AdminUserDialogComponent,]
 })
 export class AdminModule {

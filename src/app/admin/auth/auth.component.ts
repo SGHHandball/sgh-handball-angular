@@ -2,7 +2,14 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {
   TC_AUTH_LOGIN_ERROR,
-  TC_AUTH_LOGIN_SUCCESS, TC_AUTH_LOGOUT_ERROR, TC_AUTH_LOGOUT_SUCCESS, TC_ROUTE_LOGIN,
+  TC_AUTH_LOGIN_SUCCESS,
+  TC_AUTH_LOGOUT_ERROR,
+  TC_AUTH_LOGOUT_SUCCESS,
+  TC_BACK,
+  TC_EMAIL, TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED,
+  TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL, TC_IMPRINT_LOGIN_DIALOG_ERROR_PASSWORD_REQUIRED,
+  TC_LOGIN, TC_PASSWORD,
+  TC_ROUTE_LOGIN,
   TranslationService
 } from "../../translation.service";
 import {MatDialog} from "@angular/material";
@@ -13,6 +20,8 @@ import {switchMap, takeUntil} from "rxjs/operators";
 import {of, Subject} from "rxjs";
 import {AbstractService} from "../../shared/abstract.service";
 import {Location} from "@angular/common";
+import {FormControl, Validators} from "@angular/forms";
+import {Credentials} from "../../model/Credentials";
 
 @Component({
   selector: 'app-auth',
@@ -22,13 +31,33 @@ import {Location} from "@angular/common";
 export class AuthComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
+  backTc = TC_BACK;
+  loginTC = TC_LOGIN;
+  emailTC = TC_EMAIL;
+  validEmailErrorTC = TC_IMPRINT_LOGIN_DIALOG_ERROR_INVALID_EMAIL;
+  requiredEmailErrorTC = TC_IMPRINT_LOGIN_DIALOG_ERROR_EMAIL_REQUIRED;
+  requiredPasswordErrorTC = TC_IMPRINT_LOGIN_DIALOG_ERROR_PASSWORD_REQUIRED;
+  passwordTC = TC_PASSWORD;
+
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  passwordFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+
+  loginVisible = false;
+
   constructor(
     private router: Router,
     public translationService: TranslationService,
     private dialog: MatDialog,
     private dataService: DataService,
     private abstractService: AbstractService,
-    private location: Location
+    private location: Location,
   ) {
   }
 
@@ -38,7 +67,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   initAuthState() {
     if (this.router.url.includes(TC_ROUTE_LOGIN)) {
-      this.openLoginDialog();
+      this.loginVisible = true;
     } else {
       this.logout()
     }
@@ -64,35 +93,25 @@ export class AuthComponent implements OnInit, OnDestroy {
       );
   }
 
-  openLoginDialog() {
-    this.abstractService
-      .dialogWidth$
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(dialogWidth =>
-          this.dialog.open(LoginDialogComponent, {
-              width: dialogWidth
-            }
-          ).afterClosed()
-        ),
-        switchMap(credentials => {
-          if (credentials) {
-            return this.dataService.login(credentials)
-          }
-          return of(undefined);
-        })
-      ).subscribe(result => {
-        if (result) {
+  login() {
+    const credentials = {
+      email: this.emailFormControl.value,
+      password: this.passwordFormControl.value
+    };
+    this.dataService.login(credentials)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(_ => {
           this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_SUCCESS));
+        },
+        error1 => {
+          if (!environment.production) console.log(error1);
+          this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_ERROR));
+        },
+        () => {
+          this.location.back();
         }
-        this.location.back();
-      },
-      error1 => {
-        if (!environment.production) console.log(error1);
-        this.abstractService.openSnackBar(this.translationService.get(TC_AUTH_LOGIN_ERROR));
-        this.location.back();
-      }
-    );
+      )
+
   }
 
 
