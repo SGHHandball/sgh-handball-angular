@@ -23,6 +23,7 @@ import {DataService} from "../../data/data.service";
 import {SeasonService} from "../../admin/seasons/season.service";
 import {AdminService} from "../../admin/admin.service";
 import {AbstractService} from "../../shared/abstract.service";
+import {SidenavService} from "./sidenav.service";
 
 @Component({
   selector: 'app-sidenav',
@@ -49,11 +50,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   teamsNavItems: NavigationItem[];
 
-  teamsNavItemsVisible = false;
-
   generalInormationNavItems = NAVIGATION_ITEMS_GEN_INFOS;
-
-  generalInformationNavItemsVisible = false;
 
   teamsAdmin: boolean;
 
@@ -63,7 +60,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private seasonService: SeasonService,
     private adminService: AdminService,
-    public abstractService: AbstractService
+    public abstractService: AbstractService,
+    public sidenavService: SidenavService
   ) {
   }
 
@@ -78,20 +76,27 @@ export class SidenavComponent implements OnInit, OnDestroy {
       })
   }
 
-  toogleSideNav() {
-    this.drawer.toggle();
+  toggleSideNav() {
+    if (this.drawer.opened && (this.sidenavService.generalInformationNavItemsVisible || this.sidenavService.teamsNavItemsVisible)) {
+      if (this.sidenavService.generalInformationNavItemsVisible) {
+        this.toggleGenInfoSideNav();
+      } else if (this.sidenavService.teamsNavItemsVisible) {
+        this.toggleTeamsSideNav();
+      }
+    } else
+      this.drawer.toggle();
   }
 
-  toogleTeamsSideNav() {
+  toggleTeamsSideNav() {
     this.drawer.toggle().then(() => {
-      this.teamsNavItemsVisible = !this.teamsNavItemsVisible;
+      this.sidenavService.toggleTeamNavItems();
       this.drawer.toggle();
     })
   }
 
-  toogleGenInfoSideNav() {
+  toggleGenInfoSideNav() {
     this.drawer.toggle().then(() => {
-      this.generalInformationNavItemsVisible = !this.generalInformationNavItemsVisible;
+      this.sidenavService.toggleGeneralInformationItems();
       this.drawer.toggle();
     })
   }
@@ -127,7 +132,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.abstractService.isHandset$
       .pipe(first())
       .subscribe(handset => {
-        if (!handset) this.toogleSideNav()
+        if (!handset) this.toggleSideNav()
       })
   }
 
