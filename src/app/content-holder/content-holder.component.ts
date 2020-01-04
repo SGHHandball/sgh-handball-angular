@@ -50,6 +50,8 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   @Input() editContent = false;
   @Input() editImages = false;
 
+  @Input() nonStaticContent: boolean;
+
   @Output() changeContentListener = new EventEmitter<Content>();
   @Output() changeImgOrderListener = new EventEmitter<Content>();
   @Output() uploadImgListener = new EventEmitter<IImage>();
