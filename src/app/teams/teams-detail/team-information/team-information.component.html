@@ -1,7 +1,8 @@
 <mat-card *ngIf="trainings && trainings.length>0">
   <div class="tab-group">
     <div class="tab-item">
-      <button class="btn" (click)="changeToContact()" [class.active-btn]="contactVisible" mat-stroked-button>Informationen
+      <button class="btn" (click)="changeToContact()" [class.active-btn]="contactVisible" mat-stroked-button>
+        Informationen
       </button>
     </div>
     <div class="tab-item" *ngIf="false">
@@ -17,23 +18,32 @@
   <mat-divider></mat-divider>
 
   <div *ngIf="contactVisible && trainings && trainings.length>0">
-    <p *ngIf="trainings[0].trainer && trainings[0].trainer.name">
-      <b>Trainer: </b> <span>{{trainings[0].trainer.name}}</span>
-    </p>
-    <p *ngIf="trainings[0].trainer && trainings[0].trainer.email">
-      <b>E-Mail: </b> <span>{{trainings[0].trainer.email}}</span>
-    </p>
-    <p *ngIf="trainings[0].trainer && trainings[0].trainer.phoneNumber">
-      <b>Telefon: </b> <span>{{trainings[0].trainer.phoneNumber}}</span>
-    </p>
-    <p *ngIf="trainings[0].team && trainings[0].team.teamVintage">
-      <b>Jahrgänge: </b> <span>{{trainings[0].team.teamVintage}}</span>
-    </p>
-    <ng-container *ngFor="let training of trainings">
-      <p *ngIf="training.date && training.date.day && training.date.time">
-        <b>Trainingszeit: </b> <span>{{training.date.day }}</span><span>: </span> <span>{{training.date.time}}</span>
+    <div fxLayout="row" fxLayoutGap="4px">
+      <ng-container *ngFor="let training of trainings; let i = index">
+        <div fxFlex="50" *ngIf="training.trainer">
+          <p *ngIf="training.trainer.name">
+            <b>Trainer {{i + 1}}: </b> <span>{{training.trainer.name}}</span>
+          </p>
+          <p *ngIf="training.trainer.email">
+            <b>E-Mail: </b> <span>{{training.trainer.email}}</span>
+          </p>
+          <p *ngIf="training.trainer.phoneNumber">
+            <b>Telefon: </b> <span>{{training.trainer.phoneNumber}}</span>
+          </p>
+        </div>
+      </ng-container>
+    </div>
+
+    <div>
+      <p *ngIf="trainings[0].team && trainings[0].team.teamVintage">
+        <b>Jahrgänge: </b> <span>{{trainings[0].team.teamVintage}}</span>
       </p>
-    </ng-container>
+      <ng-container *ngFor="let training of trainings ; let i = index">
+        <p *ngIf="training.date && training.date.day && training.date.time">
+          <b>Trainingszeit {{i + 1}}: </b> <span>{{training.date.day }}</span><span>: </span> <span>{{training.date.time}}</span>
+        </p>
+      </ng-container>
+    </div>
   </div>
 
 

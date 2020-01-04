@@ -13,3 +13,7 @@
 .active-btn {
   background-color: lightgray;
 }
+
+p, span {
+  word-break: break-word;
+}
