@@ -210,7 +210,9 @@ export class FireApiService {
       .collection<News>(
         DB_COLLECTION_NEWS)
       .doc<News>(id)
-      .valueChanges()
+      .get().pipe(map(snap=>{
+        return snap.data() as News
+      }));
   }
 
   getNewsByType(newsType?: NewsType): Observable<News[]> {

@@ -123,6 +123,7 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
           return this.dataService.getNewsById(newsId)
         })
       ).subscribe(news => {
+        console.log(news);
       this.news = news;
       this.initFormControls();
     })

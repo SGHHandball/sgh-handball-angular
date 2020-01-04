@@ -56,7 +56,6 @@ export class TeamsDetailComponent {
   }
 
   editTeam(content: Content) {
-    console.log(content);
     this.team.imgLinks = content.imgLinks;
     this.team.imgPaths = content.imgPaths;
     this.team.teamText = content.contentText;

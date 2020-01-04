@@ -85,8 +85,6 @@ export class NewsCardComponent implements OnInit {
             .pipe(
               switchMap(
                 rightsForTeam => {
-                  console.log("rightsForTeam:");
-                  console.log(rightsForTeam);
                   return of((user && user.uid === news.creator) || rightsForTeam);
                 }
               )
