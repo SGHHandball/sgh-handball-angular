@@ -150,12 +150,12 @@ export class FireApiService {
     return this.getSghUser()
       .pipe(
         switchMap(user => {
+          if (user && user.admin) return of(true);
           if (!user || !user.teams) return of(false);
           return of(
             user.teams
               .filter(
                 team =>
-                  user.admin ||
                   team.includes(teamAge) &&
                   team.includes(teamSeason)).length > 0
           );
