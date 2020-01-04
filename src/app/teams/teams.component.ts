@@ -1,14 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {AdminService} from "../admin/admin.service";
-import {MatDialog, MatSnackBar,} from "@angular/material";
+import {MatDialog,} from "@angular/material";
 import {TeamsChangeDialogComponent} from "./teams-change-dialog/teams-change-dialog.component";
 import {
-  TC_CANCEL, TC_GENERAL_DELETE_FAIL, TC_GENERAL_DELETE_SUCCESS, TC_GENERAL_EDIT_FAIL, TC_GENERAL_EDIT_SUCCESS,
+  TC_CANCEL,
+  TC_GENERAL_DELETE_FAIL,
+  TC_GENERAL_DELETE_SUCCESS,
+  TC_GENERAL_EDIT_FAIL,
+  TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_REQUIRED_ERROR,
   TC_NEWS_TYPE_REPORT,
   TC_OK,
-  TC_TEAMS_ADD_NEW_TEAM, TC_TEAMS_ADD_NEW_TEAM_FAIL, TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
+  TC_TEAMS_ADD_NEW_TEAM,
+  TC_TEAMS_ADD_NEW_TEAM_FAIL,
+  TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
   TC_TEAMS_CHANGE_ORDER,
   TC_TEAMS_DELETE_TEAM,
   TC_TEAMS_EDIT_TEAM_PAGE,
@@ -294,8 +299,8 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
     this.newsService.openNewsDetail(news.id);
   }
 
-  addNewNews() {
-    this.dataService.addNewNews(NewsType.NEWS_TYPE_REPORT, this.currentTeam)
+  addNewNews(report:boolean) {
+    this.dataService.addNewNews(report ? NewsType.NEWS_TYPE_REPORT : NewsType.NEWS_TYPE_TEAM_EVENT, this.currentTeam)
       .pipe(takeUntil(this.destroy$))
       .subscribe(news => {
         this.newsService.openNewsEdit(news.id);

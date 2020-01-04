@@ -42,7 +42,9 @@
   <ng-container *ngIf="(currentTeam && teamsAdmin|async) ||
              (currentTeam && rightsForTeam|async)">
     <button mat-menu-item
-            (click)="addNewNews()"> {{translationService.get(newsTypeReportTC)}}</button>
+            (click)="addNewNews(true)"> {{translationService.get(newsTypeReportTC)}}</button>
+    <button mat-menu-item
+            (click)="addNewNews(false)">Team Event</button>
     <button mat-menu-item (click)="editTeamPage()">Mannschaftstext bearbeiten</button>
     <button mat-menu-item (click)="editTeamImgPage()">{{translationService.get(editTeamPageTC)}}</button>
     <button mat-menu-item (click)="editTeamLink()">NuLiga Link ändern</button>

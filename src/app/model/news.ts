@@ -22,6 +22,7 @@ export interface News {
 export enum NewsType {
   NEWS_TYPE_EVENT = 'event',
   NEWS_TYPE_REPORT = 'report',
+  NEWS_TYPE_TEAM_EVENT = 'team_event',
 }
 
 export const NEWS_TEAM_YOUTH_AGES = ['A', 'B', 'C', 'D', 'E', 'F'];

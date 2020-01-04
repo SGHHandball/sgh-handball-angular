@@ -31,7 +31,7 @@
             </mat-form-field>
           </div>
 
-          <ng-container *ngIf="isNewsTypeReport()">
+          <ng-container *ngIf="isNewsTypeReport()|| isNewsTypeTeamEvent()">
             <div [fxFlex]="!(abstractService.isHandset$ | async) ? 40 : 50"
                  fxLayoutAlign="center center"
                  class="news-team-age-container"

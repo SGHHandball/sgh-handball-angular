@@ -221,6 +221,9 @@ export class FireApiService {
       ref => {
         let query: CollectionReference | Query = ref;
         switch (newsType) {
+          case NewsType.NEWS_TYPE_TEAM_EVENT:
+            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_TEAM_EVENT);
+            break;
           case NewsType.NEWS_TYPE_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_EVENT);
             break;
@@ -240,6 +243,9 @@ export class FireApiService {
         query = query.orderBy(FireBaseModel.DATE, orderAsc ? 'asc' : 'desc');
         if (limit) query = query.limit(limit);
         switch (newsType) {
+          case NewsType.NEWS_TYPE_TEAM_EVENT:
+            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_TEAM_EVENT);
+            break;
           case NewsType.NEWS_TYPE_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_EVENT);
             break;
@@ -262,7 +268,6 @@ export class FireApiService {
               if (!userRights) {
                 query = query.where(FireBaseModel.CHECKED, '==', true);
               }
-              query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_REPORT);
               query = query.where(FireBaseModel.TEAM_AGE, '==', teamAge);
               query = query.where(FireBaseModel.TEAM_SEASON, '==', teamSeason);
               query = query.orderBy(FireBaseModel.DATE, 'asc');

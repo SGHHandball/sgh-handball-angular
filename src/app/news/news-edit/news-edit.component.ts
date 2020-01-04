@@ -104,6 +104,9 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   isNewsTypeReport(): boolean {
     return this.news && this.news.type === NewsType.NEWS_TYPE_REPORT;
   }
+  isNewsTypeTeamEvent(): boolean {
+    return this.news && this.news.type === NewsType.NEWS_TYPE_TEAM_EVENT;
+  }
 
 
   closeNews() {

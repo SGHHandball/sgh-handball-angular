@@ -34,6 +34,8 @@
               (click)="addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
       <button mat-menu-item *ngIf="teamRights|async"
               (click)="addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
+      <button mat-menu-item *ngIf="teamRights|async"
+              (click)="addNewNews(newsTypeTeamEvent)">Team Event</button>
     </mat-menu>
 
 
