@@ -37,9 +37,9 @@ export class NewsCardComponent implements OnInit {
   exportRight$ = this.adminService.isUserEventAdmin().pipe(share());
 
   constructor(
-              public translationService: TranslationService,
-              private dataService: DataService,
-              private adminService: AdminService
+    public translationService: TranslationService,
+    private dataService: DataService,
+    private adminService: AdminService
   ) {
   }
 
@@ -80,16 +80,16 @@ export class NewsCardComponent implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         switchMap(user => {
-          return this.dataService
-            .hasUserRightsForTeam(news.teamAge, news.teamSeason)
-            .pipe(
-              switchMap(
-                rightsForTeam => {
-                  return of((user && user.uid === news.creator) || rightsForTeam);
-                }
-              )
-            );
-        }
+            return this.dataService
+              .hasUserRightsForTeam(news.teamAge, news.teamSeason)
+              .pipe(
+                switchMap(
+                  rightsForTeam => {
+                    return of((user && user.uid === news.creator) || rightsForTeam);
+                  }
+                )
+              );
+          }
         )
       );
 
@@ -108,15 +108,15 @@ export class NewsCardComponent implements OnInit {
 
   getText(news: News): string {
     return news.summary ?
-      this.getFirst100Characters(news.summary) :
+      this.getFirst100Characters(news.summary, 200) :
       news.body ?
-        this.getFirst100Characters(news.body) :
+        this.getFirst100Characters(news.body, 200) :
         '';
   }
 
-  getFirst100Characters(string: string): string {
-    if (string.length > 100) {
-      return [string.substring(0, 100), "..."].join(" ");
+  getFirstCharacters(string: string, maxChars: number): string {
+    if (string.length > maxChars) {
+      return [string.substring(0, maxChars), "..."].join(" ");
     }
     return string;
   }

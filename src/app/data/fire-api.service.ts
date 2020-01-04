@@ -270,7 +270,7 @@ export class FireApiService {
               }
               query = query.where(FireBaseModel.TEAM_AGE, '==', teamAge);
               query = query.where(FireBaseModel.TEAM_SEASON, '==', teamSeason);
-              query = query.orderBy(FireBaseModel.DATE, 'asc');
+              query = query.orderBy(FireBaseModel.DATE, 'desc');
               return query;
             }
           ).valueChanges();
