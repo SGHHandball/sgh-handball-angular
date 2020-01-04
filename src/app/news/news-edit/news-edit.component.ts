@@ -25,7 +25,7 @@ import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
-import {map, startWith, switchMap, takeUntil} from "rxjs/operators";
+import {map, share, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../admin/seasons/season.service";
 import {DataService} from "../../data/data.service";
@@ -33,6 +33,7 @@ import {ActivatedRoute} from "@angular/router";
 import {IImage} from "ng2-image-compress";
 import {Season} from "../../model/season";
 import {AbstractService} from "../../shared/abstract.service";
+import {AdminService} from "../../admin/admin.service";
 
 @Component({
   selector: 'app-news-edit',
@@ -80,6 +81,8 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
 
   currentSeason: Season;
 
+  admin$ = this.adminService.isUserAdmin().pipe(share());
+
   constructor(
     public translationService: TranslationService,
     private dialog: MatDialog,
@@ -87,7 +90,9 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     private seasonService: SeasonService,
     private route: ActivatedRoute,
     private dataService: DataService,
-    public abstractService: AbstractService) {
+    public abstractService: AbstractService,
+    private adminService: AdminService
+  ) {
   }
 
 
@@ -123,7 +128,7 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
           return this.dataService.getNewsById(newsId)
         })
       ).subscribe(news => {
-        console.log(news);
+      console.log(news);
       this.news = news;
       this.initFormControls();
     })
@@ -209,6 +214,15 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
 
   saveNewClub(club: string) {
     this.newsService.saveNewClubToCollection(club);
+  }
+
+  getDate(dateAsNumber: number): Date {
+    return new Date(dateAsNumber);
+  }
+
+  changeEditDate(date:Date){
+    this.news.date = date.getTime();
+    this.onChangeValue();
   }
 
 

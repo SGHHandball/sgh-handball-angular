@@ -1,0 +1,40 @@
+<div fxLayoutGap="4px" >
+  <div [fxFlex]="50"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Anzeige Datum</mat-label>
+      <input matInput
+             [matDatepicker]="editDatePicker"
+             [formControl]="editDateFormControl"
+             (change)="changeDate()"
+             (dateChange)="changeDate()">
+      <mat-datepicker-toggle matSuffix [for]="editDatePicker" ></mat-datepicker-toggle>
+      <mat-datepicker #editDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div [fxFlex]="25"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Stunde</mat-label>
+      <input type="number" matInput
+             [value]="hours"
+             max="23"
+             min="0"
+             (change)="changeEditTimeHour($event.target.value)">
+    </mat-form-field>
+  </div>
+
+  <div [fxFlex]="25"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Minute</mat-label>
+      <input type="number" matInput
+             max="59"
+             min="0"
+             [value]="minutes"
+             (change)="changeEditTimeMinute($event.target.value)">
+    </mat-form-field>
+  </div>
+
+</div>

@@ -64,7 +64,14 @@
               </mat-form-field>
             </div>
           </ng-container>
+
         </div>
+
+        <app-news-edit-admin-date
+          *ngIf="(admin$|async) && news"
+          [editDate]="getDate(news.date)"
+          (changedValueListener)="changeEditDate($event)"
+        ></app-news-edit-admin-date>
 
         <div fxLayoutGap="4px" [fxLayout]="!(abstractService.isHandset$ | async) ? 'row' : 'column'" *ngIf="isNewsTypeReport()">
           <!-- Teams - Score -->

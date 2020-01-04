@@ -22,6 +22,7 @@ import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-man
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {EventsComponent} from "./events/events.component";
 import {NewsRoutingModule} from "./news-routing.module";
+import { NewsEditAdminDateComponent } from './news-edit/news-edit-admin-date/news-edit-admin-date.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {NewsRoutingModule} from "./news-routing.module";
     NewsCardListComponent,
     NewsCardDetailComponent,
     NewsMoreMenuComponent,
-    EventsComponent
+    EventsComponent,
+    NewsEditAdminDateComponent
   ],
   imports: [
     SharedModule,
