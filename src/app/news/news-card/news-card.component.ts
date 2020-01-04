@@ -108,9 +108,9 @@ export class NewsCardComponent implements OnInit {
 
   getText(news: News): string {
     return news.summary ?
-      this.getFirst100Characters(news.summary, 200) :
+      this.getFirstCharacters(news.summary, 200) :
       news.body ?
-        this.getFirst100Characters(news.body, 200) :
+        this.getFirstCharacters(news.body, 200) :
         '';
   }
 
