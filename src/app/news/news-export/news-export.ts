@@ -16,14 +16,6 @@ export function exportNewsToText(exportNews: News[]) {
       getPlayersHeader(news),
       getPlayers(news)
     ];
-    if (news.imgLinks.length > 0) {
-      children.push(getImageHeader());
-      news.imgLinks.forEach(link => {
-        children.push(getImageLink(doc, link));
-      })
-    }
-
-
     doc.addSection({
       properties: {},
       children: children,
