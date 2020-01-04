@@ -10,9 +10,10 @@ import {NgxEditorModule} from "ngx-editor";
 import {FormsModule} from "@angular/forms";
 import {ContentHolderRoutingModule} from "./content-holder-routing.module";
 import {HttpClientModule} from "@angular/common/http";
+import {FbIconComponent} from "./fb-icon/fb-icon.component";
 
 @NgModule({
-  declarations: [ContentHolderComponent, RichTextEditorComponent],
+  declarations: [ContentHolderComponent, RichTextEditorComponent,FbIconComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -27,7 +28,7 @@ import {HttpClientModule} from "@angular/common/http";
     ContentHolderRoutingModule,
     HttpClientModule
   ],
-  exports: [ContentHolderComponent, RichTextEditorComponent],
+  exports: [ContentHolderComponent, RichTextEditorComponent,FbIconComponent],
 })
 export class ContentHolderModule {
 }

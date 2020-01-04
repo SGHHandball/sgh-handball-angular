@@ -44,6 +44,21 @@
       </app-rich-text-editor>
     </div>
   </div>
+
+  <mat-card-actions
+    align="end"
+    class="fb-icon-container"
+    *ngIf="contentLoaded && home"
+  >
+    <app-fb-icon
+      iconPath="assets/img/F_icon.svg"
+      link="https://de-de.facebook.com/pages/category/Sports-Club/SG-Hainhausen-Handball-832106663555487/"
+    ></app-fb-icon>
+    <app-fb-icon
+      iconPath="assets/img/I_icon.svg"
+      link="https://www.instagram.com/sghainhausen_handball/"
+    ></app-fb-icon>
+  </mat-card-actions>
 </mat-card>
 
 <app-add-btn [matMenu]="newsTypeMenu" [moreIcon]="true"

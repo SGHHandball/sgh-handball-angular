@@ -48,6 +48,7 @@ export class AdminService {
       .pipe(
         switchMap(sghUser => {
           if (!sghUser) return of(false);
+          if (sghUser.admin) return of(true);
           return of(sghUser.teams && sghUser.teams.length > 0);
         })
       );

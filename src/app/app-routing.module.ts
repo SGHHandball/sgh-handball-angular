@@ -3,7 +3,6 @@ import {PreloadAllModules, RouterModule} from '@angular/router';
 import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {
   TC_ADMIN,
-  TC_ROUTE_CONTENT,
   TC_ROUTE_DOCUMENTS,
   TC_ROUTE_HALLS,
   TC_ROUTE_HOME,
@@ -26,7 +25,7 @@ export const routes = [
     loadChildren: './teams/teams.module#TeamsModule'
   },
   {
-    path: TC_ROUTE_CONTENT,
+    path: TC_ROUTE_HOME,
     loadChildren: './content-holder/content-holder.module#ContentHolderModule'
   },
   {
@@ -48,10 +47,6 @@ export const routes = [
   {
     path: TC_ROUTE_TRAINING,
     loadChildren: './trainings/trainings.module#TrainingsModule'
-  },
-  {
-    path: TC_ROUTE_HOME,
-    loadChildren: './home/home.module#HomeModule'
   },
   {
     path: TC_ROUTE_IMPRINT,

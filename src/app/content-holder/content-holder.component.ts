@@ -10,13 +10,13 @@ import {Router} from "@angular/router";
 import {
   DB_COLLECTION_CONTENT_CDH,
   DB_COLLECTION_CONTENT_EXECUTIVES, DB_COLLECTION_CONTENT_HOME,
-  DB_COLLECTION_CONTENT_REFEREE, DB_COLLECTION_CONTENT_SPONSORS,
+  DB_COLLECTION_CONTENT_REFEREE,
   DB_COLLECTION_CONTENT_TIME_KEEPER
 } from "../constants";
 import {
   TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
   TC_ROUTE_CDH,
-  TC_ROUTE_EXECUTIVES, TC_ROUTE_HOME_EDIT,
+  TC_ROUTE_EXECUTIVES,
   TC_ROUTE_REFEREES,
   TC_ROUTE_TIME_KEEPER
 } from "../translation.service";
@@ -50,8 +50,6 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   @Input() editContent = false;
   @Input() editImages = false;
 
-  @Input() nonStaticContent: boolean;
-
   @Output() changeContentListener = new EventEmitter<Content>();
   @Output() changeImgOrderListener = new EventEmitter<Content>();
   @Output() uploadImgListener = new EventEmitter<IImage>();
@@ -59,15 +57,16 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
 
   adminRight$ = this.adminService.isUserAdmin().pipe(share());
 
+  home: boolean;
+
   ngOnInit(): void {
-    if (!this.nonStaticContent)
-      this.initHomeContent();
+    this.home = this.getContentTopic() === DB_COLLECTION_CONTENT_HOME;
+    this.initContent();
   }
 
 
-  initHomeContent() {
+  initContent() {
     const contentTopic = this.getContentTopic();
-    if (contentTopic)
       this.dataService
         .getContent(contentTopic)
         .pipe(
@@ -80,125 +79,108 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   }
 
   saveContent(content: string) {
-    if (this.nonStaticContent) {
-      this.content.contentText = content;
-      this.changeContentListener.next(this.content)
-    } else {
-      const contentTopic = this.getContentTopic();
-      if (contentTopic)
-        this.dataService
-          .addContent(contentTopic,
-            {
-              contentText: content,
-              imgLinks: this.content && this.content.imgLinks ? this.content.imgLinks : [],
-              imgPaths: this.content && this.content.imgPaths ? this.content.imgPaths : []
-            }
-          )
-          .pipe(
-            takeUntil(this.destroy$)
-          )
-          .subscribe(_ => {
-            this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
-          });
-    }
+    const contentTopic = this.getContentTopic();
+    if (contentTopic)
+      this.dataService
+        .addContent(contentTopic,
+          {
+            contentText: content,
+            imgLinks: this.content && this.content.imgLinks ? this.content.imgLinks : [],
+            imgPaths: this.content && this.content.imgPaths ? this.content.imgPaths : []
+          }
+        )
+        .pipe(
+          takeUntil(this.destroy$)
+        )
+        .subscribe(_ => {
+          this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
+        });
   }
 
   changeContent() {
-    if (this.nonStaticContent) {
-      this.changeImgOrderListener.next(this.content)
-    } else {
-      const contentTopic = this.getContentTopic();
-      if (contentTopic)
-        this.dataService
-          .addContent(contentTopic, this.content)
-          .pipe(
-            takeUntil(this.destroy$)
-          )
-          .subscribe(_ => {
-            this.abstractService.openSnackBar("Reihenfolge erfolgreich geändert")
-          });
-    }
+    const contentTopic = this.getContentTopic();
+    if (contentTopic)
+      this.dataService
+        .addContent(contentTopic, this.content)
+        .pipe(
+          takeUntil(this.destroy$)
+        )
+        .subscribe(_ => {
+          this.abstractService.openSnackBar("Reihenfolge erfolgreich geändert")
+        });
   }
 
   getContentTopic(): string {
-    if (this.router.url.includes(TC_ROUTE_HOME_EDIT)) return DB_COLLECTION_CONTENT_HOME;
     if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
     if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;
     if (this.router.url.includes(TC_ROUTE_TIME_KEEPER)) return DB_COLLECTION_CONTENT_TIME_KEEPER;
     if (this.router.url.includes(TC_ROUTE_CDH)) return DB_COLLECTION_CONTENT_CDH;
-    return undefined;
+    return DB_COLLECTION_CONTENT_HOME;
   }
 
   upload(image: IImage) {
-    if (this.nonStaticContent) {
-      this.uploadImgListener.next(image)
-    } else {
-      this.uploadProgress = undefined;
-      this.dataService.uploadImage(image, this.getContentTopic())
-        .pipe(
-          takeUntil(this.destroy$),
-          switchMap(
-            imageProgress => {
-              if (imageProgress.uploadDone) {
-                if (!environment.production) console.log(imageProgress);
-                if (!this.content.imgPaths) this.content.imgPaths = [];
-                if (!this.content.imgLinks) this.content.imgLinks = [];
-                this.content.imgPaths.push(imageProgress.path);
-                this.content.imgLinks.push(imageProgress.url);
-                this.uploadProgress = of(imageProgress.progress);
-              } else {
-                this.uploadProgress = of(imageProgress.progress);
-              }
-              return of(imageProgress.uploadDone)
+    this.uploadProgress = undefined;
+    this.dataService.uploadImage(image, this.getContentTopic())
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(
+          imageProgress => {
+            if (imageProgress.uploadDone) {
+              if (!environment.production) console.log(imageProgress);
+              if (!this.content.imgPaths) this.content.imgPaths = [];
+              if (!this.content.imgLinks) this.content.imgLinks = [];
+              this.content.imgPaths.push(imageProgress.path);
+              this.content.imgLinks.push(imageProgress.url);
+              this.uploadProgress = of(imageProgress.progress);
+            } else {
+              this.uploadProgress = of(imageProgress.progress);
             }
-          ),
-          switchMap(
-            doneUploading => {
-              if (doneUploading) {
-                this.uploadProgress = undefined;
-                return this.dataService.addContent(this.getContentTopic(), this.content);
-              }
-              return of(false)
+            return of(imageProgress.uploadDone)
+          }
+        ),
+        switchMap(
+          doneUploading => {
+            if (doneUploading) {
+              this.uploadProgress = undefined;
+              return this.dataService.addContent(this.getContentTopic(), this.content);
             }
-          )
-        ).subscribe();
-    }
+            return of(false)
+          }
+        )
+      ).subscribe();
   }
 
 
   deleteImage(index: number) {
-    if (this.nonStaticContent) {
-      this.deleteImgListener.next(index)
-    } else
-      this.abstractService
-        .dialogWidth$
-        .pipe(
-          takeUntil(this.destroy$),
-          switchMap(dialogWidth =>
-            this.dialog.open(DefaultDialogComponent, {
-                width: dialogWidth,
-                data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-              }
-            ).afterClosed()
-          ),
-          switchMap(result => {
-              if (result) {
-                return this.dataService.deleteImage(this.content.imgPaths[index])
-              }
-              return of("Cancel")
+    this.abstractService
+      .dialogWidth$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(dialogWidth =>
+          this.dialog.open(DefaultDialogComponent, {
+              width: dialogWidth,
+              data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
             }
-          ),
-          switchMap(result => {
-              if (!result) {
-                this.content.imgLinks.splice(index, 1);
-                this.content.imgPaths.splice(index, 1);
-                return this.dataService.addContent(this.getContentTopic(), this.content);
-              }
-              return of(undefined)
+          ).afterClosed()
+        ),
+        switchMap(result => {
+            if (result) {
+              return this.dataService.deleteImage(this.content.imgPaths[index])
             }
-          )
+            return of("Cancel")
+          }
+        ),
+        switchMap(result => {
+            if (!result) {
+              this.content.imgLinks.splice(index, 1);
+              this.content.imgPaths.splice(index, 1);
+              return this.dataService.addContent(this.getContentTopic(), this.content);
+            }
+            return of(undefined)
+          }
         )
-        .subscribe();
+      )
+      .subscribe();
   }
 
 

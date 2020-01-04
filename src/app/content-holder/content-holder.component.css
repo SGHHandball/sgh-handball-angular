@@ -26,3 +26,11 @@
   padding: 16px;
 }
 
+.fb-icon-container {
+  width: 100%;
+}
+
+.fb-icon-container:hover{
+  cursor: pointer;
+}
+

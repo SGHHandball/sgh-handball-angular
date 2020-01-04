@@ -37,8 +37,6 @@ export const TC_ROUTE_EVENTS = 'events';
 export const TC_ROUTE_DETAIL = 'detail';
 
 
-export const TC_ROUTE_CONTENT = 'informationen';
-export const TC_ROUTE_HOME_EDIT = 'home-bearbeiten';
 export const TC_ROUTE_EXECUTIVES = 'vorstand';
 export const TC_ROUTE_REFEREES = 'schiedsrichter';
 export const TC_ROUTE_TIME_KEEPER = 'zeitnehmer';
