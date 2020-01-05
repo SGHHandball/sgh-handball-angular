@@ -17,7 +17,6 @@ export class NewsCardListComponent {
   @Output() deleteClickListener = new EventEmitter<News>();
   @Output() sendClickListener = new EventEmitter<News>();
   @Output() checkClickListener = new EventEmitter<News>();
-  @Output() exportChangeListener = new EventEmitter<News>();
   @Output() openDetailClickListener = new EventEmitter<News>();
 
   noNewsTC = TC_NEWS_NO_NEWS;

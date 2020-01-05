@@ -22,7 +22,6 @@ export class NewsCardComponent implements OnInit {
   @Output() deleteClickListener = new EventEmitter();
   @Output() sendClickListener = new EventEmitter();
   @Output() checkClickListener = new EventEmitter();
-  @Output() exportChangeListener = new EventEmitter<boolean>();
   @Output() openDetailClickListener = new EventEmitter();
 
   exportCheckBoxTC = TC_NEWS_EXPORT_CHECK_BOX;

@@ -2,10 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {News, NewsType} from "../model/news";
 import {
   TC_NEWS_TYPE_REPORT,
-   TC_NEWS_TYPE_EVENT, TC_NEWS_EXPORT
+   TC_NEWS_TYPE_EVENT,
 } from "../translation.service";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
-import {exportNewsToText} from "./news-export/news-export";
 import {first,  share, switchMap, takeUntil} from "rxjs/operators";
 import {SghUser} from "../model/sgh-user";
 
@@ -21,11 +20,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
   newsTypeReport = NewsType.NEWS_TYPE_REPORT;
   newsTypeEvent = NewsType.NEWS_TYPE_EVENT;
   newsTypeTeamEvent = NewsType.NEWS_TYPE_TEAM_EVENT;
-
-  exportTC = TC_NEWS_EXPORT;
-
-  exportNews: News[] = [];
-
   lastItem: any;
   finished = true;
   allNewsLoaded = false;
@@ -80,19 +74,6 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
       .subscribe(news => {
         this.newsService.openNewsEdit(news.id);
       })
-  }
-
-
-  changeExportNews(news: News) {
-    if (this.exportNews.includes(news)) {
-      this.exportNews.splice(this.exportNews.indexOf(news), 1);
-    } else {
-      this.exportNews.push(news);
-    }
-  }
-
-  exportNewsToText() {
-    exportNewsToText(this.exportNews);
   }
 
   openNewsDetail(news: News) {

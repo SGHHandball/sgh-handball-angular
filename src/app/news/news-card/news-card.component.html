@@ -34,11 +34,6 @@
     <div fxLayout="row wrap" fxFlex="10" class="card-sub-actions">
 
       <div fxFlex="50" class="card-export">
-        <mat-checkbox (change)="exportChangeListener.next($event.checked)"
-                      class="export-checkbox"
-                      *ngIf="(exportRight$|async)&&exportVisible">
-          {{translationService.get(exportCheckBoxTC)}}
-        </mat-checkbox>
       </div>
 
       <div fxFlex="50" fxLayoutAlign="end center" class="card-more-btn-container">
