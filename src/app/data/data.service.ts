@@ -72,9 +72,6 @@ export class DataService {
     return this.service.getNewsById(id);
   }
 
-  getNormalUserNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
-    return this.service.getNormalUserNews(orderAsc, limit, newsType);
-  }
 
   getTeamNews(teamAge: string, teamSeason: string): Observable<News[]> {
     return this.service.getTeamNews(teamAge, teamSeason);

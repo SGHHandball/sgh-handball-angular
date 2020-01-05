@@ -174,7 +174,7 @@ export class FireApiService {
             console.log("allNews");
             console.log(normalNews);
           }
-          return this.sortNewsByDate(normalNews);
+          return normalNews;
         })
       )
   }
@@ -220,31 +220,7 @@ export class FireApiService {
       DB_COLLECTION_NEWS,
       ref => {
         let query: CollectionReference | Query = ref;
-        switch (newsType) {
-          case NewsType.NEWS_TYPE_TEAM_EVENT:
-            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_TEAM_EVENT);
-            break;
-          case NewsType.NEWS_TYPE_SPECIAL:
-            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_SPECIAL);
-            break;
-          case NewsType.NEWS_TYPE_EVENT:
-            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_EVENT);
-            break;
-          case NewsType.NEWS_TYPE_REPORT:
-            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_REPORT);
-            break;
-        }
-        return query;
-      }
-    ).valueChanges();
-  }
-
-  getNormalUserNews(orderAsc: boolean, limit?: number, newsType?: NewsType): Observable<News[]> {
-    return this.db.collection<News>(DB_COLLECTION_NEWS, ref => {
-        let query: CollectionReference | Query = ref;
-        query = query.where(FireBaseModel.CHECKED, '==', true);
-        query = query.orderBy(FireBaseModel.DATE, orderAsc ? 'asc' : 'desc');
-        if (limit) query = query.limit(limit);
+        query = query.orderBy(FireBaseModel.DATE, 'desc');
         switch (newsType) {
           case NewsType.NEWS_TYPE_TEAM_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_TEAM_EVENT);
@@ -346,13 +322,6 @@ export class FireApiService {
         return ''
     }
   }
-
-  sortNewsByDate(news: News[]): News[] {
-    return news.sort((val1, val2) => {
-      return (val2.eventDate - val1.eventDate)
-    });
-  }
-
   deleteNews(news: News): Observable<void> {
     return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).delete());
   }
