@@ -34,6 +34,7 @@ export const TC_ROUTE_SGH = 'sgh';
 export const TC_ROUTE_NEWS = 'aktuelles';
 export const TC_PATH_EDIT = 'bearbeiten';
 export const TC_ROUTE_EVENTS = 'events';
+export const TC_ROUTE_SPECIAL = 'sonderberichte';
 export const TC_ROUTE_DETAIL = 'detail';
 
 

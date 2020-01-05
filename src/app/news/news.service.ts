@@ -33,6 +33,7 @@ export class NewsService {
 
   isNewsVisibleForUser(sghUser: SghUser, news: News): boolean {
     if (news.type === NewsType.NEWS_TYPE_EVENT) return true;
+    if (news.type === NewsType.NEWS_TYPE_SPECIAL) return true;
     if (news.checked) return true;
     else if (!sghUser) return false;
     else if (news.creator === sghUser.id) return true;
@@ -54,6 +55,8 @@ export class NewsService {
     return this.dataService.getSghUser()
       .pipe(
         map(user => {
+          console.log(user)
+          console.log(events)
           if (user && user.eventsAdmin) return events;
           return events.filter(event => event.checked)
         })

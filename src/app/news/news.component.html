@@ -17,7 +17,6 @@
         (deleteClickListener)="openDeleteNewsDialog($event)"
         (sendClickListener)="openSendCheckNewsDialog($event,true)"
         (checkClickListener)="openSendCheckNewsDialog($event,false)"
-        (exportChangeListener)="changeExportNews($event)"
         (openDetailClickListener)="openNewsDetail($event)"
       ></app-news-card-list>
       <div class="finished-spinner-container" *ngIf="!finished">
@@ -30,6 +29,8 @@
     <mat-menu #newsTypeMenu="matMenu">
       <button mat-menu-item *ngIf="eventAdmin |async"
               (click)="addNewNews(newsTypeEvent)"> {{translationService.get(newsTypeEventTC)}}</button>
+      <button mat-menu-item *ngIf="eventAdmin |async"
+              (click)="addNewNews(newsTypeSpecial)">Sonderbericht</button>
       <button mat-menu-item *ngIf="teamRights|async"
               (click)="addNewNews(newsTypeReport)"> {{translationService.get(newsTypeReportTC)}}</button>
       <button mat-menu-item *ngIf="teamRights|async"

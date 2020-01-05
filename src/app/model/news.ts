@@ -23,6 +23,7 @@ export enum NewsType {
   NEWS_TYPE_EVENT = 'event',
   NEWS_TYPE_REPORT = 'report',
   NEWS_TYPE_TEAM_EVENT = 'team_event',
+  NEWS_TYPE_SPECIAL= 'special',
 }
 
 export const NEWS_TEAM_YOUTH_AGES = ['A', 'B', 'C', 'D', 'E', 'F'];

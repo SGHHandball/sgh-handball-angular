@@ -19,6 +19,7 @@ export class NewsComponent extends AbstractNewsComponent implements OnInit {
 
   newsTypeReport = NewsType.NEWS_TYPE_REPORT;
   newsTypeEvent = NewsType.NEWS_TYPE_EVENT;
+  newsTypeSpecial = NewsType.NEWS_TYPE_SPECIAL;
   newsTypeTeamEvent = NewsType.NEWS_TYPE_TEAM_EVENT;
   lastItem: any;
   finished = true;

@@ -1,0 +1,18 @@
+<mat-spinner [diameter]="30" *ngIf="!specialNews" class="loading-spinner"></mat-spinner>
+
+<div class="container" *ngIf="specialNews">
+  <app-news-card-list
+    [news]="specialNews"
+    (editClickListener)="newsService.openNewsEdit($event.id)"
+    (deleteClickListener)="openDeleteNewsDialog($event)"
+    (sendClickListener)="openSendCheckNewsDialog($event,true)"
+    (checkClickListener)="openSendCheckNewsDialog($event,false)"
+    (openDetailClickListener)="openNewsDetail($event)"
+  ></app-news-card-list>
+</div>
+
+<app-add-btn [matMenu]="newsTypeMenu" *ngIf="eventsAdmin|async"></app-add-btn>
+<mat-menu #newsTypeMenu="matMenu">
+  <button mat-menu-item
+          (click)="addNewNews(newsTypeSpecial)">Sonderbericht</button>
+</mat-menu>

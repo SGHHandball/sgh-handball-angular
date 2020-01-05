@@ -23,6 +23,7 @@ import {LazyLoadImageModule} from "ng-lazyload-image";
 import {EventsComponent} from "./events/events.component";
 import {NewsRoutingModule} from "./news-routing.module";
 import { NewsEditAdminDateComponent } from './news-edit/news-edit-admin-date/news-edit-admin-date.component';
+import {SpecialComponent} from "./special/special.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NewsEditAdminDateComponent } from './news-edit/news-edit-admin-date/new
     NewsCardDetailComponent,
     NewsMoreMenuComponent,
     EventsComponent,
-    NewsEditAdminDateComponent
+    NewsEditAdminDateComponent,
+    SpecialComponent
   ],
   imports: [
     SharedModule,
@@ -66,7 +68,8 @@ import { NewsEditAdminDateComponent } from './news-edit/news-edit-admin-date/new
     NewsCardListComponent,
     NewsCardDetailComponent,
     NewsMoreMenuComponent,
-    EventsComponent
+    EventsComponent,
+    SpecialComponent
   ]
 })
 export class NewsModule {

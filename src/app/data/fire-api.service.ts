@@ -224,6 +224,9 @@ export class FireApiService {
           case NewsType.NEWS_TYPE_TEAM_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_TEAM_EVENT);
             break;
+          case NewsType.NEWS_TYPE_SPECIAL:
+            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_SPECIAL);
+            break;
           case NewsType.NEWS_TYPE_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_EVENT);
             break;
@@ -245,6 +248,9 @@ export class FireApiService {
         switch (newsType) {
           case NewsType.NEWS_TYPE_TEAM_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_TEAM_EVENT);
+            break;
+          case NewsType.NEWS_TYPE_SPECIAL:
+            query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_SPECIAL);
             break;
           case NewsType.NEWS_TYPE_EVENT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_EVENT);
@@ -330,6 +336,10 @@ export class FireApiService {
     switch (newsType) {
       case NewsType.NEWS_TYPE_EVENT:
         return "Veranstaltung";
+      case NewsType.NEWS_TYPE_TEAM_EVENT:
+        return "Team Event";
+      case NewsType.NEWS_TYPE_SPECIAL:
+        return "Sonderbericht";
       case NewsType.NEWS_TYPE_REPORT:
         return "Spielbericht";
       default:
