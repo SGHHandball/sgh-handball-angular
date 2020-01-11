@@ -1,9 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {getDateString, getTeamsWithScoreAsString, News, NewsType} from "../../model/news";
-import {
-  TC_NEWS_EXPORT_CHECK_BOX,
-  TranslationService
-} from "../../translation.service";
+import {TC_NEWS_EXPORT_CHECK_BOX, TranslationService} from "../../translation.service";
 import {Observable, of, Subject} from "rxjs";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../data/data.service";
@@ -113,6 +110,20 @@ export class NewsCardComponent implements OnInit {
       news.body ?
         this.getFirstCharacters(news.body, 200) :
         '';
+  }
+
+  getNewsType(news: News): string {
+    if (news.teamAge) return news.teamAge;
+    switch (news.type) {
+      case NewsType.NEWS_TYPE_TEAM_EVENT:
+        return "Team Event";
+      case NewsType.NEWS_TYPE_EVENT:
+        return "Veranstaltung";
+      case NewsType.NEWS_TYPE_SPECIAL:
+        return "Sonderbericht";
+      default:
+        return "";
+    }
   }
 
   getFirstCharacters(string: string, maxChars: number): string {

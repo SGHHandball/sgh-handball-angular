@@ -34,7 +34,7 @@
           {{getText(newsCard)}}
         </p>
 
-        <span class="card-extra-info">{{newsCard.teamAge ? newsCard.teamAge : 'Veranstaltung'}}</span>
+        <span class="card-extra-info">{{getNewsType(newsCard)}}</span>
         <span class="card-extra-info">{{getDateAsString(newsCard)}}</span>
       </div>
     </div>
