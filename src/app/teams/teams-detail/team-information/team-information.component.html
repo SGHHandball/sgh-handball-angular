@@ -18,9 +18,9 @@
   <mat-divider></mat-divider>
 
   <div *ngIf="contactVisible && trainings && trainings.length>0">
-    <div fxLayout="row" fxLayoutGap="4px">
+    <div fxLayout="column" fxLayoutGap="4px">
       <ng-container *ngFor="let training of trainings; let i = index">
-        <div fxFlex="50" *ngIf="training.trainer">
+        <div  *ngIf="training.trainer">
           <p *ngIf="training.trainer.name">
             <b>Trainer {{i + 1}}: </b> <span>{{training.trainer.name}}</span>
           </p>
