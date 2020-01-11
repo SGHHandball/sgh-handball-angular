@@ -1,0 +1,26 @@
+<div fxLayoutGap="4px">
+
+  <div fxFlex="50" fxLayoutAlign="center center">
+    <mat-form-field appearance="outline">
+      <mat-label>Saison</mat-label>
+      <mat-select (selectionChange)="changeSeason($event.value)" [(value)]="this.news.teamSeason">
+        <mat-option *ngIf="currentSeason"
+                    [value]="seasonService.getSeasonAsString(currentSeason)">
+          {{seasonService.getSeasonAsString(currentSeason)}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="50" fxLayoutAlign="center center">
+    <mat-form-field appearance="outline">
+      <mat-label>Typ</mat-label>
+      <mat-select (selectionChange)="changeType($event.value)" [(value)]="this.news.type">
+        <mat-option *ngFor="let option of possibleTypes" [value]="option">
+          {{getTypeNames(option)}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>

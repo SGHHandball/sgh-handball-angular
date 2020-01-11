@@ -1,0 +1,36 @@
+<div fxLayoutGap="4px" [fxLayout]="!(abstractService.isHandset$ | async) ? 'row' : 'column'">
+
+  <div [fxFlex]="!(abstractService.isHandset$ | async) ? 40 : 100">
+    <div fxFlex="100" fxLayoutAlign="center center">
+      <mat-form-field appearance="outline">
+        <mat-label>Heimmannschaft</mat-label>
+        <input  type="text" matInput
+                [value]="news.homeTeam"
+               (change)="changeHomeTeam($event.target.value)">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div [fxFlex]="!(abstractService.isHandset$ | async) ? 60 : 100" fxLayoutGap="4px">
+
+    <div [fxFlex]="!(abstractService.isHandset$ | async) ? 66 : 70" fxLayoutAlign="center center">
+      <mat-form-field appearance="outline">
+        <mat-label>Gastmannschaft</mat-label>
+        <input [value]="news.enemyTeam" type="text" matInput
+               (change)="changeEnemyTeam($event.target.value)">
+      </mat-form-field>
+    </div>
+
+    <div [fxFlex]="!(abstractService.isHandset$ | async) ? 34 : 30" fxLayoutAlign="center center" class="news-score-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Ergebnis</mat-label>
+        <input matInput
+               [value]="news.score"
+               (input)="changeScore($event.target.value)"
+               maxlength="13">
+      </mat-form-field>
+    </div>
+
+  </div>
+
+</div>

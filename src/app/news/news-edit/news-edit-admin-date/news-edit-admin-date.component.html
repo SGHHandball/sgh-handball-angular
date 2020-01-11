@@ -1,7 +1,7 @@
-<div fxLayoutGap="4px" >
+<div fxLayoutGap="4px">
   <div [fxFlex]="50"
   >
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="mat-form-field">
       <mat-label>Sortierungsdatum</mat-label>
       <input matInput
              [matDatepicker]="editDatePicker"
@@ -15,7 +15,7 @@
 
   <div [fxFlex]="25"
   >
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="mat-form-field">
       <mat-label>Stunde</mat-label>
       <input type="number" matInput
              [value]="hours"
@@ -27,7 +27,7 @@
 
   <div [fxFlex]="25"
   >
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="mat-form-field">
       <mat-label>Minute</mat-label>
       <input type="number" matInput
              max="59"

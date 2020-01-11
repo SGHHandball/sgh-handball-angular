@@ -55,8 +55,6 @@ export class NewsService {
     return this.dataService.getSghUser()
       .pipe(
         map(user => {
-          console.log(user)
-          console.log(events)
           if (user && user.eventsAdmin) return events;
           return events.filter(event => event.checked)
         })

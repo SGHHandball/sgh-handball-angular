@@ -24,6 +24,8 @@ import {EventsComponent} from "./events/events.component";
 import {NewsRoutingModule} from "./news-routing.module";
 import { NewsEditAdminDateComponent } from './news-edit/news-edit-admin-date/news-edit-admin-date.component';
 import {SpecialComponent} from "./special/special.component";
+import { NewsEditReportPartComponent } from './news-edit/news-edit-report-part/news-edit-report-part.component';
+import { NewsEditTypeSeasonComponent } from './news-edit/news-edit-type-season/news-edit-type-season.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {SpecialComponent} from "./special/special.component";
     NewsMoreMenuComponent,
     EventsComponent,
     NewsEditAdminDateComponent,
-    SpecialComponent
+    SpecialComponent,
+    NewsEditReportPartComponent,
+    NewsEditTypeSeasonComponent
   ],
   imports: [
     SharedModule,

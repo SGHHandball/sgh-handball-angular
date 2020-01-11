@@ -25,7 +25,7 @@ import {NewsService} from "../news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
-import {map, share, startWith, switchMap, takeUntil} from "rxjs/operators";
+import {first, map, share, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 import {SeasonService} from "../../admin/seasons/season.service";
 import {DataService} from "../../data/data.service";
@@ -52,34 +52,25 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   date = new FormControl();
 
   titleFormControl = new FormControl();
-  scoreFormControl = new FormControl();
   bodyFormControl = new FormControl();
   summaryFormControl = new FormControl();
   playersFormControl = new FormControl();
   teamAgeFormControl = new FormControl();
-  teamSeasonFormControl = new FormControl();
-  enemyTeamFormControl = new FormControl();
-  homeTeamFormControl = new FormControl();
 
   saveTC = this.translationService.get(TC_SAVE);
   editNewsTC = this.translationService.get(TC_EDIT_NEWS);
 
   newsTitleTC = this.translationService.get(TC_NEWS_TITLE);
-  newsScoreTC = this.translationService.get(TC_NEWS_SCORE);
   newsSummaryTC = this.translationService.get(TC_NEWS_SUMMARY);
   newsPlayersTC = this.translationService.get(TC_NEWS_PLAYERS);
   newsBodyTC = this.translationService.get(TC_NEWS_BODY);
   newsDateTC = this.translationService.get(TC_NEWS_DATE);
   newsTeamAgeTC = this.translationService.get(TC_NEWS_TEAM_AGE);
-  newsTeamSeasonTC = this.translationService.get(TC_NEWS_SEASON);
-  newsHomeTeam = this.translationService.get(TC_NEWS_HOME_TEAM);
-  newsEnemyTeam = this.translationService.get(TC_NEWS_ENEMY_TEAM);
 
   uploadProgress: Observable<number>;
 
   filteredTeamAgesOptions: Observable<string[]>;
 
-  currentSeason: Season;
 
   admin$ = this.adminService.isUserAdmin().pipe(share());
 
@@ -87,7 +78,6 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     public translationService: TranslationService,
     private dialog: MatDialog,
     public newsService: NewsService,
-    private seasonService: SeasonService,
     private route: ActivatedRoute,
     private dataService: DataService,
     public abstractService: AbstractService,
@@ -104,6 +94,7 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   isNewsTypeReport(): boolean {
     return this.news && this.news.type === NewsType.NEWS_TYPE_REPORT;
   }
+
   isNewsTypeTeamEvent(): boolean {
     return this.news && this.news.type === NewsType.NEWS_TYPE_TEAM_EVENT;
   }
@@ -118,7 +109,6 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   }
 
   ngOnInit(): void {
-    this.initCurrentSeason();
     this.initNews();
   }
 
@@ -131,30 +121,19 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
           return this.dataService.getNewsById(newsId)
         })
       ).subscribe(news => {
-      console.log(news);
       this.news = news;
       this.initFormControls();
     })
-  }
-
-  initCurrentSeason() {
-    this.dataService.getCurrentSeason()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(currentSeason => this.currentSeason = currentSeason)
   }
 
   initFormControls() {
     this.date.setValue(new Date(this.news.eventDate));
     this.date.registerOnChange(this.getOnChangeFunction);
     if (this.news.title) this.titleFormControl.setValue(this.news.title);
-    if (this.news.score) this.scoreFormControl.setValue(this.news.score);
     if (this.news.body) this.bodyFormControl.setValue(this.news.body);
     if (this.news.summary) this.summaryFormControl.setValue(this.news.summary);
     if (this.news.players) this.playersFormControl.setValue(this.news.players);
-    if (this.news.enemyTeam) this.enemyTeamFormControl.setValue(this.news.enemyTeam);
-    if (this.news.homeTeam) this.homeTeamFormControl.setValue(this.news.homeTeam);
     if (this.news.teamAge) this.teamAgeFormControl.setValue(this.news.teamAge);
-    if (this.news.teamSeason) this.teamSeasonFormControl.setValue(this.news.teamSeason);
     this.initTeamAgeFilter();
     this.valuesInit = true;
   }
@@ -197,33 +176,23 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   saveNews() {
     this.news.eventDate = new Date(this.date.value.toString()).getTime();
     this.news.title = this.titleFormControl.value;
-    this.news.score = this.scoreFormControl.value;
     this.news.body = this.bodyFormControl.value;
     this.news.summary = this.summaryFormControl.value;
     this.news.players = this.playersFormControl.value;
     this.news.teamAge = this.teamAgeFormControl.value;
-    this.news.enemyTeam = this.enemyTeamFormControl.value;
-    this.news.homeTeam = this.homeTeamFormControl.value;
-    this.news.teamSeason = this.teamSeasonFormControl.value;
-    this.saveNewClub(this.enemyTeamFormControl.value);
-    this.saveNewClub(this.homeTeamFormControl.value);
     this.dataService
       .saveNewsToDataBase(this.news)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first())
       .subscribe(_ => {
         this.changedValues = false;
       });
-  }
-
-  saveNewClub(club: string) {
-    this.newsService.saveNewClubToCollection(club);
   }
 
   getDate(dateAsNumber: number): Date {
     return new Date(dateAsNumber);
   }
 
-  changeEditDate(date:Date){
+  changeEditDate(date: Date) {
     this.news.date = date.getTime();
     this.onChangeValue();
   }
