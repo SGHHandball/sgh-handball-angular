@@ -15,7 +15,6 @@ import {
 import {SidenavListItemComponent} from "./sidenav/sidenav-list-item/sidenav-list-item.component";
 import {SidenavSubMenuComponent} from "./sidenav/sidenav-sub-menu/sidenav-sub-menu.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { LoadingComponent } from './loading/loading.component';
     ToolbarComponent,
     SidenavComponent,
     SidenavListItemComponent,
-    SidenavSubMenuComponent,
-    LoadingComponent],
+    SidenavSubMenuComponent,],
   imports: [
     CommonModule,
     RouterModule,

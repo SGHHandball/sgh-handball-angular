@@ -58,10 +58,10 @@ export const NAVIGATION_ITEM_GENERAL_INFORMATION = [
 ];
 
 export const NAVIGATION_ITEMS_GEN_INFOS = [
-  new NavigationItem([TC_ROUTE_HOME, TC_ROUTE_EXECUTIVES].join("/"), TC_ROUTE_EXECUTIVES),
-  new NavigationItem([TC_ROUTE_HOME, TC_ROUTE_REFEREES].join("/"), TC_ROUTE_REFEREES),
-  new NavigationItem([TC_ROUTE_HOME, TC_ROUTE_TIME_KEEPER].join("/"), TC_ROUTE_TIME_KEEPER),
-  new NavigationItem([TC_ROUTE_HOME, TC_ROUTE_CDH].join("/"), TC_ROUTE_CDH),
+  new NavigationItem( TC_ROUTE_EXECUTIVES, TC_ROUTE_EXECUTIVES),
+  new NavigationItem(TC_ROUTE_REFEREES, TC_ROUTE_REFEREES),
+  new NavigationItem(TC_ROUTE_TIME_KEEPER, TC_ROUTE_TIME_KEEPER),
+  new NavigationItem( TC_ROUTE_CDH, TC_ROUTE_CDH),
   /*new NavigationItem(TC_ROUTE_DOCUMENTS, TC_ROUTE_DOCUMENTS),*/
 ];
 

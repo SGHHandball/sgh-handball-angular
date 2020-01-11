@@ -3,14 +3,14 @@ import {AdminService} from "../admin/admin.service";
 import {MatDialog,} from "@angular/material";
 import {TeamsChangeDialogComponent} from "./teams-change-dialog/teams-change-dialog.component";
 import {
-  TC_CANCEL,
+  TC_CANCEL, TC_EDIT,
   TC_GENERAL_DELETE_FAIL,
   TC_GENERAL_DELETE_SUCCESS,
   TC_GENERAL_EDIT_FAIL,
   TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_REQUIRED_ERROR,
   TC_NEWS_TYPE_REPORT,
-  TC_OK,
+  TC_OK, TC_ROUTE_EDIT, TC_ROUTE_TEAMS,
   TC_TEAMS_ADD_NEW_TEAM,
   TC_TEAMS_ADD_NEW_TEAM_FAIL,
   TC_TEAMS_ADD_NEW_TEAM_SUCCESS,
@@ -31,7 +31,7 @@ import {News, NewsType} from "../model/news";
 import {TeamsDeleteDialogComponent} from "./teams-delete-dialog/teams-delete-dialog.component";
 import {Team} from "../model/team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DataService} from "../data/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
@@ -65,10 +65,6 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   teamLoaded = false;
   allTeams: Team[];
 
-  editTeamTextActive = false;
-  editTeamImgActive = false;
-  editTeamLinkActive = false;
-
   teamsAdmin = this.adminService.isUserTeamsAdmin().pipe(share());
   rightsForTeam: Observable<boolean>;
 
@@ -81,7 +77,8 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
     public newsService: NewsService,
     public route: ActivatedRoute,
     public seasonService: SeasonService,
-    private teamService: TeamService
+    private teamService: TeamService,
+    private router: Router
   ) {
     super(translationService, dialog, dataService, abstractService, adminService, newsService, route, seasonService)
   }
@@ -284,15 +281,8 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   editTeamPage() {
-    this.editTeamTextActive = !this.editTeamTextActive;
-  }
-
-  editTeamImgPage() {
-    this.editTeamImgActive = !this.editTeamImgActive;
-  }
-
-  editTeamLink() {
-    this.editTeamLinkActive = !this.editTeamLinkActive;
+      const editPage = this.router.url.replace(TC_ROUTE_TEAMS, TC_ROUTE_EDIT);
+      this.router.navigate([editPage])
   }
 
   openNewsDetail(news: News) {

@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-content>
+    <app-image-upload-manager
+      [urls]="content && content.imgLinks && content.imgLinks.length>0 ? content.imgLinks : []"
+      (itemDeleteEventListener)="deleteImage($event)"
+      (afterItemMovedEventListener)="changeContent()"
+      [uploadProgress]="uploadProgress"
+      (uploadEventListener)="upload($event)"
+    ></app-image-upload-manager>
+  </mat-card-content>
+
+  <div class="static-content">
+    <app-rich-text-editor
+      *ngIf="contentLoaded"
+      [htmlContent]="content"
+      (saveListener)="saveContent($event)"
+      (backListener)="getBack()"
+    >
+    </app-rich-text-editor>
+  </div>
+</mat-card>
+
+
+
+

@@ -1,31 +1,15 @@
-<mat-card *ngIf="editImages">
-  <mat-card-content>
-    <app-image-upload-manager
-      [urls]="content && content.imgLinks && content.imgLinks.length>0 ? content.imgLinks : []"
-      (itemDeleteEventListener)="deleteImage($event)"
-      (afterItemMovedEventListener)="changeContent()"
-      [uploadProgress]="uploadProgress"
-      (uploadEventListener)="upload($event)"
-    ></app-image-upload-manager>
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-raised-button color="warn" (click)="editImages = !editImages">Zurück</button>
-  </mat-card-actions>
-</mat-card>
-
 <mat-card
-  *ngIf="editImages ||editContent|| content &&(!!content.contentText ||  content.imgLinks && content.imgLinks.length>0)"
+  *ngIf="content &&(!!content.contentText ||  content.imgLinks && content.imgLinks.length>0)"
   class="content"
   [class.content-margin]="!nonStaticContent"
   [class.web-content]="!(abstractService.isHandset$|async) && !nonStaticContent">
   <div fxLayout="column">
 
-
     <div class="spinner-container">
       <mat-spinner *ngIf="!content && !contentLoaded" [diameter]="30" class="loading-spinner"></mat-spinner>
       <app-slider
         class="slideshow"
-        *ngIf="content && content.imgLinks && content.imgLinks.length>0 && !editImages"
+        *ngIf="content && content.imgLinks && content.imgLinks.length>0"
         [sliderArray]="content.imgLinks.length>0 ? getSlideImage(content.imgLinks) : []"
         [objectFit]="'contain'"
         [imageBorderRadius]="'4px 4px 0 0'"
@@ -33,15 +17,8 @@
       </app-slider>
     </div>
 
-
-    <div class="static-content">
-      <app-rich-text-editor
-        *ngIf="contentLoaded"
-        [htmlContent]="content"
-        [editMode]="editContent"
-        (saveListener)="saveContent($event)"
-      >
-      </app-rich-text-editor>
+    <div class="static-content" *ngIf="content && contentLoaded && content.contentText">
+      <div [innerHTML]="content.contentText"></div>
     </div>
   </div>
 
@@ -65,11 +42,7 @@
              *ngIf="adminRight$|async"></app-add-btn>
 <mat-menu #newsTypeMenu="matMenu">
   <button mat-menu-item
-          (click)="editImages = !editImages">
-    Bilder ändern
-  </button>
-  <button mat-menu-item
-          (click)="editContent = !editContent">
+          (click)="openEditPage()">
     Seite Bearbeiten
   </button>
 </mat-menu>

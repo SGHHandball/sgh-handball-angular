@@ -10,9 +10,9 @@ import {Content} from "../../model/content";
 export class RichTextEditorComponent implements OnInit {
 
   @Input() htmlContent: Content;
-  @Input() editMode: boolean;
 
   @Output() saveListener = new EventEmitter<string>();
+  @Output() backListener = new EventEmitter();
 
   editContent: Content;
 
@@ -41,11 +41,10 @@ export class RichTextEditorComponent implements OnInit {
   }
 
   saveContent() {
-    this.editMode = false;
     this.saveListener.next(this.editContent.contentText);
   }
 
   cancel() {
-    this.editMode = false;
+    this.backListener.next();
   }
 }

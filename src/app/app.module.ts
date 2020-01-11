@@ -17,6 +17,7 @@ import {DataModule} from "./data/data.module";
 import {SharedModule} from "./shared/shared.module";
 import {AppShellModule} from "./app-shell/app-shell.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ContentHolderModule} from "./content-holder/content-holder.module";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ContentHolderModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},

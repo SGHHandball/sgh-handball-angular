@@ -2,18 +2,17 @@ import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule} from '@angular/router';
 import {ROUTE_INDEX} from "./app-shell/sidenav/navigation-item";
 import {
-  TC_ADMIN,
-  TC_ROUTE_DOCUMENTS,
+  TC_ADMIN, TC_ROUTE_CDH,
+  TC_ROUTE_DOCUMENTS, TC_ROUTE_EXECUTIVES,
   TC_ROUTE_HALLS,
-  TC_ROUTE_HOME,
-  TC_ROUTE_IMPRINT, TC_ROUTE_LOADING,
+  TC_ROUTE_HOME, TC_ROUTE_EDIT,
+  TC_ROUTE_IMPRINT, TC_ROUTE_LOADING, TC_ROUTE_REFEREES,
   TC_ROUTE_SGH,
   TC_ROUTE_SPONSORS,
-  TC_ROUTE_TEAMS,
+  TC_ROUTE_TEAMS, TC_ROUTE_TIME_KEEPER,
   TC_ROUTE_TRAINING,
 } from "./translation.service";
-import {ImprintComponent} from "./imprint/imprint.component";
-import {LoadingComponent} from "./app-shell/loading/loading.component";
+import {ContentHolderComponent} from "./content-holder/content-holder.component";
 
 export const routes = [
   {
@@ -24,9 +23,14 @@ export const routes = [
     path: TC_ROUTE_TEAMS,
     loadChildren: './teams/teams.module#TeamsModule'
   },
+  {path: TC_ROUTE_EXECUTIVES, component: ContentHolderComponent},
+  {path: TC_ROUTE_REFEREES, component: ContentHolderComponent},
+  {path: TC_ROUTE_TIME_KEEPER, component: ContentHolderComponent},
+  {path: TC_ROUTE_CDH, component: ContentHolderComponent},
+  {path: TC_ROUTE_HOME, component: ContentHolderComponent},
   {
-    path: TC_ROUTE_HOME,
-    loadChildren: './content-holder/content-holder.module#ContentHolderModule'
+    path: TC_ROUTE_EDIT,
+    loadChildren: './content-holder-edit/content-holder-edit.module#ContentHolderEditModule'
   },
   {
     path: TC_ADMIN,
@@ -52,10 +56,8 @@ export const routes = [
     path: TC_ROUTE_IMPRINT,
     loadChildren: './imprint/imprint.module#ImprintModule'
   },
-
-  {path: TC_ROUTE_LOADING, component: LoadingComponent},
-  {path: ROUTE_INDEX, redirectTo: TC_ROUTE_LOADING, pathMatch: 'full'},
-  {path: '**', redirectTo: TC_ROUTE_LOADING}
+  {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
+  {path: '**', redirectTo: TC_ROUTE_HOME}
 ];
 
 

@@ -16,7 +16,7 @@ import {
 import {
   TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
   TC_ROUTE_CDH,
-  TC_ROUTE_EXECUTIVES,
+  TC_ROUTE_EXECUTIVES, TC_ROUTE_HOME, TC_ROUTE_EDIT,
   TC_ROUTE_REFEREES,
   TC_ROUTE_TIME_KEEPER
 } from "../translation.service";
@@ -39,7 +39,6 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   constructor(private adminService: AdminService,
               private dataService: DataService,
               private router: Router,
-              private dialog: MatDialog,
               public abstractService: AbstractService
   ) {
   }
@@ -47,8 +46,6 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
 
   @Input() content: Content;
   @Input() contentLoaded = false;
-  @Input() editContent = false;
-  @Input() editImages = false;
 
   @Input() nonStaticContent: boolean;
 
@@ -69,47 +66,15 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
 
   initContent() {
     const contentTopic = this.getContentTopic();
-      this.dataService
-        .getContent(contentTopic)
-        .pipe(
-          takeUntil(this.destroy$)
-        )
-        .subscribe(content => {
-          this.content = content;
-          this.contentLoaded = true;
-        });
-  }
-
-  saveContent(content: string) {
-    const contentTopic = this.getContentTopic();
-    if (contentTopic)
-      this.dataService
-        .addContent(contentTopic,
-          {
-            contentText: content,
-            imgLinks: this.content && this.content.imgLinks ? this.content.imgLinks : [],
-            imgPaths: this.content && this.content.imgPaths ? this.content.imgPaths : []
-          }
-        )
-        .pipe(
-          takeUntil(this.destroy$)
-        )
-        .subscribe(_ => {
-          this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
-        });
-  }
-
-  changeContent() {
-    const contentTopic = this.getContentTopic();
-    if (contentTopic)
-      this.dataService
-        .addContent(contentTopic, this.content)
-        .pipe(
-          takeUntil(this.destroy$)
-        )
-        .subscribe(_ => {
-          this.abstractService.openSnackBar("Reihenfolge erfolgreich geändert")
-        });
+    this.dataService
+      .getContent(contentTopic)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(content => {
+        this.content = content;
+        this.contentLoaded = true;
+      });
   }
 
   getContentTopic(): string {
@@ -120,76 +85,16 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
     return DB_COLLECTION_CONTENT_HOME;
   }
 
-  upload(image: IImage) {
-    this.uploadProgress = undefined;
-    this.dataService.uploadImage(image, this.getContentTopic())
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(
-          imageProgress => {
-            if (imageProgress.uploadDone) {
-              if (!environment.production) console.log(imageProgress);
-              if (!this.content.imgPaths) this.content.imgPaths = [];
-              if (!this.content.imgLinks) this.content.imgLinks = [];
-              this.content.imgPaths.push(imageProgress.path);
-              this.content.imgLinks.push(imageProgress.url);
-              this.uploadProgress = of(imageProgress.progress);
-            } else {
-              this.uploadProgress = of(imageProgress.progress);
-            }
-            return of(imageProgress.uploadDone)
-          }
-        ),
-        switchMap(
-          doneUploading => {
-            if (doneUploading) {
-              this.uploadProgress = undefined;
-              return this.dataService.addContent(this.getContentTopic(), this.content);
-            }
-            return of(false)
-          }
-        )
-      ).subscribe();
-  }
-
-
-  deleteImage(index: number) {
-    this.abstractService
-      .dialogWidth$
-      .pipe(
-        takeUntil(this.destroy$),
-        switchMap(dialogWidth =>
-          this.dialog.open(DefaultDialogComponent, {
-              width: dialogWidth,
-              data: new DialogData(TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE)
-            }
-          ).afterClosed()
-        ),
-        switchMap(result => {
-            if (result) {
-              return this.dataService.deleteImage(this.content.imgPaths[index])
-            }
-            return of("Cancel")
-          }
-        ),
-        switchMap(result => {
-            if (!result) {
-              this.content.imgLinks.splice(index, 1);
-              this.content.imgPaths.splice(index, 1);
-              return this.dataService.addContent(this.getContentTopic(), this.content);
-            }
-            return of(undefined)
-          }
-        )
-      )
-      .subscribe();
-  }
-
 
   getSlideImage(imgLinks: string[]): SliderImage[] {
     return imgLinks.map(link => {
       return {img: link}
     })
+  }
+
+  openEditPage() {
+    const editPage = this.router.url.replace("/", ("/" + TC_ROUTE_EDIT + "/"));
+    this.router.navigate([editPage])
   }
 
   ngOnDestroy(): void {
