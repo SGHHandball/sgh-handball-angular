@@ -7,12 +7,20 @@
          class="card-container"
          (click)="openDetailClickListener.next()"
     >
-      <div fxFlex="40">
+      <div fxFlex="40" class="image-container">
+        <img
+          *ngIf="!(abstractService.isHandset$|async)"
+          alt="SGH - SG Hainhausen (Rodgau) Handball Bild zum Spielbericht oder Veranstaltung"
+          [lazyLoad]="newsCard && newsCard.imgLinks.length>0 ? newsCard.imgLinks[0] :['assets/img/SghLogo.png']"
+          defaultImage="assets\img\SghLogo.png"
+          class="background-img"
+        >
         <img
           alt="SGH - SG Hainhausen (Rodgau) Handball Bild zum Spielbericht oder Veranstaltung"
           [lazyLoad]="newsCard && newsCard.imgLinks.length>0 ? newsCard.imgLinks[0] :['assets/img/SghLogo.png']"
           defaultImage="assets\img\SghLogo.png"
           class="news-img"
+          [class.news-img-web]="!(abstractService.isHandset$|async)"
         >
       </div>
 

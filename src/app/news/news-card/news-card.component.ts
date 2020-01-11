@@ -8,6 +8,7 @@ import {Observable, of, Subject} from "rxjs";
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../data/data.service";
 import {AdminService} from "../../admin/admin.service";
+import {AbstractService} from "../../shared/abstract.service";
 
 @Component({
   selector: 'app-news-card',
@@ -38,7 +39,8 @@ export class NewsCardComponent implements OnInit {
   constructor(
     public translationService: TranslationService,
     private dataService: DataService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    public abstractService: AbstractService
   ) {
   }
 

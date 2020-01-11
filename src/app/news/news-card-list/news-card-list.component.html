@@ -8,7 +8,8 @@
     <ng-container
       *ngFor="let newsCard of news">
     <div
-      fxFlex="0 1 calc(33.3% - 16px)"
+      fxFlex="0 1 calc(25% - 16px)"
+      fxFlex.lt-lg="0 1 calc(33.3% - 16px)"
       fxFlex.lt-md="0 1 calc(50% - 16px)"
       fxFlex.lt-sm="100%"
       *ngIf="isNewsVisibleForUser(user,newsCard)"
