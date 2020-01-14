@@ -1,13 +1,9 @@
 <mat-card class="dashboard-card">
-
-  <div fxLayout="column">
-
-    <div fxLayout="column"
-         fxFlex="90"
+    <div
          class="card-container"
          (click)="openLink()"
     >
-      <div fxFlex="40">
+      <div >
         <img
           alt="SGH - SG Hainhausen (Rodgau) Handball Logo eines Sponsors"
           [lazyLoad]="sponsor &&sponsor.imgLinks &&  sponsor.imgLinks.length>0 ? sponsor.imgLinks[0] :['assets/img/SghLogo.png']"
@@ -16,7 +12,7 @@
         >
       </div>
 
-      <div fxFlex="50" class="card-content">
+      <div class="card-content">
         <span class="card-title">{{sponsor.sponsorName}}</span>
         <p>{{sponsor.sponsorDescription}}</p>
       </div>
@@ -25,7 +21,6 @@
     <div
       *ngIf="sponsorAdmin$|async"
       fxLayout="row wrap"
-      fxFlex="10"
       class="card-sub-actions"
     >
       <div fxFlex="80">
@@ -38,5 +33,4 @@
       </div>
 
     </div>
-  </div>
 </mat-card>

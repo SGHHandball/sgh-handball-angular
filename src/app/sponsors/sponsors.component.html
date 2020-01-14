@@ -8,18 +8,21 @@
   fxLayoutAlign="space-evenly flex-start"
   *ngIf="sponsorsLoaded && sponsors && sponsors.length>0"
 >
-  <div
-    fxFlex="0 1 calc(33.3% - 16px)"
-    fxFlex.lt-md="0 1 calc(50% - 16px)"
-    fxFlex.lt-sm="100%"
-    *ngFor="let sponsor of sponsors"
-  >
-    <app-sponsor-card
-      [sponsor]="sponsor"
-      (editClickListener)="openEditSponsorPage(sponsor.id)"
+  <ng-container
+    *ngFor="let sponsor of sponsors">
+    <div
+      fxFlex="0 1 calc(25% - 16px)"
+      fxFlex.lt-lg="0 1 calc(33.3% - 16px)"
+      fxFlex.lt-md="0 1 calc(50% - 16px)"
+      fxFlex.lt-sm="100%"
     >
-    </app-sponsor-card>
-  </div>
+      <app-sponsor-card
+        [sponsor]="sponsor"
+        (editClickListener)="openEditSponsorPage(sponsor.id)"
+      >
+      </app-sponsor-card>
+    </div>
+  </ng-container>
 </div>
 
 <app-add-btn [matMenu]="newsTypeMenu" [moreIcon]="true"

@@ -17,7 +17,6 @@ export class SliderComponent implements OnInit, OnDestroy {
   @Input() autoPlayTime = 5000;
   @Input() autoPlay = true;
   @Input() objectFit = 'contain';
-  @Input() height: string;
   @Input() width = '100%';
   @Input() imageBorderRadius: string;
 

@@ -1,13 +1,12 @@
 <mat-card class="dashboard-card">
 
-  <div fxLayout="column">
+  <div >
 
-    <div fxLayout="column"
-         fxFlex="90"
+    <div
          class="card-container"
          (click)="openDetailClickListener.next()"
     >
-      <div fxFlex="40" class="image-container">
+      <div class="image-container">
         <img
           *ngIf="!(abstractService.isHandset$|async)"
           alt="SGH - SG Hainhausen (Rodgau) Handball Bild zum Spielbericht oder Veranstaltung"
@@ -24,7 +23,7 @@
         >
       </div>
 
-      <div fxFlex="50" class="card-content">
+      <div class="card-content">
         <span class="card-title">{{newsCard.title}}</span>
         <p class="card-sub-title"
            *ngIf="isNewsCardReport() && (newsCard.homeTeam || newsCard.enemyTeam || newsCard.score)">
@@ -39,7 +38,7 @@
       </div>
     </div>
 
-    <div fxLayout="row wrap" fxFlex="10" class="card-sub-actions">
+    <div fxLayout="row wrap" class="card-sub-actions">
 
       <div fxFlex="50" class="card-export">
       </div>
