@@ -71,9 +71,9 @@ export class NewsService {
         this.translationService.get(TC_NEWS_TEAM_MEN),
         this.translationService.get(TC_NEWS_TEAM_WOMEN)
       ].concat(
-        NEWS_TEAM_YOUTH_AGES.map(age => genderMen + ' ' + age + youthTC)
+        NEWS_TEAM_YOUTH_AGES.map(age => genderMen + age + youthTC)
       ).concat(
-        NEWS_TEAM_YOUTH_AGES.map(age => genderWoman + ' ' + age + youthTC)
+        NEWS_TEAM_YOUTH_AGES.map(age => genderWoman + age + youthTC)
       )
     );
   }

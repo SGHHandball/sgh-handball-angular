@@ -43,6 +43,7 @@ export const ROUTE_INDEX = '';
 export const NAVIGATION_ITEMS_CLUB = [
   new NavigationItem(TC_ROUTE_HOME, TC_ROUTE_HOME).withRouterIcon('home'),
   new NavigationItem([TC_ROUTE_SGH, TC_ROUTE_NEWS].join("/"), TC_ROUTE_NEWS).withRouterIcon('notifications'),
+  new NavigationItem([TC_ROUTE_SGH, TC_ROUTE_SPECIAL].join("/"), TC_ROUTE_SPECIAL).withRouterIcon('stars'),
 ];
 
 export const NAVIGATION_ITEM_TEAM = [
@@ -71,7 +72,6 @@ export const NAVIGATION_ITEMS_INFO = [
 ];
 
 export const NAVIGATION_ITEMS_OTHER = [
-  new NavigationItem([TC_ROUTE_SGH, TC_ROUTE_SPECIAL].join("/"), TC_ROUTE_SPECIAL).withRouterIcon('stars'),
   new NavigationItem(TC_ROUTE_SPONSORS, TC_ROUTE_SPONSORS).withRouterIcon('sports_handball'),
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
 ];
