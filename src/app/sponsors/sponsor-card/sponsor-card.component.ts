@@ -13,6 +13,7 @@ export class SponsorCardComponent implements OnInit {
   @Input() sponsor: Sponsor;
 
   @Output() editClickListener = new EventEmitter();
+  @Output() deleteClickListener = new EventEmitter();
 
   sponsorAdmin$ = this.adminService.isUserSponsorAdmin().pipe(share());
 

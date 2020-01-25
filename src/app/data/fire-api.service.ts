@@ -733,11 +733,11 @@ export class FireApiService {
     );
   }
 
-  deleteSponsor(sponsor: Sponsor): Observable<void> {
+  deleteSponsor(sponsorId: string): Observable<void> {
     return from(
       this.db
         .collection<Sponsor>(DB_COLLECTION_SPONSORS)
-        .doc<Sponsor>(sponsor.id)
+        .doc<Sponsor>(sponsorId)
         .delete());
   }
 

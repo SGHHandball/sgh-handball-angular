@@ -19,6 +19,7 @@
       <app-sponsor-card
         [sponsor]="sponsor"
         (editClickListener)="openEditSponsorPage(sponsor.id)"
+        (deleteClickListener)="deleteSponsor(sponsor.id)"
       >
       </app-sponsor-card>
     </div>

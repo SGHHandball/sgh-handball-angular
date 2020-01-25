@@ -221,8 +221,8 @@ export class DataService {
     return this.service.changeSponsor(sponsor);
   }
 
-  deleteSponsor(sponsor: Sponsor): Observable<void> {
-    return this.service.deleteSponsor(sponsor);
+  deleteSponsor(sponsorId:string): Observable<void> {
+    return this.service.deleteSponsor(sponsorId);
   }
 
 
