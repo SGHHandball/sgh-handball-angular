@@ -12,6 +12,12 @@ import {
   TC_TRAININGS_TRAINING_TRAINER,
   TC_TRAININGS_EDIT_TRAINING_SUCCESS,
   TC_TRAININGS_EDIT_TRAINING_FAIL,
+  TC_TRAININGS_TRAINING_TEAM_NAME,
+  TC_TRAININGS_TRAINING_TEAM_VINTAGE,
+  TC_TRAININGS_TRAINING_DATES_DAY,
+  TC_TRAININGS_TRAINING_DATES_TIME,
+  TC_TRAININGS_TRAINING_DATES_HALL,
+  TC_TRAININGS_TRAINING_TRAINER_NAME, TC_TRAININGS_TRAINING_TRAINER_MAIL,
 } from "../translation.service";
 import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-edit-dialog.component";
 import {AdminService} from "../admin/admin.service";
@@ -33,11 +39,25 @@ import {AbstractService} from "../shared/abstract.service";
 })
 export class TrainingsComponent implements OnInit, OnDestroy {
 
-  displayedColumnsAdmin: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER, 'edit', 'delete'];
-  displayedColumns: string[] = [TC_TRAININGS_TRAINING_TEAM, TC_TRAININGS_TRAINING_DATE, TC_TRAININGS_TRAINING_TRAINER];
+  displayedColumnsAdmin: string[] = [
+    TC_TRAININGS_TRAINING_TEAM_NAME,
+    TC_TRAININGS_TRAINING_TEAM_VINTAGE,
+    TC_TRAININGS_TRAINING_DATES_DAY,
+    TC_TRAININGS_TRAINING_DATES_TIME,
+    TC_TRAININGS_TRAINING_DATES_HALL,
+    TC_TRAININGS_TRAINING_TRAINER_NAME,
+    TC_TRAININGS_TRAINING_TRAINER_MAIL,
+    'edit', 'delete'];
+  displayedColumns: string[] = [
+    TC_TRAININGS_TRAINING_TEAM_NAME,
+    TC_TRAININGS_TRAINING_TEAM_VINTAGE,
+    TC_TRAININGS_TRAINING_DATES_DAY,
+    TC_TRAININGS_TRAINING_DATES_TIME,
+    TC_TRAININGS_TRAINING_DATES_HALL,
+    TC_TRAININGS_TRAINING_TRAINER_NAME,
+    TC_TRAININGS_TRAINING_TRAINER_MAIL
+  ];
   dataSource: MatTableDataSource<TrainingGroup> = new MatTableDataSource();
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   destroy$ = new Subject();
 
@@ -93,7 +113,6 @@ export class TrainingsComponent implements OnInit, OnDestroy {
       )
       .subscribe(trainings => {
         this.dataSource = new MatTableDataSource(this.getAllTrainingGroups(trainings));
-        this.dataSource.paginator = this.paginator;
       })
   }
 
@@ -174,7 +193,7 @@ export class TrainingsComponent implements OnInit, OnDestroy {
 
   getTrainingDateAsString(date: TrainingDate): string {
     const possibleHalls = this.halls.filter(hall => hall.id === date.hallId);
-    return [date.day, date.time, '/', possibleHalls.length > 0 ? this.getHallName(possibleHalls[0]) : ''].join(' ');
+    return  possibleHalls.length > 0 ? this.getHallName(possibleHalls[0]) : '';
   }
 
   getHallName(hall: Hall): string {

@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8" *ngIf="trainingsAdminOnceReceived">
+<div *ngIf="trainingsAdminOnceReceived">
   <table mat-table [dataSource]="dataSource">
 
     <ng-container
@@ -7,18 +7,15 @@
           *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[0] : displayedColumns[0])}}</span></th>
       <td mat-cell *matCellDef="let row">
         <span *ngIf="teams">{{teamService.getTeamAsStringFromTeams(row.teamId, teams)}}</span>
-        <span *ngIf="row.trainings && row.trainings.length>0">/ {{row.trainings[0].team.teamVintage}}</span>
       </td>
     </ng-container>
 
     <ng-container
-      matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[1] : displayedColumns[1]}}">
+      matColumnDef="{{trainingsAdmin? displayedColumnsAdmin[1] : displayedColumns[1]}}">
       <th mat-header-cell
           *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[1] : displayedColumns[1])}}</span></th>
       <td mat-cell *matCellDef="let row">
-        <p *ngFor="let training of row.trainings">
-          <span *ngIf="halls"> {{getTrainingDateAsString(training.date) }}</span>
-        </p>
+        <span *ngIf="row.trainings && row.trainings.length>0">{{row.trainings[0].team.teamVintage}}</span>
       </td>
     </ng-container>
 
@@ -28,8 +25,50 @@
           *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[2] : displayedColumns[2])}}</span></th>
       <td mat-cell *matCellDef="let row">
         <p *ngFor="let training of row.trainings">
+          <span *ngIf="training.date"> {{training.date.day}}</span>
+        </p>
+      </td>
+    </ng-container>
+
+    <ng-container
+      matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[3] : displayedColumns[3]}}">
+      <th mat-header-cell
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[3] : displayedColumns[3])}}</span></th>
+      <td mat-cell *matCellDef="let row">
+        <p *ngFor="let training of row.trainings">
+          <span *ngIf="training.date"> {{training.date.time}}</span>
+        </p>
+      </td>
+    </ng-container>
+
+    <ng-container
+      matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[4] : displayedColumns[4]}}">
+      <th mat-header-cell
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[4] : displayedColumns[4])}}</span></th>
+      <td mat-cell *matCellDef="let row">
+        <p *ngFor="let training of row.trainings">
+          <span *ngIf="halls && training.date"> {{ getTrainingDateAsString(training.date)}}</span>
+        </p>
+      </td>
+    </ng-container>
+
+    <ng-container
+      matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[5] : displayedColumns[5]}}">
+      <th mat-header-cell
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[5] : displayedColumns[5])}}</span></th>
+      <td mat-cell *matCellDef="let row">
+        <p *ngFor="let training of row.trainings">
           {{training.trainer.name ? training.trainer.name : ''}}
-          <span *ngIf="training.trainer.email">/ </span>
+        </p>
+      </td>
+    </ng-container>
+
+    <ng-container
+      matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[6] : displayedColumns[6]}}">
+      <th mat-header-cell
+          *matHeaderCellDef><span>{{translationService.get(trainingsAdmin ? displayedColumnsAdmin[6] : displayedColumns[6])}}</span></th>
+      <td mat-cell *matCellDef="let row">
+        <p *ngFor="let training of row.trainings">
           <a *ngIf="training.trainer.email" href="mailto:{{training.trainer.email}}">{{training.trainer.email}}</a>
         </p>
       </td>
@@ -38,7 +77,7 @@
 
     <ng-container *ngIf="trainingsAdmin ">
       <ng-container
-        matColumnDef="{{trainingsAdmin  ? displayedColumnsAdmin[3] : displayedColumns[3]}}">
+        matColumnDef="{{trainingsAdmin  ? displayedColumnsAdmin[7] : displayedColumns[7]}}">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <p *ngFor="let training of row.trainings">
@@ -49,7 +88,7 @@
         </td>
       </ng-container>
       <ng-container
-        matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[4] : displayedColumns[4]}}">
+        matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[8] : displayedColumns[8]}}">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <p *ngFor="let training of row.trainings">
@@ -67,8 +106,6 @@
     <tr mat-row
         *matRowDef="let row; columns: trainingsAdmin ? displayedColumnsAdmin: displayedColumns"></tr>
   </table>
-
-  <mat-paginator pageSize="15" [pageSizeOptions]="[5, 15, 30, 50]"></mat-paginator>
 </div>
 
 <app-add-btn *ngIf="trainingsAdmin "
