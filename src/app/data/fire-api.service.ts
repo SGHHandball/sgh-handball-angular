@@ -266,13 +266,12 @@ export class FireApiService {
       .pipe(
         switchMap(
           (user: User) => {
-            const newsTypeText = this.getNewNewsInitText(newsType);
             const newNews: News = {
               id: '',
-              title: newsTypeText,
-              body: newsTypeText,
+              title: "",
+              body: "",
               checked: true,
-              score: '0:0 (0:0)',
+              score: '',
               send: true,
               type: newsType,
               imgPaths: [],
