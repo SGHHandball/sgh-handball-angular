@@ -80,7 +80,6 @@ export class NewsService {
 
   openNewsEdit(toExpandNewsId: string) {
     const url = [
-      TC_ROUTE_SGH,
       TC_PATH_EDIT,
       toExpandNewsId
     ].join('/');
@@ -100,46 +99,6 @@ export class NewsService {
   closeExpandedNews() {
     this.location.back();
   }
-
-  saveNewClubToCollection(clubName: string): Observable<boolean> {
-    return this.dataService
-      .getClubs()
-      .pipe(
-        switchMap(
-          (clubs: Club[]) => {
-            const isClubNotSaved = clubs.filter(club => club.name === clubName).length > 0;
-            if (isClubNotSaved) {
-              return this.dataService.addClub(clubName).pipe(
-                map(ref => {
-                  return !!ref.id;
-                })
-              );
-            }
-            return of(false);
-          }
-        )
-      );
-  }
-
-  getAllPossibleFilterValues(): Observable<string[]> {
-    return this.getTeamAges()
-      .pipe(
-        switchMap(
-          (ages: string[]) => {
-            return this.dataService
-              .getClubs()
-              .pipe(
-                map((clubs: Club[]) =>
-                  clubs
-                    .map(club => club.name)
-                    .concat(ages)
-                )
-              )
-          }
-        )
-      );
-  }
-
 
 }
 

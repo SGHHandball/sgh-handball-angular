@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs";
-import {getDateString, getDateWithTeamAgeAsString, getTeamsWithScoreAsString, News, NewsType} from "../../model/news";
+import {getDateString, getDateWithTeamAgeAsString, News, NewsType} from "../../model/news";
 import {DataService} from "../../data/data.service";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
@@ -20,6 +20,11 @@ export class NewsCardDetailComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   news: News;
 
+
+  scrollToTopVisible: boolean;
+  topPosToStartShowing = 100;
+  target;
+
   reportType = NewsType.NEWS_TYPE_REPORT;
 
   constructor(
@@ -31,8 +36,28 @@ export class NewsCardDetailComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  gotoTop() {
+    if (this.target) {
+      this.target.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+      this.target = undefined;
+    }
+  }
+
+  scroll = (event): void => {
+    const scrollPosition = event && event.target ? event.target.scrollTop : 0;
+    this.scrollToTopVisible = scrollPosition >= this.topPosToStartShowing;
+    if (this.scrollToTopVisible) {
+      this.target = event.target;
+    }
+  };
+
   ngOnInit() {
     this.initNews();
+    window.addEventListener('scroll', this.scroll, true); //third parameter
   }
 
   initNews() {
@@ -54,10 +79,6 @@ export class NewsCardDetailComponent implements OnInit, OnDestroy {
 
   getDateWithTeamAgeAsString(news: News): string {
     return getDateWithTeamAgeAsString(news);
-  }
-
-  getTeamsWithScoreAsString(news: News): string {
-    return getTeamsWithScoreAsString(news);
   }
 
   closeNews() {
@@ -92,5 +113,6 @@ export class NewsCardDetailComponent implements OnInit, OnDestroy {
     if (this.destroy$) {
       this.destroy$.next();
     }
+    window.removeEventListener('scroll', this.scroll, true);
   }
 }

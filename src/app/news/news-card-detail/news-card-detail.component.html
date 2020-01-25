@@ -13,25 +13,13 @@
   </mat-card-title>
   <mat-card-subtitle *ngIf="news.type === reportType">
     <p *ngIf="news.teamAge || news.eventDate">{{getDateWithTeamAgeAsString(news)}}</p>
-    <p *ngIf="news.homeTeam || news.enemyTeam || news.score">{{getTeamsWithScoreAsString(news)}}</p>
   </mat-card-subtitle>
   <mat-card-subtitle *ngIf="news.type !== reportType">
     <p *ngIf=" news.eventDate">{{getDateString(news)}}</p>
   </mat-card-subtitle>
 
 
-  <p *ngIf="news.body">{{news.body}}</p>
-  <mat-divider></mat-divider>
-  <div *ngIf="news.summary">
-    <p class="label">Zusammenfassung:</p>
-    <p>{{news.summary}}</p>
-    <mat-divider></mat-divider>
-  </div>
-  <div *ngIf="news.players">
-    <p class="label">Es spielten:</p>
-    <p>{{news.players}}</p>
-    <mat-divider></mat-divider>
-  </div>
+  <div *ngIf="news.body" [innerHTML]="news.body"></div>
 
   <div fxLayout="row"
        class="img-container"
@@ -66,3 +54,7 @@
     <span>{{getSliderIndex()}}</span>
   </div>
 </mat-card>
+
+<button mat-mini-fab class="goto-top-button" *ngIf="scrollToTopVisible" (click)="gotoTop()">
+  <mat-icon>arrow_upward</mat-icon>
+</button>

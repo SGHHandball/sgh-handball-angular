@@ -66,11 +66,11 @@
           (changedValueListener)="changeEditDate($event)"
         ></app-news-edit-admin-date>
 
-        <app-news-edit-report-part
+<!--        <app-news-edit-report-part
           *ngIf="isNewsTypeReport()"
           [news]="news"
           (changedValueListener)="onChangeValue()"
-        ></app-news-edit-report-part>
+        ></app-news-edit-report-part>-->
 
 
         <div [fxFlex]="!(abstractService.isHandset$ | async) ? 50 : 100" fxLayoutAlign="center center"
@@ -82,38 +82,10 @@
           </mat-form-field>
         </div>
 
-        <div>
-          <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>{{newsBodyTC}}</mat-label>
-            <textarea [formControl]="bodyFormControl" matInput
-                      (change)="onChangeValue()"
-                      cdkTextareaAutosize
-                      cdkAutosizeMinRows="10"
-                      cdkAutosizeMaxRows="50"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div floatLabel="always">
-          <mat-form-field appearance="outline">
-            <mat-label>{{newsSummaryTC}}</mat-label>
-            <textarea [formControl]="summaryFormControl" matInput
-                      (change)="onChangeValue()"
-                      cdkTextareaAutosize
-                      cdkAutosizeMinRows="3"
-                      cdkAutosizeMaxRows="10"></textarea>
-          </mat-form-field>
-        </div>
-
-
-        <div floatLabel="always" *ngIf="isNewsTypeReport()">
-          <mat-form-field appearance="outline">
-            <mat-label>{{newsPlayersTC}}</mat-label>
-            <textarea [formControl]="playersFormControl" matInput
-                      (change)="onChangeValue()"
-                      cdkTextareaAutosize
-                      cdkAutosizeMinRows="3"
-                      cdkAutosizeMaxRows="10"></textarea>
-          </mat-form-field>
+        <div *ngIf="news">
+          <app-ngx-editor [(ngModel)]="news.body"
+                          (ngModelChange)="onChangeValue()"
+                          [config]="config"></app-ngx-editor>
         </div>
 
         <div>

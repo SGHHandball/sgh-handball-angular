@@ -210,7 +210,7 @@ export class FireApiService {
       .collection<News>(
         DB_COLLECTION_NEWS)
       .doc<News>(id)
-      .get().pipe(map(snap=>{
+      .get().pipe(map(snap => {
         return snap.data() as News
       }));
   }
@@ -278,8 +278,8 @@ export class FireApiService {
               imgPaths: [],
               imgLinks: [],
               creator: user.uid,
-              teamAge: newsTeam ? newsTeam.teamAge : undefined,
-              teamSeason: newsTeam ? newsTeam.teamSeason : undefined,
+              teamAge: newsTeam ? newsTeam.teamAge : "",
+              teamSeason: newsTeam ? newsTeam.teamSeason : "",
               date: new Date().getTime(),
               eventDate: new Date().getTime()
             };
@@ -322,6 +322,7 @@ export class FireApiService {
         return ''
     }
   }
+
   deleteNews(news: News): Observable<void> {
     return from(this.db.collection(DB_COLLECTION_NEWS).doc(news.id).delete());
   }

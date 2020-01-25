@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NewsComponent} from "./news.component";
-import {NewsEditComponent} from "./news-edit/news-edit.component";
+import {NewsEditComponent} from "../content-holder-edit/news-edit/news-edit.component";
 import {NewsCardComponent} from "./news-card/news-card.component";
 import {NewsCardListComponent} from "./news-card-list/news-card-list.component";
 import {NewsCardDetailComponent} from "./news-card-detail/news-card-detail.component";
@@ -22,24 +22,20 @@ import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-man
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {EventsComponent} from "./events/events.component";
 import {NewsRoutingModule} from "./news-routing.module";
-import { NewsEditAdminDateComponent } from './news-edit/news-edit-admin-date/news-edit-admin-date.component';
+import { NewsEditAdminDateComponent } from '../content-holder-edit/news-edit/news-edit-admin-date/news-edit-admin-date.component';
 import {SpecialComponent} from "./special/special.component";
-import { NewsEditReportPartComponent } from './news-edit/news-edit-report-part/news-edit-report-part.component';
-import { NewsEditTypeSeasonComponent } from './news-edit/news-edit-type-season/news-edit-type-season.component';
+import { NewsEditReportPartComponent } from '../content-holder-edit/news-edit/news-edit-report-part/news-edit-report-part.component';
+import { NewsEditTypeSeasonComponent } from '../content-holder-edit/news-edit/news-edit-type-season/news-edit-type-season.component';
 
 @NgModule({
   declarations: [
     NewsComponent,
-    NewsEditComponent,
     NewsCardComponent,
     NewsCardListComponent,
     NewsCardDetailComponent,
     NewsMoreMenuComponent,
     EventsComponent,
-    NewsEditAdminDateComponent,
     SpecialComponent,
-    NewsEditReportPartComponent,
-    NewsEditTypeSeasonComponent
   ],
   imports: [
     SharedModule,
@@ -51,23 +47,13 @@ import { NewsEditTypeSeasonComponent } from './news-edit/news-edit-type-season/n
     MatButtonModule,
     MatTooltipModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
     FlexLayoutModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatSelectModule,
     MatDividerModule,
-    ImageUploadManagerModule,
     LazyLoadImageModule.forRoot({}),
-    MatCheckboxModule,
-    MatNativeDateModule,
     NewsRoutingModule
   ],
   exports: [
     NewsComponent,
-    NewsEditComponent,
     NewsCardComponent,
     NewsCardListComponent,
     NewsCardDetailComponent,

@@ -38,8 +38,3 @@ export function getDateWithTeamAgeAsString(news: News): string {
   return (news.eventDate ? getDateString(news.eventDate) + ' - ' : '') + (news.teamAge ? news.teamAge : '???')
 }
 
-export function getTeamsWithScoreAsString(news: News): string {
-  return (news.homeTeam ? news.homeTeam : '???') + ' - ' +
-    (news.enemyTeam ? news.enemyTeam : '???') + ' ' +
-    (news.score ? news.score : '');
-}

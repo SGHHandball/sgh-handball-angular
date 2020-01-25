@@ -21,7 +21,7 @@ import {
   TranslationService
 } from "../../translation.service";
 import {MatDialog} from "@angular/material";
-import {NewsService} from "../news.service";
+import {NewsService} from "../../news/news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
@@ -34,6 +34,7 @@ import {IImage} from "ng2-image-compress";
 import {Season} from "../../model/season";
 import {AbstractService} from "../../shared/abstract.service";
 import {AdminService} from "../../admin/admin.service";
+import {EDITOR_CONFIG} from "../rich-text-editor/editor-config";
 
 @Component({
   selector: 'app-news-edit',
@@ -52,20 +53,16 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   date = new FormControl();
 
   titleFormControl = new FormControl();
-  bodyFormControl = new FormControl();
-  summaryFormControl = new FormControl();
-  playersFormControl = new FormControl();
   teamAgeFormControl = new FormControl();
 
   saveTC = this.translationService.get(TC_SAVE);
   editNewsTC = this.translationService.get(TC_EDIT_NEWS);
 
   newsTitleTC = this.translationService.get(TC_NEWS_TITLE);
-  newsSummaryTC = this.translationService.get(TC_NEWS_SUMMARY);
-  newsPlayersTC = this.translationService.get(TC_NEWS_PLAYERS);
-  newsBodyTC = this.translationService.get(TC_NEWS_BODY);
   newsDateTC = this.translationService.get(TC_NEWS_DATE);
   newsTeamAgeTC = this.translationService.get(TC_NEWS_TEAM_AGE);
+
+  config = EDITOR_CONFIG;
 
   uploadProgress: Observable<number>;
 
@@ -130,9 +127,6 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
     this.date.setValue(new Date(this.news.eventDate));
     this.date.registerOnChange(this.getOnChangeFunction);
     if (this.news.title) this.titleFormControl.setValue(this.news.title);
-    if (this.news.body) this.bodyFormControl.setValue(this.news.body);
-    if (this.news.summary) this.summaryFormControl.setValue(this.news.summary);
-    if (this.news.players) this.playersFormControl.setValue(this.news.players);
     if (this.news.teamAge) this.teamAgeFormControl.setValue(this.news.teamAge);
     this.initTeamAgeFilter();
     this.valuesInit = true;
@@ -176,9 +170,6 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   saveNews() {
     this.news.eventDate = new Date(this.date.value.toString()).getTime();
     this.news.title = this.titleFormControl.value;
-    this.news.body = this.bodyFormControl.value;
-    this.news.summary = this.summaryFormControl.value;
-    this.news.players = this.playersFormControl.value;
     this.news.teamAge = this.teamAgeFormControl.value;
     this.dataService
       .saveNewsToDataBase(this.news)

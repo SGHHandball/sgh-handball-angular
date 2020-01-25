@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {getDateString, getTeamsWithScoreAsString, News, NewsType} from "../../model/news";
+import {getDateString, News, NewsType} from "../../model/news";
 import {TC_NEWS_EXPORT_CHECK_BOX, TranslationService} from "../../translation.service";
 import {Observable, of, Subject} from "rxjs";
 import {share, switchMap, takeUntil} from "rxjs/operators";
@@ -64,9 +64,6 @@ export class NewsCardComponent implements OnInit {
     return getDateString(news.eventDate);
   }
 
-  getTeamsWithScoreAsString(news: News): string {
-    return getTeamsWithScoreAsString(news);
-  }
 
 
   isNewsCardReport(): boolean {
@@ -105,11 +102,9 @@ export class NewsCardComponent implements OnInit {
   }
 
   getText(news: News): string {
-    return news.summary ?
-      this.getFirstCharacters(news.summary, 200) :
-      news.body ?
-        this.getFirstCharacters(news.body, 200) :
-        '';
+    return news.body ?
+      this.getFirstCharacters(news.body, 200) :
+      '';
   }
 
   getNewsType(news: News): string {
