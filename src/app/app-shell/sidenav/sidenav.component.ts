@@ -88,17 +88,33 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   toggleTeamsSideNav() {
-    this.drawer.toggle().then(() => {
-      this.sidenavService.toggleTeamNavItems();
-      this.drawer.toggle();
-    })
+    this.abstractService.isHandset$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(handset => {
+        if (handset) {
+          this.drawer.toggle().then(() => {
+            this.sidenavService.toggleTeamNavItems();
+            this.drawer.toggle();
+          })
+        } else {
+          this.sidenavService.toggleTeamNavItems();
+        }
+      });
   }
 
   toggleGenInfoSideNav() {
-    this.drawer.toggle().then(() => {
-      this.sidenavService.toggleGeneralInformationItems();
-      this.drawer.toggle();
-    })
+    this.abstractService.isHandset$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(handset => {
+        if (handset) {
+          this.drawer.toggle().then(() => {
+            this.sidenavService.toggleGeneralInformationItems();
+            this.drawer.toggle();
+          })
+        } else {
+          this.sidenavService.toggleGeneralInformationItems();
+        }
+      });
   }
 
   ngOnInit(): void {

@@ -64,9 +64,11 @@
                           (closeEventEmitter)="toggleTeamsSideNav()"
                           [navItems]="teamsNavItems"
                           (navigateEventEmitter)="closeSideNavOnHandheldMode()"
+                          headerIcon="supervisor_account"
     ></app-sidenav-sub-menu>
 
     <app-sidenav-sub-menu *ngIf="sidenavService.generalInformationNavItemsVisible"
+                          headerIcon="info"
                           [header]="translationService.get(navItemGeneralInformation[0].routerName)"
                           (closeEventEmitter)="toggleGenInfoSideNav()"
                           [navItems]="generalInormationNavItems"

@@ -8,15 +8,18 @@ import {NavigationItem} from "../navigation-item";
 })
 export class SidenavSubMenuComponent implements OnInit {
 
-  @Input() header:string;
+  @Input() header: string;
 
-  @Input() navItems:NavigationItem[];
+  @Input() headerIcon: string;
+
+  @Input() navItems: NavigationItem[];
 
   @Output() closeEventEmitter = new EventEmitter();
 
   @Output() navigateEventEmitter = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

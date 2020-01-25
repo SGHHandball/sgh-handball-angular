@@ -1,4 +1,3 @@
-
 .teams-clear-btn{
   position: absolute;
   top: 4px;
@@ -6,5 +5,14 @@
 }
 
 .teams-header{
-  margin-right: 32px !important;
+  margin: 2px 32px !important;
+}
+
+.header-container{
+  position: relative;
+  padding: 8px;
+}
+
+.header-icon{
+  position: absolute;
 }
