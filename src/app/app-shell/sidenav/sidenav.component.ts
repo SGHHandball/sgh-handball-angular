@@ -24,6 +24,7 @@ import {SeasonService} from "../../admin/seasons/season.service";
 import {AdminService} from "../../admin/admin.service";
 import {AbstractService} from "../../shared/abstract.service";
 import {SidenavService} from "./sidenav.service";
+import {NewsService} from "../../news/news.service";
 
 @Component({
   selector: 'app-sidenav',
@@ -61,11 +62,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
     private seasonService: SeasonService,
     private adminService: AdminService,
     public abstractService: AbstractService,
-    public sidenavService: SidenavService
+    public sidenavService: SidenavService,
+    private newsService: NewsService,
   ) {
   }
 
-  closeSideNavOnHandheldMode() {
+  onNavigationItemSelected() {
     this.abstractService
       .isHandset$
       .pipe(first())
@@ -73,6 +75,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
         if (handset) {
           this.drawer.close();
         }
+        this.newsService.resetActualNews();
       })
   }
 
@@ -89,7 +92,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   toggleTeamsSideNav() {
     this.abstractService.isHandset$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first())
       .subscribe(handset => {
         if (handset) {
           this.drawer.toggle().then(() => {
@@ -104,7 +107,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   toggleGenInfoSideNav() {
     this.abstractService.isHandset$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first())
       .subscribe(handset => {
         if (handset) {
           this.drawer.toggle().then(() => {

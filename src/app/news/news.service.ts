@@ -38,6 +38,14 @@ export class NewsService {
   ) {
   }
 
+  resetActualNews(){
+    this.lastItem = undefined;
+    this.finished = false;
+    this.allNewsLoaded = false;
+    this.actualNewsClicked = undefined;
+    this.actualNews = [];
+  }
+
   isNewsVisibleForUser(sghUser: SghUser, news: News): boolean {
     if (news.type === NewsType.NEWS_TYPE_EVENT) return true;
     if (news.type === NewsType.NEWS_TYPE_SPECIAL) return true;
