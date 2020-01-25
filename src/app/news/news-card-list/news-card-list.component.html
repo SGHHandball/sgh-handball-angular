@@ -8,6 +8,7 @@
     <ng-container
       *ngFor="let newsCard of news">
     <div
+      [id]="newsCard.id"
       fxFlex="0 1 calc(25% - 16px)"
       fxFlex.lt-lg="0 1 calc(33.3% - 16px)"
       fxFlex.lt-md="0 1 calc(50% - 16px)"

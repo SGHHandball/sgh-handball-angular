@@ -23,6 +23,13 @@ import {SghUser} from "../model/sgh-user";
 })
 export class NewsService {
 
+
+  lastItem: any;
+  finished = true;
+  allNewsLoaded = false;
+  actualNews: News[] = [];
+  actualNewsClicked: string;
+
   constructor(
     private router: Router,
     private location: Location,

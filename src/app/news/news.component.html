@@ -1,4 +1,5 @@
 <div
+  #infiniteScroll
   class="news-container"
   infiniteScroll
   [infiniteScrollDistance]="2"
@@ -6,20 +7,20 @@
   (scrolled)="onScroll()"
   [scrollWindow]="false"
 >
-  <mat-spinner [diameter]="30" *ngIf="news.length==0 && !allNewsLoaded" class="loading-spinner"></mat-spinner>
-  <ng-container *ngIf="news.length>0 || allNewsLoaded">
+  <mat-spinner [diameter]="30" *ngIf="newsService.actualNews.length==0 && !newsService.allNewsLoaded" class="loading-spinner"></mat-spinner>
+  <ng-container *ngIf="newsService.actualNews.length>0 || newsService.allNewsLoaded">
     <div class="grid-container">
 
       <app-news-card-list
         [user]="user"
-        [news]="news"
+        [news]="newsService.actualNews"
         (editClickListener)="newsService.openNewsEdit($event.id)"
         (deleteClickListener)="openDeleteNewsDialog($event)"
         (sendClickListener)="openSendCheckNewsDialog($event,true)"
         (checkClickListener)="openSendCheckNewsDialog($event,false)"
         (openDetailClickListener)="openNewsDetail($event)"
       ></app-news-card-list>
-      <div class="finished-spinner-container" *ngIf="!finished">
+      <div class="finished-spinner-container" *ngIf="!newsService.finished">
         <mat-spinner [diameter]="30" class="finished-spinner"></mat-spinner>
       </div>
     </div>

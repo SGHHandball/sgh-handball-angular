@@ -26,9 +26,6 @@ export class NewsCardListComponent {
     public newsService: NewsService) {
   }
 
-  isNewsVisibleForUser(sghUser: SghUser, news: News): boolean {
-    return this.newsService.isNewsVisibleForUser(sghUser, news);
-  }
 
 }
 
