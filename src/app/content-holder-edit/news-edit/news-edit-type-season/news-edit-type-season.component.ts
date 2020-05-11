@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {News, NewsType} from "../../../model/news";
 import {FormControl} from "@angular/forms";
 import {Season} from "../../../model/season";
-import {first, switchMap, takeUntil} from "rxjs/operators";
+import {filter, first, switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../../data/data.service";
 import {Subject} from "rxjs";
 import {SeasonService} from "../../../admin/seasons/season.service";
@@ -20,6 +20,7 @@ export class NewsEditTypeSeasonComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
   currentSeason: Season;
+  seasons: Season[];
 
   constructor(
     private dataService: DataService,
@@ -30,6 +31,7 @@ export class NewsEditTypeSeasonComponent implements OnInit, OnDestroy {
   possibleTypes = [];
 
   ngOnInit() {
+    this.initSeasons();
     this.initCurrentSeason();
     this.initTypes();
   }
@@ -66,10 +68,25 @@ export class NewsEditTypeSeasonComponent implements OnInit, OnDestroy {
 
   }
 
+  initSeasons() {
+    this.dataService.getSeasons()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(seasons => this.seasons = seasons.sort(
+        (seasonA, seasonB) => {
+          if (seasonA.beginningYear < seasonB.beginningYear) {
+            return -1
+          } else return 1
+        }
+      ))
+  }
+
   initCurrentSeason() {
     this.dataService.getCurrentSeason()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(currentSeason => this.currentSeason = currentSeason)
+      .pipe(takeUntil(this.destroy$), filter(currentSeason => !!currentSeason))
+      .subscribe(currentSeason => {
+        this.currentSeason = currentSeason;
+        this.changeSeason(this.seasonService.getSeasonAsString(this.currentSeason))
+      })
   }
 
   changeSeason(teamSeason: string) {

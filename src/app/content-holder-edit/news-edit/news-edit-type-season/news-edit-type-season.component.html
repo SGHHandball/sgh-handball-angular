@@ -4,9 +4,9 @@
     <mat-form-field appearance="outline">
       <mat-label>Saison</mat-label>
       <mat-select (selectionChange)="changeSeason($event.value)" [(value)]="this.news.teamSeason">
-        <mat-option *ngIf="currentSeason"
-                    [value]="seasonService.getSeasonAsString(currentSeason)">
-          {{seasonService.getSeasonAsString(currentSeason)}}
+        <mat-option *ngFor="let season of seasons"
+                    [value]="seasonService.getSeasonAsString(season)">
+          {{seasonService.getSeasonAsString(season)}}
         </mat-option>
       </mat-select>
     </mat-form-field>
