@@ -6,25 +6,45 @@
     fxLayoutAlign="space-evenly flex-start"
   >
     <ng-container
-      *ngFor="let newsCard of news">
-    <div
-      [id]="newsCard.id"
-      fxFlex="0 1 calc(25% - 16px)"
-      fxFlex.lt-lg="0 1 calc(33.3% - 16px)"
-      fxFlex.lt-md="0 1 calc(50% - 16px)"
-      fxFlex.lt-sm="100%"
-      class="news-card"
-    >
-      <app-news-card
-        [newsCard]="newsCard"
-        (editClickListener)="editClickListener.next(newsCard)"
-        (deleteClickListener)="deleteClickListener.next(newsCard)"
-        (sendClickListener)="sendClickListener.next(newsCard)"
-        (checkClickListener)="checkClickListener.next(newsCard)"
-        (openDetailClickListener)="openDetailClickListener.next(newsCard)"
+      *ngFor="let newsCard of news; let i = index">
+      <div
+        [id]="newsCard.id"
+        fxFlex="0 1 calc(25% - 16px)"
+        fxFlex.lt-lg="0 1 calc(33.3% - 16px)"
+        fxFlex.lt-md="0 1 calc(50% - 16px)"
+        fxFlex.lt-sm="100%"
+        class="news-card"
       >
-      </app-news-card>
-    </div>
+        <app-news-card
+          [newsCard]="newsCard"
+          (editClickListener)="editClickListener.next(newsCard)"
+          (deleteClickListener)="deleteClickListener.next(newsCard)"
+          (sendClickListener)="sendClickListener.next(newsCard)"
+          (checkClickListener)="checkClickListener.next(newsCard)"
+          (openDetailClickListener)="openDetailClickListener.next(newsCard)"
+        >
+        </app-news-card>
+      </div>
+      <div *ngIf="i+1<news.length &&
+        !!newsCard.teamSeason &&
+        !!newsCard.teamSeason.length>0 &&
+         !!news[i+1].teamSeason&&
+         !!news[i+1].teamSeason.length>0&&
+          news[i+1].teamSeason !== newsCard.teamSeason"
+           class="new-season-container"
+           fxFlex="100%" fxLayout="row" fxFlexAlign="center center">
+        <mat-divider class="divider" fxFlex="40"
+                     fxFlex.lt-md="25"
+                     fxFlex.lt-sm="15"></mat-divider>
+        <div fxFlex="20"
+             fxFlex.lt-md="50"
+             fxFlex.lt-sm="70" fxLayout="row">
+          <span class="new-season-text">Saison: {{news[i + 1].teamSeason}}</span>
+        </div>
+        <mat-divider class="divider" fxFlex="40"
+                     fxFlex.lt-md="25"
+                     fxFlex.lt-sm="15"></mat-divider>
+      </div>
     </ng-container>
   </div>
 </ng-container>

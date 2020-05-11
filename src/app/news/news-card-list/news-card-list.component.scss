@@ -1,0 +1,27 @@
+.no-news {
+  text-align: center;
+}
+
+.news-card {
+  width: 100%;
+}
+
+
+.web-list {
+  margin: 16px;
+}
+
+.new-season-container {
+  margin: 16px;
+  width: calc(100% - 32px);
+
+
+  .divider {
+    margin: auto;
+  }
+
+  .new-season-text {
+    color: grey;
+    margin: auto;
+  }
+}

@@ -7,7 +7,7 @@ import {SghUser} from "../../model/sgh-user";
 @Component({
   selector: 'app-news-card-list',
   templateUrl: './news-card-list.component.html',
-  styleUrls: ['./news-card-list.component.css']
+  styleUrls: ['./news-card-list.component.scss']
 })
 export class NewsCardListComponent {
   @Input() news: News[];

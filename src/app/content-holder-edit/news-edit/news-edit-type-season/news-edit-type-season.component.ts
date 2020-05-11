@@ -85,7 +85,9 @@ export class NewsEditTypeSeasonComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$), filter(currentSeason => !!currentSeason))
       .subscribe(currentSeason => {
         this.currentSeason = currentSeason;
-        this.changeSeason(this.seasonService.getSeasonAsString(this.currentSeason))
+        if (!this.news.teamSeason) {
+          this.changeSeason(this.seasonService.getSeasonAsString(this.currentSeason))
+        }
       })
   }
 
