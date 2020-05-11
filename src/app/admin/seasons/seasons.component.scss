@@ -1,0 +1,28 @@
+.seasons {
+  padding: 16px;
+  overflow: auto;
+
+  .season-container {
+    background: white;
+    border-bottom: 1px lightgrey solid;
+    padding: 8px;
+
+    div{
+      display: flex;
+    }
+
+    .select-season-button{
+      margin: auto 0 auto auto;
+    }
+  }
+
+  .current-season{
+    background: #80f480;
+  }
+}
+
+.add-new-season-button{
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+}

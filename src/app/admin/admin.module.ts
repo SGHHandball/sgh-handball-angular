@@ -19,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {SeasonsComponent} from "./seasons/seasons.component";
 import {AuthComponent} from "./auth/auth.component";
 import {AdminRoutingModule} from "./admin-routing.module";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {AdminRoutingModule} from "./admin-routing.module";
     MatChipsModule,
     MatIconModule,
     AdminRoutingModule,
-    MatCardModule
+    MatCardModule,
+    FlexLayoutModule
   ],
   exports: [AdminUserComponent,
     SeasonsComponent,

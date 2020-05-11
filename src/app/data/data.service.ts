@@ -197,6 +197,10 @@ export class DataService {
     return this.service.changeCurrentSeason(season);
   }
 
+  addSeason(season: Season): Observable<string> {
+    return this.service.addSeason(season);
+  }
+
   getContent(topic: string): Observable<Content> {
     return this.service.getContent(topic);
   }

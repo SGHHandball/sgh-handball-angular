@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>{{translationService.get(data.header)}}</h1>
+<h1 mat-dialog-title>{{translationService.get(data.header) ? translationService.get(data.header) : data.header}}</h1>
 <div mat-dialog-content>
-  <p>{{translationService.get(data.message)}}</p>
+  <p>{{translationService.get(data.message) ? translationService.get(data.message) : data.message}}</p>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-raised-button [mat-dialog-close]="false" color="warn">{{translationService.get(cancelTC)}}</button>

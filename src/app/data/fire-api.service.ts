@@ -664,6 +664,17 @@ export class FireApiService {
       .set(season));
   }
 
+  addSeason(season: Season): Observable<string> {
+    return from(this.db
+      .collection<Season>(DB_COLLECTION_SEASONS)
+      .add(JSON.parse(JSON.stringify(season))))
+      .pipe(
+        switchMap(result => {
+          return of(result.id)
+        })
+      )
+  }
+
   //CONTENT
 
   getContent(topic: string): Observable<Content> {

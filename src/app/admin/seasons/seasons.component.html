@@ -1,7 +1,34 @@
-<p>
-  Noch nicht vorhanden!
-</p>
-
-<button mat-mini-fab (click)="addNewCurrentYear()">
+<div fxLayout="column" class="seasons">
+  <div class="season-container" fxLayout="row">
+    <div fxFlex="30">
+      <h2>Von</h2>
+    </div>
+    <div fxFlex="30">
+      <h2>Bis</h2>
+    </div>
+    <div fxFlex="40">
+    </div>
+  </div>
+  <div class="season-container"
+       [class.current-season]="season.beginningYear === currentSeason.beginningYear && season.endingYear === currentSeason.endingYear"
+       *ngFor="let season of seasons"
+       fxLayout="row">
+    <div fxFlex="30">
+      <p>{{season.beginningYear}}</p>
+    </div>
+    <div fxFlex="30">
+      <p>{{season.endingYear}}</p>
+    </div>
+    <div fxFlex="40">
+      <button mat-raised-button color="accent"
+              [disabled]="season.beginningYear === currentSeason.beginningYear && season.endingYear === currentSeason.endingYear"
+              class="select-season-button"
+              (click)="changeCurrentYear(season)">Saison
+        wechseln
+      </button>
+    </div>
+  </div>
+</div>
+<button mat-fab class="add-new-season-button" (click)="addNewSeason()">
   <mat-icon>add</mat-icon>
 </button>
