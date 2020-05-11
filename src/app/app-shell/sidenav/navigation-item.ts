@@ -1,5 +1,5 @@
 import {
-  TC_ADMIN,
+  TC_ADMIN, TC_ROUTE_ARCHIVE,
   TC_ROUTE_CDH,
   TC_ROUTE_EVENTS, TC_ROUTE_EXECUTIVES, TC_ROUTE_GENERAL_INFORMATION,
   TC_ROUTE_HALLS, TC_ROUTE_HOME,
@@ -59,10 +59,10 @@ export const NAVIGATION_ITEM_GENERAL_INFORMATION = [
 ];
 
 export const NAVIGATION_ITEMS_GEN_INFOS = [
-  new NavigationItem( TC_ROUTE_EXECUTIVES, TC_ROUTE_EXECUTIVES),
+  new NavigationItem(TC_ROUTE_EXECUTIVES, TC_ROUTE_EXECUTIVES),
   new NavigationItem(TC_ROUTE_REFEREES, TC_ROUTE_REFEREES),
   new NavigationItem(TC_ROUTE_TIME_KEEPER, TC_ROUTE_TIME_KEEPER),
-  new NavigationItem( TC_ROUTE_CDH, TC_ROUTE_CDH),
+  new NavigationItem(TC_ROUTE_CDH, TC_ROUTE_CDH),
   /*new NavigationItem(TC_ROUTE_DOCUMENTS, TC_ROUTE_DOCUMENTS),*/
 ];
 
@@ -73,6 +73,7 @@ export const NAVIGATION_ITEMS_INFO = [
 
 export const NAVIGATION_ITEMS_OTHER = [
   new NavigationItem(TC_ROUTE_SPONSORS, TC_ROUTE_SPONSORS).withRouterIcon('sports_handball'),
+  new NavigationItem(TC_ROUTE_ARCHIVE, TC_ROUTE_ARCHIVE).withRouterIcon('archive'),
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
 ];
 

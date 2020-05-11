@@ -53,6 +53,7 @@ export const TC_ROUTE_TEAMS = 'mannschaften';
 export const TC_ROUTE_GENERAL_INFORMATION = 'allgemeine-informationen';
 export const TC_ROUTE_TRAINING = 'trainingszeiten';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
+export const TC_ROUTE_ARCHIVE = 'archiv';
 
 export const TC_ROUTE_SPONSORS = 'sponsoren';
 export const TC_ROUTE_HALLS = 'hallenverzeichnis';

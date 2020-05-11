@@ -1,0 +1,11 @@
+<div class="archive-container">
+  <mat-card class="season-card" *ngFor="let archiveTeam of archiveTeams">
+    <mat-card-header>
+      <mat-card-title>Saison {{archiveTeam.season.beginningYear}}/{{archiveTeam.season.endingYear}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button class="team-button" (click)="gotoTeam(team)" color="primary"
+              *ngFor="let team of archiveTeam.teams">{{team.teamAge}}</button>
+    </mat-card-content>
+  </mat-card>
+</div>

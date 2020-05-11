@@ -10,7 +10,7 @@ import {
   TC_ROUTE_SGH,
   TC_ROUTE_SPONSORS,
   TC_ROUTE_TEAMS, TC_ROUTE_TIME_KEEPER,
-  TC_ROUTE_TRAINING,
+  TC_ROUTE_TRAINING, TC_ROUTE_ARCHIVE,
 } from "./translation.service";
 import {ContentHolderComponent} from "./content-holder/content-holder.component";
 
@@ -55,6 +55,10 @@ export const routes = [
   {
     path: TC_ROUTE_IMPRINT,
     loadChildren: './imprint/imprint.module#ImprintModule'
+  },
+  {
+    path: TC_ROUTE_ARCHIVE,
+    loadChildren: './archive/archive.module#ArchiveModule'
   },
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
   {path: '**', redirectTo: TC_ROUTE_HOME}
