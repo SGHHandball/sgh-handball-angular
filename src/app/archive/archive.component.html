@@ -1,4 +1,5 @@
 <div class="archive-container">
+  <h1 class="no-archive-text" *ngIf="!archiveTeams || archiveTeams.length===0">Das Archiv ist leider leer.</h1>
   <mat-card class="season-card" *ngFor="let archiveTeam of archiveTeams">
     <mat-card-header>
       <mat-card-title>Saison {{archiveTeam.season.beginningYear}}/{{archiveTeam.season.endingYear}}</mat-card-title>
