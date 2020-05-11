@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractNewsComponent} from "../../abstract/abstract-news.component";
-import {TC_NEWS_TYPE_EVENT} from "../../translation.service";
 import {News, NewsType} from "../../model/news";
-import {share, switchMap, takeUntil} from "rxjs/operators";
+import {map, share, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-special',
@@ -36,16 +35,27 @@ export class SpecialComponent extends AbstractNewsComponent implements OnInit {
   }
 
   initSpecials() {
-    this.dataService
-      .getAllNews(NewsType.NEWS_TYPE_SPECIAL)
+    this.route.params
       .pipe(
         takeUntil(this.destroy$),
+        map(params => {
+          return params['season'];
+        }),
+        switchMap((season: string) => {
+          if (!!season) {
+            return this.dataService
+              .getAllNewsBySeason(NewsType.NEWS_TYPE_SPECIAL, season);
+          } else {
+            return this.dataService
+              .getAllNews(NewsType.NEWS_TYPE_SPECIAL);
+          }
+        }),
         switchMap(events => {
           return this.newsService.filterEvents(events);
         })
       )
       .subscribe(events => {
         this.specialNews = events;
-      })
+      });
   }
 }

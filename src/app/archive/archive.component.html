@@ -5,6 +5,14 @@
       <mat-card-title>Saison {{archiveTeam.season.beginningYear}}/{{archiveTeam.season.endingYear}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <div>
+        <button mat-raised-button class="team-button" (click)="gotoEvents(archiveTeam.season)" color="primary">
+          Veranstaltungen
+        </button>
+        <button mat-raised-button class="team-button" (click)="gotoSpecial(archiveTeam.season)" color="primary">
+          Sonderberichte
+        </button>
+      </div>
       <button mat-raised-button class="team-button" (click)="gotoTeam(team)" color="primary"
               *ngFor="let team of archiveTeam.teams">{{team.teamAge}}</button>
     </mat-card-content>

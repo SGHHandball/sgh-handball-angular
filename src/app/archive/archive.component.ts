@@ -7,7 +7,8 @@ import {ArchiveTeam} from "./archive-team";
 import {Router} from "@angular/router";
 import {Team} from "../model/team";
 import {NavigationItem} from "../app-shell/sidenav/navigation-item";
-import {TC_ROUTE_TEAMS} from "../translation.service";
+import {TC_ROUTE_EVENTS, TC_ROUTE_SGH, TC_ROUTE_SPECIAL, TC_ROUTE_TEAMS} from "../translation.service";
+import {Season} from "../model/season";
 
 @Component({
   selector: 'app-archive',
@@ -54,6 +55,15 @@ export class ArchiveComponent implements OnInit, OnDestroy {
 
   gotoTeam(team: Team) {
     this.router.navigate([[TC_ROUTE_TEAMS, team.teamSeason, team.teamAge].join('/')]);
+  }
+
+
+  gotoEvents(season: Season) {
+    this.router.navigate([[TC_ROUTE_SGH, TC_ROUTE_EVENTS, this.seasonService.getSeasonAsString(season)].join('/')]);
+  }
+
+  gotoSpecial(season: Season) {
+    this.router.navigate([[TC_ROUTE_SGH, TC_ROUTE_SPECIAL, this.seasonService.getSeasonAsString(season)].join('/')]);
   }
 
   ngOnDestroy(): void {

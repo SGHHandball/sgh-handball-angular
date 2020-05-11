@@ -63,6 +63,10 @@ export class DataService {
     return this.service.getAllNews(newsType);
   }
 
+  getAllNewsBySeason(newsType: NewsType, season: string): Observable<News[]> {
+    return this.service.getAllNewsBySeason(newsType, season);
+  }
+
 
   getNewsWithInfinite(lastDoc?, checked?: boolean): Observable<InfiniteNews> {
     return this.service.getNewsWithInfinite(lastDoc, checked);
@@ -225,7 +229,7 @@ export class DataService {
     return this.service.changeSponsor(sponsor);
   }
 
-  deleteSponsor(sponsorId:string): Observable<void> {
+  deleteSponsor(sponsorId: string): Observable<void> {
     return this.service.deleteSponsor(sponsorId);
   }
 

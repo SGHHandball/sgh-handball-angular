@@ -179,6 +179,19 @@ export class FireApiService {
       )
   }
 
+  getAllNewsBySeason(newsType?: NewsType, season?: string): Observable<News[]> {
+    return this.getNewsByType(newsType, season)
+      .pipe(
+        map((normalNews: News[]) => {
+          if (!environment.production) {
+            console.log("allNewsBySeason");
+            console.log(normalNews);
+          }
+          return normalNews;
+        })
+      )
+  }
+
   getNewsWithInfinite(lastDoc?: any, checked?: boolean): Observable<InfiniteNews> {
     return this.db.collection<News>(
       DB_COLLECTION_NEWS,
@@ -215,7 +228,7 @@ export class FireApiService {
       }));
   }
 
-  getNewsByType(newsType?: NewsType): Observable<News[]> {
+  getNewsByType(newsType?: NewsType, season?: string): Observable<News[]> {
     return this.db.collection<News>(
       DB_COLLECTION_NEWS,
       ref => {
@@ -234,6 +247,9 @@ export class FireApiService {
           case NewsType.NEWS_TYPE_REPORT:
             query = query.where(FireBaseModel.TYPE, '==', NewsType.NEWS_TYPE_REPORT);
             break;
+        }
+        if (!!season) {
+          query = query.where(FireBaseModel.TEAM_SEASON, '==', season);
         }
         return query;
       }

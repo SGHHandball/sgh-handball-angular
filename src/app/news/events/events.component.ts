@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractNewsComponent} from "../../abstract/abstract-news.component";
 import {TC_NEWS_TYPE_EVENT} from "../../translation.service";
 import {News, NewsType} from "../../model/news";
-import {share, switchMap, takeUntil} from "rxjs/operators";
+import {map, share, switchMap, takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-events',
@@ -19,10 +19,6 @@ export class EventsComponent extends AbstractNewsComponent implements OnInit {
 
 
   eventsAdmin = this.adminService.isUserEventAdmin().pipe(share());
-
-
-  onNewsDeleted() {
-  }
 
   ngOnInit(): void {
     this.initEvents();
@@ -41,16 +37,27 @@ export class EventsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   initEvents() {
-    this.dataService
-      .getAllNews(NewsType.NEWS_TYPE_EVENT)
+    this.route.params
       .pipe(
         takeUntil(this.destroy$),
+        map(params => {
+          return params['season'];
+        }),
+        switchMap((season: string) => {
+          if (!!season) {
+            return this.dataService
+              .getAllNewsBySeason(NewsType.NEWS_TYPE_EVENT, season);
+          } else {
+            return this.dataService
+              .getAllNews(NewsType.NEWS_TYPE_EVENT);
+          }
+        }),
         switchMap(events => {
           return this.newsService.filterEvents(events);
         })
       )
       .subscribe(events => {
         this.eventNews = events;
-      })
+      });
   }
 }
