@@ -6,9 +6,14 @@
 .twenty-percent-width {
   width: calc(20% - 4px);
 }
+
+.twenty-five-percent-width {
+  width: calc(25% - 4px);
+}
+
 .thirty-percent-width {
-   width: calc(30% - 4px);
- }
+  width: calc(30% - 4px);
+}
 
 .fifty-percent-width {
   width: calc(50% - 4px);

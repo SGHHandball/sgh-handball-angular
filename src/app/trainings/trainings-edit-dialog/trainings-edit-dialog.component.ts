@@ -38,15 +38,13 @@ export class TrainingsEditDialogComponent implements OnInit {
   trainerNameTC = TC_TRAININGS_TRAINING_TRAINER_NAME;
   trainerMailTC = TC_TRAININGS_TRAINING_TRAINER_MAIL;
 
-
-  dayValues = ['Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.'];
-
   teamIdFormControl = new FormControl('', [
     Validators.required,
   ]);
   teamVintageFormControl = new FormControl('', [
     Validators.required,
   ]);
+  positionFormControl = new FormControl('',);
 
   dayFormControl = new FormControl('', [
     Validators.required
@@ -77,7 +75,8 @@ export class TrainingsEditDialogComponent implements OnInit {
       phoneNumber: '',
     },
     teamId: '',
-    editTime: new Date()
+    editTime: new Date(),
+    position: 0,
   };
   halls: Hall[];
   teams: Team[];
@@ -102,6 +101,7 @@ export class TrainingsEditDialogComponent implements OnInit {
 
     this.teamIdFormControl.setValue(this.training.teamId);
     this.teamVintageFormControl.setValue(this.training.team.teamVintage);
+    this.positionFormControl.setValue(this.training.position ? this.training.position : this.data.length);
     this.dayFormControl.setValue(this.training.date.day);
     this.timeFormControl.setValue(this.training.date.time);
     this.hallFormControl.setValue(this.training.date.hallId);
@@ -114,6 +114,7 @@ export class TrainingsEditDialogComponent implements OnInit {
     this.training.teamId = this.teamIdFormControl.value;
     this.training.team.teamId = this.teamIdFormControl.value;
     this.training.team.teamVintage = this.teamVintageFormControl.value;
+    this.training.position = this.positionFormControl.value;
     this.training.date.day = this.dayFormControl.value;
     this.training.date.time = this.timeFormControl.value;
     this.training.date.hallId = this.hallFormControl.value;

@@ -98,6 +98,16 @@
           </p>
         </td>
       </ng-container>
+      <ng-container
+        matColumnDef="{{trainingsAdmin ? displayedColumnsAdmin[9] : displayedColumns[9]}}">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <div fxLayout="column" fxFlexAlign="center center">
+            <button mat-icon-button><mat-icon *ngIf="dataSource.data.indexOf(row) > 0" (click)="moveOrderTraining(row,true)">keyboard_arrow_up</mat-icon></button>
+            <button mat-icon-button><mat-icon  *ngIf="dataSource.data.indexOf(row) < dataSource.data.length-1" (click)="moveOrderTraining(row,false)">keyboard_arrow_down</mat-icon></button>
+          </div>
+        </td>
+      </ng-container>
     </ng-container>
 
 

@@ -22,7 +22,7 @@
       <ng-container *ngFor="let training of trainings; let i = index">
         <div  *ngIf="training.trainer">
           <p *ngIf="training.trainer.name">
-            <b>Trainer {{i + 1}}: </b> <span>{{training.trainer.name}}</span>
+            <b>Trainer: </b> <span>{{training.trainer.name}}</span>
           </p>
           <p *ngIf="training.trainer.email">
             <b>E-Mail: </b> <span>{{training.trainer.email}}</span>

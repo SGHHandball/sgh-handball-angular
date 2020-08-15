@@ -601,7 +601,7 @@ export class FireApiService {
 
   getAllTrainings(): Observable<Training[]> {
     return this.db.collection<Training>(DB_COLLECTION_TRAININGS,
-      ref => ref.orderBy(FireBaseModel.EDIT_TIME, "asc"))
+      ref => ref.orderBy(FireBaseModel.POSITION, "asc"))
       .snapshotChanges()
       .pipe(
         map(actions => {

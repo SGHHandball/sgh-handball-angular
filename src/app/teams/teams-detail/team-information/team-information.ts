@@ -41,13 +41,19 @@ export class TeamInformation implements OnInit, OnDestroy {
         })
       )
       .subscribe(trainings => {
-        this.trainings = trainings;
+        this.trainings = this.sortTrainings(trainings);
       });
     this.dataService.getTrainingsByTeamId(this.teamId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(trainings => {
-        this.trainings = trainings;
+        this.trainings = this.sortTrainings(trainings);
       })
+  }
+
+  sortTrainings(trainings: Training[]): Training[] {
+    return trainings.sort((a, b) => {
+      return this.teamService.dayValues.indexOf(a.date.day) < this.teamService.dayValues.indexOf(b.date.day) ? -1 : 1;
+    })
   }
 
   changeToContact() {

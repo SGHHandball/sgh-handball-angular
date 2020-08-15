@@ -24,8 +24,8 @@ import {AdminService} from "../admin/admin.service";
 import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/default-dialog.component";
 import {environment} from "../../environments/environment";
 import {DataService} from "../data/data.service";
-import {of, Subject} from "rxjs";
-import {catchError, switchMap, takeUntil} from "rxjs/operators";
+import {forkJoin, of, Subject, zip} from "rxjs";
+import {catchError, first, switchMap, takeUntil} from "rxjs/operators";
 import {TeamService} from "../teams/team.service";
 import {Team} from "../model/team";
 import {Hall} from "../model/hall";
@@ -47,7 +47,7 @@ export class TrainingsComponent implements OnInit, OnDestroy {
     TC_TRAININGS_TRAINING_DATES_HALL,
     TC_TRAININGS_TRAINING_TRAINER_NAME,
     TC_TRAININGS_TRAINING_TRAINER_MAIL,
-    'edit', 'delete'];
+    'edit', 'delete', 'order'];
   displayedColumns: string[] = [
     TC_TRAININGS_TRAINING_TEAM_NAME,
     TC_TRAININGS_TRAINING_TEAM_VINTAGE,
@@ -160,7 +160,7 @@ export class TrainingsComponent implements OnInit, OnDestroy {
       .open(
         TrainingsEditDialogComponent, {
           width: this.dialogWidth,
-          data: {training: training, halls: this.halls, teams: this.teams}
+          data: {training: training, halls: this.halls, teams: this.teams, length: this.dataSource.data.length}
         }
       )
       .afterClosed()
@@ -193,7 +193,7 @@ export class TrainingsComponent implements OnInit, OnDestroy {
 
   getTrainingDateAsString(date: TrainingDate): string {
     const possibleHalls = this.halls.filter(hall => hall.id === date.hallId);
-    return  possibleHalls.length > 0 ? this.getHallName(possibleHalls[0]) : '';
+    return possibleHalls.length > 0 ? this.getHallName(possibleHalls[0]) : '';
   }
 
   getHallName(hall: Hall): string {
@@ -232,6 +232,26 @@ export class TrainingsComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+
+  moveOrderTraining(trainingGroup: TrainingGroup, up: boolean) {
+    const currentPosition = trainingGroup.trainings && trainingGroup.trainings.length > 0 ? trainingGroup.trainings[0].position : -1;
+    if (currentPosition > -1) {
+      const newPosition = up ? currentPosition - 1 : currentPosition + 1;
+      const otherTrainingGroup = this.dataSource.data.find(group => !!group.trainings && group.trainings.length > 0 &&
+        group.trainings[0].position === newPosition);
+      zip(
+        forkJoin(trainingGroup.trainings.map(training => {
+          return this.dataService.changeTraining({...training, position: newPosition})
+        })),
+        forkJoin(otherTrainingGroup.trainings.map(training => {
+          return this.dataService.changeTraining({...training, position: currentPosition})
+        }))
+      ).pipe(first()).subscribe(_=>{
+        this.abstractService.openSnackBar("Position erfolgreich geändert.");
+      })
+    }
   }
 
   ngOnDestroy(): void {

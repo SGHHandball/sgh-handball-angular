@@ -8,6 +8,8 @@ import {Subject} from "rxjs";
 })
 export class TeamService {
 
+  dayValues = ['Mo.', 'Di.', 'Mi.', 'Do.', 'Fr.'];
+
   teamDetail$ = new Subject<Team>();
 
   getTeamAsStringFromTeams(teamId: string, teams: Team[]): string {

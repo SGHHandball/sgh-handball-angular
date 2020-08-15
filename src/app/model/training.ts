@@ -8,6 +8,7 @@ export interface Training {
   date?: TrainingDate;
   trainer?: Trainer;
   editTime?: Date;
+  position?: number;
 }
 
 export interface TrainingTeam {
@@ -33,7 +34,8 @@ export interface TrainingGroup {
 }
 
 export interface TrainingsDialogData {
-  training: Training,
-  halls: Hall[],
-  teams: Team[]
+  training?: Training,
+  halls?: Hall[],
+  teams?: Team[],
+  length?: number
 }

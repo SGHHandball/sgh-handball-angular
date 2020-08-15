@@ -13,6 +13,7 @@ import {
 import {SharedModule} from "../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TrainingsRoutingModule} from "./trainings-routing.module";
+import {FlexModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [TrainingsComponent, TrainingsEditDialogComponent],
@@ -27,7 +28,8 @@ import {TrainingsRoutingModule} from "./trainings-routing.module";
     ReactiveFormsModule,
     MatSelectModule,
     MatDialogModule,
-    TrainingsRoutingModule
+    TrainingsRoutingModule,
+    FlexModule
   ],
   exports: [TrainingsComponent, TrainingsEditDialogComponent],
   entryComponents: [
