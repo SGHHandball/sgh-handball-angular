@@ -33,7 +33,7 @@ import {Team} from "../model/team";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DataService} from "../data/data.service";
-import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
+import {catchError, filter, first, share, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";
 import {SeasonService} from "../admin/seasons/season.service";
@@ -164,13 +164,11 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   addNewTeam() {
     this.newsService.getTeamAges()
       .pipe(
-        takeUntil(this.destroy$),
+        first(),
         switchMap(ages => this.getInputDialogObservable(ages)),
+        filter(result => !!result),
         switchMap(result => {
-            if (result) {
-              return this.getOnAddNewTeamObservable(result);
-            }
-            return of(false);
+            return this.getOnAddNewTeamObservable(result);
           }
         ),
         catchError(error => {
@@ -190,6 +188,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   getOnAddNewTeamObservable(team: string): Observable<string> {
     return this.dataService.getCurrentSeason()
       .pipe(
+        first(),
         switchMap(
           currentSeason =>
             this.dataService
@@ -225,7 +224,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   changeOrderOfTeams() {
     this.abstractService.dialogWidth$
       .pipe(
-        takeUntil(this.destroy$),
+        first(),
         switchMap(dialogWidth =>
           this.dialog.open(
             TeamsChangeDialogComponent,
@@ -254,7 +253,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   deleteTeam() {
     this.abstractService.dialogWidth$
       .pipe(
-        takeUntil(this.destroy$),
+        first(),
         switchMap(dialogWidth =>
           this.dialog.open(
             TeamsDeleteDialogComponent,
@@ -281,17 +280,17 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   editTeamPage() {
-      const editPage = this.router.url.replace(TC_ROUTE_TEAMS, TC_ROUTE_EDIT);
-      this.router.navigate([editPage])
+    const editPage = this.router.url.replace(TC_ROUTE_TEAMS, TC_ROUTE_EDIT);
+    this.router.navigate([editPage])
   }
 
   openNewsDetail(news: News) {
     this.newsService.openNewsDetail(news.id);
   }
 
-  addNewNews(report:boolean) {
+  addNewNews(report: boolean) {
     this.dataService.addNewNews(report ? NewsType.NEWS_TYPE_REPORT : NewsType.NEWS_TYPE_TEAM_EVENT, this.currentTeam)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(first())
       .subscribe(news => {
         this.newsService.openNewsEdit(news.id);
       })
