@@ -10,7 +10,7 @@ import {
   TC_ROUTE_SGH,
   TC_ROUTE_SPONSORS,
   TC_ROUTE_TEAMS, TC_ROUTE_TIME_KEEPER,
-  TC_ROUTE_TRAINING, TC_ROUTE_ARCHIVE,
+  TC_ROUTE_TRAINING, TC_ROUTE_ARCHIVE, TC_ROUTE_CORONA,
 } from "./translation.service";
 import {ContentHolderComponent} from "./content-holder/content-holder.component";
 
@@ -26,6 +26,7 @@ export const routes = [
   {path: TC_ROUTE_EXECUTIVES, component: ContentHolderComponent},
   {path: TC_ROUTE_REFEREES, component: ContentHolderComponent},
   {path: TC_ROUTE_TIME_KEEPER, component: ContentHolderComponent},
+  {path: TC_ROUTE_CORONA, component: ContentHolderComponent},
   {path: TC_ROUTE_CDH, component: ContentHolderComponent},
   {path: TC_ROUTE_HOME, component: ContentHolderComponent},
   {

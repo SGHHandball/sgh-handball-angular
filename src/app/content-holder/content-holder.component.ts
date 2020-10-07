@@ -1,29 +1,29 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Observable, of, Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {AdminService} from "../admin/admin.service";
-import {MatDialog} from "@angular/material";
 import {DataService} from "../data/data.service";
 import {Content} from "../model/content";
-import {share, switchMap, takeUntil} from "rxjs/operators";
+import {share, takeUntil} from "rxjs/operators";
 import {SliderImage} from "../model/slider-image";
 import {Router} from "@angular/router";
 import {
   DB_COLLECTION_CONTENT_CDH,
-  DB_COLLECTION_CONTENT_EXECUTIVES, DB_COLLECTION_CONTENT_HOME,
+  DB_COLLECTION_CONTENT_CORONA,
+  DB_COLLECTION_CONTENT_EXECUTIVES,
+  DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CONTENT_REFEREE,
   DB_COLLECTION_CONTENT_TIME_KEEPER
 } from "../constants";
 import {
-  TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
   TC_ROUTE_CDH,
-  TC_ROUTE_EXECUTIVES, TC_ROUTE_HOME, TC_ROUTE_EDIT,
+  TC_ROUTE_CORONA,
+  TC_ROUTE_EDIT,
+  TC_ROUTE_EXECUTIVES,
   TC_ROUTE_REFEREES,
   TC_ROUTE_TIME_KEEPER
 } from "../translation.service";
 import {IImage} from "ng2-image-compress";
-import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/default-dialog.component";
 import {AbstractService} from "../shared/abstract.service";
-import {environment} from "../../environments/environment";
 
 
 @Component({
@@ -78,6 +78,7 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   }
 
   getContentTopic(): string {
+    if (this.router.url.includes(TC_ROUTE_CORONA)) return DB_COLLECTION_CONTENT_CORONA;
     if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
     if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;
     if (this.router.url.includes(TC_ROUTE_TIME_KEEPER)) return DB_COLLECTION_CONTENT_TIME_KEEPER;

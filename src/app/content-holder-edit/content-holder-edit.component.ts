@@ -1,22 +1,26 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, of, Subject} from "rxjs";
 import {AdminService} from "../admin/admin.service";
 import {MatDialog} from "@angular/material";
 import {DataService} from "../data/data.service";
 import {Content} from "../model/content";
-import {first, share, switchMap, takeUntil} from "rxjs/operators";
-import {SliderImage} from "../model/slider-image";
+import {first, switchMap, takeUntil} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
 import {
   DB_COLLECTION_CONTENT_CDH,
-  DB_COLLECTION_CONTENT_EXECUTIVES, DB_COLLECTION_CONTENT_HOME,
+  DB_COLLECTION_CONTENT_CORONA,
+  DB_COLLECTION_CONTENT_EXECUTIVES,
+  DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CONTENT_REFEREE,
   DB_COLLECTION_CONTENT_TIME_KEEPER
 } from "../constants";
 import {
-  TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE,
+  TC_GENERAL_DELETE_HEADER,
+  TC_GENERAL_DELETE_MESSAGE,
   TC_ROUTE_CDH,
-  TC_ROUTE_EXECUTIVES, TC_ROUTE_HOME, TC_ROUTE_EDIT,
+  TC_ROUTE_CORONA,
+  TC_ROUTE_EXECUTIVES,
+  TC_ROUTE_HOME,
   TC_ROUTE_REFEREES,
   TC_ROUTE_TIME_KEEPER
 } from "../translation.service";
@@ -55,6 +59,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
   @Input() nonStaticContent: boolean;
 
   home: boolean;
+
 
   team: Team;
 
@@ -115,9 +120,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
             imgPaths: this.content && this.content.imgPaths ? this.content.imgPaths : []
           }
         )
-        .pipe(
-          takeUntil(this.destroy$)
-        )
+        .pipe(first())
         .subscribe(_ => {
           this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
         });
@@ -127,17 +130,19 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  changeThisContent() {
+    this.dataService
+      .addContent(this.getContentTopic(), this.content)
+      .pipe(first())
+      .subscribe(_ => {
+        this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
+      });
+  }
+
   changeContent() {
     const contentTopic = this.getContentTopic();
     if (contentTopic) {
-      this.dataService
-        .addContent(contentTopic, this.content)
-        .pipe(
-          first()
-        )
-        .subscribe(_ => {
-          this.abstractService.openSnackBar("Reihenfolge erfolgreich geändert")
-        });
+      this.changeThisContent();
     } else {
       this.editTeam();
     }
@@ -153,6 +158,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
   }
 
   getContentTopic(): string {
+    if (this.router.url.includes(TC_ROUTE_CORONA)) return DB_COLLECTION_CONTENT_CORONA;
     if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
     if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;
     if (this.router.url.includes(TC_ROUTE_TIME_KEEPER)) return DB_COLLECTION_CONTENT_TIME_KEEPER;
