@@ -280,8 +280,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   }
 
   editTeamPage() {
-    const editPage = this.router.url.replace(TC_ROUTE_TEAMS, TC_ROUTE_EDIT);
-    this.router.navigate([editPage])
+    this.router.navigate([`${TC_ROUTE_EDIT}/${this.currentTeam.teamSeason}/${this.currentTeam.teamAge}`])
   }
 
   openNewsDetail(news: News) {
