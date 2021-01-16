@@ -46,7 +46,8 @@ import {ContentHolderModule} from "./content-holder/content-holder.module";
   entryComponents: [
     DefaultDialogComponent,
     CookieDisclaimerComponent,
-    DefaultInputDialogComponent,]
+    DefaultInputDialogComponent,
+  ]
 })
 export class AppModule {
 }

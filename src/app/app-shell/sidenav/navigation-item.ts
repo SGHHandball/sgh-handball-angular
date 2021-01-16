@@ -1,6 +1,6 @@
 import {
   TC_ADMIN,
-  TC_ROUTE_ARCHIVE,
+  TC_ROUTE_ARCHIVE, TC_ROUTE_BOOK,
   TC_ROUTE_CDH,
   TC_ROUTE_CORONA,
   TC_ROUTE_EVENTS,
@@ -88,6 +88,7 @@ export const NAVIGATION_ITEMS_INFO = [
 ];
 
 export const NAVIGATION_ITEMS_OTHER = [
+  new NavigationItem(TC_ROUTE_BOOK, TC_ROUTE_BOOK).withRouterIcon('import_contacts'),
   new NavigationItem(TC_ROUTE_SPONSORS, TC_ROUTE_SPONSORS).withRouterIcon('sports_handball'),
   new NavigationItem(TC_ROUTE_ARCHIVE, TC_ROUTE_ARCHIVE).withRouterIcon('archive'),
   new NavigationItem(TC_ROUTE_IMPRINT, TC_ROUTE_IMPRINT).withRouterIcon('feedback')
