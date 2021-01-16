@@ -56,6 +56,7 @@ export const TC_ROUTE_CORONA = 'corona';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
 export const TC_ROUTE_ARCHIVE = 'archiv';
 
+export const TC_ROUTE_BOOK = 'saisonheft';
 export const TC_ROUTE_SPONSORS = 'sponsoren';
 export const TC_ROUTE_HALLS = 'hallenverzeichnis';
 export const TC_ROUTE_IMPRINT = 'impressum';
