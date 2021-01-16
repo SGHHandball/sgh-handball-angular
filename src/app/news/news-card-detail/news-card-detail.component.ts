@@ -15,7 +15,7 @@ import {AbstractService} from "../../shared/abstract.service";
   styleUrls: ['./news-card-detail.component.scss']
 })
 export class NewsCardDetailComponent implements OnInit, OnDestroy {
-  @ViewChild('slider', {static: false}) slider: SliderComponent;
+  @ViewChild('slider') slider: SliderComponent;
 
   destroy$ = new Subject();
   news: News;

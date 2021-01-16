@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MatCardModule} from "@angular/material";
 import {ImprintComponent} from "./imprint.component";
 import {ImprintRoutingModule} from "./imprint-routing.module";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [ImprintComponent],

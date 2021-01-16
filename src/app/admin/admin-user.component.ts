@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SghUser} from "../model/sgh-user";
 import {AdminService} from "./admin.service";
 import {
@@ -14,6 +13,10 @@ import {environment} from "../../environments/environment";
 import {of, Subject} from "rxjs";
 import {catchError, switchMap, takeUntil} from "rxjs/operators";
 import {AbstractService} from "../shared/abstract.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
 
 /**
  * @title Table with expandable rows

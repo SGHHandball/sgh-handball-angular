@@ -15,9 +15,10 @@ import {
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
 import {AdminService} from "../admin.service";
-import {MatDialogRef, MatSnackBar} from "@angular/material";
 import {Subject} from "rxjs";
 import {catchError, takeUntil} from "rxjs/operators";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-admin-user-dialog',

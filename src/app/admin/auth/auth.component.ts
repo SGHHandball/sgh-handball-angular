@@ -12,7 +12,7 @@ import {
   TC_ROUTE_LOGIN,
   TranslationService
 } from "../../translation.service";
-import {MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material/dialog";
 import {environment} from "../../../environments/environment";
 import {DataService} from "../../data/data.service";
 import {switchMap, takeUntil} from "rxjs/operators";

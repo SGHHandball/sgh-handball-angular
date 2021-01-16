@@ -9,9 +9,9 @@ import {IImage} from "ng2-image-compress";
 import {environment} from "../../../environments/environment";
 import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
 import {TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE} from "../../translation.service";
-import {MatDialog} from "@angular/material";
 import {Location} from '@angular/common';
 import {AbstractService} from "../../shared/abstract.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-sponsor-edit',

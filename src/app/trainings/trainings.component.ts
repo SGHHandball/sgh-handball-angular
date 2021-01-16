@@ -1,23 +1,20 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Training, TrainingDate, TrainingGroup} from "../model/training";
 import {
-  TC_GENERAL_DELETE_HEADER,
-  TranslationService,
-  TC_GENERAL_DELETE_SUCCESS,
   TC_GENERAL_DELETE_FAIL,
+  TC_GENERAL_DELETE_HEADER,
   TC_GENERAL_DELETE_MESSAGE,
-  TC_TRAININGS_TRAINING_TEAM,
-  TC_TRAININGS_TRAINING_DATE,
-  TC_TRAININGS_TRAINING_TRAINER,
-  TC_TRAININGS_EDIT_TRAINING_SUCCESS,
+  TC_GENERAL_DELETE_SUCCESS,
   TC_TRAININGS_EDIT_TRAINING_FAIL,
+  TC_TRAININGS_EDIT_TRAINING_SUCCESS,
+  TC_TRAININGS_TRAINING_DATES_DAY,
+  TC_TRAININGS_TRAINING_DATES_HALL,
+  TC_TRAININGS_TRAINING_DATES_TIME,
   TC_TRAININGS_TRAINING_TEAM_NAME,
   TC_TRAININGS_TRAINING_TEAM_VINTAGE,
-  TC_TRAININGS_TRAINING_DATES_DAY,
-  TC_TRAININGS_TRAINING_DATES_TIME,
-  TC_TRAININGS_TRAINING_DATES_HALL,
-  TC_TRAININGS_TRAINING_TRAINER_NAME, TC_TRAININGS_TRAINING_TRAINER_MAIL,
+  TC_TRAININGS_TRAINING_TRAINER_MAIL,
+  TC_TRAININGS_TRAINING_TRAINER_NAME,
+  TranslationService,
 } from "../translation.service";
 import {TrainingsEditDialogComponent} from "./trainings-edit-dialog/trainings-edit-dialog.component";
 import {AdminService} from "../admin/admin.service";
@@ -31,6 +28,8 @@ import {Team} from "../model/team";
 import {Hall} from "../model/hall";
 import {SeasonService} from "../admin/seasons/season.service";
 import {AbstractService} from "../shared/abstract.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-trainings',
@@ -167,7 +166,7 @@ export class TrainingsComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         switchMap(
-          result => {
+          (result: any) => {
             if (result) {
               if (result.existing) {
                 return this.dataService.changeTraining(result.training);

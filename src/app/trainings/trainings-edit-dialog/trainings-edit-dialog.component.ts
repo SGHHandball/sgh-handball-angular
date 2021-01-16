@@ -11,12 +11,12 @@ import {
   TranslationService
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Training, TrainingsDialogData} from "../../model/training";
 import {Hall} from "../../model/hall";
 import {Team} from "../../model/team";
 import {TeamService} from "../../teams/team.service";
 import {AbstractService} from "../../shared/abstract.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-trainings-edit-dialog',

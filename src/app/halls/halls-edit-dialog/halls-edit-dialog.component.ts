@@ -11,8 +11,8 @@ import {
   TranslationService
 } from "../../translation.service";
 import {FormControl, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Hall} from "../../model/hall";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-halls-edit-dialog',

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MatMenu} from "@angular/material";
 import {AbstractService} from "../abstract.service";
+import {MatMenu} from "@angular/material/menu";
 
 @Component({
   selector: 'app-add-btn',

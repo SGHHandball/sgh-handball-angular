@@ -20,7 +20,7 @@ import {
   TC_SAVE,
   TranslationService
 } from "../../translation.service";
-import {MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material/dialog";
 import {NewsService} from "../../news/news.service";
 import {ComponentCanDeactivate} from "../../guards/pending-changes.guard";
 import {Observable, of, Subject} from "rxjs";

@@ -1,6 +1,9 @@
 <div>
-  <app-ngx-editor [(ngModel)]="editContent.contentText"
-                  [config]="config"></app-ngx-editor>
+
+  <jodit-editor #editor [config]="config"
+                [defaultValue]="editContent.contentText">
+
+  </jodit-editor>
 
   <mat-card-actions align="end">
     <button mat-raised-button color="warn"

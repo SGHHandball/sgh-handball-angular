@@ -6,7 +6,7 @@ import {Season} from "../../model/season";
 import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
 import {environment} from "../../../environments/environment";
 import {AbstractService} from "../../shared/abstract.service";
-import {MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-seasons',

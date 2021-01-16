@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {MatSnackBar} from "@angular/material";
 import {CookieDisclaimerComponent} from "./cookie-disclaimer/cookie-disclaimer.component";
 import {CookieService} from "ngx-cookie-service";
 import {COOKIE_DISCLAIMER} from "./constants";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',

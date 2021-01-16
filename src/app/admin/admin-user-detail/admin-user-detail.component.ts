@@ -9,7 +9,7 @@ import {
   TC_TEAMS_TEAM,
   TranslationService
 } from "../../translation.service";
-import {MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material/dialog";
 import {
   DefaultInputDialogComponent,
   DefaultInputDialogData
@@ -111,7 +111,7 @@ export class AdminUserDetailComponent implements OnDestroy {
               )
             )
         }))
-      .subscribe(result => {
+      .subscribe((result: any) => {
         if (result) {
           if (!this.sghUser.teams) this.sghUser.teams = [];
           this.sghUser.teams.push(result);

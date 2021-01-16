@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DocumentService} from "./document.service";
-import {NestedTreeControl} from "@angular/cdk/tree";
-import {MatDialog,  MatTreeNestedDataSource} from "@angular/material";
 import {Document} from "./document";
 import {
   TC_CANCEL,
@@ -23,6 +21,9 @@ import {
 import {share, switchMap, takeUntil} from "rxjs/operators";
 import {AbstractService} from "../shared/abstract.service";
 import {Subject} from "rxjs";
+import {NestedTreeControl} from "@angular/cdk/tree";
+import {MatTreeNestedDataSource} from "@angular/material/tree";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-documents',
@@ -76,7 +77,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
             )
           }).afterClosed()
         )
-      ).subscribe(result => {
+      ).subscribe((result: any) => {
       if (result) {
         let documentExisting = false;
         if (document) {

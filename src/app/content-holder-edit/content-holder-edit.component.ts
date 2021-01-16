@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, of, Subject} from "rxjs";
 import {AdminService} from "../admin/admin.service";
-import {MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material/dialog";
 import {DataService} from "../data/data.service";
 import {Content} from "../model/content";
 import {first, switchMap, takeUntil} from "rxjs/operators";

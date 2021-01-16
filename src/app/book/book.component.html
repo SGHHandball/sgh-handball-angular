@@ -1,27 +1,8 @@
-<pdf-viewer class="pdf-viewer"
-            src="assets/pdf/Saisonheft.pdf"
-            *ngIf="fullSize else web"
-            [render-text]="true"
-            [original-size]="false"
-></pdf-viewer>
+<div [class.pdf-container]="!fullSize">
+  <pdf-viewer class="pdf-viewer"
+              src="assets/pdf/Saisonheft.pdf"
+              [render-text]="true"
+              [original-size]="!fullSize"
+  ></pdf-viewer>
+</div>
 
-<ng-template #web>
-  <div class="pdf-container" fxLayout="row">
-    <pdf-viewer fxFlex="50"
-                class="pdf-viewer"
-                src="assets/pdf/Saisonheft.pdf"
-                [render-text]="true"
-                [show-all]="false"
-                [original-size]="false"
-                [autoresize]="true"
-    ></pdf-viewer>
-    <pdf-viewer fxFlex="50"
-                class="pdf-viewer"
-                src="assets/pdf/Saisonheft.pdf"
-                [render-text]="true"
-                [show-all]="false"
-                [original-size]="false"
-                [autoresize]="true"
-    ></pdf-viewer>
-  </div>
-</ng-template>

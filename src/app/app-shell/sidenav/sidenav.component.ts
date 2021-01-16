@@ -15,7 +15,6 @@ import {
   NAVIGATION_ITEMS_INFO,
   NAVIGATION_ITEMS_OTHER, NavigationItem
 } from "./navigation-item";
-import {MatSidenav} from "@angular/material";
 import {Team} from "../../model/team";
 import {Subject} from "rxjs";
 import {first, map, switchMap, takeUntil} from "rxjs/operators";
@@ -25,6 +24,7 @@ import {AdminService} from "../../admin/admin.service";
 import {AbstractService} from "../../shared/abstract.service";
 import {SidenavService} from "./sidenav.service";
 import {NewsService} from "../../news/news.service";
+import {MatSidenav} from "@angular/material/sidenav";
 
 @Component({
   selector: 'app-sidenav',

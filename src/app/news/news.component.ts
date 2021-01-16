@@ -1,13 +1,9 @@
-import {AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {News, NewsType} from "../model/news";
-import {
-  TC_NEWS_TYPE_REPORT,
-  TC_NEWS_TYPE_EVENT, TranslationService,
-} from "../translation.service";
+import {TC_NEWS_TYPE_EVENT, TC_NEWS_TYPE_REPORT, TranslationService,} from "../translation.service";
 import {AbstractNewsComponent} from "../abstract/abstract-news.component";
 import {first, share, switchMap, takeUntil} from "rxjs/operators";
 import {SghUser} from "../model/sgh-user";
-import {MatDialog} from "@angular/material";
 import {DataService} from "../data/data.service";
 import {AbstractService} from "../shared/abstract.service";
 import {AdminService} from "../admin/admin.service";
@@ -15,6 +11,7 @@ import {NewsService} from "./news.service";
 import {ActivatedRoute} from "@angular/router";
 import {SeasonService} from "../admin/seasons/season.service";
 import {DOCUMENT} from "@angular/common";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-news',

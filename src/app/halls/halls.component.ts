@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {Hall} from "../model/hall";
 import {
   TC_FILTER,
@@ -24,6 +23,10 @@ import {of, Subject} from "rxjs";
 import {DataService} from "../data/data.service";
 import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
 import {AbstractService} from "../shared/abstract.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-halls',
@@ -97,7 +100,7 @@ export class HallsComponent implements OnInit, OnDestroy {
           .afterClosed()
         ),
         switchMap(
-          result => {
+          (result: any) => {
             if (result) {
               if (result.existing) {
                 return this.dataService.changeHall(result.hall);

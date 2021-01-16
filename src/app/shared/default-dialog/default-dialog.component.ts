@@ -3,7 +3,7 @@ import {
   TC_CANCEL,
   TC_OK, TranslationService
 } from "../../translation.service";
-import {MAT_DIALOG_DATA} from "@angular/material";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-default-dialog',

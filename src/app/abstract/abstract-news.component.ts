@@ -12,7 +12,7 @@ import {
   TC_GENERAL_EDIT_SUCCESS,
   TC_GENERAL_EDIT_FAIL,
 } from "../translation.service";
-import {MatDialog} from "@angular/material";
+import {MatDialog} from "@angular/material/dialog";
 import {environment} from "../../environments/environment";
 import {News} from "../model/news";
 import {NewsService} from "../news/news.service";

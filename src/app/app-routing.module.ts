@@ -17,11 +17,11 @@ import {ContentHolderComponent} from "./content-holder/content-holder.component"
 export const routes = [
   {
     path: TC_ROUTE_SGH,
-    loadChildren: './news/news.module#NewsModule'
+    loadChildren: () => import('./news/news.module').then(m => m.NewsModule)
   },
   {
     path: TC_ROUTE_TEAMS,
-    loadChildren: './teams/teams.module#TeamsModule'
+    loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)
   },
   {path: TC_ROUTE_EXECUTIVES, component: ContentHolderComponent},
   {path: TC_ROUTE_REFEREES, component: ContentHolderComponent},
@@ -31,39 +31,39 @@ export const routes = [
   {path: TC_ROUTE_HOME, component: ContentHolderComponent},
   {
     path: TC_ROUTE_EDIT,
-    loadChildren: './content-holder-edit/content-holder-edit.module#ContentHolderEditModule'
+    loadChildren: () => import('./content-holder-edit/content-holder-edit.module').then(m => m.ContentHolderEditModule)
   },
   {
     path: TC_ADMIN,
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: TC_ROUTE_SPONSORS,
-    loadChildren: './sponsors/sponsors.module#SponsorsModule'
+    loadChildren: () => import('./sponsors/sponsors.module').then(m => m.SponsorsModule)
   },
   {
     path: TC_ROUTE_DOCUMENTS,
-    loadChildren: './documents/documents.module#DocumentsModule'
+    loadChildren: () => import('./documents/documents.module').then(m => m.DocumentsModule)
   },
   {
     path: TC_ROUTE_HALLS,
-    loadChildren: './halls/halls.module#HallsModule'
+    loadChildren: () => import('./halls/halls.module').then(m => m.HallsModule)
   },
   {
     path: TC_ROUTE_TRAINING,
-    loadChildren: './trainings/trainings.module#TrainingsModule'
+    loadChildren: () => import('./trainings/trainings.module').then(m => m.TrainingsModule)
   },
   {
     path: TC_ROUTE_IMPRINT,
-    loadChildren: './imprint/imprint.module#BookModule'
+    loadChildren: () => import('./imprint/imprint.module').then(m => m.ImprintModule)
   },
   {
     path: TC_ROUTE_ARCHIVE,
-    loadChildren: './archive/archive.module#ArchiveModule'
+    loadChildren: () => import('./archive/archive.module').then(m => m.ArchiveModule)
   },
   {
     path: TC_ROUTE_BOOK,
-    loadChildren: './book/book.module#BookModule'
+    loadChildren: () => import('./book/book.module').then(m => m.BookModule)
   },
   {path: ROUTE_INDEX, redirectTo: TC_ROUTE_HOME, pathMatch: 'full'},
   {path: '**', redirectTo: TC_ROUTE_HOME}

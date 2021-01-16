@@ -4,7 +4,7 @@ import {
   TC_TEAMS_DELETE_TEAM,
   TranslationService
 } from "../../translation.service";
-import { MatDialogRef} from "@angular/material";
+import { MatDialogRef} from "@angular/material/dialog";
 import {Team} from "../../model/team";
 import {switchMap, takeUntil} from "rxjs/operators";
 import {DataService} from "../../data/data.service";

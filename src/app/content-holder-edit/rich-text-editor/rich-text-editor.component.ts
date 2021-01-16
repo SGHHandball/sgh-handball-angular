@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import {Content} from "../../model/content";
 import {EDITOR_CONFIG} from "./editor-config";
+import {JoditAngularComponent} from "jodit-angular";
 
 @Component({
   selector: 'app-rich-text-editor',
@@ -9,6 +10,7 @@ import {EDITOR_CONFIG} from "./editor-config";
   styleUrls: ['./rich-text-editor.component.css']
 })
 export class RichTextEditorComponent implements OnInit {
+  @ViewChild("editor") editor : JoditAngularComponent;
 
   @Input() htmlContent: Content;
 
@@ -24,7 +26,7 @@ export class RichTextEditorComponent implements OnInit {
   }
 
   saveContent() {
-    this.saveListener.next(this.editContent.contentText);
+    this.saveListener.next(this.editor.value);
   }
 
   cancel() {

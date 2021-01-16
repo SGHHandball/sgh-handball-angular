@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminService} from "../admin/admin.service";
-import {MatDialog,} from "@angular/material";
 import {TeamsChangeDialogComponent} from "./teams-change-dialog/teams-change-dialog.component";
 import {
   TC_CANCEL, TC_EDIT,
@@ -40,6 +39,7 @@ import {SeasonService} from "../admin/seasons/season.service";
 import {AbstractService} from "../shared/abstract.service";
 import {TeamService} from "./team.service";
 import {SghUser} from "../model/sgh-user";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-teams',
@@ -202,10 +202,10 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
   }
 
 
-  getInputDialogObservable(teamAges: string[]): Observable<string | undefined> {
+  getInputDialogObservable(teamAges: string[]): Observable<any> {
     return this.abstractService.dialogWidth$
       .pipe(
-        switchMap(dialogWidth =>
+        switchMap((dialogWidth: any) =>
           this.dialog.open(
             DefaultInputDialogComponent, {
               width: dialogWidth,
@@ -233,7 +233,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
             }
           ).afterClosed()
         ),
-        switchMap(teams => {
+        switchMap((teams: any) => {
           return teams ? this.dataService.changeOrderOfTeams(teams) : of("cancelBtn");
         }),
         catchError(error => {
@@ -262,7 +262,7 @@ export class TeamsComponent extends AbstractNewsComponent implements OnInit {
             }
           ).afterClosed()
         ),
-        switchMap(team => {
+        switchMap((team: any) => {
           return team ? this.dataService.deleteTeam(team) : of("cancelBtn");
         }),
         catchError(error => {

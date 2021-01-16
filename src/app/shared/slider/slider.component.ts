@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SliderImage} from "../../model/slider-image";
 import {interval, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";

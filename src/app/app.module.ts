@@ -3,9 +3,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FirestoreSettingsToken} from "@angular/fire/firestore";
-import {
-  MAT_DATE_LOCALE,
-} from "@angular/material";
 import {PendingChangesGuard} from "./guards/pending-changes.guard";
 import {FunctionsRegionToken} from "@angular/fire/functions";
 import {DefaultDialogComponent} from './shared/default-dialog/default-dialog.component';
@@ -18,6 +15,7 @@ import {SharedModule} from "./shared/shared.module";
 import {AppShellModule} from "./app-shell/app-shell.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ContentHolderModule} from "./content-holder/content-holder.module";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
 
 @NgModule({
   declarations: [
