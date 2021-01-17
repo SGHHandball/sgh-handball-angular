@@ -1,18 +1,11 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {News, NewsType,} from "../../model/news";
 import {FormControl} from "@angular/forms";
 import {
   TC_EDIT_NEWS,
   TC_GENERAL_DELETE_HEADER,
   TC_GENERAL_DELETE_MESSAGE,
-  TC_NEWS_BODY,
   TC_NEWS_DATE,
-  TC_NEWS_ENEMY_TEAM,
-  TC_NEWS_HOME_TEAM,
-  TC_NEWS_PLAYERS,
-  TC_NEWS_SCORE,
-  TC_NEWS_SEASON,
-  TC_NEWS_SUMMARY,
   TC_NEWS_TEAM_AGE,
   TC_NEWS_TITLE,
   TC_NEWS_UNSAVED_DATA_WARNING,
@@ -27,14 +20,13 @@ import {Observable, of, Subject} from "rxjs";
 import {DefaultDialogComponent, DialogData} from "../../shared/default-dialog/default-dialog.component";
 import {first, map, share, startWith, switchMap, takeUntil} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
-import {SeasonService} from "../../admin/seasons/season.service";
 import {DataService} from "../../data/data.service";
 import {ActivatedRoute} from "@angular/router";
 import {IImage} from "ng2-image-compress";
-import {Season} from "../../model/season";
 import {AbstractService} from "../../shared/abstract.service";
 import {AdminService} from "../../admin/admin.service";
 import {EDITOR_CONFIG} from "../rich-text-editor/editor-config";
+import {JoditAngularComponent} from "jodit-angular";
 
 @Component({
   selector: 'app-news-edit',
@@ -42,6 +34,18 @@ import {EDITOR_CONFIG} from "../rich-text-editor/editor-config";
   styleUrls: ['./news-edit.component.css']
 })
 export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+
+  mEditor: JoditAngularComponent;
+
+  @ViewChild("editor", {static: false}) set editor(e) {
+    this.mEditor = e;
+    if (!!this.mEditor) {
+      this.mEditor.registerOnChange(() => {
+        this.onChangeValue();
+      });
+    }
+  };
+
 
   news: News;
 
@@ -168,6 +172,7 @@ export class NewsEditComponent implements OnInit, OnDestroy, ComponentCanDeactiv
   }
 
   saveNews() {
+    this.news.body = this.mEditor.value;
     this.news.eventDate = new Date(this.date.value.toString()).getTime();
     this.news.title = this.titleFormControl.value;
     this.news.teamAge = this.teamAgeFormControl.value;

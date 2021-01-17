@@ -83,9 +83,12 @@
         </div>
 
         <div *ngIf="news">
-          <app-ngx-editor [(ngModel)]="news.body"
-                          (ngModelChange)="onChangeValue()"
-                          [config]="config"></app-ngx-editor>
+          <jodit-editor #editor
+                        [config]="config"
+                        [defaultValue]="news.body"
+            >
+
+          </jodit-editor>
         </div>
 
         <div>
