@@ -6,6 +6,10 @@
   padding: 16px 16px 56px 16px;
 }
 
+.sponsor-card {
+  width: 100%;
+}
+
 .loading-spinner {
   margin: 25% auto;
 }

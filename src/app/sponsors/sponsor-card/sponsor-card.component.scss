@@ -1,6 +1,7 @@
 .dashboard-card {
   padding: 0;
-  margin-bottom: 16px;
+  width: fit-content;
+  margin: 0 auto 16px auto;
 
   .card-container {
 
@@ -14,12 +15,10 @@
       width: 100%;
     }
 
-    .card-content {
-      padding: 16px;
-
-      .card-title {
-        font-size: 20px;
-      }
+    .sponsor-img-original {
+      margin: auto;
+      width: auto;
+      border: 0;
     }
   }
 

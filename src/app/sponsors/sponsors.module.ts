@@ -6,7 +6,7 @@ import {SponsorEditComponent} from "./sponsor-edit/sponsor-edit.component";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {SharedModule} from "../shared/shared.module";
 import {ImageUploadManagerModule} from "../image-upload-manager/image-upload-manager.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {SponsorsRoutingModule} from "./sponsors-routing.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
@@ -16,6 +16,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -35,8 +36,10 @@ import {MatIconModule} from "@angular/material/icon";
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatCheckboxModule,
     LazyLoadImageModule,
-    SponsorsRoutingModule
+    SponsorsRoutingModule,
+    FormsModule,
   ],
   exports: [
     SponsorsComponent,]

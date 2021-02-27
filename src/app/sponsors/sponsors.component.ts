@@ -1,19 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Sponsor} from "../model/sponsor";
 import {AdminService} from "../admin/admin.service";
-import {catchError, share, switchMap, takeUntil} from "rxjs/operators";
-import {of, Subject} from "rxjs";
+import {share, takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
 import {DataService} from "../data/data.service";
 import {Router} from "@angular/router";
-import {
-  TC_GENERAL_DELETE_FAIL,
-  TC_GENERAL_DELETE_SUCCESS,
-  TC_PATH_EDIT,
-  TC_ROUTE_SPONSORS
-} from "../translation.service";
+import {TC_PATH_EDIT, TC_ROUTE_SPONSORS} from "../translation.service";
 import {AbstractService} from "../shared/abstract.service";
-import {TeamsDeleteDialogComponent} from "../teams/teams-delete-dialog/teams-delete-dialog.component";
-import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-sponsors',
@@ -26,6 +19,7 @@ export class SponsorsComponent implements OnInit, OnDestroy {
   sponsorsLoaded = false;
 
   destroy$ = new Subject();
+
 
   constructor(
     private adminService: AdminService,
@@ -45,7 +39,7 @@ export class SponsorsComponent implements OnInit, OnDestroy {
     this.dataService.getSponsors()
       .pipe(takeUntil(this.destroy$))
       .subscribe(sponsors => {
-        this.sponsors = sponsors;
+        this.sponsors = [...sponsors.filter(sponsor => !!sponsor.directImgLink), ...sponsors.filter(sponsor => !sponsor.directImgLink)];
         this.sponsorsLoaded = true;
       })
   }
@@ -71,8 +65,8 @@ export class SponsorsComponent implements OnInit, OnDestroy {
     this.router.navigate([[TC_ROUTE_SPONSORS, TC_PATH_EDIT, sponsorId].join('/')])
   }
 
-  deleteSponsor(sponsorId:string){
-    this.dataService.deleteSponsor(sponsorId    )
+  deleteSponsor(sponsorId: string) {
+    this.dataService.deleteSponsor(sponsorId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(sponsorId => {
         this.abstractService.openSnackBar("Sponsor erfolgreich gelöscht")

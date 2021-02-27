@@ -24,6 +24,19 @@
       >
     </mat-form-field>
 
+    <div fxLayout="row">
+      <mat-form-field appearance="outline">
+        <input
+          placeholder="Sponsor Bild Link"
+          matInput
+          [formControl]="directImgLinkFormControl"
+        >
+      </mat-form-field>
+      <section class="margin-auto">
+        <mat-checkbox  [(ngModel)]="originalCheckBox">Orginale Größe</mat-checkbox>
+      </section>
+    </div>
+
     <mat-form-field appearance="outline">
       <textarea
         cdkTextareaAutosize

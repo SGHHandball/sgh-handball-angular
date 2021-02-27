@@ -1,39 +1,39 @@
 <mat-card class="dashboard-card">
-    <div
-         class="card-container"
-         (click)="openLink()"
-    >
-      <div >
-        <img
-          alt="SGH - SG Hainhausen (Rodgau) Handball Logo eines Sponsors"
-          [lazyLoad]="sponsor &&sponsor.imgLinks &&  sponsor.imgLinks.length>0 ? sponsor.imgLinks[0] :['assets/img/SghLogo.png']"
-          defaultImage="assets\img\SghLogo.png"
-          class="sponsor-img"
-        >
-      </div>
-
-      <div class="card-content">
-        <span class="card-title">{{sponsor.sponsorName}}</span>
-        <p>{{sponsor.sponsorDescription}}</p>
-      </div>
+  <div
+    class="card-container"
+    (click)="openLink()"
+  >
+    <div fxLayout="row">
+      <img
+        [alt]="!!sponsor && !!sponsor.alt ? sponsor.alt : 'SGH - SG Hainhausen (Rodgau) Handball Logo eines Sponsors'"
+        [lazyLoad]="!!sponsor  && !!sponsor.directImgLink?
+        sponsor.directImgLink :
+         !!sponsor && !!sponsor.imgLinks && sponsor.imgLinks.length>0 ?
+         sponsor.imgLinks[0] :
+         'assets/img/SghLogo.png'"
+        defaultImage="assets\img\SghLogo.png"
+        [class.sponsor-img-original]="!!sponsor && !!sponsor.original"
+        [class.sponsor-img]="!sponsor || !sponsor.original"
+      >
     </div>
+  </div>
 
-    <div
-      *ngIf="sponsorAdmin$|async"
-      fxLayout="row wrap"
-      class="card-sub-actions"
-    >
-      <div fxFlex="80">
-
-      </div>
-      <div fxFlex="20" fxLayoutAlign="end center" class="card-more-btn-container">
-        <button mat-icon-button (click)="editClickListener.next()">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteClickListener.next()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+  <div
+    *ngIf="sponsorAdmin$|async"
+    fxLayout="row wrap"
+    class="card-sub-actions"
+  >
+    <div fxFlex="80">
 
     </div>
+    <div fxFlex="20" fxLayoutAlign="end center" class="card-more-btn-container">
+      <button mat-icon-button (click)="editClickListener.next()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="deleteClickListener.next()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+  </div>
 </mat-card>

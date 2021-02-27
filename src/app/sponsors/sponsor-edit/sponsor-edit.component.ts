@@ -27,7 +27,9 @@ export class SponsorEditComponent implements OnInit, OnDestroy {
 
   nameFormControl = new FormControl();
   linkFormControl = new FormControl();
+  directImgLinkFormControl = new FormControl();
   descriptionFormControl = new FormControl();
+  originalCheckBox : boolean;
 
   constructor(private dataService: DataService,
               private route: ActivatedRoute,
@@ -57,7 +59,9 @@ export class SponsorEditComponent implements OnInit, OnDestroy {
   private initFormControls() {
     if (this.sponsor.sponsorName) this.nameFormControl.setValue(this.sponsor.sponsorName);
     if (this.sponsor.sponsorLink) this.linkFormControl.setValue(this.sponsor.sponsorLink);
+    if (this.sponsor.directImgLink) this.directImgLinkFormControl.setValue(this.sponsor.directImgLink);
     if (this.sponsor.sponsorDescription) this.descriptionFormControl.setValue(this.sponsor.sponsorDescription);
+    this.originalCheckBox = this.sponsor.original;
   }
 
   upload(image: IImage) {
@@ -95,7 +99,9 @@ export class SponsorEditComponent implements OnInit, OnDestroy {
   saveSponsorValues() {
     this.sponsor.sponsorName = this.nameFormControl.value;
     this.sponsor.sponsorLink = this.linkFormControl.value;
+    this.sponsor.directImgLink = this.directImgLinkFormControl.value;
     this.sponsor.sponsorDescription = this.descriptionFormControl.value;
+    this.sponsor.original = this.originalCheckBox;
     this.changeSponsor();
   }
 

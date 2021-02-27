@@ -5,4 +5,7 @@ export interface Sponsor {
   id?: string;
   imgPaths?: string[];
   imgLinks?: string[];
+  directImgLink?: string;
+  alt?: string;
+  original?: boolean;
 }
