@@ -55,6 +55,7 @@ export const TC_ROUTE_TRAINING = 'trainingszeiten';
 export const TC_ROUTE_CORONA = 'corona';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
 export const TC_ROUTE_ARCHIVE = 'archiv';
+export const TC_ROUTE_HANDBALL = 'handball';
 
 export const TC_ROUTE_BOOK = 'saisonheft';
 export const TC_ROUTE_SPONSORS = 'sponsoren';

@@ -6,30 +6,15 @@ import {DataService} from "../data/data.service";
 import {Content} from "../model/content";
 import {first, switchMap, takeUntil} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
-import {
-  DB_COLLECTION_CONTENT_CDH,
-  DB_COLLECTION_CONTENT_CORONA,
-  DB_COLLECTION_CONTENT_EXECUTIVES,
-  DB_COLLECTION_CONTENT_HOME,
-  DB_COLLECTION_CONTENT_REFEREE,
-  DB_COLLECTION_CONTENT_TIME_KEEPER
-} from "../constants";
-import {
-  TC_GENERAL_DELETE_HEADER,
-  TC_GENERAL_DELETE_MESSAGE,
-  TC_ROUTE_CDH,
-  TC_ROUTE_CORONA,
-  TC_ROUTE_EXECUTIVES,
-  TC_ROUTE_HOME,
-  TC_ROUTE_REFEREES,
-  TC_ROUTE_TIME_KEEPER
-} from "../translation.service";
+import {DB_COLLECTION_CONTENT_HOME} from "../constants";
+import {TC_GENERAL_DELETE_HEADER, TC_GENERAL_DELETE_MESSAGE} from "../translation.service";
 import {IImage} from "ng2-image-compress";
 import {DefaultDialogComponent, DialogData} from "../shared/default-dialog/default-dialog.component";
 import {AbstractService} from "../shared/abstract.service";
 import {environment} from "../../environments/environment";
 import {Location} from "@angular/common";
 import {Team} from "../model/team";
+import {ContentHolderService} from "../content-holder/content-holder.service";
 
 
 @Component({
@@ -48,7 +33,8 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               public abstractService: AbstractService,
               private location: Location,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private contentHolderService: ContentHolderService,
   ) {
   }
 
@@ -64,13 +50,13 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
   team: Team;
 
   ngOnInit(): void {
-    this.home = this.getContentTopic() === DB_COLLECTION_CONTENT_HOME;
+    this.home = this.contentHolderService.getContentTopic() === DB_COLLECTION_CONTENT_HOME;
     this.initContent();
   }
 
 
   initContent() {
-    const contentTopic = this.getContentTopic();
+    const contentTopic = this.contentHolderService.getContentTopic();
     if (contentTopic) {
       this.dataService
         .getContent(contentTopic)
@@ -110,7 +96,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
   }
 
   saveContent(content: string) {
-    const contentTopic = this.getContentTopic();
+    const contentTopic = this.contentHolderService.getContentTopic();
     if (contentTopic) {
       this.dataService
         .addContent(contentTopic,
@@ -132,7 +118,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
 
   changeThisContent() {
     this.dataService
-      .addContent(this.getContentTopic(), this.content)
+      .addContent(this.contentHolderService.getContentTopic(), this.content)
       .pipe(first())
       .subscribe(_ => {
         this.abstractService.openSnackBar("Inhalt erfolgreich bearbeitet")
@@ -140,7 +126,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
   }
 
   changeContent() {
-    const contentTopic = this.getContentTopic();
+    const contentTopic = this.contentHolderService.getContentTopic();
     if (contentTopic) {
       this.changeThisContent();
     } else {
@@ -157,15 +143,6 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
       .subscribe()
   }
 
-  getContentTopic(): string {
-    if (this.router.url.includes(TC_ROUTE_CORONA)) return DB_COLLECTION_CONTENT_CORONA;
-    if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
-    if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;
-    if (this.router.url.includes(TC_ROUTE_TIME_KEEPER)) return DB_COLLECTION_CONTENT_TIME_KEEPER;
-    if (this.router.url.includes(TC_ROUTE_CDH)) return DB_COLLECTION_CONTENT_CDH;
-    if (this.router.url.includes(TC_ROUTE_HOME)) return DB_COLLECTION_CONTENT_HOME;
-    return undefined;
-  }
 
   getBack() {
     this.location.back();
@@ -173,7 +150,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
 
   upload(image: IImage) {
     this.uploadProgress = undefined;
-    this.dataService.uploadImage(image, this.team ? this.team.id : this.getContentTopic())
+    this.dataService.uploadImage(image, this.team ? this.team.id : this.contentHolderService.getContentTopic())
       .pipe(
         takeUntil(this.destroy$),
         switchMap(
@@ -195,7 +172,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
           doneUploading => {
             if (doneUploading) {
               this.uploadProgress = undefined;
-              return this.team ? this.dataService.updateImagesInTeam(this.team) : this.dataService.addContent(this.getContentTopic(), this.content);
+              return this.team ? this.dataService.updateImagesInTeam(this.team) : this.dataService.addContent(this.contentHolderService.getContentTopic(), this.content);
             }
             return of(false)
           }
@@ -227,7 +204,7 @@ export class ContentHolderEditComponent implements OnInit, OnDestroy {
             if (!result) {
               this.team ? this.team.imgLinks.splice(index, 1) : this.content.imgLinks.splice(index, 1);
               this.team ? this.team.imgPaths.splice(index, 1) : this.content.imgPaths.splice(index, 1);
-              return this.team ? this.dataService.updateImagesInTeam(this.team) : this.dataService.addContent(this.getContentTopic(), this.content);
+              return this.team ? this.dataService.updateImagesInTeam(this.team) : this.dataService.addContent(this.contentHolderService.getContentTopic(), this.content);
             }
             return of(undefined)
           }

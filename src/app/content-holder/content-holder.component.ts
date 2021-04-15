@@ -6,24 +6,11 @@ import {Content} from "../model/content";
 import {share, takeUntil} from "rxjs/operators";
 import {SliderImage} from "../model/slider-image";
 import {Router} from "@angular/router";
-import {
-  DB_COLLECTION_CONTENT_CDH,
-  DB_COLLECTION_CONTENT_CORONA,
-  DB_COLLECTION_CONTENT_EXECUTIVES,
-  DB_COLLECTION_CONTENT_HOME,
-  DB_COLLECTION_CONTENT_REFEREE,
-  DB_COLLECTION_CONTENT_TIME_KEEPER
-} from "../constants";
-import {
-  TC_ROUTE_CDH,
-  TC_ROUTE_CORONA,
-  TC_ROUTE_EDIT,
-  TC_ROUTE_EXECUTIVES,
-  TC_ROUTE_REFEREES,
-  TC_ROUTE_TIME_KEEPER
-} from "../translation.service";
+import {DB_COLLECTION_CONTENT_HOME} from "../constants";
+import {TC_ROUTE_EDIT} from "../translation.service";
 import {IImage} from "ng2-image-compress";
 import {AbstractService} from "../shared/abstract.service";
+import {ContentHolderService} from "./content-holder.service";
 
 
 @Component({
@@ -39,7 +26,8 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   constructor(private adminService: AdminService,
               private dataService: DataService,
               private router: Router,
-              public abstractService: AbstractService
+              public abstractService: AbstractService,
+              private contentHolderService: ContentHolderService,
   ) {
   }
 
@@ -59,13 +47,13 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
   home: boolean;
 
   ngOnInit(): void {
-    this.home = this.getContentTopic() === DB_COLLECTION_CONTENT_HOME;
+    this.home = this.contentHolderService.getContentTopic() === DB_COLLECTION_CONTENT_HOME;
     this.initContent();
   }
 
 
   initContent() {
-    const contentTopic = this.getContentTopic();
+    const contentTopic = this.contentHolderService.getContentTopic();
     this.dataService
       .getContent(contentTopic)
       .pipe(
@@ -76,16 +64,6 @@ export class ContentHolderComponent implements OnInit, OnDestroy {
         this.contentLoaded = true;
       });
   }
-
-  getContentTopic(): string {
-    if (this.router.url.includes(TC_ROUTE_CORONA)) return DB_COLLECTION_CONTENT_CORONA;
-    if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
-    if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;
-    if (this.router.url.includes(TC_ROUTE_TIME_KEEPER)) return DB_COLLECTION_CONTENT_TIME_KEEPER;
-    if (this.router.url.includes(TC_ROUTE_CDH)) return DB_COLLECTION_CONTENT_CDH;
-    return DB_COLLECTION_CONTENT_HOME;
-  }
-
 
   getSlideImage(imgLinks: string[]): SliderImage[] {
     return imgLinks.map(link => {
