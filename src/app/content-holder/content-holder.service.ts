@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {
   TC_ROUTE_CDH,
-  TC_ROUTE_CORONA,
+  TC_ROUTE_CORONA, TC_ROUTE_EXCLUSIVE_DAY,
   TC_ROUTE_EXECUTIVES, TC_ROUTE_HANDBALL,
   TC_ROUTE_HOME,
   TC_ROUTE_REFEREES,
@@ -9,7 +9,7 @@ import {
 } from "../translation.service";
 import {
   DB_COLLECTION_CONTENT_CDH,
-  DB_COLLECTION_CONTENT_CORONA,
+  DB_COLLECTION_CONTENT_CORONA, DB_COLLECTION_CONTENT_EXCLUSIVE_DAY,
   DB_COLLECTION_CONTENT_EXECUTIVES, DB_COLLECTION_CONTENT_HANDBALL,
   DB_COLLECTION_CONTENT_HOME,
   DB_COLLECTION_CONTENT_REFEREE,
@@ -29,6 +29,7 @@ export class ContentHolderService {
 
   getContentTopic(): string {
     if (this.router.url.includes(TC_ROUTE_HANDBALL)) return DB_COLLECTION_CONTENT_HANDBALL;
+    if (this.router.url.includes(TC_ROUTE_EXCLUSIVE_DAY)) return DB_COLLECTION_CONTENT_EXCLUSIVE_DAY;
     if (this.router.url.includes(TC_ROUTE_CORONA)) return DB_COLLECTION_CONTENT_CORONA;
     if (this.router.url.includes(TC_ROUTE_EXECUTIVES)) return DB_COLLECTION_CONTENT_EXECUTIVES;
     if (this.router.url.includes(TC_ROUTE_REFEREES)) return DB_COLLECTION_CONTENT_REFEREE;

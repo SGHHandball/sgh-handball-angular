@@ -3,7 +3,7 @@ import {
   TC_ROUTE_ARCHIVE, TC_ROUTE_BOOK,
   TC_ROUTE_CDH,
   TC_ROUTE_CORONA,
-  TC_ROUTE_EVENTS,
+  TC_ROUTE_EVENTS, TC_ROUTE_EXCLUSIVE_DAY,
   TC_ROUTE_EXECUTIVES,
   TC_ROUTE_GENERAL_INFORMATION,
   TC_ROUTE_HALLS, TC_ROUTE_HANDBALL,
@@ -84,6 +84,7 @@ export const NAVIGATION_ITEMS_GEN_INFOS = [
 export const NAVIGATION_ITEMS_INFO = [
   new NavigationItem(TC_ROUTE_CORONA, TC_ROUTE_CORONA).withRouterIcon('coronavirus'),
   new NavigationItem(TC_ROUTE_HANDBALL, TC_ROUTE_HANDBALL).withRouterIcon('sports_handball'),
+  new NavigationItem(TC_ROUTE_EXCLUSIVE_DAY, TC_ROUTE_EXCLUSIVE_DAY).withRouterIcon('light_mode'),
   new NavigationItem([TC_ROUTE_SGH, TC_ROUTE_EVENTS].join("/"), TC_ROUTE_EVENTS).withRouterIcon('event'),
   new NavigationItem(TC_ROUTE_TRAINING, TC_ROUTE_TRAINING).withRouterIcon('fitness_center'),
 ];
