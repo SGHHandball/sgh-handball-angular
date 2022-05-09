@@ -56,7 +56,7 @@ export const TC_ROUTE_CORONA = 'corona';
 export const TC_ROUTE_DOCUMENTS = 'dokumente';
 export const TC_ROUTE_ARCHIVE = 'archiv';
 export const TC_ROUTE_HANDBALL = 'handball';
-export const TC_ROUTE_EXCLUSIVE_DAY = 'schnupper-tag';
+export const TC_ROUTE_EXCLUSIVE_DAY = 'camp';
 
 export const TC_ROUTE_BOOK = 'saisonheft';
 export const TC_ROUTE_SPONSORS = 'sponsoren';

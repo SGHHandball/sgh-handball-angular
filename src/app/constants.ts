@@ -6,7 +6,7 @@ export const DB_COLLECTION_CONTENT = 'content';
 export const DB_COLLECTION_CONTENT_HOME = 'home';
 
 export const DB_COLLECTION_CONTENT_HANDBALL = 'handball';
-export const DB_COLLECTION_CONTENT_EXCLUSIVE_DAY = 'schnupper-tag';
+export const DB_COLLECTION_CONTENT_EXCLUSIVE_DAY = 'camp';
 export const DB_COLLECTION_CONTENT_CORONA = 'corona';
 export const DB_COLLECTION_CONTENT_EXECUTIVES = 'executives';
 export const DB_COLLECTION_CONTENT_REFEREE = 'referee';
